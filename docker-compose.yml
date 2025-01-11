@@ -29,17 +29,17 @@ services:
         image: mysql:8
         container_name: mysql
         ports:
-            - "4306:3306"
+            - ${MYSQL_PORT:-3306}:3306
         volumes:
-            -   ./mysql:/var/lib/mysql
+            - ${MYSQL_DB_FOLDER_PATH:-./mysql}:/var/lib/mysql
         command: --mysql-native-password=ON --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-        #restart: always
+        restart: always
         environment:
             MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         networks:
             - server-php-mysql
-
 
 networks:
     server-php-mysql:
