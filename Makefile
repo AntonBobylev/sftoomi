@@ -1,13 +1,15 @@
+DOCKER_COMPOSE := docker-compose -f ./docker/docker-compose.yml
+
 up:
-	docker-compose -f docker/docker-compose.yml up -d
+	@$(DOCKER_COMPOSE) up -d
 down:
-	docker-compose -f docker/docker-compose.yml down
+	@$(DOCKER_COMPOSE) down
 start:
-	docker-compose -f docker-compose.yml start
+	@$(DOCKER_COMPOSE) start
 stop:
-	docker-compose -f docker-compose.yml stop
+	@$(DOCKER_COMPOSE) stop
 
 shell:
-	exec docker exec -it php bash
+	@$(DOCKER_COMPOSE) exec -it php bash
 db:
-	exec docker exec -it mysql bash
+	@$(DOCKER_COMPOSE) exec -it mysql bash
