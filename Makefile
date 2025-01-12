@@ -13,3 +13,9 @@ shell:
 	@$(DOCKER_COMPOSE) exec -it php bash
 db:
 	@$(DOCKER_COMPOSE) exec -it mysql bash
+
+db-create:
+	@$(DOCKER_COMPOSE) exec -it php bin/console doctrine:database:create
+
+front-init:
+	@$(DOCKER_COMPOSE) exec -it php npm --prefix app i
