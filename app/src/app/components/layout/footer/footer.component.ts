@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import Sftoomi from '../../../class/Sftoomi';
+
 @Component({
     selector: 'app-footer',
     imports: [],
@@ -9,5 +11,5 @@ import { Component } from '@angular/core';
 
 export class FooterComponent
 {
-
+    protected readonly Sftoomi = Sftoomi;
 }
