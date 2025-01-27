@@ -3,8 +3,17 @@ header {
     width: 100%;
 }
 
-main {
+app-header {
     height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+main {
+    height: calc(100% - 120px);
     width: 100%;
 }
 
