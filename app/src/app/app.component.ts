@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { TuiRoot } from '@taiga-ui/core';
 
 import { HeaderComponent } from './components/layout/header/header.component';
 import { ContentComponent } from './components/layout/content/content.component';
@@ -7,6 +8,7 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 @Component({
     selector: 'app-root',
     imports: [
+        TuiRoot,
         HeaderComponent,
         ContentComponent,
         FooterComponent
