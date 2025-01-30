@@ -26,6 +26,7 @@
         "@taiga-ui/kit": "^4.22.0",
         "@taiga-ui/layout": "^4.22.0",
         "axios": "^1.7.9",
+        "moment": "^2.30.1",
         "rxjs": "~7.8.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.15.0"
