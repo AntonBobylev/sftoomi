@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
+import Fetcher from '../../../class/Fetcher';
 
 @Component({
     selector: 'app-patients',
@@ -7,7 +9,15 @@ import { Component } from '@angular/core';
     styleUrl: './patients.component.scss'
 })
 
-export class PatientsComponent
+export class PatientsComponent implements OnInit
 {
-
+    ngOnInit(): void
+    {
+        (new Fetcher).request({
+            url: 'http://localhost:8080/patients',
+            success: function (response: any, request: any, data: any): void {
+                console.log('API works!');
+            }
+        })
+    }
 }
