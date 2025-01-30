@@ -1,3 +1,4 @@
+import { NgForOf } from '@angular/common';
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import {
     TuiTableCell,
@@ -7,8 +8,8 @@ import {
     TuiTableThGroup,
     TuiTableTr
 } from '@taiga-ui/addon-table';
-import { NgForOf } from '@angular/common';
-import { TuiLoader } from '@taiga-ui/core';
+import { TuiButtonGroup } from '@taiga-ui/kit';
+import { TuiAppearance, TuiIcon, TuiLoader } from '@taiga-ui/core';
 
 import Fetcher from '../../../class/Fetcher';
 import Sftoomi from '../../../class/Sftoomi';
@@ -20,7 +21,7 @@ import getPatientsAPI from '../../../APIs/getPatientsAPI';
     imports: [
         TuiTableDirective, TuiTableThGroup, TuiTableTh,
         TuiTableTbody, NgForOf, TuiTableTr, TuiTableCell,
-        TuiTableTd, TuiLoader
+        TuiTableTd, TuiLoader, TuiAppearance, TuiButtonGroup, TuiIcon
     ],
     templateUrl: './patients.component.html',
     styleUrl: './patients.component.scss'

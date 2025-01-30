@@ -4,6 +4,23 @@
         [overlay]="true"
         [showLoader]="isLoading()"
     >
+        <div tuiAppearance="action"
+             tuiButtonGroup
+        >
+            <button type="button">
+                <tui-icon icon="@tui.plus" />
+                Add
+            </button>
+            <button type="button">
+                <tui-icon icon="@tui.pencil" />
+                Edit
+            </button>
+            <button type="button">
+                <tui-icon icon="@tui.minus" />
+                Remove
+            </button>
+        </div>
+
         <table tuiTable
                [columns]="columns"
         >
