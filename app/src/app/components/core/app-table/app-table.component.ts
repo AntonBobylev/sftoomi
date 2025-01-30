@@ -1,0 +1,97 @@
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { TuiLoader } from '@taiga-ui/core';
+import { NgForOf } from '@angular/common';
+import {
+    TuiTableDirective,
+    TuiTableTbody,
+    TuiTableTh,
+    TuiTableThGroup, TuiTableTr
+} from '@taiga-ui/addon-table';
+import AppTableColumn from '../../../type/AppTableColumn';
+import Fetcher from '../../../class/Fetcher';
+
+@Component({
+    selector: 'app-table',
+    imports: [
+        TuiLoader,
+        NgForOf,
+        TuiTableDirective,
+        TuiTableTbody,
+        TuiTableTh,
+        TuiTableThGroup,
+        TuiTableTr
+    ],
+    templateUrl: './app-table.component.html',
+    styleUrl: './app-table.component.scss'
+})
+
+export default class AppTableComponent implements OnInit
+{
+    protected readonly url: string = '';
+
+    protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
+    protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
+
+    protected readonly dataRoot: string = 'data';
+
+    protected readonly columns: AppTableColumn[] = [];
+    protected columnsNames: string[] = [];
+
+    // noinspection JSMismatchedCollectionQueryUpdate
+    private originalReceivedData: any[] = [];
+
+    ngOnInit(): void
+    {
+        this.columnsNames = this.columns.map((column: AppTableColumn): string => column.name);
+
+        this.refresh();
+    }
+
+    private refresh(): void
+    {
+        if (!this.url) {
+            return;
+        }
+
+        let me: this = this;
+        me.isLoading.set(true);
+
+        (new Fetcher).request({
+            url: this.url,
+            success: function (_response: any, _request: XMLHttpRequest, data: any): void {
+                me.isLoading.set(false);
+                me.originalReceivedData = data[me.dataRoot];
+
+                me.data.set(me.convertReceivedDataToTableData(data[me.dataRoot]));
+            },
+            failure: function (): void {
+                me.isLoading.set(false);
+            }
+        });
+    }
+
+    private convertReceivedDataToTableData(data: any[]): any[]
+    {
+        let columns: AppTableColumn[] = this.columns;
+        data.forEach(function (row: any): void {
+            Object.keys(row).forEach(function (key: string): void {
+                let currentColumn: AppTableColumn | undefined;
+                columns.every(function (column: AppTableColumn): boolean {
+                    if (column.name === key) {
+                        currentColumn = column;
+
+                        return false;
+                    }
+
+                    return true;
+                })
+
+                if (currentColumn && currentColumn.valueRenderer) {
+                    row[key] = currentColumn.valueRenderer(row[key]);
+                }
+            });
+        })
+
+        return data;
+    }
+}

@@ -1,0 +1,30 @@
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isLoading()"
+>
+    <table tuiTable
+           [columns]="columnsNames"
+    >
+        <thead>
+            <tr tuiThGroup>
+                @for (column of columns; track column.name) {
+                    <th tuiTh
+                        [resizable]="column.resizable ?? true"
+                    >
+                        {{ column.caption }}
+                    </th>
+                }
+            </tr>
+        </thead>
+        <tbody tuiTbody
+               [data]="data()"
+        >
+            <tr
+                *ngFor="let row of data()"
+                tuiTr
+            >
+            </tr>
+        </tbody>
+    </table>
+</tui-loader>
