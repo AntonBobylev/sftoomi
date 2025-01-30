@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NgForOf } from '@angular/common';
+import { NgComponentOutlet, NgForOf } from '@angular/common';
 import { TuiLoader } from '@taiga-ui/core';
 import { TuiTableDirective, TuiTableTbody, TuiTableTh, TuiTableThGroup, TuiTableTr } from '@taiga-ui/addon-table';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppTableComponent from '../../../core/app-table/app-table.component';
+import PatientsTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../../type/AppTableColumn';
 
@@ -16,13 +17,14 @@ import AppTableColumn from '../../../../type/AppTableColumn';
     imports: [
         TuiLoader, NgForOf, TuiTableDirective,
         TuiTableTbody, TuiTableTh, TuiTableThGroup,
-        TuiTableTr
+        TuiTableTr, NgComponentOutlet
     ]
 })
 
 export default class PatientsTableComponent extends AppTableComponent
 {
     protected override readonly url: string = 'http://localhost:8080/getPatients';
+    protected override readonly toolbar: any = PatientsTableToolbarComponent;
 
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',

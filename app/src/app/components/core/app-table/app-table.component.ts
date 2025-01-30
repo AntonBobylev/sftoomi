@@ -1,25 +1,18 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { TuiLoader } from '@taiga-ui/core';
-import { NgForOf } from '@angular/common';
-import {
-    TuiTableDirective,
-    TuiTableTbody,
-    TuiTableTh,
-    TuiTableThGroup, TuiTableTr
-} from '@taiga-ui/addon-table';
-import AppTableColumn from '../../../type/AppTableColumn';
+import { NgComponentOutlet, NgForOf } from '@angular/common';
+import { TuiTableDirective, TuiTableTbody, TuiTableTh, TuiTableThGroup, TuiTableTr } from '@taiga-ui/addon-table';
+
 import Fetcher from '../../../class/Fetcher';
+
+import AppTableColumn from '../../../type/AppTableColumn';
 
 @Component({
     selector: 'app-table',
     imports: [
-        TuiLoader,
-        NgForOf,
-        TuiTableDirective,
-        TuiTableTbody,
-        TuiTableTh,
-        TuiTableThGroup,
-        TuiTableTr
+        TuiLoader, NgForOf, TuiTableDirective,
+        TuiTableTbody, TuiTableTh, TuiTableThGroup,
+        TuiTableTr, NgComponentOutlet
     ],
     templateUrl: './app-table.component.html',
     styleUrl: './app-table.component.scss'
@@ -28,6 +21,7 @@ import Fetcher from '../../../class/Fetcher';
 export default class AppTableComponent implements OnInit
 {
     protected readonly url: string = '';
+    protected readonly toolbar: any | undefined;
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
@@ -37,7 +31,6 @@ export default class AppTableComponent implements OnInit
     protected readonly columns: AppTableColumn[] = [];
     protected columnsNames: string[] = [];
 
-    // noinspection JSMismatchedCollectionQueryUpdate
     private originalReceivedData: any[] = [];
 
     ngOnInit(): void
@@ -47,7 +40,7 @@ export default class AppTableComponent implements OnInit
         this.refresh();
     }
 
-    private refresh(): void
+    public refresh(): void
     {
         if (!this.url) {
             return;

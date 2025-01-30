@@ -3,6 +3,14 @@
     [overlay]="true"
     [showLoader]="isLoading()"
 >
+    @if (toolbar) {
+        <div class="toolbar">
+            <ng-container *ngComponentOutlet="toolbar;
+                                              inputs: { table: this }"
+            />
+        </div>
+    }
+
     <table tuiTable
            [columns]="columnsNames"
     >
