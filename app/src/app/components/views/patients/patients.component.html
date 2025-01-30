@@ -1,1 +1,55 @@
-<p>patients content here</p>
+<div class="wrapper">
+    <tui-loader
+        [inheritColor]="true"
+        [overlay]="true"
+        [showLoader]="isLoading()"
+    >
+        <table tuiTable
+               [columns]="columns"
+        >
+            <thead>
+                <tr tuiThGroup>
+                    <th tuiTh
+                        [resizable]="true"
+                    >
+                        ID
+                    </th>
+                    <th tuiTh
+                        [resizable]="true"
+                    >
+                        Last name
+                    </th>
+                    <th tuiTh
+                        [resizable]="true"
+                    >
+                        First name
+                    </th>
+                    <th tuiTh
+                        [resizable]="true"
+                    >
+                        Middle name
+                    </th>
+                    <th tuiTh
+                        [resizable]="true"
+                    >
+                        Date of birth
+                    </th>
+                </tr>
+            </thead>
+            <tbody tuiTbody
+                   [data]="data()"
+            >
+                <tr *ngFor="let patient of data()"
+                    tuiTr
+                >
+                    <td
+                        *tuiCell="'dob'"
+                        tuiTd
+                    >
+                        {{ Sftoomi.dateShort(patient.dob.date) }}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </tui-loader>
+</div>
