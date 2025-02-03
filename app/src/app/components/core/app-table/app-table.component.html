@@ -11,28 +11,32 @@
         </div>
     }
 
-    <table tuiTable
-           [columns]="columnsNames"
+    <div class="wrapper"
+         [style.height]="toolbar ?  'calc(100% - 30px)' : '100%'"
     >
-        <thead>
-            <tr tuiThGroup>
-                @for (column of columns; track column.name) {
-                    <th tuiTh
-                        [resizable]="column.resizable ?? true"
-                    >
-                        {{ column.caption }}
-                    </th>
-                }
-            </tr>
-        </thead>
-        <tbody tuiTbody
-               [data]="data()"
+        <table tuiTable
+               [columns]="columnsNames"
         >
-            <tr
-                *ngFor="let row of data()"
-                tuiTr
+            <thead>
+                <tr tuiThGroup>
+                    @for (column of columns; track column.name) {
+                        <th tuiTh
+                            [resizable]="column.resizable ?? true"
+                        >
+                            {{ column.caption }}
+                        </th>
+                    }
+                </tr>
+            </thead>
+            <tbody tuiTbody
+                   [data]="data()"
             >
-            </tr>
-        </tbody>
-    </table>
+                <tr
+                    *ngFor="let row of data()"
+                    tuiTr
+                >
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </tui-loader>
