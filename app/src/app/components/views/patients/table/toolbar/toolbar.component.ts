@@ -20,4 +20,9 @@ export default class PatientsTableToolbarComponent
     {
         this.table.refresh();
     }
+
+    protected onEditClick(event: MouseEvent): void
+    {
+        event.stopPropagation();
+    }
 }
