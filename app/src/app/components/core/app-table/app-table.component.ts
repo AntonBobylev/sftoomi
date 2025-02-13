@@ -1,7 +1,6 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
-import { TuiLoader } from '@taiga-ui/core';
-import { NgComponentOutlet, NgForOf } from '@angular/common';
-import { TuiTableDirective, TuiTableTbody, TuiTableTh, TuiTableThGroup, TuiTableTr } from '@taiga-ui/addon-table';
+
+import AppTableImports from './app-table-imports';
 
 import Fetcher from '../../../class/Fetcher';
 
@@ -9,11 +8,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 
 @Component({
     selector: 'app-table',
-    imports: [
-        TuiLoader, NgForOf, TuiTableDirective,
-        TuiTableTbody, TuiTableTh, TuiTableThGroup,
-        TuiTableTr, NgComponentOutlet
-    ],
+    imports: [AppTableImports],
     templateUrl: './app-table.component.html',
     styleUrl: './app-table.component.scss'
 })

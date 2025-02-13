@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { NgComponentOutlet, NgForOf } from '@angular/common';
-import { TuiLoader } from '@taiga-ui/core';
-import { TuiTableDirective, TuiTableTbody, TuiTableTh, TuiTableThGroup, TuiTableTr } from '@taiga-ui/addon-table';
+
+import AppTableImports from '../../../core/app-table/app-table-imports';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
@@ -14,11 +13,7 @@ import AppTableColumn from '../../../../type/AppTableColumn';
     selector: 'patients-table',
     templateUrl: '../../../core/app-table/app-table.component.html',
     styleUrl: '../../../core/app-table/app-table.component.scss',
-    imports: [
-        TuiLoader, NgForOf, TuiTableDirective,
-        TuiTableTbody, TuiTableTh, TuiTableThGroup,
-        TuiTableTr, NgComponentOutlet
-    ]
+    imports: [AppTableImports]
 })
 
 export default class PatientsTableComponent extends AppTableComponent
