@@ -21,6 +21,8 @@ export default class AppTableComponent implements OnInit
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
 
+    protected readonly selectionRequired: boolean = true;
+
     protected readonly dataRoot: string = 'data';
 
     protected readonly columns: AppTableColumn[] = [];
@@ -30,6 +32,14 @@ export default class AppTableComponent implements OnInit
 
     ngOnInit(): void
     {
+        if (this.selectionRequired) {
+            this.columns.unshift({
+                name: 'selection',
+                caption: '',
+                resizable: false
+            });
+        }
+
         this.columnsNames = this.columns.map((column: AppTableColumn): string => column.name);
 
         this.refresh();
@@ -58,10 +68,31 @@ export default class AppTableComponent implements OnInit
         });
     }
 
+    protected get checked(): boolean | null
+    {
+        const every: boolean = this.data().every(({selected}) => selected);
+        const some: boolean = this.data().some(({selected}) => selected);
+
+        return every || (some && null);
+    }
+
+    protected onCheck(checked: boolean): void
+    {
+        this.data().forEach((item: any): void => {
+            item.selected = checked;
+        });
+    }
+
     private convertReceivedDataToTableData(data: any[]): any[]
     {
-        let columns: AppTableColumn[] = this.columns;
+        let columns: AppTableColumn[] = this.columns,
+            me: this = this;
+
         data.forEach(function (row: any): void {
+            if (me.selectionRequired) {
+                row.selected = false;
+            }
+
             Object.keys(row).forEach(function (key: string): void {
                 let currentColumn: AppTableColumn | undefined;
                 columns.every(function (column: AppTableColumn): boolean {

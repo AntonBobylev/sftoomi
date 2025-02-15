@@ -23,7 +23,16 @@
                         <th tuiTh
                             [resizable]="column.resizable ?? true"
                         >
-                            {{ column.caption }}
+                            @if (column.name === 'selection' && selectionRequired) {
+                                <input
+                                    tuiCheckbox
+                                    type="checkbox"
+                                    [ngModel]="checked"
+                                    (ngModelChange)="onCheck($event)"
+                                />
+                            } @else {
+                                {{ column.caption }}
+                            }
                         </th>
                     }
                 </tr>
@@ -35,6 +44,21 @@
                     *ngFor="let row of data()"
                     tuiTr
                 >
+                    <ng-container *ngFor="let col of columns">
+                        <td *tuiCell="col.name"
+                            tuiTd
+                        >
+                            @if (col.name === 'selection' && selectionRequired) {
+                                <input
+                                    tuiCheckbox
+                                    type="checkbox"
+                                    [(ngModel)]="row.selected"
+                                />
+                            } @else {
+                                {{ row[col.name]}}
+                            }
+                        </td>
+                    </ng-container>
                 </tr>
             </tbody>
         </table>
