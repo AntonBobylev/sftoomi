@@ -77,6 +77,18 @@ export default class AppTableComponent implements OnInit
         });
     }
 
+    public getSelection(): any[]
+    {
+        return this.data().filter(function(row: any): boolean {
+            return row.selected;
+        });
+    }
+
+    public isAllSelected(): boolean
+    {
+        return this.data().length === this.getSelection().length;
+    }
+
     protected get checked(): boolean | null
     {
         const every: boolean = this.data().every(({selected}) => selected);
