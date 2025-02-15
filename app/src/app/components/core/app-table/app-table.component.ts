@@ -5,6 +5,7 @@ import AppTableImports from './app-table-imports';
 import Fetcher from '../../../class/Fetcher';
 
 import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumnStyles from '../../../type/AppTableColumnStyles';
 
 @Component({
     selector: 'app-table',
@@ -29,15 +30,23 @@ export default class AppTableComponent implements OnInit
     protected columnsNames: string[] = [];
 
     private originalReceivedData: any[] = [];
+    private readonly defaultSelectionColumn: AppTableColumn = {
+        name: 'selection',
+        caption: '',
+        resizable: false,
+        headerStyles: {
+            alignment: 'center'
+        },
+        styles: {
+            width: '50px',
+            alignment: 'center'
+        }
+    };
 
     ngOnInit(): void
     {
         if (this.selectionRequired) {
-            this.columns.unshift({
-                name: 'selection',
-                caption: '',
-                resizable: false
-            });
+            this.columns.unshift(this.defaultSelectionColumn);
         }
 
         this.columnsNames = this.columns.map((column: AppTableColumn): string => column.name);
@@ -81,6 +90,15 @@ export default class AppTableComponent implements OnInit
         this.data().forEach((item: any): void => {
             item.selected = checked;
         });
+    }
+
+    protected getColumnWidth(columnWidth?: AppTableColumnStyles['width']): string | null
+    {
+        if (!columnWidth) {
+            return null;
+        }
+
+        return columnWidth;
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]

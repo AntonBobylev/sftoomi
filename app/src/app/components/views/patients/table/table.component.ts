@@ -23,22 +23,36 @@ export default class PatientsTableComponent extends AppTableComponent
 
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',
-        caption: 'ID'
-    }, {
-        name: 'last_name',
-        caption: 'Last name'
-    }, {
-        name: 'first_name',
-        caption: 'First name'
-    }, {
-        name: 'middle_name',
-        caption: 'Middle name'
+        caption: 'ID',
+        headerStyles: {
+            alignment: 'center'
+        },
+        styles: {
+            width: '50px',
+            alignment: 'center'
+        }
     }, {
         name: 'dob',
         caption: 'Date of birth',
         valueRenderer: function (value: any): string
         {
             return Sftoomi.dateShort(value.date) ?? 'undefined';
+        },
+        headerStyles: {
+            alignment: 'center'
+        },
+        styles: {
+            width: '120px',
+            alignment: 'center'
         }
+    }, {
+        name: 'last_name',
+        caption: 'Last name',
+    }, {
+        name: 'first_name',
+        caption: 'First name'
+    }, {
+        name: 'middle_name',
+        caption: 'Middle name'
     }];
 }

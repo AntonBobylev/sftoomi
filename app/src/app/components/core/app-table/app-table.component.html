@@ -22,6 +22,10 @@
                     @for (column of columns; track column.name) {
                         <th tuiTh
                             [resizable]="column.resizable ?? true"
+                            [ngStyle]="{
+                                'textAlign': column.headerStyles?.alignment ?? 'left',
+                                'width': getColumnWidth(column.headerStyles?.width)
+                            }"
                         >
                             @if (column.name === 'selection' && selectionRequired) {
                                 <input
@@ -47,6 +51,10 @@
                     <ng-container *ngFor="let col of columns">
                         <td *tuiCell="col.name"
                             tuiTd
+                            [ngStyle]="{
+                                'textAlign': col.styles?.alignment ?? 'left',
+                                'width': getColumnWidth(col.styles?.width)
+                            }"
                         >
                             @if (col.name === 'selection' && selectionRequired) {
                                 <input

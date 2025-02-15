@@ -1,5 +1,5 @@
 import { TuiLoader } from '@taiga-ui/core';
-import { NgComponentOutlet, NgForOf } from '@angular/common';
+import { NgComponentOutlet, NgForOf, NgStyle } from '@angular/common';
 import {
     TuiTableCell,
     TuiTableDirective,
@@ -16,5 +16,5 @@ export default [
     TuiLoader, NgForOf, TuiTableDirective,
     TuiTableTbody, TuiTableTh, TuiTableThGroup,
     TuiTableTr, NgComponentOutlet, TuiTableTd, TuiTableCell,
-    TuiCheckbox, FormsModule
+    TuiCheckbox, FormsModule, NgStyle
 ];
