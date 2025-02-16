@@ -6,6 +6,7 @@ use App\DataMappers\PatientDM;
 use App\Repository\PatientRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -23,6 +24,20 @@ class PatientsController extends AbstractController
 
         return new JsonResponse([
             "data" => $patients
+        ]);
+    }
+
+    #[Route('/getPatient', name: 'get_patient')]
+    public function getPatient(PatientRepository $patientRepository, Request $request): Response
+    {
+        $id = $request->request->get("id");
+        $patients = $patientRepository->findBy(["id" => $id]);
+        if (empty($patients)) {
+            throw new \RuntimeException("Patient not found");
+        }
+
+        return new JsonResponse([
+            "data" => (new PatientDM)->entityToData($patients[0])
         ]);
     }
 }

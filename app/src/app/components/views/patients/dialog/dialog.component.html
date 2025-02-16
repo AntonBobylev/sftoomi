@@ -1,13 +1,19 @@
-<tui-textfield [formGroup]="form">
-    <label tuiLabel>First name</label>
-    <input
-        onlyLetters
-        formControlName="first_name"
-        tuiTextfield
-        uppercase
-    />
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="false"
+    [showLoader]="isLoading"
+>
+    <tui-textfield [formGroup]="form">
+        <label tuiLabel>First name</label>
+        <input
+            onlyLetters
+            formControlName="first_name"
+            tuiTextfield
+            uppercase
+        />
 
-    <tui-error formControlName="first_name"
-               [error]="[] | tuiFieldError | async"
-    />
-</tui-textfield>
+        <tui-error formControlName="first_name"
+                   [error]="[] | tuiFieldError | async"
+        />
+    </tui-textfield>
+</tui-loader>

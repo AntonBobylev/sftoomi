@@ -15,11 +15,15 @@ type RequestOptions = {
     signal?: AbortSignal
 };
 
+type Request = {
+    headers?: any
+} & RequestOptions;
+
 export default class Fetcher
 {
     public request(options: RequestOptions): void
     {
-        let request: RequestOptions = options;
+        let request: Request = options;
 
         let successCallback = request.success,
             failureCallback = request.failure;
@@ -32,6 +36,10 @@ export default class Fetcher
 
         if (request.longRequest) {
             request.timeout = Timeout.timeoutLong;
+        }
+
+        if (request.data) {
+            request.headers = { "Content-Type": "multipart/form-data" }
         }
 
         axios(request)
@@ -48,7 +56,7 @@ export default class Fetcher
                     return;
                 }
 
-                return failureCallback(error.code, error.message, error.name, error.request)
+                return failureCallback(error.code, error.message, error.request)
             });
     }
 }
