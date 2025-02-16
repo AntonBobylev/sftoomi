@@ -11,6 +11,9 @@ import {
 } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
+import { TuiInputDateModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
+import { TuiDay } from '@taiga-ui/cdk';
+import moment from 'moment';
 
 import Fetcher from '../../../../class/Fetcher';
 import getPatientAPI from '../../../../APIs/getPatientAPI';
@@ -19,6 +22,7 @@ import { onlyLettersValidator } from '../../../../validators/only-letters.valida
 
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
 import UppercaseDirective from '../../../../directives/uppercase.directive';
+import TuiDateToNativeTransformerDirective from '../../../../directives/tui-date-to-native.directive';
 
 export type PatientEditDialogData = {
     id: number
@@ -31,7 +35,7 @@ export type PatientEditDialogData = {
         TuiTextfieldComponent, TuiTextfieldDirective,
         FormsModule, TuiTextfield, ReactiveFormsModule,
         OnlyLettersDirective, TuiError,
-        TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader
+        TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader, TuiInputDateModule, TuiUnfinishedValidator, TuiDateToNativeTransformerDirective,
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -43,10 +47,14 @@ export default class PatientEditDialogComponent implements AfterViewInit
 
     protected isLoading: boolean = false;
 
+    protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+    protected readonly TuiDay = TuiDay;
+
     protected readonly form: FormGroup = new FormGroup({
-        last_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
-        first_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
-        middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()])
+        last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()]),
+        dob:         new FormControl<Date | null>(null)
     });
 
     protected get data(): PatientEditDialogData
@@ -70,6 +78,7 @@ export default class PatientEditDialogComponent implements AfterViewInit
                 me.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
                 me.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
                 me.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
+                me.form.get('dob')?.setValue(moment(data.data.dob.date).toDate());
             },
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;

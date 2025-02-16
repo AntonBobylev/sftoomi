@@ -2,8 +2,9 @@
     [inheritColor]="true"
     [overlay]="false"
     [showLoader]="isLoading"
+    [formGroup]="form"
 >
-    <tui-textfield [formGroup]="form">
+    <tui-textfield>
         <label tuiLabel>Last name</label>
         <input
             onlyLetters
@@ -17,7 +18,7 @@
         />
     </tui-textfield>
 
-    <tui-textfield [formGroup]="form">
+    <tui-textfield>
         <label tuiLabel>First name</label>
         <input
             onlyLetters
@@ -31,7 +32,7 @@
         />
     </tui-textfield>
 
-    <tui-textfield [formGroup]="form">
+    <tui-textfield>
         <label tuiLabel>Middle name</label>
         <input
             onlyLetters
@@ -44,4 +45,17 @@
                    [error]="[] | tuiFieldError | async"
         />
     </tui-textfield>
+
+    <tui-input-date
+        formControlName="dob"
+        toNativeDate
+        tuiUnfinishedValidator="Finish filling the field"
+        [max]="TuiDay.fromLocalNativeDate(maxDobDate)"
+    >
+        Date of birth
+    </tui-input-date>
+    <tui-error
+        formControlName="dob"
+        [error]="[] | tuiFieldError | async"
+    />
 </tui-loader>
