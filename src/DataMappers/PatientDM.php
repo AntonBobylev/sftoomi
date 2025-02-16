@@ -8,14 +8,13 @@ use App\Interfaces\DataMapper;
 final class PatientDM implements DataMapper
 {
     /**
-     * @param array $data
+     * @param array   $data
+     * @param Patient $patient
      *
      * @return Patient
      */
-    public function dataToEntity(array $data): Patient
+    public function dataToEntity(array $data, $patient): Patient
     {
-        $patient = new Patient();
-
         if (empty($data)) {
             return $patient;
         }

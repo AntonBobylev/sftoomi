@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
+import { AfterViewInit, ChangeDetectionStrategy, Component, inject, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { TuiButton, TuiDialogContext, TuiError, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
@@ -11,16 +11,19 @@ import moment from 'moment';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import Fetcher from '../../../../class/Fetcher';
+
 import getPatientAPI from '../../../../APIs/getPatientAPI';
+import savePatientAPI from '../../../../APIs/savePatientAPI';
 
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
 
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
 import UppercaseDirective from '../../../../directives/uppercase.directive';
 import TuiDateToNativeTransformerDirective from '../../../../directives/tui-date-to-native.directive';
+import PopupMsgService from '../../../../services/popup-msg.service';
 
 export type PatientEditDialogData = {
-    id: number
+    id?: number
 };
 
 @Component({
@@ -38,7 +41,7 @@ export type PatientEditDialogData = {
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export default class PatientEditDialogComponent implements AfterViewInit
+export default class PatientEditDialogComponent implements AfterViewInit, OnDestroy
 {
     public readonly context = injectContext<TuiDialogContext<PatientEditDialogData, PatientEditDialogData>>();
 
@@ -55,6 +58,10 @@ export default class PatientEditDialogComponent implements AfterViewInit
         dob:         new FormControl<Date | null>(null)
     });
 
+    private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
+
+    private readonly queryController: AbortController = new AbortController();
+
     protected get data(): PatientEditDialogData
     {
         return this.context.data;
@@ -64,12 +71,16 @@ export default class PatientEditDialogComponent implements AfterViewInit
     {
         let me: this = this,
             data: FormData = new FormData();
-        data.append('id', this.data.id.toString());
+
+        if (this.data.id) {
+            data.append('id', this.data.id.toString());
+        }
 
         me.isLoading = true;
         new Fetcher().request({
             url: 'http://localhost:8080/getPatient',
             data: data,
+            signal: this.queryController.signal,
             success: function (_response: any, _request: any, data: getPatientAPI): void {
                 me.isLoading = false;
 
@@ -87,8 +98,53 @@ export default class PatientEditDialogComponent implements AfterViewInit
         })
     }
 
+    ngOnDestroy(): void
+    {
+        this.queryController.abort();
+    }
+
     protected savePatient(): void
     {
-        // TODO: implement
+        if (this.form.invalid) {
+            this.popupMsg.formInvalid();
+
+            return;
+        }
+
+        let me: this = this,
+            data: FormData = new FormData(),
+            formValues: object = this.form.value;
+
+        for (const [key, value] of Object.entries(formValues)) {
+            let val: any = value;
+
+            if (key === 'dob' && val instanceof Date) {
+                val = Sftoomi.dateShort(value);
+            }
+
+            data.append(key, val);
+        }
+
+        if (this.data.id) {
+            data.append('id', this.data.id.toString());
+        }
+
+        me.isLoading = true;
+        new Fetcher().request({
+            url: 'http://localhost:8080/savePatient',
+            data: data,
+            signal: this.queryController.signal,
+            success: function (_response: any, _request: any, data: savePatientAPI): void {
+                me.isLoading = false;
+
+                me.context.completeWith({ id: data.id });
+            },
+            failure: function (code: any, message: any, _request: any): void {
+                me.isLoading = false;
+
+                console.error(code);
+                console.error(message);
+            }
+        })
     }
 }

@@ -44,4 +44,9 @@ export default class PopupMsgService
     {
         this.warning('More than one record selected. Please, select a single record', undefined, timeoutMs);
     }
+
+    public formInvalid(timeoutMs?: number): void
+    {
+        this.warning('Form is invalid. Please, correct the form and try again', undefined, timeoutMs);
+    }
 }
