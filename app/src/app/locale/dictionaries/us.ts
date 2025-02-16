@@ -7,6 +7,7 @@ let usDictionary: object =  {
     last_name: 'Last name',
     middle_name: 'Middle name',
     refresh: 'Refresh',
+    save: 'Save',
     select_all: 'Select all',
 
     navigation: {

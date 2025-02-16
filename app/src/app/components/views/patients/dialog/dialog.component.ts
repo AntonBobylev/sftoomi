@@ -1,14 +1,7 @@
 import { AfterViewInit, ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import {
-    TuiDialogContext,
-    TuiError,
-    TuiLoader,
-    TuiTextfield,
-    TuiTextfieldComponent,
-    TuiTextfieldDirective
-} from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiError, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiInputDateModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
@@ -38,7 +31,8 @@ export type PatientEditDialogData = {
         FormsModule, TuiTextfield, ReactiveFormsModule,
         OnlyLettersDirective, TuiError,
         TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader,
-        TuiInputDateModule, TuiUnfinishedValidator, TuiDateToNativeTransformerDirective
+        TuiInputDateModule, TuiUnfinishedValidator,
+        TuiDateToNativeTransformerDirective, TuiButton
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -91,5 +85,10 @@ export default class PatientEditDialogComponent implements AfterViewInit
                 console.error(message);
             }
         })
+    }
+
+    protected savePatient(): void
+    {
+        // TODO: implement
     }
 }
