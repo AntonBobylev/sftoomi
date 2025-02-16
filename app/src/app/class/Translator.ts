@@ -13,11 +13,11 @@ import { AppLocale } from '../type/AppLocale';
 
 export default class Translator
 {
-    private readonly fallbackLocale: AppLocale = 'en';
+    private readonly fallbackLocale: AppLocale = 'us';
     private locale: AppLocale = this.fallbackLocale;
 
     private readonly availableLocales: AppLocale[] = [
-        'en',
+        'us',
         'ru'
     ];
 
