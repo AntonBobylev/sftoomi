@@ -5,7 +5,7 @@ export default function getDateFormat(): TuiDateFormatSettings
 {
     switch (Sftoomi.Translator.getLocale()) {
         case 'ru':
-            return {mode: 'DMY', separator: '.'}
+            return { mode: 'DMY', separator: '.' }
     }
 
     return { mode: 'MDY', separator: '/' };
