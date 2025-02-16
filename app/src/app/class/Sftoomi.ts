@@ -1,7 +1,14 @@
 import moment from 'moment';
 
+import Translator from './Translator';
+
+import { CookiesService } from '../services/cookies-service.service';
+
 export default class Sftoomi
 {
+    public static readonly Translator: Translator = new Translator();
+    public static readonly Cookies: CookiesService = new CookiesService();
+
     /**
      * Returns current year number
      */
