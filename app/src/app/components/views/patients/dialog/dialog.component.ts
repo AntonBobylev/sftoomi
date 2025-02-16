@@ -44,7 +44,9 @@ export default class PatientEditDialogComponent implements AfterViewInit
     protected isLoading: boolean = false;
 
     protected readonly form: FormGroup = new FormGroup({
-        first_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()])
+        last_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        first_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()])
     });
 
     protected get data(): PatientEditDialogData
@@ -66,6 +68,8 @@ export default class PatientEditDialogComponent implements AfterViewInit
                 me.isLoading = false;
 
                 me.form.get('first_name')?.setValue(data.data.first_name);
+                me.form.get('last_name')?.setValue(data.data.last_name);
+                me.form.get('middle_name')?.setValue(data.data.middle_name);
             },
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;

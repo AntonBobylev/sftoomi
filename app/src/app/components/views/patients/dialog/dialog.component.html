@@ -4,6 +4,20 @@
     [showLoader]="isLoading"
 >
     <tui-textfield [formGroup]="form">
+        <label tuiLabel>Last name</label>
+        <input
+            onlyLetters
+            formControlName="last_name"
+            tuiTextfield
+            uppercase
+        />
+
+        <tui-error formControlName="last_name"
+                   [error]="[] | tuiFieldError | async"
+        />
+    </tui-textfield>
+
+    <tui-textfield [formGroup]="form">
         <label tuiLabel>First name</label>
         <input
             onlyLetters
@@ -13,6 +27,20 @@
         />
 
         <tui-error formControlName="first_name"
+                   [error]="[] | tuiFieldError | async"
+        />
+    </tui-textfield>
+
+    <tui-textfield [formGroup]="form">
+        <label tuiLabel>Middle name</label>
+        <input
+            onlyLetters
+            formControlName="middle_name"
+            tuiTextfield
+            uppercase
+        />
+
+        <tui-error formControlName="middle_name"
                    [error]="[] | tuiFieldError | async"
         />
     </tui-textfield>
