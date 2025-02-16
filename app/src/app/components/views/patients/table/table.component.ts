@@ -23,7 +23,7 @@ export default class PatientsTableComponent extends AppTableComponent
 
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',
-        caption: 'ID',
+        caption: Sftoomi.Translator.translate('id'),
         headerStyles: {
             alignment: 'center'
         },
@@ -33,7 +33,7 @@ export default class PatientsTableComponent extends AppTableComponent
         }
     }, {
         name: 'dob',
-        caption: 'Date of birth',
+        caption: Sftoomi.Translator.translate('dob_full'),
         valueRenderer: function (value: any): string
         {
             return Sftoomi.dateShort(value.date) ?? 'undefined';
@@ -47,12 +47,12 @@ export default class PatientsTableComponent extends AppTableComponent
         }
     }, {
         name: 'last_name',
-        caption: 'Last name',
+        caption: Sftoomi.Translator.translate('last_name'),
     }, {
         name: 'first_name',
-        caption: 'First name'
+        caption: Sftoomi.Translator.translate('first_name')
     }, {
         name: 'middle_name',
-        caption: 'Middle name'
+        caption: Sftoomi.Translator.translate('middle_name')
     }];
 }

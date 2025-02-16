@@ -5,7 +5,7 @@
     [formGroup]="form"
 >
     <tui-textfield>
-        <label tuiLabel>Last name</label>
+        <label tuiLabel>{{ Sftoomi.Translator.translate('last_name') }}</label>
         <input
             onlyLetters
             formControlName="last_name"
@@ -19,7 +19,7 @@
     </tui-textfield>
 
     <tui-textfield>
-        <label tuiLabel>First name</label>
+        <label tuiLabel>{{ Sftoomi.Translator.translate('first_name') }}</label>
         <input
             onlyLetters
             formControlName="first_name"
@@ -33,7 +33,7 @@
     </tui-textfield>
 
     <tui-textfield>
-        <label tuiLabel>Middle name</label>
+        <label tuiLabel>{{ Sftoomi.Translator.translate('middle_name') }}</label>
         <input
             onlyLetters
             formControlName="middle_name"
@@ -52,7 +52,7 @@
         tuiUnfinishedValidator="Finish filling the field"
         [max]="TuiDay.fromLocalNativeDate(maxDobDate)"
     >
-        Date of birth
+        {{ Sftoomi.Translator.translate('dob_full') }}
     </tui-input-date>
     <tui-error
         formControlName="dob"

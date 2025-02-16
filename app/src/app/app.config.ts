@@ -5,6 +5,7 @@ import {NG_EVENT_PLUGINS} from '@taiga-ui/event-plugins';
 import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
 
 import { routes } from './app.routes';
+import Sftoomi from './class/Sftoomi';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -13,9 +14,9 @@ export const appConfig: ApplicationConfig = {
         provideAnimations(),
         NG_EVENT_PLUGINS,
         tuiValidationErrorsProvider({
-            required: 'This field is required',
-            maxlength: ({requiredLength}: {requiredLength: string}): string => `Maximum length — ${requiredLength}`,
-            only_letters: (): string => 'Only letters allowed'
+            required: Sftoomi.Translator.translate('validators.field_required'),
+            maxlength: ({requiredLength}: {requiredLength: string}): string => Sftoomi.format(Sftoomi.Translator.translate('validators.max_length'), [requiredLength]),
+            only_letters: (): string => Sftoomi.Translator.translate('validators.only_letters_allowed')
         })
     ]
 };

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import Sftoomi from '../../../class/Sftoomi';
 
 @Component({
     selector: 'app-home',
@@ -10,4 +11,5 @@ import { Component } from '@angular/core';
 export class HomeComponent
 {
 
+    protected readonly Sftoomi = Sftoomi;
 }

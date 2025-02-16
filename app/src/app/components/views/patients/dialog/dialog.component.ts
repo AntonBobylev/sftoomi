@@ -23,6 +23,7 @@ import { onlyLettersValidator } from '../../../../validators/only-letters.valida
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
 import UppercaseDirective from '../../../../directives/uppercase.directive';
 import TuiDateToNativeTransformerDirective from '../../../../directives/tui-date-to-native.directive';
+import Sftoomi from '../../../../class/Sftoomi';
 
 export type PatientEditDialogData = {
     id: number
@@ -88,4 +89,6 @@ export default class PatientEditDialogComponent implements AfterViewInit
             }
         })
     }
+
+    protected readonly Sftoomi = Sftoomi;
 }
