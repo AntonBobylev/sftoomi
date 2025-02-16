@@ -1,5 +1,5 @@
 import { Component, inject, Input } from '@angular/core';
-import { TuiButton } from '@taiga-ui/core';
+import { TuiButton, TuiHint } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { TuiDialogService } from '@taiga-ui/core';
 
@@ -14,7 +14,8 @@ import PatientsTableComponent from '../table.component';
     selector: 'patients-table-toolbar',
     templateUrl: './toolbar.component.html',
     imports: [
-        TuiButton
+        TuiButton,
+        TuiHint
     ],
     styleUrl: './toolbar.component.scss'
 })
@@ -22,6 +23,8 @@ import PatientsTableComponent from '../table.component';
 export default class PatientsTableToolbarComponent
 {
     @Input({required: true}) table!: PatientsTableComponent;
+
+    protected readonly Sftoomi = Sftoomi;
 
     private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
     private readonly dialog: TuiDialogService = inject(TuiDialogService);

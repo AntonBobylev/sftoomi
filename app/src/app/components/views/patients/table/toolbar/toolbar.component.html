@@ -6,6 +6,7 @@
         iconStart="@tui.rotate-ccw"
         type="button"
         (click)="onRefreshClick()"
+        tuiHint="{{ Sftoomi.Translator.translate('refresh') }}"
     >
     </button>
     <button
@@ -14,6 +15,7 @@
         appearance="icon"
         iconStart="@tui.pencil"
         type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('edit') }}"
         (click)="onEditClick($event)"
     >
     </button>

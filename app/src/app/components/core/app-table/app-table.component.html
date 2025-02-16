@@ -31,6 +31,7 @@
                                 <input
                                     tuiCheckbox
                                     type="checkbox"
+                                    [tuiHint]="Sftoomi.Translator.translate('select_all')"
                                     [ngModel]="checked"
                                     (ngModelChange)="onCheck($event)"
                                 />

@@ -1,10 +1,13 @@
 let usDictionary: object =  {
     dob: 'DoB',
     dob_full: 'Date of birth',
+    edit: 'Edit',
     first_name: 'First name',
     id: 'ID',
     last_name: 'Last name',
     middle_name: 'Middle name',
+    refresh: 'Refresh',
+    select_all: 'Select all',
 
     navigation: {
         home: 'Home',

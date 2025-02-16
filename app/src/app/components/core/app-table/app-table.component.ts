@@ -1,9 +1,10 @@
 import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 
+import Sftoomi from '../../../class/Sftoomi';
+
 import AppTableImports from './app-table-imports';
 
 import Fetcher from '../../../class/Fetcher';
-
 import AppTableColumn from '../../../type/AppTableColumn';
 import AppTableColumnStyles from '../../../type/AppTableColumnStyles';
 
@@ -28,6 +29,8 @@ export default class AppTableComponent implements OnInit
 
     protected readonly columns: AppTableColumn[] = [];
     protected columnsNames: string[] = [];
+
+    protected readonly Sftoomi = Sftoomi;
 
     private originalReceivedData: any[] = [];
     private readonly defaultSelectionColumn: AppTableColumn = {

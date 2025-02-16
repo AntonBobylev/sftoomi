@@ -1,10 +1,13 @@
 let ruDictionary: object =  {
     dob: 'ДР',
     dob_full: 'Дата рождения',
+    edit: 'Редактировать',
     first_name: 'Имя',
     id: 'ID',
     last_name: 'Фамилия',
     middle_name: 'Отчество',
+    refresh: 'Обновить',
+    select_all: 'Выбрать всё',
 
     navigation: {
         home: 'Домашняя',
