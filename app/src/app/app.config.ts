@@ -2,6 +2,7 @@ import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {NG_EVENT_PLUGINS} from '@taiga-ui/event-plugins';
+import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
 
 import { routes } from './app.routes';
 
@@ -10,6 +11,11 @@ export const appConfig: ApplicationConfig = {
         provideZoneChangeDetection({eventCoalescing: true}),
         provideRouter(routes, withHashLocation()),
         provideAnimations(),
-        NG_EVENT_PLUGINS
+        NG_EVENT_PLUGINS,
+        tuiValidationErrorsProvider({
+            required: 'This field is required',
+            maxlength: ({requiredLength}: {requiredLength: string}): string => `Maximum length — ${requiredLength}`,
+            only_letters: (): string => 'Only letters allowed'
+        })
     ]
 };
