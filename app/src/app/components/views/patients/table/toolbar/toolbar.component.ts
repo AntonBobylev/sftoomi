@@ -52,6 +52,7 @@ export default class PatientsTableToolbarComponent
         this.dialog.open(new PolymorpheusComponent(PatientEditDialogComponent), {
             label: Sftoomi.format(Sftoomi.Translator.translate('views.patients.dialog.title'), [selectedRecords[0].id]),
             dismissible: false,
+            size: 'auto',
             data: {
                 id: selectedRecords[0].id
             } as PatientEditDialogData
