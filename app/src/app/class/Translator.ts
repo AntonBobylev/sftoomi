@@ -1,7 +1,7 @@
 import {TuiLanguage, TUI_RUSSIAN_LANGUAGE, TUI_ENGLISH_LANGUAGE} from '@taiga-ui/i18n';
 
-import enDictionary from '../dictionaries/us';
-import ruDictionary from '../dictionaries/ru';
+import enDictionary from '../locale/dictionaries/us';
+import ruDictionary from '../locale/dictionaries/ru';
 
 import Sftoomi from './Sftoomi';
 
