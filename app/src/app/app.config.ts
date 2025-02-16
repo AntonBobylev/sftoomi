@@ -4,10 +4,14 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { TUI_LANGUAGE } from '@taiga-ui/i18n';
+import { tuiDateFormatProvider } from '@taiga-ui/core';
 import { of } from 'rxjs';
 
 import { routes } from './app.routes';
+
 import Sftoomi from './class/Sftoomi';
+
+import getDateFormat from './locale/getDateFormat';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -23,6 +27,7 @@ export const appConfig: ApplicationConfig = {
         {
             provide: TUI_LANGUAGE,
             useValue: of(Sftoomi.Translator.getI18nLocale()),
-        }
+        },
+        tuiDateFormatProvider(getDateFormat())
     ]
 };
