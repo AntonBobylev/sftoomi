@@ -1,15 +1,23 @@
-<button tuiButton
-        size="s"
-        type="button"
-        routerLink=""
->
-    Home
-</button>
+<div class="wrapper">
+    <span class="left"></span>
+    <span class="center">
+        <button tuiButton
+                size="s"
+                type="button"
+                routerLink=""
+        >
+            {{ Sftoomi.Translator.translate('navigation.home') }}
+        </button>
 
-<button tuiButton
-        size="s"
-        type="button"
-        routerLink="patients"
->
-    Patients
-</button>
+        <button tuiButton
+                size="s"
+                type="button"
+                routerLink="patients"
+        >
+            {{ Sftoomi.Translator.translate('navigation.patients') }}
+        </button>
+    </span>
+    <span class="right">
+        <app-language-switcher />
+    </span>
+</div>
