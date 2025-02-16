@@ -1,4 +1,14 @@
-// TODO: dialog content here
-<div>
-    Editing the patient with ID {{ data.id }}
-</div>
+<tui-textfield [formGroup]="form">
+    <label tuiLabel>First name</label>
+    <input
+        onlyLetters
+        formControlName="first_name"
+        tuiTextfield
+        uppercase
+    />
+
+    <tui-error formControlName="first_name"
+               [error]="[] | tuiFieldError | async"
+    />
+
+</tui-textfield>
