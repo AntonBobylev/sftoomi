@@ -1,3 +1,5 @@
+import {TuiLanguage, TUI_RUSSIAN_LANGUAGE, TUI_ENGLISH_LANGUAGE} from '@taiga-ui/i18n';
+
 import enDictionary from '../dictionaries/us';
 import ruDictionary from '../dictionaries/ru';
 
@@ -28,6 +30,16 @@ export default class Translator
         }
     }
 
+    public getI18nLocale(): TuiLanguage
+    {
+        switch (this.locale) {
+            case "ru":
+                return TUI_RUSSIAN_LANGUAGE;
+        }
+
+        return TUI_ENGLISH_LANGUAGE;
+    }
+
     public switchToTheNextLocale(): void
     {
         let me: this = this,
@@ -44,6 +56,8 @@ export default class Translator
             this.locale,
             1825 // 5 years
         );
+
+        window.location.reload();
     }
 
     public getLocale(): AppLocale
