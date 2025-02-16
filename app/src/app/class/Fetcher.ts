@@ -1,12 +1,11 @@
 import axios from 'axios';
 
 import Timeout from './Timeout';
-import Sftoomi from './Sftoomi';
 
 type RequestOptions = {
     url: string,
     module?: string,
-    formData?: {}[],
+    data?: FormData,
     params?: {}[],
     success?: Function,
     failure?: Function,
@@ -16,15 +15,11 @@ type RequestOptions = {
     signal?: AbortSignal
 };
 
-type Request = {
-    data?: FormData,
-} & RequestOptions;
-
 export default class Fetcher
 {
     public request(options: RequestOptions): void
     {
-        let request: Request = options;
+        let request: RequestOptions = options;
 
         let successCallback = request.success,
             failureCallback = request.failure;
@@ -39,40 +34,8 @@ export default class Fetcher
             request.timeout = Timeout.timeoutLong;
         }
 
-        if (request.formData) {
-            let data: FormData = new FormData();
-            request.formData.forEach(function (row: any) {
-                let value: any = row.value;
-
-                if (value === null) {
-                    value = '';
-                }
-
-                if (Sftoomi.isArray(value)) {
-                    value = value.join(',');
-                }
-
-                if (Sftoomi.isDate(value)) {
-                    value = Sftoomi.dateShort(value);
-                }
-
-                data.append(row.name, value);
-            });
-
-            request.data = data;
-        }
-
         axios(request)
             .then((response): void => {
-                if (response.data.success === 0) {
-                    if (typeof failureCallback !== 'function') {
-
-                        return;
-                    }
-
-                    return failureCallback(response, response.request, response.data);
-                }
-
                 if (typeof successCallback !== 'function') {
 
                     return;
