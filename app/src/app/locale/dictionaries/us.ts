@@ -18,6 +18,13 @@ let usDictionary: object =  {
 
     views: {
         patients: {
+            table: {
+                columns: {
+                    dob: {
+                        width: '120px'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Add patient',
                 edit_title: 'Edit patient #{0}'

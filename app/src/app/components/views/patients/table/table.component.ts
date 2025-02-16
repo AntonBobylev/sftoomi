@@ -42,7 +42,7 @@ export default class PatientsTableComponent extends AppTableComponent
             alignment: 'center'
         },
         styles: {
-            width: '120px',
+            width: Sftoomi.Translator.translate('views.patients.table.columns.dob.width'),
             alignment: 'center'
         }
     }, {

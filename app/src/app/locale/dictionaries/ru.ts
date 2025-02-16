@@ -18,6 +18,13 @@ let ruDictionary: object =  {
 
     views: {
         patients: {
+            table: {
+                columns: {
+                    dob: {
+                        width: '130px'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Добавление пациента',
                 edit_title: 'Редактирование пациента #{0}'
