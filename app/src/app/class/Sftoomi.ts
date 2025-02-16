@@ -38,4 +38,21 @@ export default class Sftoomi
 
         return moment(date).format('MM/DD/YYYY');
     }
+
+    /**
+     * Formats line with passed arguments
+     * Example:
+     *  format: 'Our {0} project called {1}'
+     *  args:   ['angular', 'SFTOOMI']
+     *  Result: 'Our angular project called SFTOOMI'
+     *
+     * @param format
+     * @param args
+     */
+    public static format(format: string, args: any[]): string
+    {
+        return format.replace(/\{(\d+)}/g, function(_m, i: number){
+            return args[i];
+        });
+    }
 }
