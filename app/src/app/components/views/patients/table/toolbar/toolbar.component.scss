@@ -1,8 +1,9 @@
 .wrapper {
     display: flex;
     height: 40px;
-    width: 100%;
     align-items: center;
+
+    width: calc(100% - 20px);
     padding-left: 10px;
     padding-right: 10px;
 }
