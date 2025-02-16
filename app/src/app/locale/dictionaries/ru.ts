@@ -8,6 +8,7 @@ let ruDictionary: object =  {
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     refresh: 'Обновить',
+    remove: 'Удалить',
     save: 'Сохранить',
     select_all: 'Выбрать всё',
 

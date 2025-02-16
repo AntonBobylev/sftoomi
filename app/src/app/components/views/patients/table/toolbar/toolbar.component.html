@@ -29,4 +29,14 @@
         (click)="onEditClick($event)"
     >
     </button>
+    <button
+        tuiIconButton
+        size="xs"
+        appearance="icon"
+        iconStart="@tui.circle-minus"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('remove') }}"
+        (click)="onRemoveClick($event)"
+    >
+    </button>
 </div>

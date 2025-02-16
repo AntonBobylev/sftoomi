@@ -5,9 +5,11 @@ import { TuiDialogService } from '@taiga-ui/core';
 
 import Sftoomi from '../../../../../class/Sftoomi';
 
-import PopupMsgService from '../../../../../services/popup-msg.service';
-import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
+import Fetcher from '../../../../../class/Fetcher';
 
+import PopupMsgService from '../../../../../services/popup-msg.service';
+
+import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
 import PatientsTableComponent from '../table.component';
 
 @Component({
@@ -63,6 +65,39 @@ export default class PatientsTableToolbarComponent
             Sftoomi.format(Sftoomi.Translator.translate('views.patients.dialog.edit_title'), [id]),
             id
         );
+    }
+
+    protected onRemoveClick(event: MouseEvent): void
+    {
+        event.stopPropagation();
+
+        let selectedRecords: any[] = this.table.getSelection();
+        if (selectedRecords.length < 1) {
+            this.popupMsg.nothingSelected();
+
+            return;
+        }
+
+        let me: this = this,
+            data: FormData = new FormData();
+
+        data.append('ids', selectedRecords.map(function (record: any): number {
+            return record.id;
+        }).join(','));
+
+        me.table.setIsLoading(true);
+        new Fetcher().request({
+            url: 'http://localhost:8080/removePatient',
+            data: data,
+            success: function (_response: any, _request: any, _data: any): void {
+                me.table.setIsLoading(false);
+
+                me.table.refresh();
+            },
+            failure: function (): void {
+                me.table.setIsLoading(false);
+            }
+        })
     }
 
     private openPatientEditDialog(title: string, id?: number): void

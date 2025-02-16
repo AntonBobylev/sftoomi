@@ -80,5 +80,26 @@ class PatientsController extends AbstractController
         return new JsonResponse([
             "id" => $patient->getId()
         ]);
+
+    }
+    #[Route('/removePatient', name: 'remove_patient')]
+    public function removePatient(EntityManagerInterface $entityManager, PatientRepository $patientRepository, Request $request): Response
+    {
+        $ids = $request->request->get("ids");
+
+        if (empty($ids)) {
+            throw new \RuntimeException("At least one id is required for removal operation");
+        }
+
+        $ids = explode(",", $ids);
+
+        $patients = $patientRepository->findBy(["id" => $ids]);
+        foreach ($patients as $patient) {
+            $entityManager->remove($patient);
+        }
+
+        $entityManager->flush();
+
+        return new Response();
     }
 }

@@ -57,6 +57,11 @@ export default class AppTableComponent implements OnInit
         this.refresh();
     }
 
+    public setIsLoading(isLoading: boolean): void
+    {
+        this.isLoading.set(isLoading);
+    }
+
     public refresh(): void
     {
         if (!this.url) {
