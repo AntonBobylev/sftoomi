@@ -5,12 +5,23 @@ import { Directive, HostListener } from '@angular/core';
 })
 export default class OnlyLettersDirective
 {
-    protected key: number = 0;
+    private readonly allowedKeys: string[] = [
+        'Backspace',
+        'Shift',
+        'Control',
+        'Tab',
+        'Space',
+        'ArrowLeft',
+        'ArrowRight',
+        'ArrowUp',
+        'ArrowDown',
+        'Home',
+        'End'
+    ];
 
     @HostListener('keydown', ['$event']) onKeydown(event: KeyboardEvent): void
     {
-        this.key = event.keyCode;
-        if ((this.key >= 65 && this.key <= 90)) {
+        if ((event.keyCode >= 65 && event.keyCode <= 90) || this.allowedKeys.includes(event.key)) {
             return;
         }
 
