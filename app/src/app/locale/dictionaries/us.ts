@@ -3,14 +3,17 @@ let usDictionary: object =  {
     dob: 'DoB',
     dob_full: 'Date of birth',
     edit: 'Edit',
+    error: 'Error',
     first_name: 'First name',
     id: 'ID',
+    information: 'Information',
     last_name: 'Last name',
     middle_name: 'Middle name',
     refresh: 'Refresh',
     remove: 'Remove',
     save: 'Save',
     select_all: 'Select all',
+    warning: 'Warning',
 
     navigation: {
         home: 'Home',
@@ -42,6 +45,12 @@ let usDictionary: object =  {
 
     home: {
         greetings_label: 'Welcome to the SFTOOMI application!'
+    },
+
+    popup: {
+        form_invalid: 'Form is invalid. Please, correct the form and try again',
+        more_than_one_selected: 'More than one record selected. Please, select a single record',
+        nothing_selected: 'Nothing selected'
     }
 };
 

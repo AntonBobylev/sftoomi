@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { TuiAlertService, TuiAppearanceOptions } from '@taiga-ui/core';
 
+import Sftoomi from '../class/Sftoomi';
+
 @Injectable({
     providedIn: 'root'
 })
@@ -22,31 +24,31 @@ export default class PopupMsgService
 
     public info(msg: string, header?: string, timeoutMs?: number, callback?: Function): void
     {
-        this.show(msg, header ?? 'Information', timeoutMs, callback, 'info');
+        this.show(msg, header ?? Sftoomi.Translator.translate('information'), timeoutMs, callback, 'info');
     }
 
     public warning(msg: string, header?: string, timeoutMs?: number, callback?: Function): void
     {
-        this.show(msg, header ?? 'Warning', timeoutMs, callback, 'warning');
+        this.show(msg, header ?? Sftoomi.Translator.translate('warning'), timeoutMs, callback, 'warning');
     }
 
     public error(msg: string, header?: string, timeoutMs?: number, callback?: Function): void
     {
-        this.show(msg, header ?? 'Error', timeoutMs, callback, 'negative');
+        this.show(msg, header ?? Sftoomi.Translator.translate('error'), timeoutMs, callback, 'negative');
     }
 
     public nothingSelected(timeoutMs?: number): void
     {
-        this.warning('Nothing selected', undefined, timeoutMs);
+        this.warning(Sftoomi.Translator.translate('popup.nothing_selected'), undefined, timeoutMs);
     }
 
     public moreThanOneSelected(timeoutMs?: number): void
     {
-        this.warning('More than one record selected. Please, select a single record', undefined, timeoutMs);
+        this.warning(Sftoomi.Translator.translate('popup.more_than_one_selected'), undefined, timeoutMs);
     }
 
     public formInvalid(timeoutMs?: number): void
     {
-        this.warning('Form is invalid. Please, correct the form and try again', undefined, timeoutMs);
+        this.warning(Sftoomi.Translator.translate('popup.form_invalid'), undefined, timeoutMs);
     }
 }

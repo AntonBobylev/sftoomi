@@ -3,14 +3,17 @@ let ruDictionary: object =  {
     dob: 'ДР',
     dob_full: 'Дата рождения',
     edit: 'Редактировать',
+    error: 'Ошибка',
     first_name: 'Имя',
     id: 'ID',
+    information: 'Информация',
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     refresh: 'Обновить',
     remove: 'Удалить',
     save: 'Сохранить',
     select_all: 'Выбрать всё',
+    warning: 'Внимание',
 
     navigation: {
         home: 'Домашняя',
@@ -42,6 +45,12 @@ let ruDictionary: object =  {
 
     home: {
         greetings_label: 'Добро пожаловать в SFTOOMI!'
+    },
+
+    popup: {
+        form_invalid: 'Форма заполнена неверно. Пожалуйста, исправьте форму и попробуйте снова',
+        more_than_one_selected: 'Больше, чем одна запись выбрана. Пожалуйста, выберите одну запись',
+        nothing_selected: 'Ничего не выбрано'
     }
 };
 
