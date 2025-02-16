@@ -13,6 +13,16 @@
         tuiIconButton
         size="xs"
         appearance="icon"
+        iconStart="@tui.plus"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('add') }}"
+        (click)="onAddClick($event)"
+    >
+    </button>
+    <button
+        tuiIconButton
+        size="xs"
+        appearance="icon"
         iconStart="@tui.pencil"
         type="button"
         tuiHint="{{ Sftoomi.Translator.translate('edit') }}"

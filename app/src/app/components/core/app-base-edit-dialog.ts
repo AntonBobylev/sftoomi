@@ -49,7 +49,9 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         let me: this = this,
             data: FormData = new FormData();
 
-        if (this.data.id) {
+        if (!this.data.id) {
+            return;
+        } else {
             data.append('id', this.data.id.toString());
         }
 

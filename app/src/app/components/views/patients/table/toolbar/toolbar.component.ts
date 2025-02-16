@@ -34,6 +34,13 @@ export default class PatientsTableToolbarComponent
         this.table.refresh();
     }
 
+    protected onAddClick(event: MouseEvent): void
+    {
+        event.stopPropagation();
+
+        this.openPatientEditDialog(Sftoomi.Translator.translate('views.patients.dialog.add_title'));
+    }
+
     protected onEditClick(event: MouseEvent): void
     {
         event.stopPropagation();
@@ -51,13 +58,22 @@ export default class PatientsTableToolbarComponent
             return;
         }
 
+        let id: number = selectedRecords[0].id;
+        this.openPatientEditDialog(
+            Sftoomi.format(Sftoomi.Translator.translate('views.patients.dialog.edit_title'), [id]),
+            id
+        );
+    }
+
+    private openPatientEditDialog(title: string, id?: number): void
+    {
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(PatientEditDialogComponent), {
-            label: Sftoomi.format(Sftoomi.Translator.translate('views.patients.dialog.title'), [selectedRecords[0].id]),
+            label: title,
             dismissible: false,
             size: 'auto',
             data: {
-                id: selectedRecords[0].id
+                id: id
             } as PatientEditDialogData
         }).subscribe({
             complete: (): void => {

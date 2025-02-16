@@ -1,4 +1,5 @@
 let ruDictionary: object =  {
+    add: 'Добавить',
     dob: 'ДР',
     dob_full: 'Дата рождения',
     edit: 'Редактировать',
@@ -18,7 +19,8 @@ let ruDictionary: object =  {
     views: {
         patients: {
             dialog: {
-                title: 'Редактирование пациента #{0}'
+                add_title: 'Добавление пациента',
+                edit_title: 'Редактирование пациента #{0}'
             }
         }
     },

@@ -60,11 +60,18 @@ class PatientsController extends AbstractController
             }
         }
 
+        $dob = $request->request->get("dob");
+        if (($dob = strtotime($dob)) !== false) {
+            $dob = (new \DateTime())->setTimestamp($dob);
+        } else {
+            $dob = null;
+        }
+
         $patient = (new PatientDM())->dataToEntity([
             "last_name"   => $request->request->get("last_name"),
             "first_name"  => $request->request->get("first_name"),
             "middle_name" => $request->request->get("middle_name"),
-            "dob"         => (new \DateTime())->setTimestamp(strtotime($request->request->get("dob")))
+            "dob"         => $dob
         ], $patient);
 
         $entityManager->persist($patient);

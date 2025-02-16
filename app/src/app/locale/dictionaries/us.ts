@@ -1,4 +1,5 @@
 let usDictionary: object =  {
+    add: 'Add',
     dob: 'DoB',
     dob_full: 'Date of birth',
     edit: 'Edit',
@@ -18,7 +19,8 @@ let usDictionary: object =  {
     views: {
         patients: {
             dialog: {
-                title: 'Edit patient #{0}'
+                add_title: 'Add patient',
+                edit_title: 'Edit patient #{0}'
             }
         }
     },
