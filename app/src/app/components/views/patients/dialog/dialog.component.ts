@@ -15,6 +15,8 @@ import { TuiInputDateModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
 import { TuiDay } from '@taiga-ui/cdk';
 import moment from 'moment';
 
+import Sftoomi from '../../../../class/Sftoomi';
+
 import Fetcher from '../../../../class/Fetcher';
 import getPatientAPI from '../../../../APIs/getPatientAPI';
 
@@ -23,7 +25,6 @@ import { onlyLettersValidator } from '../../../../validators/only-letters.valida
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
 import UppercaseDirective from '../../../../directives/uppercase.directive';
 import TuiDateToNativeTransformerDirective from '../../../../directives/tui-date-to-native.directive';
-import Sftoomi from '../../../../class/Sftoomi';
 
 export type PatientEditDialogData = {
     id: number
@@ -36,7 +37,8 @@ export type PatientEditDialogData = {
         TuiTextfieldComponent, TuiTextfieldDirective,
         FormsModule, TuiTextfield, ReactiveFormsModule,
         OnlyLettersDirective, TuiError,
-        TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader, TuiInputDateModule, TuiUnfinishedValidator, TuiDateToNativeTransformerDirective,
+        TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader,
+        TuiInputDateModule, TuiUnfinishedValidator, TuiDateToNativeTransformerDirective
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -50,6 +52,7 @@ export default class PatientEditDialogComponent implements AfterViewInit
 
     protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     protected readonly TuiDay = TuiDay;
+    protected readonly Sftoomi = Sftoomi;
 
     protected readonly form: FormGroup = new FormGroup({
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
@@ -89,6 +92,4 @@ export default class PatientEditDialogComponent implements AfterViewInit
             }
         })
     }
-
-    protected readonly Sftoomi = Sftoomi;
 }

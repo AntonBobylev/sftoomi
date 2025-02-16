@@ -49,7 +49,7 @@
     <tui-input-date
         formControlName="dob"
         toNativeDate
-        tuiUnfinishedValidator="Finish filling the field"
+        tuiUnfinishedValidator
         [max]="TuiDay.fromLocalNativeDate(maxDobDate)"
     >
         {{ Sftoomi.Translator.translate('dob_full') }}

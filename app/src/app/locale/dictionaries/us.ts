@@ -24,6 +24,7 @@ let usDictionary: object =  {
 
     validators: {
         field_required: 'This field is required',
+        finish_filling_field: 'Finish filling the field',
         max_length: 'Maximum length — {0}',
         only_letters_allowed: 'Only letters allowed'
     },

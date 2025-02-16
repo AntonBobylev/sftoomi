@@ -24,6 +24,7 @@ let ruDictionary: object =  {
 
     validators: {
         field_required: 'Это поле обязательно',
+        finish_filling_field: 'Закончите заполнение поля',
         max_length: 'Максимальная длина — {0}',
         only_letters_allowed: 'Разрешены только буквы'
     },
