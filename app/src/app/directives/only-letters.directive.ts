@@ -3,7 +3,7 @@ import { Directive, HostListener } from '@angular/core';
 @Directive({
     selector: '[onlyLetters]',
 })
-export class OnlyLettersDirective
+export default class OnlyLettersDirective
 {
     protected key: number = 0;
 
