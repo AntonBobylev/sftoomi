@@ -67,9 +67,9 @@ export default class PatientEditDialogComponent implements AfterViewInit
             success: function (_response: any, _request: any, data: getPatientAPI): void {
                 me.isLoading = false;
 
-                me.form.get('first_name')?.setValue(data.data.first_name);
-                me.form.get('last_name')?.setValue(data.data.last_name);
-                me.form.get('middle_name')?.setValue(data.data.middle_name);
+                me.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
+                me.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
+                me.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
             },
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;
