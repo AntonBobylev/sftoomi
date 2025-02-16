@@ -1,5 +1,6 @@
+import { TuiDateFormatSettings } from '@taiga-ui/core'
+    ;
 import Sftoomi from '../class/Sftoomi';
-import { TuiDateFormatSettings } from '@taiga-ui/core';
 
 export default function getDateFormat(): TuiDateFormatSettings
 {
