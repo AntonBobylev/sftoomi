@@ -1,6 +1,9 @@
 import axios from 'axios';
 
+import { environment } from '../../environments/environment';
+
 import Timeout from './Timeout';
+import Sftoomi from './Sftoomi';
 
 type RequestOptions = {
     url: string,
@@ -41,6 +44,8 @@ export default class Fetcher
         if (request.data) {
             request.headers = { "Content-Type": "multipart/form-data" }
         }
+
+        request.url = Sftoomi.format('{0}{1}', [environment.baseUrl, request.url])
 
         axios(request)
             .then((response): void => {

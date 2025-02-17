@@ -87,7 +87,7 @@ export default class PatientsTableToolbarComponent
 
         me.table.setIsLoading(true);
         new Fetcher().request({
-            url: 'http://localhost:8080/removePatient',
+            url: '/removePatient',
             data: data,
             success: function (_response: any, _request: any, _data: any): void {
                 me.table.setIsLoading(false);

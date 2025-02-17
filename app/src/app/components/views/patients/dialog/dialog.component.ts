@@ -45,8 +45,8 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
     protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     protected readonly TuiDay: typeof TuiDay = TuiDay;
 
-    protected readonly loadUrl: string = 'http://localhost:8080/getPatient';
-    protected readonly saveUrl: string = 'http://localhost:8080/savePatient';
+    protected readonly loadUrl: string = '/getPatient';
+    protected readonly saveUrl: string = '/savePatient';
 
     protected readonly form: FormGroup = new FormGroup({
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),

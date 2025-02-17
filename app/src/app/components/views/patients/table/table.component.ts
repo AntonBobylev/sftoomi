@@ -18,7 +18,7 @@ import AppTableColumn from '../../../../type/AppTableColumn';
 
 export default class PatientsTableComponent extends AppTableComponent
 {
-    protected override readonly url: string = 'http://localhost:8080/getPatients';
+    protected override readonly url: string = '/getPatients';
     protected override readonly toolbar: any = PatientsTableToolbarComponent;
 
     protected override readonly columns: AppTableColumn[] = [{
