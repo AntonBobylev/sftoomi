@@ -1,36 +1,22 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component} from '@angular/core';
 import { TuiButton, TuiHint } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
-import { TuiDialogService } from '@taiga-ui/core';
 
 import Sftoomi from '../../../../../class/Sftoomi';
-
 import Fetcher from '../../../../../class/Fetcher';
 
-import PopupMsgService from '../../../../../services/popup-msg.service';
-
 import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
-import PatientsTableComponent from '../table.component';
+import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
 @Component({
     selector: 'patients-table-toolbar',
     templateUrl: './toolbar.component.html',
-    imports: [
-        TuiButton,
-        TuiHint
-    ],
+    imports: [ TuiButton, TuiHint ],
     styleUrl: './toolbar.component.scss'
 })
 
-export default class PatientsTableToolbarComponent
+export default class PatientsTableToolbarComponent extends AppBaseToolbar
 {
-    @Input({required: true}) table!: PatientsTableComponent;
-
-    protected readonly Sftoomi = Sftoomi;
-
-    private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
-    private readonly dialog: TuiDialogService = inject(TuiDialogService);
-
     protected onRefreshClick(): void
     {
         this.table.refresh();
@@ -88,6 +74,7 @@ export default class PatientsTableToolbarComponent
         me.table.setIsLoading(true);
         new Fetcher().request({
             url: '/removePatient',
+            signal: this.queryController.signal,
             data: data,
             success: function (_response: any, _request: any, _data: any): void {
                 me.table.setIsLoading(false);
