@@ -1,9 +1,10 @@
 <button
+    tuiIconButton
     appearance="flat"
     iconStart="@tui.languages"
     size="xs"
-    tuiIconButton
     type="button"
+    [tuiHint]="Sftoomi.Translator.translate('switch_language')"
     (click)="switchLanguage($event)"
     [style.border-radius.%]="100"
 >

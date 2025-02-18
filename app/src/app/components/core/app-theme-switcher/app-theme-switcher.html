@@ -1,10 +1,11 @@
 <button
     tuiIconButton
-    size="xs"
-    appearance="icon"
+    appearance="flat"
     [iconStart]="Sftoomi.Theme.isDarkMode()() ? '@tui.sun' : '@tui.moon'"
-    [tuiHint]="Sftoomi.Translator.translate('switch_theme')"
+    size="xs"
     type="button"
+    [tuiHint]="Sftoomi.Translator.translate('switch_theme')"
     (click)="switchTheme()"
+    [style.border-radius.%]="100"
 >
 </button>
