@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -15,7 +15,7 @@ import AppTableColumnStyles from '../../../type/AppTableColumnStyles';
     styleUrl: './app-table.component.scss'
 })
 
-export default class AppTableComponent implements OnInit
+export default class AppTableComponent implements OnInit, OnDestroy
 {
     protected readonly url: string = '';
     protected readonly toolbar: any | undefined;
@@ -29,6 +29,8 @@ export default class AppTableComponent implements OnInit
 
     protected readonly columns: AppTableColumn[] = [];
     protected columnsNames: string[] = [];
+
+    protected readonly queryController: AbortController = new AbortController();
 
     protected readonly Sftoomi = Sftoomi;
 
@@ -57,6 +59,11 @@ export default class AppTableComponent implements OnInit
         this.refresh();
     }
 
+    ngOnDestroy(): void
+    {
+        this.queryController.abort();
+    }
+
     public setIsLoading(isLoading: boolean): void
     {
         this.isLoading.set(isLoading);
@@ -73,6 +80,7 @@ export default class AppTableComponent implements OnInit
 
         (new Fetcher).request({
             url: this.url,
+            signal: this.queryController.signal,
             success: function (_response: any, _request: XMLHttpRequest, data: any): void {
                 me.isLoading.set(false);
                 me.originalReceivedData = data[me.dataRoot];
