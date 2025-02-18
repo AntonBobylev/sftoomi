@@ -13,6 +13,7 @@ let usDictionary: object =  {
     remove: 'Remove',
     save: 'Save',
     select_all: 'Select all',
+    switch_theme: 'Switch theme',
     warning: 'Warning',
 
     navigation: {

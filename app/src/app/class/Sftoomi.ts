@@ -1,6 +1,7 @@
 import moment from 'moment';
 
 import Translator from './Translator';
+import Theme from './Theme';
 
 import { CookiesService } from '../services/cookies-service.service';
 
@@ -8,6 +9,7 @@ export default class Sftoomi
 {
     public static readonly Translator: Translator = new Translator();
     public static readonly Cookies: CookiesService = new CookiesService();
+    public static Theme: Theme; // initialized in AppComponent
 
     /**
      * Returns current year number

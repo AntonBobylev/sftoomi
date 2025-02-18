@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { TuiRoot } from '@taiga-ui/core';
 
+import Sftoomi from './class/Sftoomi';
+import Theme from './class/Theme';
+
 import { HeaderComponent } from './components/layout/header/header.component';
 import { ContentComponent } from './components/layout/content/content.component';
 import { FooterComponent } from './components/layout/footer/footer.component';
@@ -19,4 +22,10 @@ import { FooterComponent } from './components/layout/footer/footer.component';
 
 export class AppComponent
 {
+    protected readonly Sftoomi = Sftoomi;
+
+    constructor()
+    {
+        Sftoomi.Theme = new Theme();
+    }
 }

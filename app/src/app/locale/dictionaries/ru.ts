@@ -13,6 +13,7 @@ let ruDictionary: object =  {
     remove: 'Удалить',
     save: 'Сохранить',
     select_all: 'Выбрать всё',
+    switch_theme: 'Поменять тему',
     warning: 'Внимание',
 
     navigation: {
