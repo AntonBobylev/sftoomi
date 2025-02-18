@@ -68,6 +68,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;
 
+                if (message === 'canceled') {
+                    return;
+                }
+
                 console.error(code);
                 console.error(message);
             }
@@ -112,6 +116,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             },
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;
+
+                if (message === 'canceled') {
+                    return;
+                }
 
                 console.error(code);
                 console.error(message);
