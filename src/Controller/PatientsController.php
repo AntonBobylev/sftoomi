@@ -15,17 +15,23 @@ use Symfony\Component\Routing\Attribute\Route;
 class PatientsController extends AbstractController
 {
     #[Route('/getPatients', name: 'get_patients')]
-    public function getPatients(PatientRepository $patientRepository): Response
+    public function getPatients(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $patientsEntities = $patientRepository->findAll();
+        $limit = $request->request->get("limit");
+        $start = $request->request->get("start");
+        $start = $limit * $start;
 
-        $patients = [];
-        foreach ($patientsEntities as $patientEntity) {
-            $patients[] = (new PatientDM)->entityToData($patientEntity);
-        }
+        $sql = "select id, last_name, first_name, middle_name, dob
+                from patient
+                limit $start, $limit";
+        $patients = $entityManager->getConnection()->fetchAllAssociative($sql);
+
+        $sql = "select count(*) from patient";
+        $total = $entityManager->getConnection()->fetchOne($sql);
 
         return new JsonResponse([
-            "data" => $patients
+            "data"  => $patients,
+            "total" => $total
         ]);
     }
 

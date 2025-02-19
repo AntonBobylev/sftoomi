@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
+import { tuiCeil } from '@taiga-ui/cdk';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -24,17 +25,6 @@ export default class AppTableComponent implements OnInit, OnDestroy
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
 
     protected readonly selectionRequired: boolean = true;
-
-    protected readonly dataRoot: string = 'data';
-
-    protected readonly columns: AppTableColumn[] = [];
-    protected columnsNames: string[] = [];
-
-    protected readonly queryController: AbortController = new AbortController();
-
-    protected readonly Sftoomi = Sftoomi;
-
-    private originalReceivedData: any[] = [];
     private readonly defaultSelectionColumn: AppTableColumn = {
         name: 'selection',
         caption: '',
@@ -47,6 +37,22 @@ export default class AppTableComponent implements OnInit, OnDestroy
             alignment: 'center'
         }
     };
+
+    protected readonly dataRoot: string = 'data';
+
+    protected readonly columns: AppTableColumn[] = [];
+    protected columnsNames: string[] = [];
+
+    protected readonly queryController: AbortController = new AbortController();
+
+    protected readonly paginatorRequired: boolean = false;
+    protected itemsPerPage: number = 50;
+    protected totalPagesCount: number = 1;
+    protected currentPageIndex: number = 0;
+
+    protected readonly Sftoomi = Sftoomi;
+
+    private originalReceivedData: any[] = [];
 
     ngOnInit(): void
     {
@@ -78,12 +84,23 @@ export default class AppTableComponent implements OnInit, OnDestroy
         let me: this = this;
         me.isLoading.set(true);
 
+        let formData = new FormData();
+        if (me.paginatorRequired) {
+            formData.set('start', me.currentPageIndex.toString());
+            formData.set('limit', me.itemsPerPage.toString());
+        }
+
         (new Fetcher).request({
             url: this.url,
+            data: formData,
             signal: this.queryController.signal,
             success: function (_response: any, _request: XMLHttpRequest, data: any): void {
                 me.isLoading.set(false);
                 me.originalReceivedData = data[me.dataRoot];
+
+                if (me.paginatorRequired) {
+                    me.totalPagesCount = tuiCeil(data.total / me.itemsPerPage);
+                }
 
                 me.data.set(me.convertReceivedDataToTableData(data[me.dataRoot]));
             },
@@ -95,7 +112,7 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     public getSelection(): any[]
     {
-        return this.data().filter(function(row: any): boolean {
+        return this.data().filter(function (row: any): boolean {
             return row.selected;
         });
     }
@@ -127,6 +144,13 @@ export default class AppTableComponent implements OnInit, OnDestroy
         }
 
         return columnWidth;
+    }
+
+    protected onPageChange(newPageNumber: number): void
+    {
+        this.currentPageIndex = newPageNumber;
+
+        this.refresh();
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]

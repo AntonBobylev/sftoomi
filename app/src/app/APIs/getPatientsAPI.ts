@@ -4,11 +4,7 @@ type getPatientsAPI = {
         last_name: string,
         first_name: string,
         middle_name: string,
-        dob: {
-            date: string,
-            timezone: string,
-            timezone_type: number
-        }
+        dob: string
     }[]
 };
 

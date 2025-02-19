@@ -20,6 +20,7 @@ export default class PatientsTableComponent extends AppTableComponent
 {
     protected override readonly url: string = '/getPatients';
     protected override readonly toolbar: any = PatientsTableToolbarComponent;
+    protected override readonly paginatorRequired: boolean = true;
 
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',
@@ -36,7 +37,7 @@ export default class PatientsTableComponent extends AppTableComponent
         caption: Sftoomi.Translator.translate('dob_full'),
         valueRenderer: function (value: any): string
         {
-            return Sftoomi.dateShort(value.date) ?? 'undefined';
+            return Sftoomi.dateShort(value) ?? 'undefined';
         },
         headerStyles: {
             alignment: 'center'
