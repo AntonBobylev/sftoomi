@@ -75,6 +75,24 @@
 
     @if (paginatorRequired) {
         <div class="footer">
+            <caption tuiCaption>
+                <button
+                    appearance="flat"
+                    tuiButton
+                    tuiButtonSelect
+                    type="button"
+                    [(ngModel)]="itemsPerPage"
+                >
+                    {{ pageSizeCaption }}
+                    <tui-data-list-wrapper
+                        *tuiTextfieldDropdown
+                        (itemClick)="onPageSizeChange($event)"
+                        [itemContent]="content"
+                        [items]="items"
+                    />
+                </button>
+            </caption>
+
             <tui-pagination
                 [length]="totalPagesCount"
                 [index]="currentPageIndex"

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, signal, WritableSignal } from '@angular/core';
-import { tuiCeil } from '@taiga-ui/cdk';
+import { tuiCeil, TuiContext, TuiStringHandler } from '@taiga-ui/cdk';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -52,7 +52,13 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     protected readonly Sftoomi = Sftoomi;
 
+    protected readonly items = [5, 10, 50, 100];
+    protected readonly content: TuiStringHandler<TuiContext<number>> = ({$implicit}: TuiContext<number>): string =>
+        `${$implicit} items per page`;
+    protected pageSizeCaption: string = '';
+
     private originalReceivedData: any[] = [];
+    private totalRowsCount: number = 0;
 
     ngOnInit(): void
     {
@@ -98,9 +104,12 @@ export default class AppTableComponent implements OnInit, OnDestroy
                 me.isLoading.set(false);
                 me.originalReceivedData = data[me.dataRoot];
 
+                me.totalRowsCount = data.total;
                 if (me.paginatorRequired) {
                     me.totalPagesCount = tuiCeil(data.total / me.itemsPerPage);
                 }
+
+                me.updatePageSizeCaption();
 
                 me.data.set(me.convertReceivedDataToTableData(data[me.dataRoot]));
             },
@@ -149,8 +158,36 @@ export default class AppTableComponent implements OnInit, OnDestroy
     protected onPageChange(newPageNumber: number): void
     {
         this.currentPageIndex = newPageNumber;
+        this.updatePageSizeCaption();
 
         this.refresh();
+    }
+
+    protected onPageSizeChange(newSize: number): void
+    {
+        this.itemsPerPage = newSize;
+        this.currentPageIndex = 0;
+
+        this.refresh();
+    }
+
+    protected updatePageSizeCaption(): void
+    {
+        let from: number = (this.currentPageIndex * this.itemsPerPage) + 1,
+            to: number = (this.currentPageIndex + 1) * this.itemsPerPage;
+
+        if (to > this.totalRowsCount) {
+            to = this.totalRowsCount;
+        }
+
+        this.pageSizeCaption = Sftoomi.format(
+            '{0}-{1} {2}',
+            [
+                from,
+                to,
+                'rows'
+            ]
+        );
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]
