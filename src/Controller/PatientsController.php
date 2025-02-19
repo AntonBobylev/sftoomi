@@ -56,7 +56,7 @@ class PatientsController extends AbstractController
 
             $patient = $patients[0];
             if (empty($patient)) {
-                $this->createNotFoundException(sprintf("Patient with ID %s not found", $id));
+                throw $this->createNotFoundException(sprintf("Patient with ID %s not found", $id));
             }
         }
 

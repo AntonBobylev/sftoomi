@@ -1,6 +1,7 @@
 import { Component} from '@angular/core';
 import { TuiButton, TuiHint } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { defaultIfEmpty } from 'rxjs';
 
 import Sftoomi from '../../../../../class/Sftoomi';
 import Fetcher from '../../../../../class/Fetcher';
@@ -97,10 +98,12 @@ export default class PatientsTableToolbarComponent extends AppBaseToolbar
             data: {
                 id: id
             } as PatientEditDialogData
-        }).subscribe({
-            complete: (): void => {
-                me.table.refresh();
-            }
-        });
+        })
+            .pipe(defaultIfEmpty({saved: false}))
+            .subscribe((result: any): void => {
+                if (result?.saved) {
+                    me.table.refresh();
+                }
+            });
     }
 }

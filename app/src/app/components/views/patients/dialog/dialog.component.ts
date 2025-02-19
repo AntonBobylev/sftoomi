@@ -40,7 +40,7 @@ export type PatientEditDialogData = {
 
 export default class PatientEditDialogComponent extends AppBaseEditDialog
 {
-    protected readonly context: TuiDialogContext<PatientEditDialogData, PatientEditDialogData> = injectContext<TuiDialogContext<PatientEditDialogData, PatientEditDialogData>>();
+    protected readonly context: TuiDialogContext<any, PatientEditDialogData> = injectContext<TuiDialogContext<any, PatientEditDialogData>>();
 
     protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     protected readonly TuiDay: typeof TuiDay = TuiDay;
@@ -55,9 +55,9 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         dob:         new FormControl<Date | null>(null)
     });
 
-    protected afterSave(data: savePatientAPI): void
+    protected afterSave(_data: savePatientAPI): void
     {
-        this.context.completeWith({id: data.id});
+        this.context.completeWith({saved: true});
     }
 
     protected afterLoad(data: getPatientAPI): void
