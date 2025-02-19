@@ -22,6 +22,11 @@ let usDictionary: object =  {
         patients: 'Patients'
     },
 
+    base_table: {
+        items_per_page: 'items per page',
+        rows: 'rows'
+    },
+
     views: {
         patients: {
             table: {

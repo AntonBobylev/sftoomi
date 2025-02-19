@@ -52,9 +52,17 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     protected readonly Sftoomi = Sftoomi;
 
-    protected readonly items = [5, 10, 50, 100];
-    protected readonly content: TuiStringHandler<TuiContext<number>> = ({$implicit}: TuiContext<number>): string =>
-        `${$implicit} items per page`;
+    protected readonly items = [5, 10, 15, 25, 50, 100];
+    protected readonly content: TuiStringHandler<TuiContext<number>> = function ({$implicit}: TuiContext<number>): string {
+        return Sftoomi.format(
+            '{0} {1}',
+            [
+                $implicit,
+                Sftoomi.Translator.translate('base_table.items_per_page')
+            ]
+        );
+    }
+
     protected pageSizeCaption: string = '';
 
     private originalReceivedData: any[] = [];
@@ -185,7 +193,7 @@ export default class AppTableComponent implements OnInit, OnDestroy
             [
                 from,
                 to,
-                'rows'
+                Sftoomi.Translator.translate('base_table.rows')
             ]
         );
     }

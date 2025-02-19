@@ -22,6 +22,11 @@ let ruDictionary: object =  {
         patients: 'Пациенты'
     },
 
+    base_table: {
+        items_per_page: 'строк на странице',
+        rows: 'строки'
+    },
+
     views: {
         patients: {
             table: {
