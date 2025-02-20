@@ -9,6 +9,7 @@ let ruDictionary: object =  {
     information: 'Информация',
     last_name: 'Фамилия',
     middle_name: 'Отчество',
+    phone: 'Телефон',
     refresh: 'Обновить',
     remove: 'Удалить',
     save: 'Сохранить',

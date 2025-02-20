@@ -61,6 +61,32 @@
             [error]="[] | tuiFieldError | async"
         />
 
+        <tui-input
+            [style.max-width.rem]="30"
+            [tuiTextfieldCustomContent]="countryIsoCode ? flag : '@tui.phone'"
+            formControlName="phone"
+        >
+            {{ Sftoomi.Translator.translate('phone') }}
+            <input
+                autocomplete="tel"
+                inputmode="tel"
+                tuiTextfieldLegacy
+                [attr.pattern]="pattern"
+                [maskito]="mask"
+            />
+        </tui-input>
+
+        <ng-template #flag>
+            <img
+                width="28"
+                [attr.alt]="countryIsoCode"
+                [src]="countryIsoCode | tuiFlag"
+                [style.border-radius.%]="50"
+            />
+        </ng-template>
+
+        {{ form.get('phone')?.value }}
+
         <div class="actions">
             <button
                 tuiButton

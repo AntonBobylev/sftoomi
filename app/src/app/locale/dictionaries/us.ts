@@ -9,6 +9,7 @@ let usDictionary: object =  {
     information: 'Information',
     last_name: 'Last name',
     middle_name: 'Middle name',
+    phone: 'Phone',
     refresh: 'Refresh',
     remove: 'Remove',
     save: 'Save',

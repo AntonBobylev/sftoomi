@@ -1,11 +1,15 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
-import { TuiButton, TuiDialogContext, TuiError, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiError, TuiFlagPipe, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TuiInputDateModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
+import { TUI_IS_APPLE, TuiInputDateModule, TuiInputModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
 import { TuiDay } from '@taiga-ui/cdk';
+import { MaskitoDirective } from '@maskito/angular';
+import { maskitoGetCountryFromNumber, maskitoPhoneOptionsGenerator } from '@maskito/phone';
+import { MaskitoOptions } from '@maskito/core';
+import metadata from 'libphonenumber-js/min/metadata';
 import moment from 'moment';
 
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
@@ -32,7 +36,8 @@ export type PatientEditDialogData = {
         OnlyLettersDirective, TuiError,
         TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader,
         TuiInputDateModule, TuiUnfinishedValidator,
-        TuiDateToNativeTransformerDirective, TuiButton
+        TuiDateToNativeTransformerDirective, TuiButton, TuiInputModule,
+        TuiTextfieldControllerModule, MaskitoDirective, TuiFlagPipe
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -52,8 +57,25 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()]),
-        dob:         new FormControl<Date | null>(null)
+        dob:         new FormControl<Date | null>(null),
+        phone:       new FormControl<string | null>(null, [Validators.maxLength(15)])
     });
+
+    private readonly isApple = inject(TUI_IS_APPLE);
+
+    protected readonly mask: Required<MaskitoOptions> = maskitoPhoneOptionsGenerator({
+        metadata,
+        strict: false,
+        countryIsoCode: 'RU'
+    });
+
+    protected get countryIsoCode(): string {
+        return maskitoGetCountryFromNumber(this.form.get('phone')?.value ?? '', metadata) ?? '';
+    }
+
+    protected get pattern(): string {
+        return this.isApple ? '+[0-9-]{1,20}' : '';
+    }
 
     protected afterSave(_data: savePatientAPI): void
     {
