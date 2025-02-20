@@ -26,6 +26,9 @@ class Patient
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dob = null;
 
+    #[ORM\Column(length: 15, nullable: true)]
+    private ?string $phone = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -75,6 +78,18 @@ class Patient
     public function setDob(?\DateTimeInterface $dob): static
     {
         $this->dob = $dob;
+
+        return $this;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): static
+    {
+        $this->phone = $phone;
 
         return $this;
     }

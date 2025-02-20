@@ -23,7 +23,8 @@ final class PatientDM extends AbstractDM
         $data = [
             "id"         => $entity->getId(),
             "last_name"  => $entity->getLastName(),
-            "first_name" => $entity->getFirstName()
+            "first_name" => $entity->getFirstName(),
+            "phone"      => $entity->getPhone()
         ];
 
         $middleName = $entity->getMiddleName();
@@ -59,6 +60,9 @@ final class PatientDM extends AbstractDM
                 break;
             case "dob":
                 $entity->setDob($value);
+                break;
+            case "phone":
+                $entity->setPhone($value);
                 break;
         }
 
