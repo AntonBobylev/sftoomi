@@ -58,7 +58,7 @@ class PatientsController extends AbstractController
     {
         $dob = $request->request->get("dob");
         if (($dob = strtotime($dob)) !== false) {
-            $dob = (new \DateTime())->setTimestamp($dob);
+            $dob = (new \DateTime())->setTimestamp($dob)->format('Y-m-d');
         } else {
             $dob = null;
         }
