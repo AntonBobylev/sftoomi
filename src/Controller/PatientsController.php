@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\DataMappers\PatientDM;
-use App\Entity\Patient;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -21,7 +20,7 @@ class PatientsController extends AbstractController
         $start = $request->request->get("start");
         $start = $limit * $start;
 
-        $sql = "select id, last_name, first_name, middle_name, dob
+        $sql = "select id, last_name, first_name, middle_name, dob, phone
                 from patient
                 limit $start, $limit";
         $patients = $entityManager->getConnection()->fetchAllAssociative($sql);
@@ -36,36 +35,27 @@ class PatientsController extends AbstractController
     }
 
     #[Route('/getPatient', name: 'get_patient')]
-    public function getPatient(PatientRepository $patientRepository, Request $request): Response
+    public function getPatient(EntityManagerInterface $entityManager, Request $request): Response
     {
         $id = $request->request->get("id");
-        $patients = $patientRepository->findBy(["id" => $id]);
-        if (empty($patients)) {
+
+        $sql = "select id, last_name, first_name, middle_name, dob, phone
+                from patient
+                where id = $id";
+        $patient = $entityManager->getConnection()->fetchAssociative($sql);
+
+        if (empty($patient)) {
             throw new \RuntimeException("Patient not found");
         }
 
         return new JsonResponse([
-            "data" => (new PatientDM)->entityToData($patients[0])
+            "data" => $patient
         ]);
     }
 
     #[Route('/savePatient', name: 'save_patient')]
-    public function savePatient(EntityManagerInterface $entityManager, PatientRepository $patientRepository, Request $request): Response
+    public function savePatient(EntityManagerInterface $entityManager, Request $request): Response
     {
-        $id = $request->request->get("id");
-
-        if (empty($id)) {
-            // it means this is the new patient
-            $patient = new Patient();
-        } else {
-            $patients = $patientRepository->findBy(["id" => $id]);
-
-            $patient = $patients[0];
-            if (empty($patient)) {
-                throw $this->createNotFoundException(sprintf("Patient with ID %s not found", $id));
-            }
-        }
-
         $dob = $request->request->get("dob");
         if (($dob = strtotime($dob)) !== false) {
             $dob = (new \DateTime())->setTimestamp($dob);
@@ -73,18 +63,33 @@ class PatientsController extends AbstractController
             $dob = null;
         }
 
-        $patient = (new PatientDM())->dataToEntity([
+        $id = $request->request->get("id");
+        $values = [
+            "id"          => $request->request->get("id"),
             "last_name"   => $request->request->get("last_name"),
             "first_name"  => $request->request->get("first_name"),
             "middle_name" => $request->request->get("middle_name"),
+            "phone"       => $request->request->get("phone"),
             "dob"         => $dob
-        ], $patient);
+        ];
 
-        $entityManager->persist($patient);
-        $entityManager->flush();
+        if (isset($id)) { {
+            $entityManager->getConnection()->update(
+                "patient",
+                $values,
+                ["id" => $values["id"]]
+            );
+        }} else {
+            $entityManager->getConnection()->insert(
+                "patient",
+                $values
+            );
+
+            $id = $entityManager->getConnection()->lastInsertId();
+        }
 
         return new JsonResponse([
-            "id" => $patient->getId()
+            "id" => $id
         ]);
 
     }

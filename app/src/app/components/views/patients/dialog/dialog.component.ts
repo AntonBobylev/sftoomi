@@ -4,8 +4,8 @@ import { AsyncPipe } from '@angular/common';
 import { TuiButton, TuiDialogContext, TuiError, TuiFlagPipe, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
 import { TuiFieldErrorPipe } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TUI_IS_APPLE, TuiInputDateModule, TuiInputModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
-import { TuiDay } from '@taiga-ui/cdk';
+import { TuiInputDateModule, TuiInputModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
+import { TUI_IS_IOS, TuiDay } from '@taiga-ui/cdk';
 import { MaskitoDirective } from '@maskito/angular';
 import { maskitoGetCountryFromNumber, maskitoPhoneOptionsGenerator } from '@maskito/phone';
 import { MaskitoOptions } from '@maskito/core';
@@ -58,10 +58,10 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()]),
         dob:         new FormControl<Date | null>(null),
-        phone:       new FormControl<string | null>(null, [Validators.maxLength(15)])
+        phone:       new FormControl<string | null>(null, [Validators.maxLength(16)])
     });
 
-    private readonly isApple = inject(TUI_IS_APPLE);
+    private readonly isIos = inject(TUI_IS_IOS);
 
     protected readonly mask: Required<MaskitoOptions> = maskitoPhoneOptionsGenerator({
         metadata,
@@ -74,7 +74,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
     }
 
     protected get pattern(): string {
-        return this.isApple ? '+[0-9-]{1,20}' : '';
+        return this.isIos ? '+[0-9-]{1,20}' : '';
     }
 
     protected afterSave(_data: savePatientAPI): void
@@ -87,6 +87,10 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         this.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
         this.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
         this.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
-        this.form.get('dob')?.setValue(moment(data.data.dob.date).toDate());
+        this.form.get('phone')?.setValue(data.data.phone);
+
+        if (data.data.dob) {
+            this.form.get('dob')?.setValue(moment(data.data.dob).toDate());
+        }
     }
 }

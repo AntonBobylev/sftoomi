@@ -4,7 +4,8 @@ type getPatientsAPI = {
         last_name: string,
         first_name: string,
         middle_name: string,
-        dob: string
+        dob: string,
+        phone: string
     }[]
 };
 

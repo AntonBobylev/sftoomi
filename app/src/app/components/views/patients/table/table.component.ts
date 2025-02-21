@@ -55,5 +55,16 @@ export default class PatientsTableComponent extends AppTableComponent
     }, {
         name: 'middle_name',
         caption: Sftoomi.Translator.translate('middle_name')
+    }, {
+        name: 'phone',
+        caption: Sftoomi.Translator.translate('phone'),
+        resizable: true,
+        styles: {
+            width: '140px',
+            alignment: 'center'
+        },
+        headerStyles: {
+            alignment: 'center'
+        }
     }];
 }
