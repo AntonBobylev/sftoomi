@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\DataMappers\PatientDM;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
