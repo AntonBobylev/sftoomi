@@ -19,8 +19,6 @@ class PatientsController extends AbstractController
         $start = $request->request->get("start");
         $start = $limit * $start;
 
-        \App::logDump("test");
-
         $sql = "select id, last_name, first_name, middle_name, dob, phone
                 from patient
                 limit $start, $limit";
