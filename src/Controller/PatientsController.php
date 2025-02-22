@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Repository\PatientRepository;
+use DateTime;
+use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,6 +15,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class PatientsController extends AbstractController
 {
+    /**
+     * @throws Exception
+     */
     #[Route('/getPatients', name: 'get_patients')]
     public function getPatients(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -33,6 +39,9 @@ class PatientsController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/getPatient', name: 'get_patient')]
     public function getPatient(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -44,7 +53,7 @@ class PatientsController extends AbstractController
         $patient = $entityManager->getConnection()->fetchAssociative($sql);
 
         if (empty($patient)) {
-            throw new \RuntimeException("Patient not found");
+            throw new RuntimeException("Patient not found");
         }
 
         return new JsonResponse([
@@ -52,12 +61,15 @@ class PatientsController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/savePatient', name: 'save_patient')]
     public function savePatient(EntityManagerInterface $entityManager, Request $request): Response
     {
         $dob = $request->request->get("dob");
         if (($dob = strtotime($dob)) !== false) {
-            $dob = (new \DateTime())->setTimestamp($dob)->format('Y-m-d');
+            $dob = (new DateTime())->setTimestamp($dob)->format('Y-m-d');
         } else {
             $dob = null;
         }
@@ -98,7 +110,7 @@ class PatientsController extends AbstractController
         $ids = $request->request->get("ids");
 
         if (empty($ids)) {
-            throw new \RuntimeException("At least one id is required for removal operation");
+            throw new RuntimeException("At least one id is required for removal operation");
         }
 
         $ids = explode(",", $ids);
