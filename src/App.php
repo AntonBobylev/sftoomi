@@ -30,7 +30,7 @@ final class App
 
     private static function getLogDir(): string
     {
-        return __DIR__ . "/../../var/log";
+        return __DIR__ . "/../var/log";
     }
 
     public static function getContainer(): ContainerInterface
