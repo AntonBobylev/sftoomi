@@ -2,6 +2,7 @@ services:
     server:
         image: nginx:stable-alpine
         container_name: server
+        restart: always
         ports:
             - "8080:80"
         volumes:
@@ -15,6 +16,7 @@ services:
 
     php:
         container_name: php
+        restart: always
         build:
             context: .
             dockerfile: ./php/Dockerfile
