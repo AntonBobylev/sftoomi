@@ -25,13 +25,16 @@ class PatientsController extends AbstractController
         $start = $request->request->get("start");
         $start = $limit * $start;
 
-        $sql = "select id, last_name, first_name, middle_name, dob, phone
-                from patient
-                limit $start, $limit";
-        $patients = $entityManager->getConnection()->fetchAllAssociative($sql);
+        $connection = $entityManager->getConnection();
+        $patients = $connection->createQueryBuilder()
+            ->select(["id", "last_name", "first_name", "middle_name", "dob", "phone"])
+            ->from("patient")
+            ->setFirstResult($start)
+            ->setMaxResults($limit)
+            ->fetchAllAssociative();
 
         $sql = "select count(*) from patient";
-        $total = $entityManager->getConnection()->fetchOne($sql);
+        $total = $connection->fetchOne($sql);
 
         return new JsonResponse([
             "data"  => $patients,
