@@ -1,14 +1,8 @@
 <?php
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-
+/** @noinspection PhpIllegalPsrClassPathInspection */
 final class App
 {
-    /**
-     * @var ContainerInterface
-     */
-    private static $container;
-
     public static function logDump($data, $filename = "dumps"): void
     {
         ob_start();
@@ -23,22 +17,8 @@ final class App
 
     private static function appendToFile($filename, $data): void
     {
-        $file = self::getLogDir() . "/" . $filename;
+        $file = __DIR__ . "/../var/log/" . $filename;
 
         file_put_contents($file, $data, FILE_APPEND);
-    }
-
-    private static function getLogDir(): string
-    {
-        return __DIR__ . "/../var/log";
-    }
-
-    public static function getContainer(): ContainerInterface
-    {
-        if (!isset(self::$container)) {
-            throw new \Exception("Container is not initialized yet");
-        }
-
-        return self::$container;
     }
 }
