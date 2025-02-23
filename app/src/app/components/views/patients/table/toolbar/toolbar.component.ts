@@ -4,10 +4,10 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { defaultIfEmpty } from 'rxjs';
 
 import Sftoomi from '../../../../../class/Sftoomi';
-import Fetcher from '../../../../../class/Fetcher';
+
+import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
 import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
-import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
 @Component({
     selector: 'patients-table-toolbar',
@@ -18,77 +18,12 @@ import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
 export default class PatientsTableToolbarComponent extends AppBaseToolbar
 {
-    protected onRefreshClick(): void
-    {
-        this.table.refresh();
-    }
+    protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.patients.dialog.add_title');
+    protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.patients.dialog.edit_title');
 
-    protected onAddClick(event: MouseEvent): void
-    {
-        event.stopPropagation();
+    protected override readonly removeUrl: string = '/removePatient';
 
-        this.openPatientEditDialog(Sftoomi.Translator.translate('views.patients.dialog.add_title'));
-    }
-
-    protected onEditClick(event: MouseEvent): void
-    {
-        event.stopPropagation();
-
-        let selectedRecords: any[] = this.table.getSelection();
-        if (selectedRecords.length < 1) {
-            this.popupMsg.nothingSelected();
-
-            return;
-        }
-
-        if (selectedRecords.length > 1) {
-            this.popupMsg.moreThanOneSelected();
-
-            return;
-        }
-
-        let id: number = selectedRecords[0].id;
-        this.openPatientEditDialog(
-            Sftoomi.format(Sftoomi.Translator.translate('views.patients.dialog.edit_title'), [id]),
-            id
-        );
-    }
-
-    protected onRemoveClick(event: MouseEvent): void
-    {
-        event.stopPropagation();
-
-        let selectedRecords: any[] = this.table.getSelection();
-        if (selectedRecords.length < 1) {
-            this.popupMsg.nothingSelected();
-
-            return;
-        }
-
-        let me: this = this,
-            data: FormData = new FormData();
-
-        data.append('ids', selectedRecords.map(function (record: any): number {
-            return record.id;
-        }).join(','));
-
-        me.table.setIsLoading(true);
-        new Fetcher().request({
-            url: '/removePatient',
-            signal: this.queryController.signal,
-            data: data,
-            success: function (_response: any, _request: any, _data: any): void {
-                me.table.setIsLoading(false);
-
-                me.table.refresh();
-            },
-            failure: function (): void {
-                me.table.setIsLoading(false);
-            }
-        })
-    }
-
-    private openPatientEditDialog(title: string, id?: number): void
+    protected openEditDialog(title: string, id?: number): void
     {
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(PatientEditDialogComponent), {
