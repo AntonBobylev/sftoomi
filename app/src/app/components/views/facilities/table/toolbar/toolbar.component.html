@@ -9,4 +9,24 @@
         tuiHint="{{ Sftoomi.Translator.translate('refresh') }}"
     >
     </button>
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.plus"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('add') }}"
+        (click)="onAddClick($event)"
+    >
+    </button>
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.pencil"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('edit') }}"
+        (click)="onEditClick($event)"
+    >
+    </button>
 </div>

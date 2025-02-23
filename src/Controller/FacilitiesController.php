@@ -40,6 +40,9 @@ class FacilitiesController extends AbstractController
         ]);
     }
 
+    /**
+     * @throws Exception
+     */
     #[Route('/getFacility', name: 'get_facility')]
     public function getFacility(EntityManagerInterface $entityManager, Request $request): Response
     {
@@ -56,6 +59,40 @@ class FacilitiesController extends AbstractController
 
         return new JsonResponse([
             "data" => $facility
+        ]);
+    }
+
+    /**
+     * @throws Exception
+     */
+    #[Route('/saveFacility', name: 'save_facility')]
+    public function saveFacility(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $id = $request->request->get("id");
+        $values = [
+            "id"         => $request->request->get("id"),
+            "short_name" => $request->request->get("short_name"),
+            "full_name"  => $request->request->get("full_name")
+        ];
+
+        $connection = $entityManager->getConnection();
+        if (isset($id)) { {
+            $connection->update(
+                "facility",
+                $values,
+                ["id" => $values["id"]]
+            );
+        }} else {
+            $connection->insert(
+                "facility",
+                $values
+            );
+
+            $id = $connection->lastInsertId();
+        }
+
+        return new JsonResponse([
+            "id" => $id
         ]);
     }
 }

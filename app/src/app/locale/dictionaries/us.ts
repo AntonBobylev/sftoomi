@@ -46,7 +46,10 @@ let usDictionary: object =  {
             }
         },
         facilities: {
-
+            dialog: {
+                add_title: 'Add facility',
+                edit_title: 'Edit facility #{0}'
+            }
         }
     },
 

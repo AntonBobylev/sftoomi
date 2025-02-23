@@ -44,6 +44,12 @@ let ruDictionary: object =  {
                 add_title: 'Добавление пациента',
                 edit_title: 'Редактирование пациента #{0}'
             }
+        },
+        facilities: {
+            dialog: {
+                add_title: 'Добавить учреждение',
+                edit_title: 'Редактирование учреждения #{0}'
+            }
         }
     },
 
