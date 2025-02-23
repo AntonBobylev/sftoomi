@@ -26,7 +26,7 @@ class Patient
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dob = null;
 
-    #[ORM\Column(length: 15, nullable: true)]
+    #[ORM\Column(length: 16, nullable: true)]
     private ?string $phone = null;
 
     public function getId(): ?int
