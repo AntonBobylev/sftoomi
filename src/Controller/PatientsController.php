@@ -2,43 +2,32 @@
 
 namespace App\Controller;
 
+use App\Class\Fetcher;
 use App\Repository\PatientRepository;
-use DateTime;
 use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManagerInterface;
-use RuntimeException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-class PatientsController extends AbstractController
+final class PatientsController extends AppCrudController
 {
+    protected string $baseTable = "patient";
+
     /**
      * @throws Exception
      */
     #[Route("/getPatients", name: "get_patients")]
-    public function getPatients(EntityManagerInterface $entityManager, Request $request): Response
+    public function getPatients(Request $request): Response
     {
-        $limit = $request->request->get("limit");
-        $start = $request->request->get("start");
-        $start = $limit * $start;
-
-        $connection = $entityManager->getConnection();
-        $patients = $connection->createQueryBuilder()
-            ->select(["id", "last_name", "first_name", "middle_name", "dob", "phone"])
-            ->from("patient")
-            ->setFirstResult($start)
-            ->setMaxResults($limit)
-            ->fetchAllAssociative();
-
-        $sql = "select count(*) from patient";
-        $total = $connection->fetchOne($sql);
+        $patients = $this->getList(
+            $request,
+            ["id", "last_name", "first_name", "middle_name", "dob", "phone"]
+        );
 
         return new JsonResponse([
-            "data"  => $patients,
-            "total" => $total
+            "data"  => $patients["data"],
+            "total" => $patients["total"]
         ]);
     }
 
@@ -46,21 +35,10 @@ class PatientsController extends AbstractController
      * @throws Exception
      */
     #[Route("/getPatient", name: "get_patient")]
-    public function getPatient(EntityManagerInterface $entityManager, Request $request): Response
+    public function getPatient(Request $request): Response
     {
-        $id = $request->request->get("id");
-
-        $sql = "select id, last_name, first_name, middle_name, dob, phone
-                from patient
-                where id = $id";
-        $patient = $entityManager->getConnection()->fetchAssociative($sql);
-
-        if (empty($patient)) {
-            throw new RuntimeException("Patient not found");
-        }
-
         return new JsonResponse([
-            "data" => $patient
+            "data" => $this->getOne($request, ["id", "last_name", "first_name", "middle_name", "dob", "phone"])
         ]);
     }
 
@@ -68,39 +46,18 @@ class PatientsController extends AbstractController
      * @throws Exception
      */
     #[Route("/savePatient", name: "save_patient")]
-    public function savePatient(EntityManagerInterface $entityManager, Request $request): Response
+    public function savePatient(Request $request): Response
     {
-        $dob = $request->request->get("dob");
-        if (($dob = strtotime($dob)) !== false) {
-            $dob = (new DateTime())->setTimestamp($dob)->format("Y-m-d");
-        } else {
-            $dob = null;
-        }
-
-        $id = $request->request->get("id");
         $values = [
-            "id"          => $request->request->get("id"),
-            "last_name"   => $request->request->get("last_name"),
-            "first_name"  => $request->request->get("first_name"),
-            "middle_name" => $request->request->get("middle_name"),
-            "phone"       => $request->request->get("phone"),
-            "dob"         => $dob
+            "id"          => Fetcher::int($request->request->get("id")),
+            "last_name"   => Fetcher::trim($request->request->get("last_name")),
+            "first_name"  => Fetcher::trim($request->request->get("first_name")),
+            "middle_name" => Fetcher::trim($request->request->get("middle_name")),
+            "phone"       => Fetcher::trim($request->request->get("phone")),
+            "dob"         => Fetcher::date($request->request->get("dob"))
         ];
 
-        if (isset($id)) { {
-            $entityManager->getConnection()->update(
-                "patient",
-                $values,
-                ["id" => $values["id"]]
-            );
-        }} else {
-            $entityManager->getConnection()->insert(
-                "patient",
-                $values
-            );
-
-            $id = $entityManager->getConnection()->lastInsertId();
-        }
+        $id = $this->save($request, $values)["id"];
 
         return new JsonResponse([
             "id" => $id
@@ -109,23 +66,10 @@ class PatientsController extends AbstractController
     }
 
     #[Route("/removePatient", name: "remove_patient")]
-    public function removePatient(EntityManagerInterface $entityManager, PatientRepository $patientRepository, Request $request): Response
+    public function removePatient(PatientRepository $patientRepository, Request $request): Response
     {
-        $ids = $request->request->get("ids");
+        $this->remove($patientRepository, $request);
 
-        if (empty($ids)) {
-            throw new RuntimeException("At least one id is required for removal operation");
-        }
-
-        $ids = explode(",", $ids);
-
-        $patients = $patientRepository->findBy(["id" => $ids]);
-        foreach ($patients as $patient) {
-            $entityManager->remove($patient);
-        }
-
-        $entityManager->flush();
-
-        return new Response();
+        return new JsonResponse([]);
     }
 }
