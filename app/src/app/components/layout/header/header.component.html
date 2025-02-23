@@ -24,6 +24,14 @@
         >
             {{ Sftoomi.Translator.translate('navigation.facilities') }}
         </button>
+
+        <button tuiButton
+                size="s"
+                type="button"
+                [routerLink]="RoutesPaths.DOCTORS"
+        >
+            {{ Sftoomi.Translator.translate('navigation.doctors') }}
+        </button>
     </span>
     <span class="right">
         <app-theme-switcher />

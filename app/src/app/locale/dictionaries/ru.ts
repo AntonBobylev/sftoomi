@@ -21,6 +21,7 @@ let ruDictionary: object =  {
     warning: 'Внимание',
 
     navigation: {
+        doctors: 'Доктора',
         facilities: 'Учреждения',
         home: 'Домашняя',
         patients: 'Пациенты'
