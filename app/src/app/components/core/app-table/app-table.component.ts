@@ -184,7 +184,7 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     protected updatePageSizeCaption(): void
     {
-        let from: number = (this.currentPageIndex * this.itemsPerPage) + 1,
+        let from: number = this.totalRowsCount > 0 ? (this.currentPageIndex * this.itemsPerPage) + 1 : 0,
             to: number = (this.currentPageIndex + 1) * this.itemsPerPage;
 
         if (to > this.totalRowsCount) {

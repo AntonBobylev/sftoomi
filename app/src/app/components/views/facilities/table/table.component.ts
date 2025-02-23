@@ -16,7 +16,7 @@ import AppTableColumn from '../../../../type/AppTableColumn';
 
 export default class FacilitiesTableComponent extends AppTableComponent
 {
-    // protected override readonly url: string = '/getFacilities'; // TODO: implement API
+    protected override readonly url: string = '/getFacilities';
     protected override readonly paginatorRequired: boolean = true;
 
     protected override readonly columns: AppTableColumn[] = [{
