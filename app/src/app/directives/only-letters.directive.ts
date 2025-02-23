@@ -7,8 +7,8 @@ export default class OnlyLettersDirective
 {
     private readonly allowedKeys: string[] = [
         'Backspace',
-        'Shift',
-        'Control',
+        'ShiftLeft',
+        'ControlLeft',
         'Tab',
         'Space',
         'ArrowLeft',
@@ -21,7 +21,7 @@ export default class OnlyLettersDirective
 
     @HostListener('keydown', ['$event']) onKeydown(event: KeyboardEvent): void
     {
-        if ((event.keyCode >= 65 && event.keyCode <= 90) || this.allowedKeys.includes(event.key)) {
+        if ((event.keyCode >= 65 && event.keyCode <= 90) || this.allowedKeys.includes(event.code)) {
             return;
         }
 
