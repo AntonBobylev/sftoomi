@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import PatientsTableComponent from './table/table.component';
 
 @Component({
-    selector: 'app-patients',
+    selector: 'patients-module',
     imports: [
         PatientsTableComponent
     ],
