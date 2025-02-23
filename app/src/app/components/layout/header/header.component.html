@@ -4,7 +4,7 @@
         <button tuiButton
                 size="s"
                 type="button"
-                routerLink=""
+                [routerLink]="RoutesPaths.HOME"
         >
             {{ Sftoomi.Translator.translate('navigation.home') }}
         </button>
@@ -12,9 +12,17 @@
         <button tuiButton
                 size="s"
                 type="button"
-                routerLink="patients"
+                [routerLink]="RoutesPaths.PATIENTS"
         >
             {{ Sftoomi.Translator.translate('navigation.patients') }}
+        </button>
+
+        <button tuiButton
+                size="s"
+                type="button"
+                [routerLink]="RoutesPaths.FACILITIES"
+        >
+            {{ Sftoomi.Translator.translate('navigation.facilities') }}
         </button>
     </span>
     <span class="right">

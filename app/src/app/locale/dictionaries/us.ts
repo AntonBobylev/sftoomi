@@ -5,6 +5,7 @@ let usDictionary: object =  {
     edit: 'Edit',
     error: 'Error',
     first_name: 'First name',
+    full_name: 'Full name',
     id: 'ID',
     information: 'Information',
     last_name: 'Last name',
@@ -14,11 +15,13 @@ let usDictionary: object =  {
     remove: 'Remove',
     save: 'Save',
     select_all: 'Select all',
+    short_name: 'Short name',
     switch_language: 'Switch language',
     switch_theme: 'Switch theme',
     warning: 'Warning',
 
     navigation: {
+        facilities: 'Facilities',
         home: 'Home',
         patients: 'Patients'
     },
@@ -41,6 +44,9 @@ let usDictionary: object =  {
                 add_title: 'Add patient',
                 edit_title: 'Edit patient #{0}'
             }
+        },
+        facilities: {
+
         }
     },
 

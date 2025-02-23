@@ -5,6 +5,7 @@ let ruDictionary: object =  {
     edit: 'Редактировать',
     error: 'Ошибка',
     first_name: 'Имя',
+    full_name: 'Полное имя',
     id: 'ID',
     information: 'Информация',
     last_name: 'Фамилия',
@@ -14,11 +15,13 @@ let ruDictionary: object =  {
     remove: 'Удалить',
     save: 'Сохранить',
     select_all: 'Выбрать всё',
+    short_name: 'Короткое имя',
     switch_language: 'Изменить язык',
     switch_theme: 'Поменять тему',
     warning: 'Внимание',
 
     navigation: {
+        facilities: 'Учреждения',
         home: 'Домашняя',
         patients: 'Пациенты'
     },
