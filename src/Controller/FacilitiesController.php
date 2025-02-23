@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Repository\FacilityRepository;
+use App\Repository\PatientRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
@@ -94,5 +96,26 @@ class FacilitiesController extends AbstractController
         return new JsonResponse([
             "id" => $id
         ]);
+    }
+
+    #[Route('/removeFacility', name: 'remove_facility')]
+    public function removeFacility(EntityManagerInterface $entityManager, FacilityRepository $facilityRepository, Request $request): Response
+    {
+        $ids = $request->request->get("ids");
+
+        if (empty($ids)) {
+            throw new RuntimeException("At least one id is required for removal operation");
+        }
+
+        $ids = explode(",", $ids);
+
+        $facilities = $facilityRepository->findBy(["id" => $ids]);
+        foreach ($facilities as $facility) {
+            $entityManager->remove($facility);
+        }
+
+        $entityManager->flush();
+
+        return new Response();
     }
 }
