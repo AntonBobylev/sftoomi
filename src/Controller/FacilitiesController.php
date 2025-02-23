@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,6 +37,25 @@ class FacilitiesController extends AbstractController
         return new JsonResponse([
             "data"  => $facilities,
             "total" => $total
+        ]);
+    }
+
+    #[Route('/getFacility', name: 'get_facility')]
+    public function getFacility(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $id = $request->request->get("id");
+
+        $sql = "select id, short_name, full_name
+                from facility
+                where id = $id";
+        $facility = $entityManager->getConnection()->fetchAssociative($sql);
+
+        if (empty($facility)) {
+            throw new RuntimeException("Facility not found");
+        }
+
+        return new JsonResponse([
+            "data" => $facility
         ]);
     }
 }
