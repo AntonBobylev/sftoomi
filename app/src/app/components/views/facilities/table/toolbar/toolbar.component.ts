@@ -10,7 +10,7 @@ import AppBaseToolbar from '../../../../core/app-base-toolbar';
 import FacilityEditDialogComponent, { FacilityEditDialogData } from '../../dialog/dialog.component';
 
 @Component({
-    selector: 'patients-table-toolbar',
+    selector: 'facilities-table-toolbar',
     templateUrl: './toolbar.component.html',
     imports: [ TuiButton, TuiHint ],
     styleUrl: './toolbar.component.scss'
