@@ -9,11 +9,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class IndexController extends AbstractController
 {
-    #[Route('/', name: 'index')]
+    #[Route("/", name: "index")]
     public function index(): Response
     {
-        return new JsonResponse([
-            "test" => "test"
-        ]);
+        return new JsonResponse([]);
     }
 }

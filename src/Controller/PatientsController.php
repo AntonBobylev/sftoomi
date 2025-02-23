@@ -18,7 +18,7 @@ class PatientsController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/getPatients', name: 'get_patients')]
+    #[Route("/getPatients", name: "get_patients")]
     public function getPatients(EntityManagerInterface $entityManager, Request $request): Response
     {
         $limit = $request->request->get("limit");
@@ -45,7 +45,7 @@ class PatientsController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/getPatient', name: 'get_patient')]
+    #[Route("/getPatient", name: "get_patient")]
     public function getPatient(EntityManagerInterface $entityManager, Request $request): Response
     {
         $id = $request->request->get("id");
@@ -67,12 +67,12 @@ class PatientsController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/savePatient', name: 'save_patient')]
+    #[Route("/savePatient", name: "save_patient")]
     public function savePatient(EntityManagerInterface $entityManager, Request $request): Response
     {
         $dob = $request->request->get("dob");
         if (($dob = strtotime($dob)) !== false) {
-            $dob = (new DateTime())->setTimestamp($dob)->format('Y-m-d');
+            $dob = (new DateTime())->setTimestamp($dob)->format("Y-m-d");
         } else {
             $dob = null;
         }
@@ -108,7 +108,7 @@ class PatientsController extends AbstractController
 
     }
 
-    #[Route('/removePatient', name: 'remove_patient')]
+    #[Route("/removePatient", name: "remove_patient")]
     public function removePatient(EntityManagerInterface $entityManager, PatientRepository $patientRepository, Request $request): Response
     {
         $ids = $request->request->get("ids");

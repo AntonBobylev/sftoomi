@@ -127,7 +127,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         })
     }
 
-    protected afterSave(data: any): void
+    protected afterSave(_data: any): void
     {
     };
 }

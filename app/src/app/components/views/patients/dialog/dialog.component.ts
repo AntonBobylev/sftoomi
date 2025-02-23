@@ -15,7 +15,6 @@ import moment from 'moment';
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
 
 import getPatientAPI from '../../../../APIs/getPatientAPI';
-import savePatientAPI from '../../../../APIs/savePatientAPI';
 
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
 
@@ -61,7 +60,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         phone:       new FormControl<string | null>(null, [Validators.maxLength(16)])
     });
 
-    private readonly isIos = inject(TUI_IS_IOS);
+    private readonly isIos: boolean = inject(TUI_IS_IOS);
 
     protected readonly mask: Required<MaskitoOptions> = maskitoPhoneOptionsGenerator({
         metadata,

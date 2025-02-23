@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\FacilityRepository;
-use App\Repository\PatientRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
@@ -18,7 +17,7 @@ class FacilitiesController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/getFacilities', name: 'get_facilities')]
+    #[Route("/getFacilities", name: "get_facilities")]
     public function getFacilities(EntityManagerInterface $entityManager, Request $request): Response
     {
         $limit = $request->request->get("limit");
@@ -45,7 +44,7 @@ class FacilitiesController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/getFacility', name: 'get_facility')]
+    #[Route("/getFacility", name: "get_facility")]
     public function getFacility(EntityManagerInterface $entityManager, Request $request): Response
     {
         $id = $request->request->get("id");
@@ -67,7 +66,7 @@ class FacilitiesController extends AbstractController
     /**
      * @throws Exception
      */
-    #[Route('/saveFacility', name: 'save_facility')]
+    #[Route("/saveFacility", name: "save_facility")]
     public function saveFacility(EntityManagerInterface $entityManager, Request $request): Response
     {
         $id = $request->request->get("id");
@@ -98,7 +97,7 @@ class FacilitiesController extends AbstractController
         ]);
     }
 
-    #[Route('/removeFacility', name: 'remove_facility')]
+    #[Route("/removeFacility", name: "remove_facility")]
     public function removeFacility(EntityManagerInterface $entityManager, FacilityRepository $facilityRepository, Request $request): Response
     {
         $ids = $request->request->get("ids");
