@@ -1,0 +1,61 @@
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="false"
+    [showLoader]="isLoading"
+>
+    <div class="wrapper"
+         [formGroup]="form"
+    >
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('last_name') }}</label>
+            <input
+                onlyLetters
+                formControlName="last_name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="last_name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('first_name') }}</label>
+            <input
+                onlyLetters
+                formControlName="first_name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="first_name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('middle_name') }}</label>
+            <input
+                onlyLetters
+                formControlName="first_name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="first_name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <div class="actions">
+            <button
+                tuiButton
+                appearance="flat"
+                iconStart="check"
+                type="button"
+                [disabled]="form.invalid"
+                (click)="save()"
+            >
+                {{ Sftoomi.Translator.translate('save') }}
+            </button>
+        </div>
+    </div>
+</tui-loader>

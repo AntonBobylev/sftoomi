@@ -1,0 +1,42 @@
+<div class="wrapper">
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.rotate-ccw"
+        type="button"
+        (click)="onRefreshClick()"
+        tuiHint="{{ Sftoomi.Translator.translate('refresh') }}"
+    >
+    </button>
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.plus"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('add') }}"
+        (click)="onAddClick($event)"
+    >
+    </button>
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.pencil"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('edit') }}"
+        (click)="onEditClick($event)"
+    >
+    </button>
+    <button
+        tuiIconButton
+        size="s"
+        appearance="icon"
+        iconStart="@tui.circle-minus"
+        type="button"
+        tuiHint="{{ Sftoomi.Translator.translate('remove') }}"
+        (click)="onRemoveClick($event)"
+    >
+    </button>
+</div>
