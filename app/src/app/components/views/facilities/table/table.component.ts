@@ -4,6 +4,7 @@ import Sftoomi from '../../../../class/Sftoomi';
 
 import AppTableImports from '../../../core/app-table/app-table-imports';
 import AppTableComponent from '../../../core/app-table/app-table.component';
+import FacilitiesTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../../type/AppTableColumn';
 
@@ -17,6 +18,7 @@ import AppTableColumn from '../../../../type/AppTableColumn';
 export default class FacilitiesTableComponent extends AppTableComponent
 {
     protected override readonly url: string = '/getFacilities';
+    protected override readonly toolbar = FacilitiesTableToolbarComponent;
     protected override readonly paginatorRequired: boolean = true;
 
     protected override readonly columns: AppTableColumn[] = [{
