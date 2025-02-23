@@ -6,44 +6,65 @@
     <div class="wrapper"
          [formGroup]="form"
     >
-        <tui-textfield>
-            <label tuiLabel>{{ Sftoomi.Translator.translate('last_name') }}</label>
-            <input
-                onlyLetters
-                formControlName="last_name"
-                tuiTextfield
-            />
+        <tui-tabs [(activeItemIndex)]="activeTabIndex">
+            <button tuiTab
+                    type="button"
+            >
+                {{ Sftoomi.Translator.translate('views.doctors.dialog.tabs.common.title') }}
+            </button>
+            <button tuiTab
+                    type="button"
+            >
+                {{ Sftoomi.Translator.translate('views.doctors.dialog.tabs.facilities.title') }}
+            </button>
+        </tui-tabs>
 
-            <tui-error formControlName="last_name"
-                       [error]="[] | tuiFieldError | async"
-            />
-        </tui-textfield>
+        <div [style.display]="activeTabIndex === 0 ? 'flex' : 'none'"
+             class="common-tab"
+        >
+            <tui-textfield>
+                <label tuiLabel>{{ Sftoomi.Translator.translate('last_name') }}</label>
+                <input
+                    onlyLetters
+                    formControlName="last_name"
+                    tuiTextfield
+                />
 
-        <tui-textfield>
-            <label tuiLabel>{{ Sftoomi.Translator.translate('first_name') }}</label>
-            <input
-                onlyLetters
-                formControlName="first_name"
-                tuiTextfield
-            />
+                <tui-error formControlName="last_name"
+                           [error]="[] | tuiFieldError | async"
+                />
+            </tui-textfield>
 
-            <tui-error formControlName="first_name"
-                       [error]="[] | tuiFieldError | async"
-            />
-        </tui-textfield>
+            <tui-textfield>
+                <label tuiLabel>{{ Sftoomi.Translator.translate('first_name') }}</label>
+                <input
+                    onlyLetters
+                    formControlName="first_name"
+                    tuiTextfield
+                />
 
-        <tui-textfield>
-            <label tuiLabel>{{ Sftoomi.Translator.translate('middle_name') }}</label>
-            <input
-                onlyLetters
-                formControlName="first_name"
-                tuiTextfield
-            />
+                <tui-error formControlName="first_name"
+                           [error]="[] | tuiFieldError | async"
+                />
+            </tui-textfield>
 
-            <tui-error formControlName="first_name"
-                       [error]="[] | tuiFieldError | async"
-            />
-        </tui-textfield>
+            <tui-textfield>
+                <label tuiLabel>{{ Sftoomi.Translator.translate('middle_name') }}</label>
+                <input
+                    onlyLetters
+                    formControlName="middle_name"
+                    tuiTextfield
+                />
+
+                <tui-error formControlName="middle_name"
+                           [error]="[] | tuiFieldError | async"
+                />
+            </tui-textfield>
+        </div>
+
+        <div [style.display]="activeTabIndex === 1 ? 'block' : 'none'">
+            // TODO: facilities here
+        </div>
 
         <div class="actions">
             <button

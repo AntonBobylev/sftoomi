@@ -55,7 +55,16 @@ let usDictionary: object =  {
         doctors: {
             dialog: {
                 add_title: 'Add doctor',
-                edit_title: 'Edit doctor #{0}'
+                edit_title: 'Edit doctor #{0}',
+
+                tabs: {
+                    common: {
+                        title: 'Common'
+                    },
+                    facilities: {
+                        title: 'Facilities'
+                    }
+                }
             }
         }
     },

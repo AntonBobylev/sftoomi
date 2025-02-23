@@ -55,7 +55,16 @@ let ruDictionary: object =  {
         doctors: {
             dialog: {
                 add_title: 'Добавление доктора',
-                edit_title: 'Редактирование доктора #{0}'
+                edit_title: 'Редактирование доктора #{0}',
+
+                tabs: {
+                    common: {
+                        title: 'Общее'
+                    },
+                    facilities: {
+                        title: 'Учреждения'
+                    }
+                }
             }
         }
     },

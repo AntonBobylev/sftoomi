@@ -2,7 +2,7 @@ import { AsyncPipe } from '@angular/common';
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton, TuiDialogContext, TuiError, TuiLabel, TuiLoader, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
-import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiFieldErrorPipe, TuiTab, TuiTabsHorizontal } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
 
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
@@ -23,7 +23,8 @@ export type DoctorEditDialogData = {
     imports: [
         AsyncPipe, OnlyLettersDirective, ReactiveFormsModule,
         TuiButton, TuiError, TuiFieldErrorPipe, TuiLabel,
-        TuiLoader, TuiTextfieldComponent, TuiTextfieldDirective
+        TuiLoader, TuiTextfieldComponent, TuiTextfieldDirective,
+        TuiTabsHorizontal, TuiTab
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -41,6 +42,8 @@ export default class DoctorEditDialogComponent extends AppBaseEditDialog
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()])
     });
+
+    protected activeTabIndex: number = 0;
 
     protected afterLoad(data: getDoctorAPI): void
     {
