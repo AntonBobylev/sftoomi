@@ -77,11 +77,6 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         return this.isIos ? '+[0-9-]{1,20}' : '';
     }
 
-    protected afterSave(_data: savePatientAPI): void
-    {
-        this.context.completeWith({saved: true});
-    }
-
     protected afterLoad(data: getPatientAPI): void
     {
         this.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());

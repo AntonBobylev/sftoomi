@@ -8,7 +8,6 @@ import { injectContext } from '@taiga-ui/polymorpheus';
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
 
 import getFacilityAPI from '../../../../APIs/getFacilityAPI';
-import saveFacilityAPI from '../../../../APIs/saveFacilityAPI';
 
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
 
@@ -41,11 +40,6 @@ export default class FacilityEditDialogComponent extends AppBaseEditDialog
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()])
     });
-
-    protected afterSave(_data: saveFacilityAPI): void
-    {
-        this.context.completeWith({saved: true}); // TODO: replace to the parent?
-    }
 
     protected afterLoad(data: getFacilityAPI): void
     {

@@ -23,7 +23,6 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected abstract readonly saveUrl: string;
 
     protected abstract afterLoad(data: any): void;
-    protected abstract afterSave(data: any): void;
 
     private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
@@ -113,6 +112,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
                 me.isLoading = false;
 
                 me.afterSave(data);
+                me.context.completeWith({saved: true});
             },
             failure: function (code: any, message: any, _request: any): void {
                 me.isLoading = false;
@@ -126,4 +126,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             }
         })
     }
+
+    protected afterSave(data: any): void
+    {
+    };
 }
