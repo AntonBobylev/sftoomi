@@ -107,6 +107,7 @@ class PatientsController extends AbstractController
         ]);
 
     }
+
     #[Route('/removePatient', name: 'remove_patient')]
     public function removePatient(EntityManagerInterface $entityManager, PatientRepository $patientRepository, Request $request): Response
     {
