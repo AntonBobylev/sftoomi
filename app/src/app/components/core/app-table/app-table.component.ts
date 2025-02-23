@@ -21,6 +21,9 @@ export default class AppTableComponent implements OnInit, OnDestroy
     protected readonly url: string = '';
     protected readonly toolbar: any | undefined;
 
+    protected readonly toolbarHeight: string = '40px';
+    protected readonly footerHeight: string = '60px';
+
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
 
@@ -196,6 +199,26 @@ export default class AppTableComponent implements OnInit, OnDestroy
                 Sftoomi.Translator.translate('base_table.rows')
             ]
         );
+    }
+
+    protected getTableHeight(): string
+    {
+        let height: string = '100%';
+        if (this.toolbar || this.paginatorRequired) {
+            height = 'calc(100%';
+
+            if (this.toolbar) {
+                height = this.Sftoomi.format('{0} - {1}', [height, this.toolbarHeight]);
+            }
+
+            if (this.paginatorRequired) {
+                height = this.Sftoomi.format('{0} - {1}', [height, this.footerHeight]);
+            }
+
+            height += ')';
+        }
+
+        return height;
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]

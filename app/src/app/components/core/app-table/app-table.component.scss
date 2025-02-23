@@ -2,10 +2,6 @@ table {
     width: 100%;
 }
 
-.toolbar {
-    height: 40px;
-}
-
 tui-loader {
     height: 100%;
     width: 100%;
@@ -14,11 +10,9 @@ tui-loader {
 .wrapper {
     width: 100%;
     overflow: auto;
-    height: 100%;
 }
 
 .footer {
-    height: 60px;
     width: 100%;
     display: flex;
     justify-content: center;

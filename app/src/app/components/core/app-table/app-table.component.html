@@ -4,7 +4,7 @@
     [showLoader]="isLoading()"
 >
     @if (toolbar) {
-        <div class="toolbar">
+        <div [style.height]="toolbarHeight">
             <ng-container *ngComponentOutlet="toolbar;
                                               inputs: { table: this }"
             />
@@ -12,7 +12,7 @@
     }
 
     <div class="wrapper"
-         [style.height]="toolbar ? 'calc(100% - 100px)' : '100%'"
+         [style.height]="getTableHeight()"
     >
         <table tuiTable
                [columns]="columnsNames"
@@ -74,7 +74,9 @@
     </div>
 
     @if (paginatorRequired) {
-        <div class="footer">
+        <div class="footer"
+             [style.height]="footerHeight"
+        >
             <caption tuiCaption>
                 <button
                     appearance="flat"
