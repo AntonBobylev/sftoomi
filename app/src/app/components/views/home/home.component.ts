@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import Sftoomi from '../../../class/Sftoomi';
 
 @Component({
@@ -8,8 +9,7 @@ import Sftoomi from '../../../class/Sftoomi';
     styleUrl: './home.component.scss'
 })
 
-export class HomeComponent
+export default class HomeComponent
 {
-
     protected readonly Sftoomi = Sftoomi;
 }

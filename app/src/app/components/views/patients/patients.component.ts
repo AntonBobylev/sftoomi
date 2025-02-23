@@ -4,13 +4,11 @@ import PatientsTableComponent from './table/table.component';
 
 @Component({
     selector: 'patients-module',
-    imports: [
-        PatientsTableComponent
-    ],
+    imports: [PatientsTableComponent],
     templateUrl: './patients.component.html',
     styleUrl: './patients.component.scss'
 })
 
-export class PatientsComponent
+export default class PatientsComponent
 {
 }
