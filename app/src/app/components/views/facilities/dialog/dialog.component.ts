@@ -7,14 +7,15 @@ import { injectContext } from '@taiga-ui/polymorpheus';
 
 import AppBaseEditDialogWithTabs from '../../../core/app-base-edit-dialog-with-tabs';
 
+import AppItemSelectorComponent from '../../../fields/app-item-selector/app-item-selector.component';
+import { AppItemSelectorDataListRow } from '../../../fields/app-item-selector/data-list/data-list.component';
+
 import getFacilityAPI from '../../../../APIs/getFacilityAPI';
 
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
 
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
-import AppItemSelectorComponent from '../../../fields/app-item-selector/app-item-selector.component';
-import Facility from '../../../../type/Facility';
-import { AppItemSelectorDataListRow } from '../../../fields/app-item-selector/data-list/data-list.component';
+
 import Doctor from '../../../../type/Doctor';
 
 export type FacilityEditDialogData = {
