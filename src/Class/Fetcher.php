@@ -25,6 +25,19 @@ class Fetcher
         return trim($value);
     }
 
+    public static function intArray($value, $default = null): array
+    {
+        if (self::isNull($value)) {
+            return $default;
+        }
+
+        if (is_string($value)) {
+            $value =  explode(',', $value);
+        }
+
+        return array_map('intval', $value);
+    }
+
     public static function date($value, $default = null): ?string
     {
         if (self::isNull($value)) {

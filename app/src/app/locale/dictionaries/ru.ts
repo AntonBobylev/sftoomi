@@ -10,6 +10,7 @@ let ruDictionary: object =  {
     information: 'Информация',
     last_name: 'Фамилия',
     middle_name: 'Отчество',
+    no_data_to_display: 'Нет данных для отображения',
     phone: 'Телефон',
     refresh: 'Обновить',
     remove: 'Удалить',
@@ -66,6 +67,15 @@ let ruDictionary: object =  {
                     }
                 }
             }
+        }
+    },
+
+    fields: {
+        item_selector: {
+            move_all_left: 'Переместить всё влево',
+            move_all_right: 'Переместить всё вправо',
+            move_left: 'Переместить влево',
+            move_right: 'Переместить вправо'
         }
     },
 

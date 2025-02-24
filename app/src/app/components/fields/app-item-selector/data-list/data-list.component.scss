@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--tui-background-neutral-1);
+    line-height: 30px;
+    padding: 10px;
+
+    .no-data-message {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .item {
+        cursor: pointer;
+        padding: 10px;
+    }
+
+    .item-selected {
+        background-color: var(--tui-background-neutral-1-pressed);
+    }
+
+    .item:hover {
+        background-color: var(--tui-background-neutral-1-hover);
+    }
+}

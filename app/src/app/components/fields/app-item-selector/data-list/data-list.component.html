@@ -1,0 +1,14 @@
+<div class="wrapper">
+    @if (data().length < 1) {
+        <span class="no-data-message">{{ Sftoomi.Translator.translate('no_data_to_display') }}</span>
+    }
+    @for (row of data(); track row.value) {
+        <span class="item"
+              (click)="onItemClick($event, row)"
+              [ngClass]="{'item-selected': row.selected}"
+              [tuiHint]="row.tooltip"
+        >
+            {{ row.name }}
+        </span>
+    }
+</div>

@@ -14,7 +14,7 @@ class AppCrudController extends AbstractController
     protected string $baseTable = "";
 
     /** @var EntityManagerInterface */
-    private EntityManagerInterface $entityManager;
+    protected EntityManagerInterface $entityManager;
 
     public function __construct(EntityManagerInterface $entityManager)
     {

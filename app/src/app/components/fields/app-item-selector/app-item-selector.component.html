@@ -1,0 +1,34 @@
+<div class="wrapper">
+    <app-item-selector-data-list #left />
+    <div class="action-buttons-wrapper">
+        <button tuiIconButton
+                iconStart="@tui.arrow-right-to-line"
+                appearance="flat"
+                [tuiHint]="Sftoomi.Translator.translate('fields.item_selector.move_all_right')"
+                size="s"
+                (click)="onMoveAllRightClick()"
+        ></button>
+        <button tuiIconButton
+                iconStart="@tui.arrow-right"
+                appearance="flat"
+                [tuiHint]="Sftoomi.Translator.translate('fields.item_selector.move_right')"
+                size="s"
+                (click)="onMoveRightClick()"
+        ></button>
+        <button tuiIconButton
+                iconStart="@tui.arrow-left"
+                appearance="flat"
+                [tuiHint]="Sftoomi.Translator.translate('fields.item_selector.move_left')"
+                size="s"
+                (click)="onMoveLeftClick()"
+        ></button>
+        <button tuiIconButton
+                iconStart="@tui.arrow-left-to-line"
+                appearance="flat"
+                [tuiHint]="Sftoomi.Translator.translate('fields.item_selector.move_all_left')"
+                size="s"
+                (click)="onMoveAllLeftClick()"
+        ></button>
+    </div>
+    <app-item-selector-data-list #right />
+</div>

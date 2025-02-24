@@ -10,6 +10,7 @@ let usDictionary: object =  {
     information: 'Information',
     last_name: 'Last name',
     middle_name: 'Middle name',
+    no_data_to_display: 'No data to display',
     phone: 'Phone',
     refresh: 'Refresh',
     remove: 'Remove',
@@ -66,6 +67,15 @@ let usDictionary: object =  {
                     }
                 }
             }
+        }
+    },
+
+    fields: {
+        item_selector: {
+            move_all_left: 'Move all left',
+            move_all_right: 'Move all right',
+            move_left: 'Move left',
+            move_right: 'Move right'
         }
     },
 

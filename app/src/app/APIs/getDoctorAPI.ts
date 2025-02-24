@@ -1,9 +1,12 @@
+import Doctor from '../type/Doctor';
+import Facility from '../type/Facility';
+
 type getDoctorAPI = {
-    data: {
-        id: number,
-        last_name: string,
-        first_name: string,
-        middle_name: string
+    data: Doctor & {
+        doctor_facilities: Facility[]
+    },
+    lists: {
+        facilities: Facility[]
     }
 };
 

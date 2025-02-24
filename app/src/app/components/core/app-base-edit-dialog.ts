@@ -48,9 +48,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         let me: this = this,
             data: FormData = new FormData();
 
-        if (!this.data.id) {
-            return;
-        } else {
+        if (this.data.id) {
             data.append('id', this.data.id.toString());
         }
 
@@ -103,6 +101,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             data.append('id', this.data.id.toString());
         }
 
+        data = this.getAdditionalDataOnSave(data);
+
         me.isLoading = true;
         new Fetcher().request({
             url: this.saveUrl,
@@ -130,4 +130,9 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected afterSave(_data: any): void
     {
     };
+
+    protected getAdditionalDataOnSave(data: FormData): FormData
+    {
+        return data;
+    }
 }

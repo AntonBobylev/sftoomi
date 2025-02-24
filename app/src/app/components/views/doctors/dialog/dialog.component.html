@@ -26,6 +26,7 @@
                 <label tuiLabel>{{ Sftoomi.Translator.translate('last_name') }}</label>
                 <input
                     onlyLetters
+                    uppercase
                     formControlName="last_name"
                     tuiTextfield
                 />
@@ -38,6 +39,7 @@
             <tui-textfield>
                 <label tuiLabel>{{ Sftoomi.Translator.translate('first_name') }}</label>
                 <input
+                    uppercase
                     onlyLetters
                     formControlName="first_name"
                     tuiTextfield
@@ -51,6 +53,7 @@
             <tui-textfield>
                 <label tuiLabel>{{ Sftoomi.Translator.translate('middle_name') }}</label>
                 <input
+                    uppercase
                     onlyLetters
                     formControlName="middle_name"
                     tuiTextfield
@@ -63,7 +66,7 @@
         </div>
 
         <div [style.display]="activeTabIndex === 1 ? 'block' : 'none'">
-            // TODO: facilities here
+            <app-item-selector #facilitiesItemSelectorCtrl />
         </div>
 
         <div class="actions">
@@ -72,7 +75,7 @@
                 appearance="flat"
                 iconStart="check"
                 type="button"
-                [disabled]="form.invalid"
+                [disabled]="isSaveButtonDisabled()"
                 (click)="save()"
             >
                 {{ Sftoomi.Translator.translate('save') }}
