@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { TuiHintDirective } from '@taiga-ui/core';
 
@@ -26,6 +26,8 @@ type Item = {
 
 export default class AppItemSelectorDataListComponent
 {
+    @Input({required: true}) public title: string = '';
+
     protected readonly data: WritableSignal<Item[]> = signal<Item[]>([]);
 
     protected readonly Sftoomi = Sftoomi;

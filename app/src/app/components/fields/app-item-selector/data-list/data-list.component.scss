@@ -4,24 +4,36 @@
     background-color: var(--tui-background-neutral-1);
     line-height: 30px;
     padding: 10px;
+    min-height: 180px;
+    max-height: 180px;
 
-    .no-data-message {
-        width: 100%;
+    .header {
+        color: var(--tui-text-action);
+    }
+
+    .content {
         display: flex;
-        justify-content: center;
-        align-items: center;
-    }
+        flex-direction: column;
+        overflow: auto;
 
-    .item {
-        cursor: pointer;
-        padding: 10px;
-    }
+        .no-data-message {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-    .item-selected {
-        background-color: var(--tui-background-neutral-1-pressed);
-    }
+        .item {
+            cursor: pointer;
+            padding: 10px;
+        }
 
-    .item:hover {
-        background-color: var(--tui-background-neutral-1-hover);
+        .item-selected {
+            background-color: var(--tui-background-neutral-1-pressed);
+        }
+
+        .item:hover {
+            background-color: var(--tui-background-neutral-1-hover);
+        }
     }
 }

@@ -72,10 +72,12 @@ let ruDictionary: object =  {
 
     fields: {
         item_selector: {
+            available: 'Возможное',
             move_all_left: 'Переместить всё влево',
             move_all_right: 'Переместить всё вправо',
             move_left: 'Переместить влево',
-            move_right: 'Переместить вправо'
+            move_right: 'Переместить вправо',
+            selected: 'Выбранное'
         }
     },
 

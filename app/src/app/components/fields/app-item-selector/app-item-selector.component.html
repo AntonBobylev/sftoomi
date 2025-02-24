@@ -1,5 +1,7 @@
 <div class="wrapper">
-    <app-item-selector-data-list #left />
+    <app-item-selector-data-list #left
+                                 [title]="Sftoomi.Translator.translate('fields.item_selector.available')"
+    />
     <div class="action-buttons-wrapper">
         <button tuiIconButton
                 iconStart="@tui.arrow-right-to-line"
@@ -30,5 +32,7 @@
                 (click)="onMoveAllLeftClick()"
         ></button>
     </div>
-    <app-item-selector-data-list #right />
+    <app-item-selector-data-list #right
+                                 [title]="Sftoomi.Translator.translate('fields.item_selector.selected')"
+    />
 </div>
