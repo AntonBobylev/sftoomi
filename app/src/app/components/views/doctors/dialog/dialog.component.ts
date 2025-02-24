@@ -58,13 +58,16 @@ export default class DoctorEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getDoctorAPI): void
     {
-        this.form.get('last_name')?.setValue(data.data.last_name);
-        this.form.get('first_name')?.setValue(data.data.first_name);
-        this.form.get('middle_name')?.setValue(data.data.middle_name);
-
         let doctorFacilities: Facility[] = [];
-        if (data.data.doctor_facilities) {
-            doctorFacilities = data.data.doctor_facilities;
+
+        if (this.data.id) {
+            this.form.get('last_name')?.setValue(data.data.last_name);
+            this.form.get('first_name')?.setValue(data.data.first_name);
+            this.form.get('middle_name')?.setValue(data.data.middle_name);
+
+            if (data.data.doctor_facilities) {
+                doctorFacilities = data.data.doctor_facilities;
+            }
         }
 
         let facilitiesList: Facility[] = data.lists.facilities;
