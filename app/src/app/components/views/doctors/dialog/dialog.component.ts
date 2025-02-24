@@ -5,7 +5,7 @@ import { TuiButton, TuiDialogContext, TuiError, TuiLabel, TuiLoader, TuiTextfiel
 import { TuiFieldErrorPipe, TuiTab, TuiTabsHorizontal } from '@taiga-ui/kit';
 import { injectContext } from '@taiga-ui/polymorpheus';
 
-import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
+import AppBaseEditDialogWithTabs from '../../../core/app-base-edit-dialog-with-tabs';
 
 import getDoctorAPI from '../../../../APIs/getDoctorAPI';
 
@@ -32,11 +32,14 @@ export type DoctorEditDialogData = {
         TuiLoader, TuiTextfieldComponent, TuiTextfieldDirective,
         TuiTabsHorizontal, TuiTab, AppItemSelectorComponent, UppercaseDirective
     ],
-    styleUrl: './dialog.component.scss',
+    styleUrls: [
+        './dialog.component.scss',
+        '../../../core/app-base-edit-dialog-with-tabs.scss'
+    ],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export default class DoctorEditDialogComponent extends AppBaseEditDialog
+export default class DoctorEditDialogComponent extends AppBaseEditDialogWithTabs
 {
     protected readonly context: TuiDialogContext<any, DoctorEditDialogData> = injectContext<TuiDialogContext<any, DoctorEditDialogData>>();
 
@@ -53,8 +56,6 @@ export default class DoctorEditDialogComponent extends AppBaseEditDialog
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()])
     });
-
-    protected activeTabIndex: number = 0;
 
     protected afterLoad(data: getDoctorAPI): void
     {
@@ -87,7 +88,7 @@ export default class DoctorEditDialogComponent extends AppBaseEditDialog
     {
         let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl.getRightListData();
         if (selectedFacilities.length > 0) {
-            let facilitiesIds: string[] = selectedFacilities.map(function (facility:  AppItemSelectorDataListRow): string {
+            let facilitiesIds: string[] = selectedFacilities.map(function (facility: AppItemSelectorDataListRow): string {
                 return facility.value;
             });
 
