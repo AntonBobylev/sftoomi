@@ -102,7 +102,6 @@ final class DoctorsController extends AppCrudController
         ]);
     }
 
-
     /**
      * @throws Exception
      */
