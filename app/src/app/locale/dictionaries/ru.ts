@@ -49,7 +49,7 @@ let ruDictionary: object =  {
         },
         facilities: {
             dialog: {
-                add_title: 'Добавление учреждение',
+                add_title: 'Добавление учреждения',
                 edit_title: 'Редактирование учреждения #{0}'
             }
         },
