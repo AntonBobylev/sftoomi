@@ -54,8 +54,8 @@ final class DoctorsController extends AppCrudController
         }
 
         return new JsonResponse([
-            "data"       => $data,
-            "lists"      => [
+            "data"  => $data,
+            "lists" => [
                 "facilities" => $facilities
             ]
         ]);
