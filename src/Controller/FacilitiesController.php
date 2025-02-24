@@ -37,8 +37,13 @@ final class FacilitiesController extends AppCrudController
     #[Route("/getFacility", name: "get_facility")]
     public function getFacility(Request $request): Response
     {
+        $data = [];
+        if ($request->request->has("id")) {
+            $data = $this->getOne($request, ["id", "short_name", "full_name"]);
+        }
+
         return new JsonResponse([
-            "data" => $this->getOne($request, ["id", "short_name", "full_name"])
+            "data" => $data
         ]);
     }
 

@@ -46,6 +46,8 @@ export default class DoctorEditDialogComponent extends AppBaseEditDialog
     protected readonly loadUrl: string = '/getDoctor';
     protected readonly saveUrl: string = '/saveDoctor';
 
+    protected override readonly fetchExtraRequestOnLoad: boolean = true;
+
     protected readonly form: FormGroup = new FormGroup({
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),

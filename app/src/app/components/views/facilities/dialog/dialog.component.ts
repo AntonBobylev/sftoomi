@@ -43,7 +43,9 @@ export default class FacilityEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getFacilityAPI): void
     {
-        this.form.get('short_name')?.setValue(data.data.short_name);
-        this.form.get('full_name')?.setValue(data.data.full_name);
+        if (this.data.id) {
+            this.form.get('short_name')?.setValue(data.data.short_name);
+            this.form.get('full_name')?.setValue(data.data.full_name);
+        }
     }
 }

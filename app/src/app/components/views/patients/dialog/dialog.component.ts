@@ -78,13 +78,15 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getPatientAPI): void
     {
-        this.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
-        this.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
-        this.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
-        this.form.get('phone')?.setValue(data.data.phone);
+        if (this.data.id) {
+            this.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
+            this.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
+            this.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
+            this.form.get('phone')?.setValue(data.data.phone);
 
-        if (data.data.dob) {
-            this.form.get('dob')?.setValue(moment(data.data.dob).toDate());
+            if (data.data.dob) {
+                this.form.get('dob')?.setValue(moment(data.data.dob).toDate());
+            }
         }
     }
 }

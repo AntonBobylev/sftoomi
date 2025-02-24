@@ -7,8 +7,6 @@ import Fetcher from '../../class/Fetcher';
 
 import PopupMsgService from '../../services/popup-msg.service';
 
-import { PatientEditDialogData } from '../views/patients/dialog/dialog.component';
-
 @Directive()
 export default abstract class AppBaseEditDialog implements AfterViewInit, OnDestroy
 {
@@ -19,6 +17,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected readonly Sftoomi = Sftoomi;
 
+    protected readonly fetchExtraRequestOnLoad: boolean = false;
+
     protected abstract readonly loadUrl: string;
     protected abstract readonly saveUrl: string;
 
@@ -26,7 +26,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
-    protected get data(): PatientEditDialogData
+    protected get data(): any
     {
         return this.context.data;
     }
@@ -45,6 +45,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected load(): void
     {
+        if (!this.fetchExtraRequestOnLoad) {
+            return;
+        }
+
         let me: this = this,
             data: FormData = new FormData();
 

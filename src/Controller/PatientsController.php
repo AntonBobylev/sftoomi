@@ -37,8 +37,13 @@ final class PatientsController extends AppCrudController
     #[Route("/getPatient", name: "get_patient")]
     public function getPatient(Request $request): Response
     {
+        $data = [];
+        if ($request->request->has("id")) {
+            $data = $this->getOne($request, ["id", "last_name", "first_name", "middle_name", "dob", "phone"]);
+        }
+
         return new JsonResponse([
-            "data" => $this->getOne($request, ["id", "last_name", "first_name", "middle_name", "dob", "phone"])
+            "data" => $data
         ]);
     }
 
