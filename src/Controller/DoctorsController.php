@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
+use App\Repository\DoctorRepository;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,7 +89,7 @@ final class DoctorsController extends AppCrudController
             $this->entityManager->getConnection()->insert(
                 "facilities_doctors",
                 [
-                    "doctor_id" => $id,
+                    "doctor_id"   => $id,
                     "facility_id" => $facilityId
                 ]
             );
@@ -99,5 +100,27 @@ final class DoctorsController extends AppCrudController
         return new JsonResponse([
             "id" => $id
         ]);
+    }
+
+
+    /**
+     * @throws Exception
+     */
+    #[Route("/removeDoctor", name: "remove_doctor")]
+    public function removeDoctor(DoctorRepository $doctorRepository, Request $request): Response
+    {
+        $ids = $request->request->get("ids");
+        $ids = explode(",", $ids);
+
+        $this->entityManager->getConnection()->beginTransaction();
+        foreach ($ids as $id) {
+            $this->entityManager->getConnection()->delete("facilities_doctors", ["doctor_id" => $id]);
+        }
+
+        $this->remove($doctorRepository, $request);
+
+        $this->entityManager->getConnection()->commit();
+
+        return new JsonResponse([]);
     }
 }
