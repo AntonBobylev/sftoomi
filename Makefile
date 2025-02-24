@@ -19,3 +19,6 @@ db-create:
 
 front-init:
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app i
+
+front-dev:
+	cd app && ng serve
