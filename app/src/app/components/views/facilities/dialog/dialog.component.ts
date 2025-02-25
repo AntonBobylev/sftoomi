@@ -17,6 +17,7 @@ import { onlyLettersValidator } from '../../../../validators/only-letters.valida
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
 
 import Doctor from '../../../../type/Doctor';
+import Sftoomi from '../../../../class/Sftoomi';
 
 export type FacilityEditDialogData = {
     id?: number
@@ -98,8 +99,8 @@ export default class FacilityEditDialogComponent extends AppBaseEditDialogWithTa
     {
         return doctors.map(function (row: Doctor): AppItemSelectorDataListRow {
             return {
-                name:    row.last_name,
-                value:   row.id.toString()
+                name:  Sftoomi.humanShortName(row),
+                value: row.id.toString()
             };
         });
     }
