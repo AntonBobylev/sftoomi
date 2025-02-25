@@ -46,6 +46,8 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 {
     protected readonly context: TuiDialogContext<any, PatientEditDialogData> = injectContext<TuiDialogContext<any, PatientEditDialogData>>();
 
+    protected override readonly fetchExtraRequestOnLoad: boolean = true;
+
     protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
     protected readonly TuiDay: typeof TuiDay = TuiDay;
 
