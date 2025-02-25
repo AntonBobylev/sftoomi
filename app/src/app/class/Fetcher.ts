@@ -80,8 +80,13 @@ export default class Fetcher
                     formattedTrace += `<div>#${row}</div>`
                 });
 
+                let message: string = `<div style="overflow-y: auto; max-height: 300px;">
+                                            <div>${error.response.data.message}</div>
+                                            ${formattedTrace}
+                                      </div>`;
+
                 me.informationDialog.show(
-                    error.response.data.message + formattedTrace,
+                    message,
                     InformationDialogType.ERROR,
                     (): void => {
                         failureCallback(error.response.data.message, formattedTrace, error.request)

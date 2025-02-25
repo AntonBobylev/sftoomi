@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 
 import Sftoomi from '../class/Sftoomi';
+import { DomSanitizer } from '@angular/platform-browser';
 
 export enum InformationDialogType {
     INFO,
@@ -16,6 +17,8 @@ export enum InformationDialogType {
 export default class InformationDialogService
 {
     private readonly dialog: TuiDialogService = inject(TuiDialogService);
+
+    constructor(private readonly domSanitizer: DomSanitizer) {}
 
     public show(message: string, type: InformationDialogType = InformationDialogType.INFO, callback?: Function): void
     {
@@ -33,7 +36,7 @@ export default class InformationDialogService
         }
 
         this.dialog.open(
-            message,
+            this.domSanitizer.bypassSecurityTrustHtml(message),
             {label: header, size: 'auto', dismissible: false}
         ).subscribe((): void => {
             if (callback) {
