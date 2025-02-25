@@ -65,7 +65,31 @@ export default class Fetcher
                     return;
                 }
 
-                return successCallback(response, response.request, response.data);
+                try {
+                    return successCallback(response, response.request, response.data);
+                }  catch (e: unknown) {
+                    // do not throw to catch Promise block
+
+                    let message: string = '';
+                    if (typeof e === "string") {
+                        message = e.toUpperCase();
+                    } else if (e instanceof Error) {
+                        let stack: string = e.stack ?? '',
+                            stackArray: string[] = stack.split('    '),
+                            stackFormatted: string = '';
+
+                        stackArray.forEach(function (row: string): void {
+                            stackFormatted += `<div>&nbsp;&nbsp;&nbsp;&nbsp;${row}</div>`;
+                        });
+
+                        message = `<div>${e.message}</div><div>${stackFormatted}</div>`;
+                    }
+
+                    me.informationDialog.show(
+                        message,
+                        InformationDialogType.ERROR
+                    );
+                }
             })
             .catch((error): void => {
                 if (typeof failureCallback !== 'function') {
