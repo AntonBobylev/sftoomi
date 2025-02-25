@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Injector } from '@angular/core';
 import { TuiRoot } from '@taiga-ui/core';
+
+import ServiceLocator from './services/locator.service';
 
 import Sftoomi from './class/Sftoomi';
 import Theme from './class/Theme';
@@ -24,8 +26,10 @@ export class AppComponent
 {
     protected readonly Sftoomi = Sftoomi;
 
-    constructor()
+    constructor(private injector: Injector)
     {
+        ServiceLocator.injector = this.injector;
+
         Sftoomi.Theme = new Theme();
     }
 }
