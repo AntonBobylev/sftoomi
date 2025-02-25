@@ -1,6 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 
+import Sftoomi from '../class/Sftoomi';
+
 export enum InformationDialogType {
     INFO,
     WARNING,
@@ -20,13 +22,13 @@ export default class InformationDialogService
         let header;
         switch (type) {
             case InformationDialogType.INFO:
-                header = 'Information';
+                header = Sftoomi.Translator.translate('information');
                 break;
             case InformationDialogType.WARNING:
-                header = 'Warning';
+                header = Sftoomi.Translator.translate('warning');
                 break;
             case InformationDialogType.ERROR:
-                header = 'Error';
+                header = Sftoomi.Translator.translate('error');
                 break;
         }
 
