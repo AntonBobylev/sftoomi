@@ -32,7 +32,7 @@ export default class InformationDialogService
 
         this.dialog.open(
             message,
-            {label: header, size: 'auto'}
+            {label: header, size: 'auto', dismissible: false}
         ).subscribe((): void => {
             if (callback) {
                 callback();

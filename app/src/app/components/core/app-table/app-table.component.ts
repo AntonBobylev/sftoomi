@@ -69,7 +69,6 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     protected pageSizeCaption: string = '';
 
-    private originalReceivedData: any[] = [];
     private totalRowsCount: number = 0;
 
     ngOnInit(): void
@@ -114,7 +113,6 @@ export default class AppTableComponent implements OnInit, OnDestroy
             signal: this.queryController.signal,
             success: function (_response: any, _request: XMLHttpRequest, data: any): void {
                 me.isLoading.set(false);
-                me.originalReceivedData = data[me.dataRoot];
 
                 me.totalRowsCount = data.total;
                 if (me.paginatorRequired) {
