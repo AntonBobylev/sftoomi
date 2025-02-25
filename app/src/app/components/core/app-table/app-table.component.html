@@ -64,7 +64,13 @@
                                     [(ngModel)]="row.selected"
                                 />
                             } @else {
-                                {{ row[col.name]}}
+                                <div [innerHTML]="row[col.name]"
+                                     [ngStyle]="{
+                                        'height': getColumnHeight(col.styles?.height),
+                                     }"
+                                     style="overflow: auto; display: flex; align-items: center;"
+                                >
+                                </div>
                             }
                         </td>
                     </ng-container>

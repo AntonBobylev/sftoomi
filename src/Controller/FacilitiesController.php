@@ -25,8 +25,18 @@ final class FacilitiesController extends AppCrudController
             ["id", "short_name", "full_name"]
         );
 
+        $data = $facilities["data"];
+        foreach ($data as &$row) {
+            $sql = "select d.id, d.last_name, d.first_name, d.middle_name
+                    from facilities_doctors fd
+                        left join doctor d on d.id = fd.doctor_id
+                    where fd.facility_id = {$row["id"]}";
+            $row["facility_doctors"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+        }
+        unset($row);
+
         return new JsonResponse([
-            "data"  => $facilities["data"],
+            "data"  => $data,
             "total" => $facilities["total"]
         ]);
     }

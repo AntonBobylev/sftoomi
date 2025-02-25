@@ -1,6 +1,8 @@
 type AppTableColumnStyles = {
     alignment?: 'left' | 'center' |'right',
-    width?: string
+    width?: string,
+    height?: string,
+    overflow?: string
 }
 
 export default AppTableColumnStyles

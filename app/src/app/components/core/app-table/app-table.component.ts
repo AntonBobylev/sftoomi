@@ -166,6 +166,15 @@ export default class AppTableComponent implements OnInit, OnDestroy
         return columnWidth;
     }
 
+    protected getColumnHeight(columnHeight?: AppTableColumnStyles['height']): string | null
+    {
+        if (!columnHeight) {
+            return null;
+        }
+
+        return columnHeight;
+    }
+
     protected onPageChange(newPageNumber: number): void
     {
         this.currentPageIndex = newPageNumber;
