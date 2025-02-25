@@ -6,6 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import AppTableImports from './app-table-imports';
 
 import Fetcher from '../../../class/Fetcher';
+
 import AppTableColumn from '../../../type/AppTableColumn';
 import AppTableColumnStyles from '../../../type/AppTableColumnStyles';
 
