@@ -149,9 +149,9 @@ export default class Sftoomi
             return '';
         }
 
-        let last: string = '',
-            first: string = '',
-            middle: string = '';
+        let last: string,
+            first: string,
+            middle: string;
 
         if (Sftoomi.isObject(arg1)) {
             last = arg1['last_name'];
