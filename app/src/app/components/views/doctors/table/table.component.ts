@@ -7,6 +7,7 @@ import AppTableComponent from '../../../core/app-table/app-table.component';
 import DoctorsTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../../type/AppTableColumn';
+import Facility from '../../../../type/Facility';
 
 @Component({
     selector: 'doctors-table',
@@ -40,5 +41,21 @@ export default class DoctorsTableComponent extends AppTableComponent
     }, {
         name: 'middle_name',
         caption: Sftoomi.Translator.translate('middle_name')
+    }, {
+        name: 'doctor_facilities',
+        caption: Sftoomi.Translator.translate('views.doctors.table.columns.facilities'),
+        valueRenderer: function (facilities: Facility[]): string
+        {
+            let result: string = '';
+            facilities.forEach(function (facility: Facility): void {
+                result += `<div>${facility.full_name}</div>`;
+            });
+
+            return result;
+        },
+        styles: {
+            width: '300px',
+            height: '40px'
+        }
     }];
 }

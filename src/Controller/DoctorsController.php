@@ -25,8 +25,18 @@ final class DoctorsController extends AppCrudController
             ["id", "last_name", "first_name", "middle_name"]
         );
 
+        $data = $doctors["data"];
+        foreach ($data as &$row) {
+            $sql = "select f.id, f.short_name, f.full_name
+                    from facilities_doctors fd
+                        left join facility f on f.id = fd.facility_id
+                    where fd.doctor_id = {$row["id"]}";
+            $row["doctor_facilities"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+        }
+        unset($row);
+
         return new JsonResponse([
-            "data"  => $doctors["data"],
+            "data"  => $data,
             "total" => $doctors["total"]
         ]);
     }
