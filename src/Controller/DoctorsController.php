@@ -31,7 +31,7 @@ final class DoctorsController extends AppCrudController
                     from facilities_doctors fd
                         left join facility f on f.id = fd.facility_id
                     where fd.doctor_id = {$row["id"]}";
-            $row["doctor_facilities"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+            $row["doctor_facilities"] = $this->connection->fetchAllAssociative($sql);
         }
         unset($row);
 
@@ -49,7 +49,7 @@ final class DoctorsController extends AppCrudController
     {
         $sql = "select id, full_name, short_name
                 from facility";
-        $facilities = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+        $facilities = $this->connection->fetchAllAssociative($sql);
 
         $data = [];
         $doctorId = $request->request->get("id");
@@ -60,7 +60,7 @@ final class DoctorsController extends AppCrudController
                     from facilities_doctors fd
                         left join facility f on f.id = fd.facility_id 
                     where fd.doctor_id = $doctorId";
-            $data["doctor_facilities"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+            $data["doctor_facilities"] = $this->connection->fetchAllAssociative($sql);
         }
 
         return new JsonResponse([
@@ -84,28 +84,33 @@ final class DoctorsController extends AppCrudController
             "middle_name" => Fetcher::trim($request->request->get("middle_name"))
         ];
 
-        $this->entityManager->getConnection()->beginTransaction();
-        $id = $this->save($request, $values)["id"];
+        try {
+            $this->connection->beginTransaction();
+            $id = $this->save($request, $values)["id"];
 
-        $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
+            $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
 
-        if (empty($doctorFacilitiesIds)) {
-            $this->entityManager->getConnection()->rollback();
-            throw new \RuntimeException("Doctor must be assigned at least to one facility");
+            if (empty($doctorFacilitiesIds)) {
+                throw new \RuntimeException("Doctor must be assigned at least to one facility");
+            }
+
+            $this->connection->delete("facilities_doctors", ["doctor_id" => $id]);
+            foreach ($doctorFacilitiesIds as $facilityId) {
+                $this->connection->insert(
+                    "facilities_doctors",
+                    [
+                        "doctor_id"   => $id,
+                        "facility_id" => $facilityId
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            $this->connection->rollback();
+
+            throw new \RuntimeException("Failed to save doctor due to error: " . $e->getMessage());
         }
 
-        $this->entityManager->getConnection()->delete("facilities_doctors", ["doctor_id" => $id]);
-        foreach ($doctorFacilitiesIds as $facilityId) {
-            $this->entityManager->getConnection()->insert(
-                "facilities_doctors",
-                [
-                    "doctor_id"   => $id,
-                    "facility_id" => $facilityId
-                ]
-            );
-        }
-
-        $this->entityManager->getConnection()->commit();
+        $this->connection->commit();
 
         return new JsonResponse([
             "id" => $id
@@ -118,17 +123,22 @@ final class DoctorsController extends AppCrudController
     #[Route("/removeDoctor", name: "remove_doctor")]
     public function removeDoctor(DoctorRepository $doctorRepository, Request $request): Response
     {
-        $ids = $request->request->get("ids");
-        $ids = explode(",", $ids);
+        $ids = Fetcher::intArray($request->request->get("ids"));
 
-        $this->entityManager->getConnection()->beginTransaction();
-        foreach ($ids as $id) {
-            $this->entityManager->getConnection()->delete("facilities_doctors", ["doctor_id" => $id]);
+        try {
+            $this->connection->beginTransaction();
+            foreach ($ids as $id) {
+                $this->connection->delete("facilities_doctors", ["doctor_id" => $id]);
+            }
+
+            $this->remove($doctorRepository, $request);
+        } catch (\Exception $e) {
+            $this->connection->rollback();
+
+            throw new \RuntimeException("Failed to remove the doctor due to error: " . $e->getMessage());
         }
 
-        $this->remove($doctorRepository, $request);
-
-        $this->entityManager->getConnection()->commit();
+        $this->connection->commit();
 
         return new JsonResponse([]);
     }

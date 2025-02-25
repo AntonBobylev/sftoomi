@@ -31,7 +31,7 @@ final class FacilitiesController extends AppCrudController
                     from facilities_doctors fd
                         left join doctor d on d.id = fd.doctor_id
                     where fd.facility_id = {$row["id"]}";
-            $row["facility_doctors"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+            $row["facility_doctors"] = $this->connection->fetchAllAssociative($sql);
         }
         unset($row);
 
@@ -49,7 +49,7 @@ final class FacilitiesController extends AppCrudController
     {
         $sql = "select id, last_name, first_name, middle_name
                 from doctor";
-        $doctors = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+        $doctors = $this->connection->fetchAllAssociative($sql);
 
         $data = [];
         $facilityId = $request->request->get("id");
@@ -60,7 +60,7 @@ final class FacilitiesController extends AppCrudController
                     from facilities_doctors fd
                         left join doctor d on d.id = fd.doctor_id 
                     where fd.facility_id = $facilityId";
-            $data["facility_doctors"] = $this->entityManager->getConnection()->fetchAllAssociative($sql);
+            $data["facility_doctors"] = $this->connection->fetchAllAssociative($sql);
         }
 
         return new JsonResponse([
@@ -83,26 +83,28 @@ final class FacilitiesController extends AppCrudController
             "full_name"  => Fetcher::trim($request->request->get("full_name"))
         ];
 
-        $connection = $this->entityManager->getConnection();
+        try {
+            $this->connection->beginTransaction();
 
-        $connection->beginTransaction();
+            $id = $this->save($request, $values)["id"];
 
-        $id = $this->save($request, $values)["id"];
+            $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"));
 
-        $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"));
-
-        $connection->delete("facilities_doctors", ["facility_id" => $id]);
-        foreach ($facilityDoctorIds as $doctorId) {
-            $connection->insert(
-                "facilities_doctors",
-                [
-                    "doctor_id"   => $doctorId,
-                    "facility_id" => $id
-                ]
-            );
+            $this->connection->delete("facilities_doctors", ["facility_id" => $id]);
+            foreach ($facilityDoctorIds as $doctorId) {
+                $this->connection->insert(
+                    "facilities_doctors",
+                    [
+                        "doctor_id"   => $doctorId,
+                        "facility_id" => $id
+                    ]
+                );
+            }
+        } catch (\Exception $e) {
+            throw new \RuntimeException("Failed to save facility due to error: " . $e->getMessage());
         }
 
-        $connection->commit();
+        $this->connection->commit();
 
         return new JsonResponse([
             "id" => $id

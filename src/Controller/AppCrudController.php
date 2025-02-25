@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
@@ -16,9 +17,13 @@ class AppCrudController extends AbstractController
     /** @var EntityManagerInterface */
     protected EntityManagerInterface $entityManager;
 
+    /** @var Connection */
+    protected Connection $connection;
+
     public function __construct(EntityManagerInterface $entityManager)
     {
         $this->entityManager = $entityManager;
+        $this->connection = $entityManager->getConnection();
     }
 
     /**
