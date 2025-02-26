@@ -24,6 +24,7 @@ services:
             - "9000:9000"
         volumes:
             - ../.:/var/www/project
+            - ./php/ini:/usr/local/etc/php
         networks:
             - server-php-mysql
 
