@@ -12,6 +12,7 @@ doctrine:
             "~^(?!(\
                 cpts|\
                 facilities_doctors\
+                studies_cpts\
             )$)~"
     orm:
         auto_generate_proxy_classes: true
