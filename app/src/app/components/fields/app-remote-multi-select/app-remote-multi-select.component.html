@@ -2,6 +2,7 @@
                   [tuiTextfieldLabelOutside]="true"
                   (searchChange)="onSearch($event)"
                   [stringify]="stringify"
+                  (tuiValueChanges)="valueChanged($event)"
 >
     {{ label }}
 

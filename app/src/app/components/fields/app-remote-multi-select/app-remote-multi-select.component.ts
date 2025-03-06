@@ -2,6 +2,7 @@ import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TuiHintDirective, TuiLoader, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
 import { TuiCell } from '@taiga-ui/layout';
+import { TuiValueChanges } from '@taiga-ui/cdk';
 import { TuiMultiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 
 import Fetcher from '../../../class/Fetcher';
@@ -22,7 +23,7 @@ export type AppRemoteMultiSelectLookupApiResult = {
     imports: [
         TuiMultiSelectModule, TuiTextfieldOptionsDirective,
         TuiTextfieldControllerModule, ReactiveFormsModule,
-        TuiCell, TuiLoader, TuiHintDirective
+        TuiCell, TuiLoader, TuiHintDirective, TuiValueChanges
     ],
     styleUrl: 'app-remote-multi-select.component.scss'
 })
@@ -40,6 +41,13 @@ export default class AppRemoteMultiSelectComponent
 
     private queryController: AbortController = new AbortController();
 
+    private excludeItemsIds: number[] = [];
+
+    protected valueChanged(selectedRecords: AppRemoteMultiSelectOption[]): void
+    {
+        this.excludeItemsIds = selectedRecords.map((row: AppRemoteMultiSelectOption): number => row.id);
+    };
+
     protected onSearch(query: string | null): void
     {
         this.queryController.abort();
@@ -56,6 +64,7 @@ export default class AppRemoteMultiSelectComponent
             data: FormData = new FormData();
 
         data.append('query', query);
+        data.append('exclude_ids', me.excludeItemsIds.join(','));
 
         me.isLoading.set(true);
         new Fetcher().request({
