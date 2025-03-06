@@ -25,7 +25,8 @@ let ruDictionary: object =  {
         doctors: 'Доктора',
         facilities: 'Учреждения',
         home: 'Домашняя',
-        patients: 'Пациенты'
+        patients: 'Пациенты',
+        studies: 'Исследования'
     },
 
     base_table: {
@@ -76,6 +77,17 @@ let ruDictionary: object =  {
                         title: 'Учреждения'
                     }
                 }
+            }
+        },
+        studies: {
+            table: {
+                columns: {
+                    study_cpts: 'CPT коды'
+                }
+            },
+            dialog: {
+                add_title: 'Добавление исследования',
+                edit_title: 'Редактирование исследования #{0}',
             }
         }
     },

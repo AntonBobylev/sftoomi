@@ -1,0 +1,48 @@
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="false"
+    [showLoader]="isLoading"
+>
+    <div class="wrapper"
+         [formGroup]="form"
+    >
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('short_name') }}</label>
+            <input
+                onlyLetters
+                formControlName="short_name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="short_name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('full_name') }}</label>
+            <input
+                onlyLetters
+                formControlName="full_name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="full_name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <div class="actions">
+            <button
+                tuiButton
+                appearance="flat"
+                iconStart="check"
+                type="button"
+                [disabled]="form.invalid"
+                (click)="save()"
+            >
+                {{ Sftoomi.Translator.translate('save') }}
+            </button>
+        </div>
+    </div>
+</tui-loader>

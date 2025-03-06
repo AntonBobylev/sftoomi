@@ -25,7 +25,8 @@ let usDictionary: object =  {
         doctors: 'Doctors',
         facilities: 'Facilities',
         home: 'Home',
-        patients: 'Patients'
+        patients: 'Patients',
+        studies: 'Studies'
     },
 
     base_table: {
@@ -76,6 +77,17 @@ let usDictionary: object =  {
                         title: 'Facilities'
                     }
                 }
+            }
+        },
+        studies: {
+            table: {
+                columns: {
+                    study_cpts: 'Study CPTs'
+                }
+            },
+            dialog: {
+                add_title: 'Add study',
+                edit_title: 'Edit study #{0}',
             }
         }
     },
