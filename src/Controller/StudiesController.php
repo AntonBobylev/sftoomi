@@ -113,4 +113,27 @@ final class StudiesController extends AppCrudController
 
         return new JsonResponse([]);
     }
+
+    /**
+     * @throws Exception
+     */
+    #[Route("/lookupCpt", name: "lookup_cpt")]
+    public function lookupCpt(Request $request): Response
+    {
+        $query = $request->request->get("query");
+        if (empty($query)) {
+            return new JsonResponse([]);
+        }
+
+        $sql = "select id, code as name, full_name as tooltip
+                from cpts
+                where short_name like '%{$query}%'
+                    or full_name like '%{$query}%'
+                    or code like '%{$query}%'";
+        $cpts = $this->connection->fetchAllAssociative($sql);
+
+        return new JsonResponse([
+            "data"  => $cpts
+        ]);
+    }
 }
