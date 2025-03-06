@@ -92,7 +92,7 @@ export default class Fetcher
                 }
             })
             .catch((error): void => {
-                if (typeof failureCallback !== 'function') {
+                if (typeof failureCallback !== 'function' || error.code === 'ERR_CANCELED') {
                     return;
                 }
 
