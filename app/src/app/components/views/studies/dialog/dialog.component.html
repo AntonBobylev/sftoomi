@@ -35,6 +35,11 @@
         <app-remote-multi-select [label]="Sftoomi.Translator.translate('views.studies.dialog.cpts')"
                                  formControlName="cpts"
                                  lookupUrl="/lookupCpt"
+        >
+        </app-remote-multi-select>
+
+        <tui-error formControlName="cpts"
+                   [error]="[] | tuiFieldError | async"
         />
 
         <div class="actions">
