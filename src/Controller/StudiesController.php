@@ -58,6 +58,13 @@ final class StudiesController extends AppCrudController
                         left join cpts on cpt_id = scpts.cpt_id
                     where st.id = $studyId";
             $study = $this->connection->fetchAssociative($sql);
+
+            if (!empty($study["study_cpts"])) {
+                $sql = "select id, code as name, full_name as tooltip
+                        from cpts
+                        where id in {$study["study_cpts"]}}";
+                $study["study_cpts"] = $this->connection->fetchAllAssociative($sql);
+            }
         }
 
         return new JsonResponse([
@@ -125,11 +132,14 @@ final class StudiesController extends AppCrudController
             return new JsonResponse([]);
         }
 
+        $excludeIds = $request->request->get("exclude_ids");
         $sql = "select id, code as name, full_name as tooltip
                 from cpts
-                where short_name like '%{$query}%'
-                    or full_name like '%{$query}%'
-                    or code like '%{$query}%'";
+                where (short_name like '%{$query}%' or full_name like '%{$query}%' or code like '%{$query}%')";
+        if (!empty($excludeIds)) {
+            $sql .= " and id not in ($excludeIds)";
+        }
+
         $cpts = $this->connection->fetchAllAssociative($sql);
 
         return new JsonResponse([
