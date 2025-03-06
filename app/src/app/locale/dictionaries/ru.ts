@@ -87,7 +87,8 @@ let ruDictionary: object =  {
             },
             dialog: {
                 add_title: 'Добавление исследования',
-                edit_title: 'Редактирование исследования #{0}',
+                cpts: 'CPT коды',
+                edit_title: 'Редактирование исследования #{0}'
             }
         }
     },

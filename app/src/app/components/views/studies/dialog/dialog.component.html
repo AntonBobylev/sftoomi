@@ -32,6 +32,11 @@
             />
         </tui-textfield>
 
+        <app-remote-multi-select [label]="Sftoomi.Translator.translate('views.studies.dialog.cpts')"
+                                 formControlName="cpts"
+                                 lookupUrl="/lookupCpt"
+        />
+
         <div class="actions">
             <button
                 tuiButton

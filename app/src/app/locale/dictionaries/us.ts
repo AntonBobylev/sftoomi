@@ -87,7 +87,8 @@ let usDictionary: object =  {
             },
             dialog: {
                 add_title: 'Add study',
-                edit_title: 'Edit study #{0}',
+                cpts: 'CPTs',
+                edit_title: 'Edit study #{0}'
             }
         }
     },

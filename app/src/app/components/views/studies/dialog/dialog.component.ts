@@ -7,10 +7,13 @@ import { injectContext } from '@taiga-ui/polymorpheus';
 
 import getStudyAPI from '../../../../APIs/getStudyAPI';
 
+import AppRemoteMultiSelectComponent from '../../../fields/app-remote-multi-select/app-remote-multi-select.component';
+
+import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
+
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
 
 import OnlyLettersDirective from '../../../../directives/only-letters.directive';
-import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
 
 export type StudyEditDialogData = {
     id?: number
@@ -22,7 +25,8 @@ export type StudyEditDialogData = {
     imports: [
         AsyncPipe, OnlyLettersDirective, ReactiveFormsModule,
         TuiButton, TuiError, TuiFieldErrorPipe, TuiLabel,
-        TuiLoader, TuiTextfieldComponent, TuiTextfieldDirective
+        TuiLoader, TuiTextfieldComponent,
+        TuiTextfieldDirective, AppRemoteMultiSelectComponent
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -39,7 +43,8 @@ export default class StudyEditDialogComponent extends AppBaseEditDialog
 
     protected readonly form: FormGroup = new FormGroup({
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
-        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()])
+        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        cpts:       new FormControl(null, [Validators.required])
     });
 
     protected afterLoad(data: getStudyAPI): void
@@ -47,6 +52,7 @@ export default class StudyEditDialogComponent extends AppBaseEditDialog
         if (this.data.id) {
             this.form.get('short_name')?.setValue(data.data.short_name);
             this.form.get('full_name')?.setValue(data.data.full_name);
+            this.form.get('cpts')?.setValue(data.data.study_cpts);
         }
     }
 
