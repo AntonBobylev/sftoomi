@@ -6,6 +6,7 @@ import { TuiValueChanges } from '@taiga-ui/cdk';
 import { TuiMultiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 
 import Fetcher from '../../../class/Fetcher';
+import Sftoomi from '../../../class/Sftoomi';
 
 export type AppRemoteMultiSelectOption = {
     id: number,
@@ -45,6 +46,10 @@ export default class AppRemoteMultiSelectComponent
 
     protected valueChanged(selectedRecords: AppRemoteMultiSelectOption[]): void
     {
+        if (Sftoomi.isEmpty(selectedRecords)) {
+            this.store.set([]);
+        }
+
         this.excludeItemsIds = selectedRecords.map((row: AppRemoteMultiSelectOption): number => row.id);
     };
 
