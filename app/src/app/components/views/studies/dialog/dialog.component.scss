@@ -3,6 +3,12 @@
     flex-direction: column;
     gap: 10px;
     min-width: 350px;
+
+    .study-cpts {
+        width: 500px;
+        max-height: 200px;
+        overflow: auto;
+    }
 }
 
 .actions {
