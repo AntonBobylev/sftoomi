@@ -33,13 +33,13 @@
         </tui-textfield>
 
         <app-remote-multi-select [label]="Sftoomi.Translator.translate('views.studies.dialog.cpts')"
-                                 formControlName="cpts"
+                                 formControlName="study_cpts"
                                  lookupUrl="/lookupCpt"
                                  style="width: 500px"
         >
         </app-remote-multi-select>
 
-        <tui-error formControlName="cpts"
+        <tui-error formControlName="study_cpts"
                    [error]="[] | tuiFieldError | async"
         />
 

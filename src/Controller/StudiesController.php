@@ -51,20 +51,16 @@ final class StudiesController extends AppCrudController
 
         $study = [];
         if (!empty($studyId)) {
-            $sql = "select st.id, st.full_name, st.short_name,
-                        group_concat(cpts.id) as study_cpts
-                    from study st
-                        left join studies_cpts scpts on scpts.study_id = st.id
-                        left join cpts on cpt_id = scpts.cpt_id
-                    where st.id = $studyId";
+            $sql = "select id, full_name, short_name
+                    from study
+                    where id = $studyId";
             $study = $this->connection->fetchAssociative($sql);
 
-            if (!empty($study["study_cpts"])) {
-                $sql = "select id, code as name, full_name as tooltip
-                        from cpts
-                        where id in {$study["study_cpts"]}}";
-                $study["study_cpts"] = $this->connection->fetchAllAssociative($sql);
-            }
+            $sql = "select cpts.id, cpts.code as name, cpts.full_name as tooltip
+                    from studies_cpts scpts
+                        left join cpts on cpts.id = scpts.cpt_id
+                    where scpts.study_id = $studyId";
+            $study["study_cpts"] = $this->connection->fetchAllAssociative($sql);
         }
 
         return new JsonResponse([
@@ -78,6 +74,11 @@ final class StudiesController extends AppCrudController
     #[Route("/saveStudy", name: "save_study")]
     public function saveStudy(Request $request): Response
     {
+        $cptCodesIds = Fetcher::intArray($request->request->get("study_cpts"));
+        if (empty($cptCodesIds)) {
+            throw new \InvalidArgumentException("Study must have at least one cpt code");
+        }
+
         $values = [
             "id"          => Fetcher::int($request->request->get("id")),
             "short_name"  => Fetcher::trim($request->request->get("short_name")),
@@ -87,6 +88,18 @@ final class StudiesController extends AppCrudController
         try {
             $this->connection->beginTransaction();
             $id = $this->save($request, $values)["id"];
+
+            foreach ($cptCodesIds as $cptCodeId) {
+                $this->connection->delete(
+                    "studies_cpts",
+                    ["study_id" => $id]
+                );
+
+                $this->connection->insert(
+                    "studies_cpts",
+                    ["study_id" => $id, "cpt_id" => $cptCodeId]
+                );
+            }
         } catch (\Exception $e) {
             $this->connection->rollback();
 

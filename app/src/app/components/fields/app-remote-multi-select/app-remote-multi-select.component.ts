@@ -8,14 +8,14 @@ import { TuiMultiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/le
 import Fetcher from '../../../class/Fetcher';
 import Sftoomi from '../../../class/Sftoomi';
 
-export type AppRemoteMultiSelectOption = {
+export type AppRemoteMultiSelectRecord = {
     id: number,
     name: string,
     tooltip?: string
 };
 
 export type AppRemoteMultiSelectLookupApiResult = {
-    data: AppRemoteMultiSelectOption[]
+    data: AppRemoteMultiSelectRecord[]
 };
 
 @Component({
@@ -37,22 +37,22 @@ export default class AppRemoteMultiSelectComponent
 
     @Input() public emptyContent: string = Sftoomi.Translator.translate('fields.remote_multi_select.tip');
 
-    protected readonly store: WritableSignal<AppRemoteMultiSelectOption[]> = signal([]);
+    protected readonly store: WritableSignal<AppRemoteMultiSelectRecord[]> = signal([]);
     protected readonly isLoading: WritableSignal<boolean> = signal(false);
 
-    protected readonly stringify = ({name}: AppRemoteMultiSelectOption): string => name;
+    protected readonly stringify = ({name}: AppRemoteMultiSelectRecord): string => name;
 
     private queryController: AbortController = new AbortController();
 
     private excludeItemsIds: number[] = [];
 
-    protected valueChanged(selectedRecords: AppRemoteMultiSelectOption[]): void
+    protected valueChanged(selectedRecords: AppRemoteMultiSelectRecord[]): void
     {
         if (Sftoomi.isEmpty(selectedRecords)) {
             this.store.set([]);
         }
 
-        this.excludeItemsIds = selectedRecords.map((row: AppRemoteMultiSelectOption): number => row.id);
+        this.excludeItemsIds = selectedRecords.map((row: AppRemoteMultiSelectRecord): number => row.id);
     };
 
     protected onSearch(query: string | null): void
