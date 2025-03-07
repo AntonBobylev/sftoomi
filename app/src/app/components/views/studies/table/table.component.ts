@@ -8,6 +8,7 @@ import AppTableComponent from '../../../core/app-table/app-table.component';
 import StudiesTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../../type/AppTableColumn';
+import Cpt from '../../../../type/Cpt';
 
 @Component({
     selector: 'studies-table',
@@ -41,12 +42,16 @@ export default class StudiesTableComponent extends AppTableComponent
     }, {
         name: 'study_cpts',
         caption: Sftoomi.Translator.translate('views.studies.table.columns.study_cpts'),
-        valueRenderer: function (): string
+        valueRenderer: function (records: Cpt[]): string
         {
-            return /*TODO:*/ 'Implement me';
+            let result: string = '';
+            records.forEach(function (record: Cpt): void {
+                result += `<div><strong>${record.code}</strong> - ${record.short_name}</div>`;
+            });
+
+            return result;
         },
         styles: {
-            width: '300px',
             height: '40px'
         }
     }];

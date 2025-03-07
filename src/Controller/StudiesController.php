@@ -89,12 +89,12 @@ final class StudiesController extends AppCrudController
             $this->connection->beginTransaction();
             $id = $this->save($request, $values)["id"];
 
-            foreach ($cptCodesIds as $cptCodeId) {
-                $this->connection->delete(
-                    "studies_cpts",
-                    ["study_id" => $id]
-                );
+            $this->connection->delete(
+                "studies_cpts",
+                ["study_id" => $id]
+            );
 
+            foreach ($cptCodesIds as $cptCodeId) {
                 $this->connection->insert(
                     "studies_cpts",
                     ["study_id" => $id, "cpt_id" => $cptCodeId]
