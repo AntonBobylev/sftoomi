@@ -11,10 +11,6 @@ import AppRemoteMultiSelectComponent, { AppRemoteMultiSelectRecord } from '../..
 
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
 
-import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
-
-import OnlyLettersDirective from '../../../../directives/only-letters.directive';
-
 export type StudyEditDialogData = {
     id?: number
 };
@@ -23,7 +19,7 @@ export type StudyEditDialogData = {
     selector: 'study-edit-dialog',
     templateUrl: './dialog.component.html',
     imports: [
-        AsyncPipe, OnlyLettersDirective, ReactiveFormsModule,
+        AsyncPipe, ReactiveFormsModule,
         TuiButton, TuiError, TuiFieldErrorPipe, TuiLabel,
         TuiLoader, TuiTextfieldComponent,
         TuiTextfieldDirective, AppRemoteMultiSelectComponent
@@ -42,8 +38,8 @@ export default class StudyEditDialogComponent extends AppBaseEditDialog
     protected readonly saveUrl: string = '/saveStudy';
 
     protected readonly form: FormGroup = new FormGroup({
-        short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
-        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
+        short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),
+        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),
         study_cpts: new FormControl(null, [Validators.required])
     });
 
