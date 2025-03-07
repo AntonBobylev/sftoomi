@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Class\Fetcher;
 use App\Repository\StudyRepository;
 use Doctrine\DBAL\Exception;
+use InvalidArgumentException;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -76,7 +78,7 @@ final class StudiesController extends AppCrudController
     {
         $cptCodesIds = Fetcher::intArray($request->request->get("study_cpts"));
         if (empty($cptCodesIds)) {
-            throw new \InvalidArgumentException("Study must have at least one cpt code");
+            throw new InvalidArgumentException("Study must have at least one cpt code");
         }
 
         $values = [
@@ -103,7 +105,7 @@ final class StudiesController extends AppCrudController
         } catch (\Exception $e) {
             $this->connection->rollback();
 
-            throw new \RuntimeException("Failed to save study due to error: " . $e->getMessage());
+            throw new RuntimeException("Failed to save study due to error: " . $e->getMessage());
         }
 
         $this->connection->commit();
@@ -126,7 +128,7 @@ final class StudiesController extends AppCrudController
         } catch (\Exception $e) {
             $this->connection->rollback();
 
-            throw new \RuntimeException("Failed to remove study due to error: " . $e->getMessage());
+            throw new RuntimeException("Failed to remove study due to error: " . $e->getMessage());
         }
 
         $this->connection->commit();
@@ -148,7 +150,7 @@ final class StudiesController extends AppCrudController
         $excludeIds = $request->request->get("exclude_ids");
         $sql = "select id, code as name, full_name as tooltip
                 from cpts
-                where (short_name like '%{$query}%' or full_name like '%{$query}%' or code like '%{$query}%')";
+                where (short_name like '%$query%' or full_name like '%$query%' or code like '%$query%')";
         if (!empty($excludeIds)) {
             $sql .= " and id not in ($excludeIds)";
         }
