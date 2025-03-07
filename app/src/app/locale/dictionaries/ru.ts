@@ -26,6 +26,7 @@ let ruDictionary: object =  {
         facilities: 'Учреждения',
         home: 'Домашняя',
         patients: 'Пациенты',
+        setup: 'Настройка',
         studies: 'Исследования'
     },
 

@@ -26,6 +26,7 @@ let usDictionary: object =  {
         facilities: 'Facilities',
         home: 'Home',
         patients: 'Patients',
+        setup: 'Setup',
         studies: 'Studies'
     },
 
