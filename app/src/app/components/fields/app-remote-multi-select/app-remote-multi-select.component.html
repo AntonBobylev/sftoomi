@@ -31,6 +31,9 @@
               class="option"
         >
             {{ option.name }}
+            @if (showExpandedNameInOptionsList) {
+                - {{ option.tooltip }}
+            }
         </span>
     </span>
 </ng-template>

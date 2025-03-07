@@ -32,6 +32,7 @@ export type AppRemoteMultiSelectLookupApiResult = {
 export default class AppRemoteMultiSelectComponent
 {
     @Input({required: true}) public label!: string;
+    @Input() public showExpandedNameInOptionsList: boolean = false;
 
     @Input({required: true}) public lookupUrl!: string;
 
