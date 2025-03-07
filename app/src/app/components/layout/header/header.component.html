@@ -2,6 +2,7 @@
     <span class="left"></span>
     <span class="center">
         <button tuiButton
+                appearance="flat"
                 size="s"
                 type="button"
                 [routerLink]="RoutesPaths.HOME"
@@ -9,37 +10,61 @@
             {{ Sftoomi.Translator.translate('navigation.home') }}
         </button>
 
-        <button tuiButton
-                size="s"
-                type="button"
-                [routerLink]="RoutesPaths.PATIENTS"
+        <button
+            appearance="flat"
+            iconEnd="@tui.chevron-right"
+            size="s"
+            tuiButton
+            tuiDropdownAlign="right"
+            type="button"
+            [tuiAppearanceState]="setupMenuOpened ? 'active' : null"
+            [(tuiDropdownOpen)]="setupMenuOpened"
+            [tuiDropdown]="setupDropdown"
+            [tuiDropdownSided]="true"
         >
-            {{ Sftoomi.Translator.translate('navigation.patients') }}
+            Setup
         </button>
 
-        <button tuiButton
-                size="s"
-                type="button"
-                [routerLink]="RoutesPaths.FACILITIES"
+        <ng-template
+            #setupDropdown
+            let-close
         >
-            {{ Sftoomi.Translator.translate('navigation.facilities') }}
-        </button>
+            <tui-data-list>
+                <tui-opt-group>
+                    <button tuiOption
+                            type="button"
+                            [routerLink]="RoutesPaths.PATIENTS"
+                            (click)="close()"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.patients') }}
+                    </button>
 
-        <button tuiButton
-                size="s"
-                type="button"
-                [routerLink]="RoutesPaths.DOCTORS"
-        >
-            {{ Sftoomi.Translator.translate('navigation.doctors') }}
-        </button>
+                    <button tuiOption
+                            type="button"
+                            [routerLink]="RoutesPaths.FACILITIES"
+                            (click)="close()"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.facilities') }}
+                    </button>
 
-        <button tuiButton
-                size="s"
-                type="button"
-                [routerLink]="RoutesPaths.STUDIES"
-        >
-            {{ Sftoomi.Translator.translate('navigation.studies') }}
-        </button>
+                    <button tuiOption
+                            type="button"
+                            [routerLink]="RoutesPaths.DOCTORS"
+                            (click)="close()"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.doctors') }}
+                    </button>
+
+                    <button tuiOption
+                            type="button"
+                            [routerLink]="RoutesPaths.STUDIES"
+                            (click)="close()"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.studies') }}
+                    </button>
+                </tui-opt-group>
+            </tui-data-list>
+        </ng-template>
     </span>
     <span class="right">
         <app-theme-switcher />

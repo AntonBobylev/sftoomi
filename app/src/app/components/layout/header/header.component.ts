@@ -1,5 +1,11 @@
 import { Component } from '@angular/core';
-import { TuiButton } from '@taiga-ui/core';
+import {
+    TuiButton,
+    TuiDataListComponent,
+    TuiDropdownDirective, TuiDropdownOpen,
+    TuiDropdownOptionsDirective,
+    TuiDropdownPositionSided, TuiOptGroup, TuiOption
+} from '@taiga-ui/core';
 import { RouterLink } from '@angular/router';
 
 import Sftoomi from '../../../class/Sftoomi';
@@ -12,7 +18,7 @@ import { RoutesPaths } from '../../../app.routes';
     selector: 'app-header',
     imports: [
         TuiButton, RouterLink,
-        I18nSwitcherComponent, AppThemeSwitcher
+        I18nSwitcherComponent, AppThemeSwitcher, TuiDropdownOptionsDirective, TuiDropdownDirective, TuiDropdownPositionSided, TuiDataListComponent, TuiOptGroup, TuiDropdownOpen, TuiOption
     ],
     templateUrl: './header.component.html',
     styleUrl: './header.component.scss'
@@ -22,4 +28,6 @@ export class HeaderComponent
 {
     protected readonly Sftoomi = Sftoomi;
     protected readonly RoutesPaths = RoutesPaths;
+
+    protected setupMenuOpened: boolean = false;
 }
