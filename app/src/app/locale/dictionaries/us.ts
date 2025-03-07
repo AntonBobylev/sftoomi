@@ -101,6 +101,9 @@ let usDictionary: object =  {
             move_left: 'Move left',
             move_right: 'Move right',
             selected: 'Selected'
+        },
+        remote_multi_select: {
+            tip: 'Type at least 3 symbols'
         }
     },
 

@@ -1,10 +1,9 @@
-import { Component, inject, Input, signal, WritableSignal } from '@angular/core';
+import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { TUI_NOTHING_FOUND_MESSAGE, TuiHintDirective, TuiLoader, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
+import { TuiHintDirective, TuiLoader, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
 import { TuiCell } from '@taiga-ui/layout';
 import { TuiValueChanges } from '@taiga-ui/cdk';
 import { TuiMultiSelectModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
-import { toSignal } from '@angular/core/rxjs-interop';
 
 import Fetcher from '../../../class/Fetcher';
 import Sftoomi from '../../../class/Sftoomi';
@@ -36,7 +35,7 @@ export default class AppRemoteMultiSelectComponent
 
     @Input({required: true}) public lookupUrl!: string;
 
-    @Input() public emptyContent: string = toSignal(inject(TUI_NOTHING_FOUND_MESSAGE))() ?? '';
+    @Input() public emptyContent: string = Sftoomi.Translator.translate('fields.remote_multi_select.tip');
 
     protected readonly store: WritableSignal<AppRemoteMultiSelectOption[]> = signal([]);
     protected readonly isLoading: WritableSignal<boolean> = signal(false);
