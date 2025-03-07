@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, inject, OnDestroy } from '@angular/core';
+import { AfterViewInit, Directive, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { TuiDialogContext } from '@taiga-ui/core';
 
@@ -13,7 +13,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected abstract readonly context: TuiDialogContext<any, any>;
     protected abstract readonly form: FormGroup;
 
-    protected isLoading: boolean = false;
+    protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     protected readonly Sftoomi = Sftoomi;
 
@@ -56,18 +56,18 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             data.append('id', this.data.id.toString());
         }
 
-        me.isLoading = true;
+        me.isLoading.set(true);
         new Fetcher().request({
             url: this.loadUrl,
             data: data,
             signal: this.queryController.signal,
             success: function (_response: any, _request: any, data: any): void {
-                me.isLoading = false;
+                me.isLoading.set(false);
 
                 me.afterLoad(data);
             },
             failure: function (code: any, message: any, _request: any): void {
-                me.isLoading = false;
+                me.isLoading.set(false);
 
                 if (message === 'canceled') {
                     return;
@@ -107,19 +107,19 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
         data = this.getAdditionalDataOnSave(data);
 
-        me.isLoading = true;
+        me.isLoading.set(true);
         new Fetcher().request({
             url: this.saveUrl,
             data: data,
             signal: this.queryController.signal,
             success: function (_response: any, _request: any, data: any): void {
-                me.isLoading = false;
+                me.isLoading.set(false);
 
                 me.afterSave(data);
                 me.context.completeWith({saved: true});
             },
             failure: function (code: any, message: any, _request: any): void {
-                me.isLoading = false;
+                me.isLoading.set(false);
 
                 if (message === 'canceled') {
                     return;
