@@ -3,6 +3,7 @@
                   (searchChange)="onSearch($event)"
                   [stringify]="stringify"
                   (tuiValueChanges)="valueChanged($event)"
+                  (focusedChange)="store.set([])"
 >
     {{ label }}
 
