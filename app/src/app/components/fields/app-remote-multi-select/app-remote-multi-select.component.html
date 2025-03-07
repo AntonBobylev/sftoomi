@@ -12,6 +12,7 @@
                     [showLoader]="isLoading()"
         >
             <tui-data-list-wrapper
+                [emptyContent]="emptyContent"
                 tuiMultiSelectGroup
                 [items]="store()"
                 [itemContent]="template"
