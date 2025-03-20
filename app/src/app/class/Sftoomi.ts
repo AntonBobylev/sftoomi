@@ -3,7 +3,7 @@ import moment from 'moment';
 import Translator from './Translator';
 import Theme from './Theme';
 
-import { CookiesService } from '../services/cookies-service.service';
+import { CookiesService } from '../services/cookies.service';
 
 export default class Sftoomi
 {
