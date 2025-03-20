@@ -3,6 +3,7 @@ import { Routes } from '@angular/router';
 import Sftoomi from './class/Sftoomi';
 
 import HomeComponent from './components/views/home/home.component';
+import ProcessingComponent from './components/views/processing/processing.component';
 import PatientsComponent from './components/views/patients/patients.component';
 import FacilitiesComponent from './components/views/facilities/facilities.component';
 import DoctorsComponent from './components/views/doctors/doctors.component';
@@ -12,16 +13,21 @@ const BASE_TITLE = 'SFTOOMI :: ';
 
 export enum RoutesPaths {
     HOME = '',
+    PROCESSING = 'processing',
     PATIENTS = 'patients',
     FACILITIES = 'facilities',
     DOCTORS = 'doctors',
-    STUDIES = 'studies',
+    STUDIES = 'studies'
 }
 
 export const routes: Routes = [{
     path: RoutesPaths.HOME,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.home'),
     component: HomeComponent
+}, {
+    path: RoutesPaths.PROCESSING,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.processing'),
+    component: ProcessingComponent
 }, {
     path: RoutesPaths.PATIENTS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.patients'),
