@@ -1,5 +1,5 @@
 FROM php:8.4-fpm
-ENV NODE_VERSION=22.13.0
+ENV NODE_VERSION=22.14.0
 
 RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
