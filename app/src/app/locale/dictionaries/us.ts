@@ -11,6 +11,7 @@ let usDictionary: object =  {
     last_name: 'Last name',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
+    on_offline_message: 'You are currently offline, please establish your Internet connection',
     phone: 'Phone',
     refresh: 'Refresh',
     remove: 'Remove',

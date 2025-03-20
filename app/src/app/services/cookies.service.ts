@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
 @Injectable()
-export class CookiesService
+export default class CookiesService
 {
     public deleteCookie(name: SftoomiCookie): void
     {

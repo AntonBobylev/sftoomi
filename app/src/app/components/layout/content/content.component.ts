@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
+import Sftoomi from '../../../class/Sftoomi';
+
 @Component({
     selector: 'app-content',
     imports: [
@@ -12,5 +14,5 @@ import { RouterOutlet } from '@angular/router';
 
 export class ContentComponent
 {
-
+    protected readonly Sftoomi = Sftoomi;
 }

@@ -1,3 +1,11 @@
 <div class="wrapper">
-    <router-outlet />
+    @if (Sftoomi.Network.isOnline()) {
+        <router-outlet />
+    } @else {
+        <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div style="margin-bottom: 30px;">
+                {{ Sftoomi.Translator.translate('on_offline_message') }}
+            </div>
+        </div>
+    }
 </div>

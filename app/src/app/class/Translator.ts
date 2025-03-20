@@ -5,7 +5,7 @@ import ruDictionary from '../locale/dictionaries/ru';
 
 import Sftoomi from './Sftoomi';
 
-import { CookiesService } from '../services/cookies.service';
+import CookiesService from '../services/cookies.service';
 
 import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 

@@ -3,13 +3,15 @@ import moment from 'moment';
 import Translator from './Translator';
 import Theme from './Theme';
 
-import { CookiesService } from '../services/cookies.service';
+import CookiesService from '../services/cookies.service';
+import NetworkService from '../services/network.service';
 
 export default class Sftoomi
 {
     public static readonly Translator: Translator = new Translator();
     public static readonly Cookies: CookiesService = new CookiesService();
     public static Theme: Theme; // initialized in AppComponent
+    public static readonly Network: NetworkService = new NetworkService();
 
     /**
      * Returns current year number
