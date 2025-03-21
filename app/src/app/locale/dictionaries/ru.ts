@@ -1,5 +1,6 @@
 let ruDictionary: object =  {
     add: 'Добавить',
+    clear: 'Очистить',
     dob: 'ДР',
     dob_full: 'Дата рождения',
     edit: 'Редактировать',
@@ -18,6 +19,7 @@ let ruDictionary: object =  {
     refresh: 'Обновить',
     remove: 'Удалить',
     save: 'Сохранить',
+    search: 'Поиск',
     select_all: 'Выбрать всё',
     short_name: 'Короткое имя',
     switch_language: 'Изменить язык',
@@ -51,6 +53,11 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление пациента',
                 edit_title: 'Редактирование пациента #{0}'
+            }
+        },
+        processing: {
+            filters: {
+                examination_id: 'ID обследования'
             }
         },
         facilities: {

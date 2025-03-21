@@ -3,7 +3,9 @@
         <button [tuiAccordion]="true">{{ Sftoomi.Translator.translate('filters') }}</button>
         <tui-expand>
             <div class="filters-panel-wrapper">
-                // TODO: add the filters content here
+                <processing-module-filters-panel (onSearch)="search($event)"
+                                                 (onClear)="search($event)"
+                />
             </div>
         </tui-expand>
     </tui-accordion>

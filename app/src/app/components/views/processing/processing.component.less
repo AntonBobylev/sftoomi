@@ -31,12 +31,15 @@
         @media @tui-desktop-min {
             margin-bottom: 0;
             width: 30%;
-            min-width: 300px;
+            min-width: 350px;
         }
     }
 
     .filters-panel-wrapper {
-        max-height: 200px;
+        @media @tui-mobile {
+            max-height: 350px;
+        }
+
         overflow: auto;
     }
 

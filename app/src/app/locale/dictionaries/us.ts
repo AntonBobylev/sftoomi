@@ -1,5 +1,6 @@
 let usDictionary: object =  {
     add: 'Add',
+    clear: 'Clear',
     dob: 'DoB',
     dob_full: 'Date of birth',
     edit: 'Edit',
@@ -18,6 +19,7 @@ let usDictionary: object =  {
     refresh: 'Refresh',
     remove: 'Remove',
     save: 'Save',
+    search: 'Search',
     select_all: 'Select all',
     short_name: 'Short name',
     switch_language: 'Switch language',
@@ -51,6 +53,11 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add patient',
                 edit_title: 'Edit patient #{0}'
+            }
+        },
+        processing: {
+            filters: {
+                examination_id: 'Examination ID'
             }
         },
         facilities: {
