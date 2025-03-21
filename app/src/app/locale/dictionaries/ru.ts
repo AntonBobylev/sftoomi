@@ -4,6 +4,8 @@ let ruDictionary: object =  {
     dob_full: 'Дата рождения',
     edit: 'Редактировать',
     error: 'Ошибка',
+    examinations: 'Обследования',
+    filters: 'Фильтры',
     first_name: 'Имя',
     full_name: 'Полное имя',
     id: 'ID',

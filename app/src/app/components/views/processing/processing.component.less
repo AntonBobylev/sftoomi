@@ -1,0 +1,46 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+:host(processing-module) {
+    height: 100%;
+    width: 100%;
+}
+
+//noinspection LessResolvedByNameOnly
+.wrapper {
+    padding: 10px 5px;
+    height: calc(100% - 20px);
+    width: calc(100% - 10px);
+    overflow: auto;
+
+    @media @tui-desktop-min {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+    }
+
+    @media @tui-mobile {
+        width: calc(100% - 4px);
+
+        padding-left: 2px;
+        padding-right: 2px;
+    }
+
+    .filters-accordion-wrapper {
+        margin-bottom: 10px;
+
+        @media @tui-desktop-min {
+            margin-bottom: 0;
+            width: 30%;
+            min-width: 300px;
+        }
+    }
+
+    .filters-panel-wrapper {
+        max-height: 200px;
+        overflow: auto;
+    }
+
+    .examinations-panel-wrapper {
+        overflow: auto;
+    }
+}

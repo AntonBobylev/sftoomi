@@ -4,6 +4,8 @@ let usDictionary: object =  {
     dob_full: 'Date of birth',
     edit: 'Edit',
     error: 'Error',
+    examinations: 'Examinations',
+    filters: 'Filters',
     first_name: 'First name',
     full_name: 'Full name',
     id: 'ID',

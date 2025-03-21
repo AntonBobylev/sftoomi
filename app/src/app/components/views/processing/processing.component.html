@@ -1,3 +1,19 @@
 <div class="wrapper">
-    // TODO: processing module here
+    <tui-accordion class="filters-accordion-wrapper">
+        <button [tuiAccordion]="true">{{ Sftoomi.Translator.translate('filters') }}</button>
+        <tui-expand>
+            <div class="filters-panel-wrapper">
+                // TODO: add the filters content here
+            </div>
+        </tui-expand>
+    </tui-accordion>
+
+    <tui-accordion>
+        <button [tuiAccordion]="true">{{ Sftoomi.Translator.translate('examinations') }}</button>
+        <tui-expand>
+            <div class="examinations-panel-wrapper">
+                // TODO: add the examinations content here
+            </div>
+        </tui-expand>
+    </tui-accordion>
 </div>
