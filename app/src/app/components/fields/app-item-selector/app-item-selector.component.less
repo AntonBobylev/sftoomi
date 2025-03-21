@@ -1,0 +1,33 @@
+@import '@taiga-ui/core/styles/taiga-ui-local.less';
+
+.wrapper {
+    min-width: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    @media @tui-mobile {
+        width: calc(100% - 10px);
+        min-width: unset;
+        flex-direction: column;
+    }
+
+    app-item-selector-data-list {
+        width: 50%;
+        max-height: 200px;
+
+        @media @tui-mobile {
+            width: 100%;
+        }
+    }
+
+    .action-buttons-wrapper {
+        display: flex;
+        flex-direction: column;
+
+        @media @tui-mobile {
+            flex-direction: row-reverse;
+        }
+    }
+}

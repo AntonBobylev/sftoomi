@@ -13,7 +13,7 @@ import AppItemSelectorDataListComponent, { AppItemSelectorDataListRow } from './
         TuiButton,
         TuiHintDirective
     ],
-    styleUrl: './app-item-selector.component.scss'
+    styleUrl: './app-item-selector.component.less'
 })
 
 export default class AppItemSelectorComponent
