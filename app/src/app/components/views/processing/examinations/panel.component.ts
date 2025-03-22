@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
+import ProcessingModuleExaminationsPanelTableComponent from './table/table.component';
 
 @Component({
     selector: 'processing-module-examinations-panel',
     templateUrl: './panel.component.html',
     imports: [
-        ProcessingModuleExaminationsPanelToolbarComponent
+        ProcessingModuleExaminationsPanelToolbarComponent,
+        ProcessingModuleExaminationsPanelTableComponent
     ],
     styleUrl: './panel.component.less'
 })
