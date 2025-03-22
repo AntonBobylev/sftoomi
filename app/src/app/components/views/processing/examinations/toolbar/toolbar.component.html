@@ -1,0 +1,47 @@
+<div class="wrapper">
+    <div class="left">
+        <button
+            tuiIconButton
+            size="s"
+            appearance="icon"
+            iconStart="@tui.plus"
+            type="button"
+            (click)="onAdd.emit()"
+            tuiHint="{{ Sftoomi.Translator.translate('add') }}"
+        >
+        </button>
+        <button
+            tuiIconButton
+            size="s"
+            appearance="icon"
+            iconStart="@tui.pencil"
+            type="button"
+            (click)="onEdit.emit()"
+            tuiHint="{{ Sftoomi.Translator.translate('edit') }}"
+        >
+        </button>
+        <button
+            tuiIconButton
+            size="s"
+            appearance="icon"
+            iconStart="@tui.circle-minus"
+            type="button"
+            (click)="onRemove.emit()"
+            tuiHint="{{ Sftoomi.Translator.translate('remove') }}"
+        >
+        </button>
+    </div>
+
+    <div class="right">
+        <button
+            tuiIconButton
+            size="s"
+            appearance="icon"
+            iconStart="@tui.rotate-ccw"
+            type="button"
+            (click)="onRefresh.emit()"
+            tuiHint="{{ Sftoomi.Translator.translate('refresh') }}"
+        >
+        </button>
+    </div>
+</div>
