@@ -2,7 +2,7 @@ import { TuiDateFormatSettings } from '@taiga-ui/core'
     ;
 import Sftoomi from '../class/Sftoomi';
 
-export default function getDateFormat(): TuiDateFormatSettings
+export default function getTuiLocalDateFormat(): TuiDateFormatSettings
 {
     switch (Sftoomi.Translator.getLocale()) {
         case 'ru':

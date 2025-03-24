@@ -11,7 +11,7 @@ import { routes } from './app.routes';
 
 import Sftoomi from './class/Sftoomi';
 
-import getDateFormat from './locale/getDateFormat';
+import getTuiLocalDateFormat from './locale/getTuiLocalDateFormat';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -27,6 +27,6 @@ export const appConfig: ApplicationConfig = {
             provide: TUI_LANGUAGE,
             useValue: of(Sftoomi.Translator.getI18nLocale())
         },
-        tuiDateFormatProvider(getDateFormat())
+        tuiDateFormatProvider(getTuiLocalDateFormat())
     ]
 };
