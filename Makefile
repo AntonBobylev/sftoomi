@@ -8,6 +8,8 @@ start:
 	@$(DOCKER_COMPOSE) start
 stop:
 	@$(DOCKER_COMPOSE) stop
+rebuild:
+	@$(DOCKER_COMPOSE) up --build
 
 shell:
 	@$(DOCKER_COMPOSE) exec -it php bash
