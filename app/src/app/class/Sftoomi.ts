@@ -3,6 +3,8 @@ import moment from 'moment';
 import Translator from './Translator';
 import Theme from './Theme';
 
+import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
+
 import CookiesService from '../services/cookies.service';
 import NetworkService from '../services/network.service';
 
@@ -42,8 +44,6 @@ export default class Sftoomi
     }
 
     /**
-     * TODO: add local date formats
-     *
      * @param date
      */
     public static dateShort(date?: string | null | Date): string | null
@@ -52,7 +52,7 @@ export default class Sftoomi
             return '';
         }
 
-        return moment(date).format('MM/DD/YYYY');
+        return moment(date).format(getMomentLocalDateFormat().date);
     }
 
     /**
