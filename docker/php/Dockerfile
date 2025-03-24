@@ -1,4 +1,4 @@
-FROM php:8.4-fpm
+FROM php:8.4.5-fpm
 ENV NODE_VERSION=22.14.0
 
 RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
