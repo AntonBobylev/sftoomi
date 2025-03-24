@@ -1,17 +1,18 @@
 import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { TUI_LANGUAGE } from '@taiga-ui/i18n';
-import { of } from 'rxjs';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { tuiDateFormatProvider } from '@taiga-ui/core';
+import { TUI_FIRST_DAY_OF_WEEK, tuiDateFormatProvider } from '@taiga-ui/core';
 import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
+import { of } from 'rxjs';
 
 import { routes } from './app.routes';
 
 import Sftoomi from './class/Sftoomi';
 
 import getTuiLocalDateFormat from './locale/getTuiLocalDateFormat';
+import getLocalFirstDayOfWeek from './locale/getLocalFirstDayOfWeek';
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -27,6 +28,10 @@ export const appConfig: ApplicationConfig = {
             provide: TUI_LANGUAGE,
             useValue: of(Sftoomi.Translator.getI18nLocale())
         },
-        tuiDateFormatProvider(getTuiLocalDateFormat())
+        tuiDateFormatProvider(getTuiLocalDateFormat()),
+        {
+            provide: TUI_FIRST_DAY_OF_WEEK,
+            useValue: getLocalFirstDayOfWeek()
+        },
     ]
 };
