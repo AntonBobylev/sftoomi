@@ -9,7 +9,7 @@ start:
 stop:
 	@$(DOCKER_COMPOSE) stop
 rebuild:
-	@$(DOCKER_COMPOSE) up --build
+	@$(DOCKER_COMPOSE) up -d --build
 
 shell:
 	@$(DOCKER_COMPOSE) exec -it php bash
