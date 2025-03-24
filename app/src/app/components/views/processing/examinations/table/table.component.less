@@ -1,7 +1,56 @@
 .wrapper {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 1000px;
 
-    processing-module-examinations-panel-table-row {
-        width: 100%;
+    .main-table {
+        border-collapse: separate;
+        border: 1px solid var(--tui-border-normal);
+        border-radius: 6px;
+
+        tr {
+            border: 1px solid var(--tui-border-normal);
+        }
+
+        .cell {
+            padding: 10px;
+        }
+
+        .header-column {
+            color: var(--tui-text-secondary);
+            text-align: left;
+        }
+
+        .row-select-cell {
+        }
+
+        .cell-inline-table {
+            td:first-child {
+                width: 1px;
+                white-space: nowrap;
+            }
+
+            td:not(:first-child) {
+                padding-left: 15px;
+            }
+        }
+    }
+}
+
+.central-align {
+    text-align: center;
+}
+
+.studies-cell-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+
+    .studies-separator {
+        border-left: 1px solid;
+        height: 50px;
+        align-self: center;
     }
 }

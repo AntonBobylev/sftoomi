@@ -41,6 +41,11 @@ export default class Sftoomi
         return variable instanceof Date;
     }
 
+    /**
+     * TODO: add local date formats
+     *
+     * @param date
+     */
     public static dateShort(date?: string | null | Date): string | null
     {
         if (!date) {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
 import ProcessingModuleExaminationsPanelTableComponent from './table/table.component';
@@ -13,8 +13,16 @@ import ProcessingModuleExaminationsPanelTableComponent from './table/table.compo
     styleUrl: './panel.component.less'
 })
 
-export default class ProcessingModuleExaminationsPanelComponent
+export default class ProcessingModuleExaminationsPanelComponent implements AfterViewInit
 {
+    @ViewChild('tableCtrl')
+    protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
+
+    ngAfterViewInit(): void
+    {
+
+    }
+
     protected onAddExaminationClick(): void
     {
         // TODO: implement

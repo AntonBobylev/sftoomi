@@ -1,17 +1,105 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
+import { TuiHintDirective } from '@taiga-ui/core';
+import { FormsModule } from '@angular/forms';
+import { TuiCheckbox } from '@taiga-ui/kit';
+import moment from 'moment/moment';
 
-import ProcessingModuleExaminationsPanelTableRowComponent from './row/row.component';
+import Sftoomi from '../../../../../class/Sftoomi';
+
+import Study from '../../../../../type/Study';
+import Doctor from '../../../../../type/Doctor';
+import Facility from '../../../../../type/Facility';
+
+export type ProcessingModuleExaminationsPanelTableData = {
+    rows: ProcessingModuleExaminationsPanelTableRowData[]
+};
+
+export type ProcessingModuleExaminationsPanelTableRowData = {
+    examination_id: number,
+    patient: {
+        id: number
+        first_name: string
+        last_name: string
+        middle_name?: string,
+        dob?: string
+        phone?: string
+    },
+    doctor?: Doctor,
+    facility: Facility,
+    studies: (Study & {
+        exam_id: number
+    })[]
+};
 
 @Component({
     selector: 'processing-module-examinations-panel-table',
     templateUrl: './table.component.html',
     imports: [
-        ProcessingModuleExaminationsPanelTableRowComponent
+        FormsModule,
+        TuiCheckbox,
+        TuiHintDirective
     ],
     styleUrl: './table.component.less'
 })
 
 export default class ProcessingModuleExaminationsPanelTableComponent
 {
+    private readonly data: WritableSignal<ProcessingModuleExaminationsPanelTableData> = signal<ProcessingModuleExaminationsPanelTableData>({rows: []});
+    protected readonly selectedRowsIndexes: WritableSignal<number[]> = signal<number[]>([]);
 
+    protected readonly moment = moment;
+    protected readonly Sftoomi = Sftoomi;
+
+    public setData(data: ProcessingModuleExaminationsPanelTableData): void
+    {
+        this.data.set(data);
+    }
+
+    public getAllRowsSignal(): WritableSignal<ProcessingModuleExaminationsPanelTableData>
+    {
+        return this.data;
+    }
+
+    protected onRowSelected(event: any): void
+    {
+        let indexes: number[] = this.selectedRowsIndexes();
+
+        if (event.selected) {
+            if (indexes.includes(event.row_index)) {
+                return;
+            }
+
+            indexes.push(event.row_index);
+            this.selectedRowsIndexes.set(indexes);
+
+            return;
+        }
+
+        let itemIndex: number = indexes.indexOf(event.row_index);
+        if (itemIndex > -1) {
+            indexes.splice(itemIndex, 1);
+            this.selectedRowsIndexes.set(indexes);
+        }
+    }
+
+    protected onSelectAllRowsClick(checked: boolean): void
+    {
+        if (!checked) {
+            this.clearSelection();
+
+            return;
+        }
+
+        let newSelections: number[] = [];
+        this.data().rows.forEach(function (_row: ProcessingModuleExaminationsPanelTableRowData, index: number): void {
+            newSelections.push(index);
+        });
+
+        this.selectedRowsIndexes.set(newSelections);
+    }
+
+    protected clearSelection(): void
+    {
+        this.selectedRowsIndexes.set([]);
+    }
 }
