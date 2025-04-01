@@ -28,8 +28,6 @@ export default class PatientsTableToolbarComponent extends AppBaseToolbar
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(PatientEditDialogComponent), {
             label: title,
-            dismissible: false,
-            size: 'auto',
             data: {
                 id: id
             } as PatientEditDialogData

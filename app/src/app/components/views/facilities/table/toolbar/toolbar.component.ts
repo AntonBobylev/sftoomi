@@ -28,8 +28,6 @@ export default class FacilitiesTableToolbarComponent extends AppBaseToolbar
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(FacilityEditDialogComponent  ), {
             label: title,
-            dismissible: false,
-            size: 'auto',
             data: {
                 id: id
             } as FacilityEditDialogData

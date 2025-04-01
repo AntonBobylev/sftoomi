@@ -28,8 +28,6 @@ export default class StudiesTableToolbarComponent extends AppBaseToolbar
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(StudyEditDialogComponent), {
             label: title,
-            dismissible: false,
-            size: 'auto',
             data: {
                 id: id
             } as StudyEditDialogData
