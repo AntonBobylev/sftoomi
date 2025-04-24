@@ -63,6 +63,7 @@ let usDictionary: object =  {
             }
         },
         processing: {
+            add_examination: 'Add examination',
             filters: {
                 examination_id: 'Examination ID'
             }

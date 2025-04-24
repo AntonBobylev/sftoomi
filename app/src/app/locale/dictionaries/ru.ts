@@ -63,6 +63,7 @@ let ruDictionary: object =  {
             }
         },
         processing: {
+            add_examination: 'Добавить обследование',
             filters: {
                 examination_id: 'ID обследования'
             }

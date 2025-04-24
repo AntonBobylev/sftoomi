@@ -50,6 +50,11 @@ export default class ProcessingModuleExaminationsPanelTableComponent
     protected readonly moment = moment;
     protected readonly Sftoomi = Sftoomi;
 
+    public refresh(): void
+    {
+        // TODO: add an implementation
+    }
+
     public setData(data: ProcessingModuleExaminationsPanelTableData): void
     {
         this.data.set(data);

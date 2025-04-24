@@ -1,7 +1,13 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { TuiDialogService } from '@taiga-ui/core';
+import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
+import { defaultIfEmpty } from 'rxjs';
+
+import Sftoomi from '../../../../class/Sftoomi';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
 import ProcessingModuleExaminationsPanelTableComponent from './table/table.component';
+import ExaminationEditDialogComponent, { ExaminationEditDialogData } from './dialog/dialog.component';
 
 @Component({
     selector: 'processing-module-examinations-panel',
@@ -17,6 +23,8 @@ export default class ProcessingModuleExaminationsPanelComponent implements After
 {
     @ViewChild('tableCtrl')
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
+
+    private readonly dialog: TuiDialogService = inject(TuiDialogService);
 
     ngAfterViewInit(): void
     {
@@ -78,7 +86,19 @@ export default class ProcessingModuleExaminationsPanelComponent implements After
 
     protected onAddExaminationClick(): void
     {
-        // TODO: implement
+        let me: this = this;
+        this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
+            label: Sftoomi.Translator.translate('views.processing.add_examination'),
+            data: {
+                id: 1
+            } as ExaminationEditDialogData
+        })
+            .pipe(defaultIfEmpty({saved: false}))
+            .subscribe((result: any): void => {
+                if (result?.saved) {
+                    me.tableCtrl.refresh();
+                }
+            });
     }
 
     protected onEditExaminationClick(): void

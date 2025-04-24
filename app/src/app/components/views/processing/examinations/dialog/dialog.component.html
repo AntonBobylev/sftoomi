@@ -1,0 +1,26 @@
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="true"
+    [showLoader]="isLoading()"
+>
+    <div class="wrapper"
+         [formGroup]="form"
+    >
+        <div>
+            // TODO: add a content here
+        </div>
+
+        <div class="actions">
+            <button
+                tuiButton
+                appearance="flat"
+                iconStart="check"
+                type="button"
+                [disabled]="form.invalid"
+                (click)="save()"
+            >
+                {{ Sftoomi.Translator.translate('save') }}
+            </button>
+        </div>
+    </div>
+</tui-loader>
