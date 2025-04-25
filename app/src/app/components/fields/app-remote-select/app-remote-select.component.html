@@ -3,11 +3,12 @@
                (searchChange)="onSearch($event)"
                (tuiValueChanges)="valueChanged($event)"
                [stringify]="stringify"
-               (focusedChange)="store.set([])"
+               (focusedChange)="onFocusChange()"
 >
     {{ label }}
 
-    <input tuiTextfieldLegacy />
+    <input #inputFieldCtrl
+           tuiTextfieldLegacy />
 
     <ng-container *tuiDataList>
         <tui-loader [inheritColor]="true"

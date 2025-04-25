@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal, ViewChild, WritableSignal } from '@angular/core';
 
 import AppRemoteSelectImports from './app-remote-select-imports';
 
@@ -32,7 +32,9 @@ export default class AppRemoteSelectComponent
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
     @Input() public emptyContent: string = Sftoomi.format(Sftoomi.Translator.translate('fields.remote_select.tip'), [this.minSearchLength]);
 
-    @Output() public onOptionSelected: EventEmitter<AppRemoteSelectRecord> = new EventEmitter<AppRemoteSelectRecord>;
+    @ViewChild('inputFieldCtrl') protected inputFieldCtrl!: any;
+
+    @Output() public onOptionSelected: EventEmitter<AppRemoteSelectRecord | null> = new EventEmitter<AppRemoteSelectRecord | null>;
 
     protected readonly store: WritableSignal<AppRemoteSelectRecord[]> = signal([]);
     protected readonly isLoading: WritableSignal<boolean> = signal(false);
@@ -50,6 +52,7 @@ export default class AppRemoteSelectComponent
         }
 
         this.excludeItemsIds = Sftoomi.isEmpty(selectedRecord) ? [] : [selectedRecord.id];
+        this.onOptionSelected.emit(selectedRecord);
     };
 
     protected onSearch(query: string | null): void
@@ -84,5 +87,11 @@ export default class AppRemoteSelectComponent
                 me.isLoading.set(false);
             }
         });
+    }
+
+    protected onFocusChange(): void
+    {
+        this.store.set([]);
+        this.inputFieldCtrl.el.value = null;
     }
 }
