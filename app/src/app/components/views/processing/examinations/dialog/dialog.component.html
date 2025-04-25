@@ -6,8 +6,19 @@
     <div class="wrapper"
          [formGroup]="form"
     >
-        <div>
-            // TODO: add a content here
+        <div class="main">
+            <tui-textfield>
+                <label tuiLabel>{{ Sftoomi.Translator.translate('id') }}</label>
+                <input
+                    formControlName="patient_id"
+                    tuiInputNumber
+                />
+
+                <tui-error formControlName="patient_id"
+                           [error]="[] | tuiFieldError | async"
+                />
+            </tui-textfield>
+            <patient-demographics-template [controls]="getPatientTemplateControls()"/>
         </div>
 
         <div class="actions">
