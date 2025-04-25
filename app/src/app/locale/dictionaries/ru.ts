@@ -122,8 +122,8 @@ let ruDictionary: object =  {
             move_right: 'Переместить вправо',
             selected: 'Выбранное'
         },
-        remote_multi_select: {
-            tip: 'Наберите минимум 3 символа'
+        remote_select: {
+            tip: 'Наберите минимальное количество символов: {0}'
         }
     },
 

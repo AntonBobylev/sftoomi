@@ -1,0 +1,88 @@
+import { Component, EventEmitter, Input, Output, signal, WritableSignal } from '@angular/core';
+
+import AppRemoteSelectImports from './app-remote-select-imports';
+
+import Sftoomi from '../../../class/Sftoomi';
+import Fetcher from '../../../class/Fetcher';
+
+export type AppRemoteSelectRecord = {
+    id: number,
+    name: string,
+    tooltip?: string
+};
+
+export type AppRemoteSelectLookupApiResult = {
+    data: AppRemoteSelectRecord[]
+};
+
+@Component({
+    selector: 'app-remote-select',
+    templateUrl: 'app-remote-select.component.html',
+    imports: AppRemoteSelectImports,
+    styleUrl: './app-remote-select.component.scss'
+})
+
+export default class AppRemoteSelectComponent
+{
+    @Input({required: true}) public label!: string;
+    @Input({required: true}) public lookupUrl!: string;
+
+    @Input() public showExpandedNameInOptionsList: boolean = false;
+
+    @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
+    @Input() public emptyContent: string = Sftoomi.format(Sftoomi.Translator.translate('fields.remote_select.tip'), [this.minSearchLength]);
+
+    @Output() public onOptionSelected: EventEmitter<AppRemoteSelectRecord> = new EventEmitter<AppRemoteSelectRecord>;
+
+    protected readonly store: WritableSignal<AppRemoteSelectRecord[]> = signal([]);
+    protected readonly isLoading: WritableSignal<boolean> = signal(false);
+
+    protected readonly stringify = ({id}: AppRemoteSelectRecord): string => id.toString();
+
+    protected excludeItemsIds: number[] = [];
+
+    private queryController: AbortController = new AbortController();
+
+    protected valueChanged(selectedRecord: AppRemoteSelectRecord): void
+    {
+        if (Sftoomi.isEmpty(selectedRecord)) {
+            this.store.set([]);
+        }
+
+        this.excludeItemsIds = Sftoomi.isEmpty(selectedRecord) ? [] : [selectedRecord.id];
+    };
+
+    protected onSearch(query: string | null): void
+    {
+        this.queryController.abort();
+
+        if (!query || query.length < this.minSearchLength) {
+            return;
+        }
+
+        this.queryController = new AbortController();
+
+        this.store.set([]);
+
+        let me: this = this,
+            data: FormData = new FormData();
+
+        data.append('query', query);
+        data.append('exclude_ids', me.excludeItemsIds.join(','));
+
+        me.isLoading.set(true);
+        new Fetcher().request({
+            url: this.lookupUrl,
+            signal: this.queryController.signal,
+            data: data,
+            success: function (_response: any, _request: XMLHttpRequest, data: AppRemoteSelectLookupApiResult): void {
+                me.isLoading.set(false);
+
+                me.store.set(data.data);
+            },
+            failure: function (): void {
+                me.isLoading.set(false);
+            }
+        });
+    }
+}
