@@ -123,7 +123,7 @@ export default class Sftoomi
         }
 
         last = last.trim();
-        first = last.trim().substring(0, 1);
+        first = first.trim().substring(0, 1);
         if (first != '') {
             first += '.';
         }
