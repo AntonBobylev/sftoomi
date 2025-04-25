@@ -18,12 +18,12 @@ class Format
 
         $last = trim($last);
 
-        $first = trim($first)[0];
+        $first = substr(trim($first), 0, 1);
         if ($first != "") {
             $first .= ".";
         }
 
-        $middle = trim($middle)[0];
+        $middle = substr(trim($middle), 0, 1);
         if ($middle != "") {
             $middle .= ".";
         }
