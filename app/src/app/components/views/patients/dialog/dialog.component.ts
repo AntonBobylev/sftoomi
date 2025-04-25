@@ -1,26 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AsyncPipe } from '@angular/common';
-import { TuiButton, TuiDialogContext, TuiError, TuiFlagPipe, TuiLoader, TuiTextfield, TuiTextfieldComponent, TuiTextfieldDirective } from '@taiga-ui/core';
-import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiButton, TuiDialogContext, TuiLoader } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TuiInputDateModule, TuiInputModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
-import { TUI_IS_IOS, TuiDay } from '@taiga-ui/cdk';
-import { MaskitoDirective } from '@maskito/angular';
-import { maskitoGetCountryFromNumber, maskitoPhoneOptionsGenerator } from '@maskito/phone';
-import { MaskitoOptions } from '@maskito/core';
-import metadata from 'libphonenumber-js/min/metadata';
+import { TuiInputDateModule, TuiInputModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import moment from 'moment';
 
 import AppBaseEditDialog from '../../../core/app-base-edit-dialog';
 
+import PatientDemographicsTemplateComponent, { PatientDemographicsTemplateControls } from '../../../templates/patient-demographics-template.component';
+
 import getPatientAPI from '../../../../APIs/getPatientAPI';
 
 import { onlyLettersValidator } from '../../../../validators/only-letters.validator';
-
-import OnlyLettersDirective from '../../../../directives/only-letters.directive';
-import UppercaseDirective from '../../../../directives/uppercase.directive';
-import TuiDateToNativeTransformerDirective from '../../../../directives/tui-date-to-native.directive';
 
 export type PatientEditDialogData = {
     id?: number
@@ -30,13 +21,9 @@ export type PatientEditDialogData = {
     selector: 'patient-edit-dialog',
     templateUrl: './dialog.component.html',
     imports: [
-        TuiTextfieldComponent, TuiTextfieldDirective,
-        FormsModule, TuiTextfield, ReactiveFormsModule,
-        OnlyLettersDirective, TuiError,
-        TuiFieldErrorPipe, AsyncPipe, UppercaseDirective, TuiLoader,
-        TuiInputDateModule, TuiUnfinishedValidator,
-        TuiDateToNativeTransformerDirective, TuiButton, TuiInputModule,
-        TuiTextfieldControllerModule, MaskitoDirective, TuiFlagPipe
+        FormsModule, ReactiveFormsModule, TuiLoader,
+        TuiInputDateModule, TuiButton, TuiInputModule,
+        TuiTextfieldControllerModule, PatientDemographicsTemplateComponent
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -48,9 +35,6 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
-    protected readonly maxDobDate: Date = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
-    protected readonly TuiDay: typeof TuiDay = TuiDay;
-
     protected readonly loadUrl: string = '/getPatient';
     protected readonly saveUrl: string = '/savePatient';
 
@@ -61,23 +45,6 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         dob:         new FormControl<Date | null>(null),
         phone:       new FormControl<string | null>(null, [Validators.maxLength(16)])
     });
-
-    private readonly isIos: boolean = inject(TUI_IS_IOS);
-
-    protected readonly mask: Required<MaskitoOptions> = maskitoPhoneOptionsGenerator({
-        metadata,
-        strict: false,
-        countryIsoCode: 'RU'
-    });
-
-    protected get countryIsoCode(): string {
-        return maskitoGetCountryFromNumber(this.form.get('phone')?.value ?? '', metadata) ?? '';
-    }
-
-    protected get pattern(): string {
-        return this.isIos ? '+[0-9-]{1,20}' : '';
-    }
-
     protected afterLoad(data: getPatientAPI): void
     {
         if (this.data.id) {
@@ -89,6 +56,17 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
             if (data.data.dob) {
                 this.form.get('dob')?.setValue(moment(data.data.dob).toDate());
             }
+        }
+    }
+
+    protected getPatientTemplateControls(): PatientDemographicsTemplateControls
+    {
+        return {
+            last_name:   this.form.get('last_name') as FormControl,
+            first_name:  this.form.get('first_name') as FormControl,
+            middle_name: this.form.get('middle_name') as FormControl,
+            dob:         this.form.get('dob') as FormControl,
+            phone:       this.form.get('phone') as FormControl
         }
     }
 }
