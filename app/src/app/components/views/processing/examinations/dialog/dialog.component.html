@@ -34,15 +34,19 @@
             </div>
 
             <div class="main">
-                <app-combo-box [label]="Sftoomi.Translator.translate('facility')"
+                <app-combo-box #facilityIdCtrl
+                               [label]="Sftoomi.Translator.translate('facility')"
                                name="facility_id"
                                [parentFormGroup]="form"
                                [store]="facilitiesStore"
+                               [filterFn]="filterFacilities"
                 />
-                <app-combo-box [label]="Sftoomi.Translator.translate('doctor')"
+                <app-combo-box #doctorIdCtrl
+                               [label]="Sftoomi.Translator.translate('doctor')"
                                name="doctor_id"
                                [parentFormGroup]="form"
                                [store]="doctorsStore"
+                               [filterFn]="filterDoctors"
                 />
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton, TuiDialogContext, TuiLoader, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
@@ -16,6 +16,7 @@ import AppRemoteSelectComponent, { AppRemoteSelectRecord } from '../../../../fie
 import AppComboBoxComponent, { AppComboboxRecord } from '../../../../fields/app-combo-box/app-combo-box.component';
 
 import getPatientAPI from '../../../../../APIs/getPatientAPI';
+import getExaminationAPI from '../../../../../APIs/getExaminationAPI';
 
 export type ExaminationEditDialogData = {
     id: number
@@ -30,7 +31,8 @@ export type ExaminationEditDialogData = {
         PatientDemographicsTemplateComponent,
         AppRemoteSelectComponent, TuiCardLarge,
         TuiTitle, TuiHeader, TuiSurface,
-        TuiComboBoxModule, TuiTextfieldControllerModule, AppComboBoxComponent
+        TuiComboBoxModule, TuiTextfieldControllerModule,
+        AppComboBoxComponent
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,7 +42,15 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 {
     protected readonly context: TuiDialogContext<any, ExaminationEditDialogData> = injectContext<TuiDialogContext<any, ExaminationEditDialogData>>();
 
-    protected readonly loadUrl: string = '//TODO:implementMe';
+    protected override readonly fetchExtraRequestOnLoad: boolean = true;
+
+    @ViewChild('facilityIdCtrl')
+    protected readonly facilityIdCtrl!: AppComboBoxComponent;
+
+    @ViewChild('doctorIdCtrl')
+    protected readonly doctorIdCtrl!: AppComboBoxComponent;
+
+    protected readonly loadUrl: string = '/getExamination';
     protected readonly saveUrl: string = '//TODO:implementMe';
     private readonly getPatientUrl: string = '/getPatient';
 
@@ -61,15 +71,32 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
     protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
     protected readonly doctorsStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
+    private lists: getExaminationAPI['lists'] | undefined;
+
     ngOnInit(): void
     {
-        this.form.get('facility_id')?.valueChanges.subscribe(this.onFacilitySelected);
-        this.form.get('doctor_id')?.valueChanges.subscribe(this.onDoctorSelected);
+        let me: this = this;
+        this.form.get('facility_id')?.valueChanges.subscribe((selectedFacilityId): void => me.onFacilitySelected(selectedFacilityId));
+        this.form.get('doctor_id')?.valueChanges.subscribe((selectedDoctorId): void => me.onDoctorSelected(selectedDoctorId));
     }
 
-    protected afterLoad(_data: any): void
+    protected afterLoad(data: getExaminationAPI): void
     {
-        // TODO: implement
+        this.facilitiesStore.set(data.lists.facilities.map(function (facility): AppComboboxRecord {
+            return {
+                value: facility.id,
+                title: facility.short_name
+            };
+        }));
+
+        this.doctorsStore.set(data.lists.doctors.map(function (doctor): AppComboboxRecord {
+            return {
+                value: doctor.id,
+                title: Sftoomi.humanShortName(doctor)
+            };
+        }));
+
+        this.lists = data.lists;
     }
 
     protected getPatientTemplateControls(): PatientDemographicsTemplateControls
@@ -127,13 +154,51 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         });
     }
 
-    private onFacilitySelected(_selectedFacilityId: string | null): void
+    private onFacilitySelected(selectedFacilityId: string | null): void
     {
-        // TODO: implement the behavior
+        if (!this.lists) {
+            return;
+        }
+
+        let facility = this.lists.facilities.find(function (record): boolean {
+            return record.id.toString() === selectedFacilityId;
+        });
+
+        this.doctorIdCtrl.updateFilters(facility);
     }
 
-    private onDoctorSelected(_selectedDoctorId: string | null): void
+    private onDoctorSelected(selectedDoctorId: string | null): void
     {
-        // TODO: implement the behavior
+        if (!this.lists) {
+            return;
+        }
+
+        let doctor = this.lists.doctors.find(function (record): boolean {
+            return record.id.toString() === selectedDoctorId;
+        });
+
+        this.facilityIdCtrl.updateFilters(doctor);
+    }
+
+    protected filterFacilities(currentFacilityId: string, selectedDoctor: any | undefined): boolean
+    {
+        if (!selectedDoctor) {
+            return true;
+        }
+
+        let selectedDoctorFacilities: string[] = selectedDoctor.facilities.split(',');
+
+        return selectedDoctorFacilities.includes(currentFacilityId);
+    }
+
+    protected filterDoctors(currentDoctorId: string, selectedFacility: any | undefined): boolean
+    {
+        if (!selectedFacility) {
+            return true;
+        }
+
+        let selectedFacilityDoctors: string[] = selectedFacility.doctors.split(',');
+
+        return selectedFacilityDoctors.includes(currentDoctorId);
     }
 }
