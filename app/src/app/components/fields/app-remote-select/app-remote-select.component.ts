@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, signal, ViewChild, WritableSignal } from '@angular/core';
 
 import AppRemoteSelectImports from './app-remote-select-imports';
 
@@ -22,7 +22,7 @@ export type AppRemoteSelectLookupApiResult = {
     styleUrl: './app-remote-select.component.scss'
 })
 
-export default class AppRemoteSelectComponent
+export default class AppRemoteSelectComponent implements OnInit
 {
     @Input({required: true}) public label!: string;
     @Input({required: true}) public lookupUrl!: string;
@@ -30,7 +30,7 @@ export default class AppRemoteSelectComponent
     @Input() public showExpandedNameInOptionsList: boolean = false;
 
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
-    @Input() public emptyContent: string = Sftoomi.format(Sftoomi.Translator.translate('fields.remote_select.tip'), [this.minSearchLength]);
+    @Input() public emptyContent: string = '';
 
     @ViewChild('inputFieldCtrl') protected inputFieldCtrl!: any;
 
@@ -44,6 +44,11 @@ export default class AppRemoteSelectComponent
     protected excludeItemsIds: number[] = [];
 
     private queryController: AbortController = new AbortController();
+
+    public ngOnInit(): void
+    {
+        this.emptyContent = Sftoomi.format(Sftoomi.Translator.translate('fields.remote_select.tip'), [this.minSearchLength]);
+    }
 
     protected valueChanged(selectedRecord: AppRemoteSelectRecord): void
     {
