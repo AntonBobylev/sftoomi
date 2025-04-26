@@ -6,14 +6,15 @@
     <div class="wrapper"
          [formGroup]="form"
     >
-        <div tuiCardLarge
-             tuiSurface="floating"
-        >
-            <div tuiHeader>
-                <div tuiTitle>{{ Sftoomi.Translator.translate('patient') }}</div>
-            </div>
+        <div class="main">
+            <div class="card"
+                 tuiCardLarge
+                 tuiSurface="floating"
+            >
+                <div tuiHeader>
+                    <div tuiTitle>{{ Sftoomi.Translator.translate('patient') }}</div>
+                </div>
 
-            <div class="main">
                 <app-remote-select [label]="Sftoomi.Translator.translate('id')"
                                    lookupUrl="/lookupPatient"
                                    formControlName="patient_id"
@@ -24,16 +25,15 @@
 
                 <patient-demographics-template [controls]="getPatientTemplateControls()"/>
             </div>
-        </div>
 
-        <div tuiCardLarge
-             tuiSurface="floating"
-        >
-            <div tuiHeader>
-                <div tuiTitle>{{ Sftoomi.Translator.translate('staff') }}</div>
-            </div>
+            <div class="card"
+                 tuiCardLarge
+                 tuiSurface="floating"
+            >
+                <div tuiHeader>
+                    <div tuiTitle>{{ Sftoomi.Translator.translate('staff') }}</div>
+                </div>
 
-            <div class="main">
                 <app-combo-box #facilityIdCtrl
                                [label]="Sftoomi.Translator.translate('facility')"
                                name="facility_id"
@@ -48,6 +48,9 @@
                                [store]="doctorsStore"
                                [filterFn]="filterDoctors"
                 />
+
+                <!-- space filler -->
+                <span></span>
             </div>
         </div>
 

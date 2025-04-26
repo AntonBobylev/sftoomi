@@ -34,7 +34,7 @@ export type ExaminationEditDialogData = {
         TuiComboBoxModule, TuiTextfieldControllerModule,
         AppComboBoxComponent
     ],
-    styleUrl: './dialog.component.scss',
+    styleUrl: './dialog.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
