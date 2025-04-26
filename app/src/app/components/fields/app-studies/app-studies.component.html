@@ -1,0 +1,35 @@
+<tui-elastic-container>
+    {{ label }}
+
+    <div class="wrapper">
+        @for (study of studiesCollection; track study) {
+            <div class="study">
+                <app-combo-box [label]="Sftoomi.Translator.translate('study')"
+                               [name]="'study' + study.index"
+                               [parentFormGroup]="form"
+                               [store]="store"
+                />
+
+                <button
+                    tuiIconButton
+                    size="s"
+                    appearance="icon"
+                    iconStart="@tui.circle-minus"
+                    type="button"
+                    tuiHint="{{ Sftoomi.Translator.translate('remove') }}"
+                    (click)="onRemoveClick(study.index)"
+                >
+                </button>
+            </div>
+        }
+
+        <button
+            size="s"
+            tuiButton
+            type="button"
+            (click)="onAddStudyClick()"
+        >
+            {{ Sftoomi.Translator.translate('fields.studies.add_study') }}
+        </button>
+    </div>
+</tui-elastic-container>
