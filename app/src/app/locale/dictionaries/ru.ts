@@ -124,6 +124,9 @@ let ruDictionary: object =  {
         },
         remote_select: {
             tip: 'Наберите минимальное количество символов: {0}'
+        },
+        studies: {
+            add_study: 'Добавить исследование'
         }
     },
 

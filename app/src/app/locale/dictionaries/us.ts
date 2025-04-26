@@ -124,6 +124,9 @@ let usDictionary: object =  {
         },
         remote_select: {
             tip: 'Type the minimal amount of symbols: {0}'
+        },
+        studies: {
+            add_study: 'Add study'
         }
     },
 
