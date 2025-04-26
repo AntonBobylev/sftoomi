@@ -38,18 +38,15 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
 
     private lastIndex: number = 0;
 
-    public getAddedStudiesCount(): number
-    {
-        return this.studiesCollection.length;
-    }
-
     constructor()
     {
         super();
 
+        let me: this = this;
         effect((): void => {
-            if (this.store && this.store().length > 0) {
-                this.updateStudiesStores();
+            if (me.store && me.store().length > 0) {
+                me.updateStudiesStores();
+                me.clearInvalidForceSelectedStudies();
             }
         });
     }
@@ -62,6 +59,11 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
             me.addNewStudy();
             me.studiesCollection[index].control.setValue(studyId.toString());
         });
+    }
+
+    public getAddedStudiesCount(): number
+    {
+        return this.studiesCollection.length;
     }
 
     protected onAddStudyClick(): void
@@ -79,7 +81,7 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
 
     protected isAddStudyClickDisabled(): boolean
     {
-        return this.getAddedStudiesCount() === this.store().length;
+        return this.getAddedStudiesCount() >= this.store().length;
     }
 
     private updateStudiesStores(): void
@@ -104,7 +106,6 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
 
             study.store.set(filteredStudies);
         });
-
     }
 
     private getAlreadySelectedStudies(): string[]
@@ -139,5 +140,31 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
         control.valueChanges.subscribe((): void => this.updateStudiesStores());
 
         this.updateStudiesStores();
+    }
+
+    private clearInvalidForceSelectedStudies(): void
+    {
+        let me: this = this,
+            alreadySelectedStudies: string[] = this.getAlreadySelectedStudies();
+
+        if (Sftoomi.isEmpty(alreadySelectedStudies)) {
+            return;
+        }
+
+        this.studiesCollection.forEach(function (study: StudyCollectionRow, index: number): void {
+            if (!study.control.value) {
+                return;
+            }
+
+            let storeRecord: AppComboboxRecord | undefined = me.store().find(function (record: AppComboboxRecord): boolean {
+                return record.value.toString() === study.control.value!.toString();
+            });
+
+            if (storeRecord) { // exists
+                return;
+            }
+
+            Sftoomi.removeArrayItemByIndex(me.studiesCollection, index);
+        });
     }
 }
