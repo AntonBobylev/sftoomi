@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, signal, WritableSignal } from '@angular/core'
+import { AfterViewInit, Component, effect, Input, signal, WritableSignal } from '@angular/core'
 import { TuiButton, TuiHintDirective } from '@taiga-ui/core';
 import { TuiElasticContainer } from '@taiga-ui/kit';
 import { FormControl, Validators } from '@angular/forms';
@@ -30,6 +30,7 @@ type StudyCollectionRow = {
 export default class AppStudiesComponent extends AppBaseField implements AfterViewInit
 {
     @Input() public override label: string = Sftoomi.Translator.translate('studies');
+    @Input() public initialValues: (string | number)[] = [];
 
     @Input({required: true}) public store: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
@@ -42,28 +43,30 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
         return this.studiesCollection.length;
     }
 
+    constructor()
+    {
+        super();
+
+        effect((): void => {
+            if (this.store && this.store().length > 0) {
+                this.updateStudiesStores();
+            }
+        });
+    }
+
+
     public ngAfterViewInit(): void
     {
-        this.updateStudiesStores();
+        let me: this = this;
+        this.initialValues.forEach(function (studyId: string | number, index: number): void {
+            me.addNewStudy();
+            me.studiesCollection[index].control.setValue(studyId.toString());
+        });
     }
 
     protected onAddStudyClick(): void
     {
-        let nextIndex: number = this.lastIndex + 1,
-            control: FormControl<string | null> = new FormControl<string | null>(null, [Validators.required]);
-
-        this.lastIndex = nextIndex;
-
-        this.form.addControl('study' + nextIndex, control);
-        this.studiesCollection.push({
-            index: nextIndex,
-            store: signal(this.store()),
-            control: control
-        });
-
-        control.valueChanges.subscribe((): void => this.updateStudiesStores());
-
-        this.updateStudiesStores();
+        this.addNewStudy();
     }
 
     protected onRemoveClick(studyIndex: number): void
@@ -117,5 +120,24 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
         });
 
         return result;
+    }
+
+    private addNewStudy(): void
+    {
+        let nextIndex: number = this.lastIndex + 1,
+            control: FormControl<string | null> = new FormControl<string | null>(null, [Validators.required]);
+
+        this.lastIndex = nextIndex;
+
+        this.form.addControl('study' + nextIndex, control);
+        this.studiesCollection.push({
+            index: nextIndex,
+            store: signal(this.store()),
+            control: control
+        });
+
+        control.valueChanges.subscribe((): void => this.updateStudiesStores());
+
+        this.updateStudiesStores();
     }
 }
