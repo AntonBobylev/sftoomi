@@ -29,7 +29,7 @@ type StudyCollectionRow = {
 
 export default class AppStudiesComponent extends AppBaseField implements AfterViewInit
 {
-    @Input() public override label: string = 'Studies';
+    @Input() public override label: string = Sftoomi.Translator.translate('studies');
 
     @Input({required: true}) public store: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
