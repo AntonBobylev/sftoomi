@@ -1,11 +1,11 @@
 import { Component, effect, Input, signal, WritableSignal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TuiComboBoxModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { TuiDataListWrapper, TuiDataListWrapperComponent, TuiFieldErrorPipe, TuiFilterByInputPipe, TuiStringifyContentPipe } from '@taiga-ui/kit';
 import { TuiError } from '@taiga-ui/core';
 
-import Sftoomi from '../../../class/Sftoomi';
+import AppBaseField from '../app-base-field';
 
 export type AppComboboxRecord = {
     value: string | number,
@@ -25,15 +25,10 @@ export type AppComboboxRecord = {
     styleUrl: './app-combo-box.component.scss'
 })
 
-export default class AppComboBoxComponent
+export default class AppComboBoxComponent extends AppBaseField
 {
-    @Input({required: true}) public label!: string;
-    @Input({required: true}) public name!: string;
-    @Input({required: true, alias: 'parentFormGroup'}) public form!: FormGroup;
     @Input({required: true}) public store: WritableSignal<AppComboboxRecord[]> = signal([]);
     @Input() public filterFn?: Function;
-
-    protected readonly Sftoomi = Sftoomi;
 
     protected readonly stringify = (value: number): string =>
         this.store().find(function (item: AppComboboxRecord): boolean {
@@ -44,6 +39,8 @@ export default class AppComboBoxComponent
 
     constructor()
     {
+        super();
+
         let me: this = this;
         effect((): void => {
             me.items = me.recordsToValuesOnlyArray(me.store());
