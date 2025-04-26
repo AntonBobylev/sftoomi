@@ -7,17 +7,14 @@
          [formGroup]="form"
     >
         <div class="main">
-            <tui-textfield>
-                <label tuiLabel>{{ Sftoomi.Translator.translate('id') }}</label>
-                <input
-                    formControlName="patient_id"
-                    tuiInputNumber
-                />
+            <app-remote-select [label]="Sftoomi.Translator.translate('id')"
+                               lookupUrl="/lookupPatient"
+                               formControlName="patient_id"
+                               [showExpandedNameInOptionsList]="true"
+                               [minimalQueryLength]="1"
+                               (onOptionSelected)="onPatientSelected($event)"
+            />
 
-                <tui-error formControlName="patient_id"
-                           [error]="[] | tuiFieldError | async"
-                />
-            </tui-textfield>
             <patient-demographics-template [controls]="getPatientTemplateControls()"/>
         </div>
 

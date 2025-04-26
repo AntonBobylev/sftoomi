@@ -1,14 +1,19 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiDialogContext, TuiError, TuiLabel, TuiLoader, TuiTextfieldComponent } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiLoader } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiInputDateModule } from '@taiga-ui/legacy';
-import { TuiFieldErrorPipe, TuiInputNumberDirective } from '@taiga-ui/kit';
-import { AsyncPipe } from '@angular/common';
+import moment from 'moment/moment';
+
+import Sftoomi from '../../../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../../core/app-base-edit-dialog';
+import Fetcher from '../../../../../class/Fetcher';
 
 import PatientDemographicsTemplateComponent, { PatientDemographicsTemplateControls } from '../../../../templates/patient-demographics-template.component';
+import AppRemoteSelectComponent, { AppRemoteSelectRecord } from '../../../../fields/app-remote-select/app-remote-select.component';
+
+import getPatientAPI from '../../../../../APIs/getPatientAPI';
 
 export type ExaminationEditDialogData = {
     id: number
@@ -21,13 +26,9 @@ export type ExaminationEditDialogData = {
         ReactiveFormsModule, TuiButton,
         TuiLoader, TuiInputDateModule,
         PatientDemographicsTemplateComponent,
-        TuiTextfieldComponent, AsyncPipe, TuiError,
-        TuiFieldErrorPipe, TuiLabel, TuiInputNumberDirective
+        AppRemoteSelectComponent
     ],
-    styleUrls: [
-        './dialog.component.scss',
-        '../../../core/app-base-edit-dialog-with-tabs.scss'
-    ],
+    styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -37,9 +38,10 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected readonly loadUrl: string = '//TODO:implementMe';
     protected readonly saveUrl: string = '//TODO:implementMe';
+    private readonly getPatientUrl: string = '/getPatient';
 
     protected readonly form: FormGroup = new FormGroup({
-        patient_id:          new FormControl('', [Validators.min(1)]),
+        patient_id:          new FormControl(null, [Validators.min(1)]),
         patient_last_name:   new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
         patient_first_name:  new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
         patient_middle_name: new FormControl('', [Validators.minLength(2), Validators.maxLength(255)]),
@@ -61,5 +63,49 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             dob:         this.form.get('patient_dob') as FormControl,
             phone:       this.form.get('patient_phone') as FormControl
         }
+    }
+
+    protected onPatientSelected(event: AppRemoteSelectRecord | null): void
+    {
+        if (!event) {
+            return;
+        }
+
+        let me: this = this,
+            data: FormData = new FormData();
+
+        data.append('id', event.id.toString());
+
+        me.isLoading.set(true);
+        new Fetcher().request({
+            url: this.getPatientUrl,
+            data: data,
+            success: function (_response: any, _request: any, data: getPatientAPI): void {
+                me.isLoading.set(false);
+
+                if (Sftoomi.isEmpty(data.data)) {
+                    return;
+                }
+
+                me.form.get('patient_first_name')?.setValue(data.data.first_name.toUpperCase());
+                me.form.get('patient_last_name')?.setValue(data.data.last_name.toUpperCase());
+                me.form.get('patient_middle_name')?.setValue(data.data.middle_name.toUpperCase());
+                me.form.get('patient_phone')?.setValue(data.data.phone);
+
+                if (data.data.dob) {
+                    me.form.get('patient_dob')?.setValue(moment(data.data.dob).toDate());
+                }
+            },
+            failure: function (code: any, message: any, _request: any): void {
+                me.isLoading.set(false);
+
+                if (message === 'canceled') {
+                    return;
+                }
+
+                console.error(code);
+                console.error(message);
+            }
+        });
     }
 }
