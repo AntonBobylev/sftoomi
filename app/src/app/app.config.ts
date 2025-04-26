@@ -3,7 +3,11 @@ import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
 import { TUI_LANGUAGE } from '@taiga-ui/i18n';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter, withHashLocation } from '@angular/router';
-import { TUI_DIALOG_OPTIONS, TUI_FIRST_DAY_OF_WEEK, tuiDateFormatProvider } from '@taiga-ui/core';
+import {
+    TUI_DIALOG_OPTIONS,
+    TUI_FIRST_DAY_OF_WEEK,
+    tuiDateFormatProvider
+} from '@taiga-ui/core';
 import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
 import { of } from 'rxjs';
 
@@ -36,6 +40,7 @@ export const appConfig: ApplicationConfig = {
         {
             provide: TUI_DIALOG_OPTIONS,
             useValue: {
+                closeable: true,
                 dismissible: false,
                 size: 'auto'
             }
