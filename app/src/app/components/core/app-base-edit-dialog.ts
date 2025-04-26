@@ -24,7 +24,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected abstract afterLoad(data: any): void;
 
-    private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
+    protected readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
     protected get data(): any
     {
@@ -81,6 +81,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected save(): void
     {
+        if (!this.isPreValid()) {
+            return;
+        }
+
         this.validate();
         if (this.form.invalid) {
             this.popupMsg.formInvalid();
@@ -147,5 +151,11 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             control.markAsDirty();
             control.markAsTouched();
         }
+    }
+
+    protected isPreValid(): boolean
+    {
+        // implement in child
+        return true;
     }
 }

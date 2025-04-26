@@ -64,7 +64,8 @@
                     <div tuiTitle>{{ Sftoomi.Translator.translate('study') }}</div>
                 </div>
 
-                <app-studies name="studies"
+                <app-studies #studiesCtrl
+                             name="studies"
                              [parentFormGroup]="form"
                              [store]="studiesStore"
                              label=""

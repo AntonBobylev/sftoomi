@@ -53,6 +53,9 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
     @ViewChild('doctorIdCtrl')
     protected readonly doctorIdCtrl!: AppComboBoxComponent;
 
+    @ViewChild('studiesCtrl')
+    protected readonly studiesCtrl!: AppStudiesComponent;
+
     protected readonly loadUrl: string = '/getExamination';
     protected readonly saveUrl: string = '//TODO:implementMe';
     private readonly getPatientUrl: string = '/getPatient';
@@ -211,5 +214,17 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         let selectedFacilityDoctors: string[] = selectedFacility.doctors.split(',');
 
         return selectedFacilityDoctors.includes(currentDoctorId);
+    }
+
+    protected override isPreValid(): boolean
+    {
+        let addedStudiesCount: number = this.studiesCtrl.getAddedStudiesCount();
+        if (addedStudiesCount < 1) {
+            this.popupMsg.warning(Sftoomi.Translator.translate('views.processing.dialog.no_studies_added_tip'));
+
+            return false;
+        }
+
+        return true;
     }
 }

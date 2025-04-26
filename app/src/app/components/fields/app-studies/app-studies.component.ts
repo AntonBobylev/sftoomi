@@ -35,6 +35,11 @@ export default class AppStudiesComponent extends AppBaseField
 
     private lastIndex: number = 0;
 
+    public getAddedStudiesCount(): number
+    {
+        return this.studiesCollection.length;
+    }
+
     protected onAddStudyClick(): void
     {
         let nextIndex: number = this.lastIndex + 1;
