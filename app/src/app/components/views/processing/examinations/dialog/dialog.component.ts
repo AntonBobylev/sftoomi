@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiButton, TuiDialogContext, TuiLoader, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TuiInputDateModule } from '@taiga-ui/legacy';
+import { TuiComboBoxModule, TuiInputDateModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import moment from 'moment/moment';
 
@@ -13,6 +13,7 @@ import Fetcher from '../../../../../class/Fetcher';
 
 import PatientDemographicsTemplateComponent, { PatientDemographicsTemplateControls } from '../../../../templates/patient-demographics-template.component';
 import AppRemoteSelectComponent, { AppRemoteSelectRecord } from '../../../../fields/app-remote-select/app-remote-select.component';
+import AppComboBoxComponent, { AppComboboxRecord } from '../../../../fields/app-combo-box/app-combo-box.component';
 
 import getPatientAPI from '../../../../../APIs/getPatientAPI';
 
@@ -28,13 +29,14 @@ export type ExaminationEditDialogData = {
         TuiLoader, TuiInputDateModule,
         PatientDemographicsTemplateComponent,
         AppRemoteSelectComponent, TuiCardLarge,
-        TuiTitle, TuiHeader, TuiSurface
+        TuiTitle, TuiHeader, TuiSurface,
+        TuiComboBoxModule, TuiTextfieldControllerModule, AppComboBoxComponent
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export default class ExaminationEditDialogComponent extends AppBaseEditDialog
+export default class ExaminationEditDialogComponent extends AppBaseEditDialog implements OnInit
 {
     protected readonly context: TuiDialogContext<any, ExaminationEditDialogData> = injectContext<TuiDialogContext<any, ExaminationEditDialogData>>();
 
@@ -43,15 +45,27 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
     private readonly getPatientUrl: string = '/getPatient';
 
     protected readonly form: FormGroup = new FormGroup({
+        // Patient
         patient_id:          new FormControl(null, [Validators.min(1)]),
         patient_last_name:   new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
         patient_first_name:  new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
         patient_middle_name: new FormControl('', [Validators.minLength(2), Validators.maxLength(255)]),
         patient_dob:         new FormControl,
-        patient_phone:       new FormControl('', [Validators.minLength(16), Validators.maxLength(16)])
+        patient_phone:       new FormControl('', [Validators.minLength(16), Validators.maxLength(16)]),
+
+        // Staff
+        facility_id: new FormControl<string | null>(null, [Validators.required]),
+        doctor:      new FormControl
     });
 
-    protected afterLoad(data: any): void
+    protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal([]);
+
+    ngOnInit(): void
+    {
+        this.form.get('facility_id')?.valueChanges.subscribe(this.onFacilitySelected);
+    }
+
+    protected afterLoad(_data: any): void
     {
         // TODO: implement
     }
@@ -109,5 +123,10 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
                 console.error(message);
             }
         });
+    }
+
+    private onFacilitySelected(_selectedFacilityId: string | null): void
+    {
+        // TODO: implement the behavior
     }
 }

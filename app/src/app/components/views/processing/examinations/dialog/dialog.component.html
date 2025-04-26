@@ -26,6 +26,22 @@
             </div>
         </div>
 
+        <div tuiCardLarge
+             tuiSurface="floating"
+        >
+            <div tuiHeader>
+                <div tuiTitle>{{ Sftoomi.Translator.translate('staff') }}</div>
+            </div>
+
+            <div class="main">
+                <app-combo-box [label]="Sftoomi.Translator.translate('facility')"
+                               name="facility_id"
+                               [parentFormGroup]="form"
+                               [store]="facilitiesStore"
+                />
+            </div>
+        </div>
+
         <div class="actions">
             <button
                 tuiButton
