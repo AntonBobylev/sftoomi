@@ -7,7 +7,7 @@
                 <app-combo-box [label]="Sftoomi.Translator.translate('study')"
                                [name]="'study' + study.index"
                                [parentFormGroup]="form"
-                               [store]="store"
+                               [store]="study.store"
                 />
 
                 <button
@@ -27,6 +27,7 @@
             size="s"
             tuiButton
             type="button"
+            [disabled]="isAddStudyClickDisabled()"
             (click)="onAddStudyClick()"
         >
             {{ Sftoomi.Translator.translate('fields.studies.add_study') }}
