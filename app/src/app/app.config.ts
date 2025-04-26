@@ -39,6 +39,6 @@ export const appConfig: ApplicationConfig = {
                 dismissible: false,
                 size: 'auto'
             }
-        },
+        }
     ]
 };
