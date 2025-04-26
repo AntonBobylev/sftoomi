@@ -24,6 +24,9 @@
                 />
 
                 <patient-demographics-template [controls]="getPatientTemplateControls()"/>
+
+                <!-- space filler -->
+                <span></span>
             </div>
 
             <div class="card"
@@ -61,10 +64,10 @@
                     <div tuiTitle>{{ Sftoomi.Translator.translate('study') }}</div>
                 </div>
 
-                <app-combo-box [label]="Sftoomi.Translator.translate('study')"
-                               name="study_id"
-                               [parentFormGroup]="form"
-                               [store]="studiesStore"
+                <app-studies name="studies"
+                             [parentFormGroup]="form"
+                             [store]="studiesStore"
+                             label=""
                 />
 
                 <!-- space filler -->

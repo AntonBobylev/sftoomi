@@ -14,6 +14,7 @@ import Fetcher from '../../../../../class/Fetcher';
 import PatientDemographicsTemplateComponent, { PatientDemographicsTemplateControls } from '../../../../templates/patient-demographics-template.component';
 import AppRemoteSelectComponent, { AppRemoteSelectRecord } from '../../../../fields/app-remote-select/app-remote-select.component';
 import AppComboBoxComponent, { AppComboboxRecord } from '../../../../fields/app-combo-box/app-combo-box.component';
+import AppStudiesComponent from '../../../../fields/app-studies/app-studies.component';
 
 import getPatientAPI from '../../../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../../../APIs/getExaminationAPI';
@@ -34,7 +35,7 @@ export type ExaminationEditDialogData = {
         AppRemoteSelectComponent, TuiCardLarge,
         TuiTitle, TuiHeader, TuiSurface,
         TuiComboBoxModule, TuiTextfieldControllerModule,
-        AppComboBoxComponent
+        AppComboBoxComponent, AppStudiesComponent
     ],
     styleUrl: './dialog.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -68,9 +69,6 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         // Staff
         facility_id: new FormControl<string | null>(null, [Validators.required]),
         doctor_id:   new FormControl<string | null>(null),
-
-        // Study
-        study_id:    new FormControl<string | null>(null, [Validators.required])
     });
 
     protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
