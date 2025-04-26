@@ -31,6 +31,7 @@ export default class AppComboBoxComponent
     @Input({required: true}) public name!: string;
     @Input({required: true, alias: 'parentFormGroup'}) public form!: FormGroup;
     @Input({required: true}) public store: WritableSignal<AppComboboxRecord[]> = signal([]);
+    @Input() public filterFn?: Function;
 
     protected readonly Sftoomi = Sftoomi;
 
@@ -45,7 +46,23 @@ export default class AppComboBoxComponent
     {
         let me: this = this;
         effect((): void => {
-            me.items = me.store().map(({value}: AppComboboxRecord): string => value.toString());
+            me.items = me.recordsToValuesOnlyArray(me.store());
         })
+    }
+
+    public updateFilters(filters: any | undefined): void
+    {
+        let me: this = this;
+        if (me.filterFn) {
+            let filteredRecords: string[] = me.recordsToValuesOnlyArray(me.store());
+            me.items = filteredRecords.filter(function (value: string): boolean {
+                return me.filterFn!(value, filters);
+            })
+        }
+    }
+
+    private recordsToValuesOnlyArray(records: AppComboboxRecord[]): string[]
+    {
+        return records.map(({value}: AppComboboxRecord): string => value.toString())
     }
 }
