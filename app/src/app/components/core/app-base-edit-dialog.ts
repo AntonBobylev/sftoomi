@@ -81,6 +81,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected save(): void
     {
+        this.validate();
         if (this.form.invalid) {
             this.popupMsg.formInvalid();
 
@@ -138,5 +139,13 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected getAdditionalDataOnSave(data: FormData): FormData
     {
         return data;
+    }
+
+    protected validate(): void
+    {
+        for (const [_key, control] of Object.entries(this.form.controls)) {
+            control.markAsDirty();
+            control.markAsTouched();
+        }
     }
 }
