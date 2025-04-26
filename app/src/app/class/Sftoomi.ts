@@ -178,4 +178,9 @@ export default class Sftoomi
             ? last
             : String(last + (last ? ', ' : '') + first + ' ' + middle).trim();
     }
+
+    public static removeArrayItemByIndex(array: any[], index: any): void
+    {
+        array.splice(index, 1);
+    }
 }
