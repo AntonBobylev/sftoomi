@@ -69,14 +69,17 @@ class FetcherTest extends TestCase
         $value = Fetcher::intArray(null);
         $this->assertEquals(null, $value);
 
+        $value = Fetcher::intArray("1");
+        $this->assertEquals([1], $value);
+
         $value = Fetcher::intArray(null, []);
         $this->assertEquals([], $value);
 
         $value = Fetcher::intArray(1);
         $this->assertEquals(null, $value);
 
-        $value = Fetcher::intArray("test");
-        $this->assertEquals(null, $value);
+        $this->expectException(\RuntimeException::class);
+        Fetcher::intArray("test");
 
         $this->expectException(\RuntimeException::class);
         Fetcher::intArray("test,test");

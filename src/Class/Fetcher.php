@@ -33,10 +33,6 @@ class Fetcher
         }
 
         if (is_string($value)) {
-            if (!str_contains($value, $separator)) {
-                return $default;
-            }
-
             $value = explode($separator, $value);
         }
 
