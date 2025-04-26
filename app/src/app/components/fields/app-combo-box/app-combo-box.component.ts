@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core';
+import { Component, effect, Input, signal, WritableSignal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { TuiComboBoxModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
@@ -20,12 +20,12 @@ export type AppComboboxRecord = {
         TuiComboBoxModule, TuiDataListWrapper,
         TuiDataListWrapperComponent, TuiError,
         TuiFieldErrorPipe, TuiFilterByInputPipe,
-        TuiStringifyContentPipe, TuiTextfieldControllerModule,
+        TuiStringifyContentPipe, TuiTextfieldControllerModule
     ],
     styleUrl: './app-combo-box.component.scss'
 })
 
-export default class AppComboBoxComponent implements OnInit
+export default class AppComboBoxComponent
 {
     @Input({required: true}) public label!: string;
     @Input({required: true}) public name!: string;
@@ -41,8 +41,11 @@ export default class AppComboBoxComponent implements OnInit
 
     protected items: string[] = [];
 
-    ngOnInit(): void
+    constructor()
     {
-        this.items = this.store().map(({value}: AppComboboxRecord): string => value.toString());
+        let me: this = this;
+        effect((): void => {
+            me.items = me.store().map(({value}: AppComboboxRecord): string => value.toString());
+        })
     }
 }
