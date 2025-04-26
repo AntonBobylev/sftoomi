@@ -1,8 +1,9 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiDialogContext, TuiLoader } from '@taiga-ui/core';
+import { TuiButton, TuiDialogContext, TuiLoader, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
 import { TuiInputDateModule } from '@taiga-ui/legacy';
+import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import moment from 'moment/moment';
 
 import Sftoomi from '../../../../../class/Sftoomi';
@@ -26,7 +27,8 @@ export type ExaminationEditDialogData = {
         ReactiveFormsModule, TuiButton,
         TuiLoader, TuiInputDateModule,
         PatientDemographicsTemplateComponent,
-        AppRemoteSelectComponent
+        AppRemoteSelectComponent, TuiCardLarge,
+        TuiTitle, TuiHeader, TuiSurface
     ],
     styleUrl: './dialog.component.scss',
     changeDetection: ChangeDetectionStrategy.OnPush

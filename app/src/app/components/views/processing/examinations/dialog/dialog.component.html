@@ -6,16 +6,24 @@
     <div class="wrapper"
          [formGroup]="form"
     >
-        <div class="main">
-            <app-remote-select [label]="Sftoomi.Translator.translate('id')"
-                               lookupUrl="/lookupPatient"
-                               formControlName="patient_id"
-                               [showExpandedNameInOptionsList]="true"
-                               [minimalQueryLength]="1"
-                               (onOptionSelected)="onPatientSelected($event)"
-            />
+        <div tuiCardLarge
+             tuiSurface="floating"
+        >
+            <div tuiHeader>
+                <div tuiTitle>Patient</div>
+            </div>
 
-            <patient-demographics-template [controls]="getPatientTemplateControls()"/>
+            <div class="main">
+                <app-remote-select [label]="Sftoomi.Translator.translate('id')"
+                                   lookupUrl="/lookupPatient"
+                                   formControlName="patient_id"
+                                   [showExpandedNameInOptionsList]="true"
+                                   [minimalQueryLength]="1"
+                                   (onOptionSelected)="onPatientSelected($event)"
+                />
+
+                <patient-demographics-template [controls]="getPatientTemplateControls()"/>
+            </div>
         </div>
 
         <div class="actions">
