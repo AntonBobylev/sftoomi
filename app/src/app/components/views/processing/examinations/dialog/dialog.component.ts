@@ -55,14 +55,16 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 
         // Staff
         facility_id: new FormControl<string | null>(null, [Validators.required]),
-        doctor:      new FormControl
+        doctor_id:   new FormControl<string | null>(null)
     });
 
-    protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal([]);
+    protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
+    protected readonly doctorsStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
     ngOnInit(): void
     {
         this.form.get('facility_id')?.valueChanges.subscribe(this.onFacilitySelected);
+        this.form.get('doctor_id')?.valueChanges.subscribe(this.onDoctorSelected);
     }
 
     protected afterLoad(_data: any): void
@@ -126,6 +128,11 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
     }
 
     private onFacilitySelected(_selectedFacilityId: string | null): void
+    {
+        // TODO: implement the behavior
+    }
+
+    private onDoctorSelected(_selectedDoctorId: string | null): void
     {
         // TODO: implement the behavior
     }
