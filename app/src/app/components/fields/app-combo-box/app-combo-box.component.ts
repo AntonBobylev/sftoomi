@@ -1,9 +1,9 @@
 import { Component, Input, OnInit, signal, WritableSignal } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { TuiComboBoxModule } from '@taiga-ui/legacy';
+import { TuiComboBoxModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
 import { TuiDataListWrapper, TuiDataListWrapperComponent, TuiFieldErrorPipe, TuiFilterByInputPipe, TuiStringifyContentPipe } from '@taiga-ui/kit';
-import { TuiError, TuiTextfieldOptionsDirective } from '@taiga-ui/core';
+import { TuiError } from '@taiga-ui/core';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -20,7 +20,7 @@ export type AppComboboxRecord = {
         TuiComboBoxModule, TuiDataListWrapper,
         TuiDataListWrapperComponent, TuiError,
         TuiFieldErrorPipe, TuiFilterByInputPipe,
-        TuiStringifyContentPipe, TuiTextfieldOptionsDirective
+        TuiStringifyContentPipe, TuiTextfieldControllerModule,
     ],
     styleUrl: './app-combo-box.component.scss'
 })
