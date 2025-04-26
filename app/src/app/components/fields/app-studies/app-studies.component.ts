@@ -76,7 +76,7 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
 
     protected isAddStudyClickDisabled(): boolean
     {
-        return this.getAlreadySelectedStudies().length === this.store().length;
+        return this.getAddedStudiesCount() === this.store().length;
     }
 
     private updateStudiesStores(): void
