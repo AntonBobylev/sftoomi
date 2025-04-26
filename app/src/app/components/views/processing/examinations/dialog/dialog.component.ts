@@ -18,6 +18,8 @@ import AppComboBoxComponent, { AppComboboxRecord } from '../../../../fields/app-
 import getPatientAPI from '../../../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../../../APIs/getExaminationAPI';
 
+import Study from '../../../../../type/Study';
+
 export type ExaminationEditDialogData = {
     id: number
 };
@@ -65,11 +67,15 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 
         // Staff
         facility_id: new FormControl<string | null>(null, [Validators.required]),
-        doctor_id:   new FormControl<string | null>(null)
+        doctor_id:   new FormControl<string | null>(null),
+
+        // Study
+        study_id:    new FormControl<string | null>(null, [Validators.required])
     });
 
     protected readonly facilitiesStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
     protected readonly doctorsStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
+    protected readonly studiesStore: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
     private lists: getExaminationAPI['lists'] | undefined;
 
@@ -93,6 +99,13 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
             return {
                 value: doctor.id,
                 title: Sftoomi.humanShortName(doctor)
+            };
+        }));
+
+        this.studiesStore.set(data.lists.studies.map(function (study: Study): AppComboboxRecord {
+            return {
+                value: study.id,
+                title: study.short_name
             };
         }));
 

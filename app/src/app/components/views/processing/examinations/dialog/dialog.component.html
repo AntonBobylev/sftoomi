@@ -52,6 +52,24 @@
                 <!-- space filler -->
                 <span></span>
             </div>
+
+            <div class="card"
+                 tuiCardLarge
+                 tuiSurface="floating"
+            >
+                <div tuiHeader>
+                    <div tuiTitle>{{ Sftoomi.Translator.translate('study') }}</div>
+                </div>
+
+                <app-combo-box [label]="Sftoomi.Translator.translate('study')"
+                               name="study_id"
+                               [parentFormGroup]="form"
+                               [store]="studiesStore"
+                />
+
+                <!-- space filler -->
+                <span></span>
+            </div>
         </div>
 
         <div class="actions">

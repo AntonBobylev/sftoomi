@@ -30,11 +30,16 @@ final class ProcessingController extends AbstractController
                 group by d.id";
         $doctors = $connection->fetchAllAssociative($sql);
 
+        $sql = "select id, full_name, short_name
+                from study";
+        $studies = $connection->fetchAllAssociative($sql);
+
         return new JsonResponse([
             "data"  => [],
             "lists" => [
                 "facilities" => $facilities,
-                "doctors"    => $doctors
+                "doctors"    => $doctors,
+                "studies"    => $studies
             ]
         ]);
     }
