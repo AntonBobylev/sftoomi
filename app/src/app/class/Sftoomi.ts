@@ -31,7 +31,7 @@ export default class Sftoomi
      */
     public static isArray(variable: any): boolean
     {
-        return toString.apply(variable) === '[object Array]';
+        return Array.isArray(variable);
     }
 
     /**
@@ -188,5 +188,21 @@ export default class Sftoomi
     public static getFormControlName(control: AbstractControl): string | undefined
     {
         return Object.keys(control.parent!.controls).find((name: string): boolean => control === control.parent!.get(name))
+    }
+
+    public static formValuesToFormData(formValues: object): FormData
+    {
+        let data: FormData = new FormData();
+        for (const [key, value] of Object.entries(formValues)) {
+            let val: any = value;
+
+            if (val instanceof Date) {
+                val = Sftoomi.dateShort(value);
+            }
+
+            data.append(key, val);
+        }
+
+        return data;
     }
 }
