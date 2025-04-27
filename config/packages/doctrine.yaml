@@ -11,7 +11,7 @@ doctrine:
         schema_filter:
             "~^(?!(\
                 cpts|\
-                facilities_doctors\
+                facilities_doctors|\
                 studies_cpts\
             )$)~"
     orm:
