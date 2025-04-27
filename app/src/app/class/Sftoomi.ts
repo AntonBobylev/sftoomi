@@ -1,3 +1,4 @@
+import { AbstractControl } from '@angular/forms';
 import moment from 'moment';
 
 import Translator from './Translator';
@@ -182,5 +183,10 @@ export default class Sftoomi
     public static removeArrayItemByIndex(array: any[], index: any): void
     {
         array.splice(index, 1);
+    }
+
+    public static getFormControlName(control: AbstractControl): string | undefined
+    {
+        return Object.keys(control.parent!.controls).find((name: string): boolean => control === control.parent!.get(name))
     }
 }
