@@ -6,6 +6,7 @@ import Study from "../type/Study";
 type getExaminationsAPI = {
     data: {
         id: number,
+        date: string,
         doctor: Doctor,
         facility: Facility,
         patient: Patient,

@@ -17,7 +17,7 @@ final class ProcessingController extends AppCrudController
     {
         $examinations = $this->getList(
             $request,
-            ["id", "patient_id", "facility_id", "doctor_id"]
+            ["id", "patient_id", "facility_id", "doctor_id", "date"]
         );
 
         $data = $examinations["data"];
@@ -74,7 +74,7 @@ final class ProcessingController extends AppCrudController
 
             $data = $this->getOne(
                 $request,
-                ["id", "patient_id", "facility_id", "doctor_id"]
+                ["id", "patient_id", "facility_id", "doctor_id", "date"]
             );
 
             $sql = "select study_id

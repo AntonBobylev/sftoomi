@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ExaminationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExaminationRepository::class)]
@@ -21,6 +22,9 @@ class Examination
 
     #[ORM\Column(nullable: true)]
     private ?int $doctor_id = null;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?\DateTimeInterface $date = null;
 
     public function getId(): ?int
     {
@@ -59,6 +63,18 @@ class Examination
     public function setDoctorId(?int $doctor_id): static
     {
         $this->doctor_id = $doctor_id;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(\DateTimeInterface $date): static
+    {
+        $this->date = $date;
 
         return $this;
     }
