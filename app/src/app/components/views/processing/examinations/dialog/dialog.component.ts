@@ -22,7 +22,7 @@ import getExaminationAPI from '../../../../../APIs/getExaminationAPI';
 import Study from '../../../../../type/Study';
 
 export type ExaminationEditDialogData = {
-    id: number
+    id?: number
 };
 
 @Component({
@@ -59,7 +59,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
     protected readonly studiesCtrl!: AppStudiesComponent;
 
     protected readonly loadUrl: string = '/getExamination';
-    protected readonly saveUrl: string = '//TODO:implementMe';
+    protected readonly saveUrl: string = '/saveExamination';
     private readonly getPatientUrl: string = '/getPatient';
 
     protected readonly form: FormGroup = new FormGroup({
