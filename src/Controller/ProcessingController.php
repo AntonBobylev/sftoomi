@@ -22,7 +22,7 @@ final class ProcessingController extends AppCrudController
 
         $data = $examinations["data"];
         foreach ($data as &$row) {
-            $sql = "select s.id, s.short_name, s.full_name
+            $sql = "select es.exam_id, s.id, s.short_name, s.full_name
                     from examinations_studies es
                         left join study s on s.id = es.study_id
                     where es.examination_id = {$row["id"]}";

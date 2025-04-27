@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, inject, Input, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, effect, inject, Input, signal, ViewChild, WritableSignal } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { defaultIfEmpty } from 'rxjs';
@@ -6,10 +6,9 @@ import { defaultIfEmpty } from 'rxjs';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
-import ProcessingModuleExaminationsPanelTableComponent, {
-    ProcessingModuleExaminationsPanelTableData, ProcessingModuleExaminationsPanelTableRowData
-} from './table/table.component';
+import ProcessingModuleExaminationsPanelTableComponent, { ProcessingModuleExaminationsPanelTableData, ProcessingModuleExaminationsPanelTableRowData } from './table/table.component';
 import ExaminationEditDialogComponent, { ExaminationEditDialogData } from './dialog/dialog.component';
+
 import getExaminationsAPI from '../../../../APIs/getExaminationsAPI';
 
 @Component({
@@ -22,7 +21,7 @@ import getExaminationsAPI from '../../../../APIs/getExaminationsAPI';
     styleUrl: './panel.component.less'
 })
 
-export default class ProcessingModuleExaminationsPanelComponent implements AfterViewInit
+export default class ProcessingModuleExaminationsPanelComponent
 {
     @ViewChild('tableCtrl')
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
@@ -53,17 +52,13 @@ export default class ProcessingModuleExaminationsPanelComponent implements After
         });
     }
 
-    ngAfterViewInit(): void
-    {
-    }
-
     protected onAddExaminationClick(): void
     {
         let me: this = this;
         this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
             label: Sftoomi.Translator.translate('views.processing.add_examination'),
             data: {
-                id: 1 // TODO: implement
+                //id: 1 // TODO: implement
             } as ExaminationEditDialogData
         })
             .pipe(defaultIfEmpty({saved: false}))

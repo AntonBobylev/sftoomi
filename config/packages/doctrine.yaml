@@ -12,6 +12,7 @@ doctrine:
             "~^(?!(\
                 cpts|\
                 facilities_doctors|\
+                examinations_studies|\
                 studies_cpts\
             )$)~"
     orm:
