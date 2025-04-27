@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output } from '@angular/core';
 import { TuiAppearance, TuiCalendar, TuiError, TuiIcon, TuiLabel, TuiTextfieldComponent } from '@taiga-ui/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
@@ -24,10 +24,11 @@ export type ProcessingFiltersPanelOut = {
     styleUrl: './filters.component.less'
 })
 
-export default class ProcessingFiltersPanelComponent
+export default class ProcessingFiltersPanelComponent implements AfterViewInit
 {
     @Output() public onSearch: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
     @Output() public onClear: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
+    @Output() public onLoaded: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
 
     protected readonly Sftoomi = Sftoomi;
 
@@ -37,11 +38,18 @@ export default class ProcessingFiltersPanelComponent
 
     protected examinationDate: TuiDay = TuiDay.fromLocalNativeDate(new Date());
 
+    ngAfterViewInit(): void
+    {
+        // TODO: implement panel loading here
+
+        this.onLoaded.emit(this.getValues());
+    }
+
     public getValues(): ProcessingFiltersPanelOut
     {
         return {
             examination_date: this.examinationDate.toLocalNativeDate(),
-            examination_id:   this.form.get('examination_id')?.value
+            examination_id:   this.form.get('examination_id')?.value ?? ''
         };
     }
 
