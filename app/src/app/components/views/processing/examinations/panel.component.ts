@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, effect, inject, Input, signal, ViewChild, WritableSignal } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { defaultIfEmpty } from 'rxjs';
@@ -6,8 +6,11 @@ import { defaultIfEmpty } from 'rxjs';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
-import ProcessingModuleExaminationsPanelTableComponent from './table/table.component';
+import ProcessingModuleExaminationsPanelTableComponent, {
+    ProcessingModuleExaminationsPanelTableData, ProcessingModuleExaminationsPanelTableRowData
+} from './table/table.component';
 import ExaminationEditDialogComponent, { ExaminationEditDialogData } from './dialog/dialog.component';
+import getExaminationsAPI from '../../../../APIs/getExaminationsAPI';
 
 @Component({
     selector: 'processing-module-examinations-panel',
@@ -24,64 +27,34 @@ export default class ProcessingModuleExaminationsPanelComponent implements After
     @ViewChild('tableCtrl')
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
 
+    @Input() public data: WritableSignal<getExaminationsAPI['data']> = signal<getExaminationsAPI['data']>([]);
+
     private readonly dialog: TuiDialogService = inject(TuiDialogService);
+
+    constructor()
+    {
+        let me: this = this;
+        effect((): void => {
+            if (me.data().length > 0) {
+                let tableData: ProcessingModuleExaminationsPanelTableData = {
+                    rows: me.data().map(function (row): ProcessingModuleExaminationsPanelTableRowData {
+                        return {
+                            examination_id: row.id,
+                            patient: row.patient,
+                            doctor: row.doctor,
+                            facility: row.facility,
+                            studies: row.studies
+                        };
+                    })
+                };
+
+                me.tableCtrl.setData(tableData);
+            }
+        });
+    }
 
     ngAfterViewInit(): void
     {
-        this.tableCtrl.setData({
-            rows: [{
-                examination_id: 1,
-                patient: {
-                    id: 12,
-                    last_name: 'Bobylev',
-                    first_name: 'Anton',
-                    middle_name: 'Aleksandrovich',
-                    dob: '2001-02-19',
-                    phone: '+7 911 549-22-93'
-                },
-                studies: [{
-                    exam_id: 123,
-                    id: 1,
-                    short_name: 'COVID',
-                    full_name: 'COVID-19'
-                }, {
-                    exam_id: 111,
-                    id: 1,
-                    short_name: 'COVID',
-                    full_name: 'COVID-19'
-                }],
-                facility: {
-                    id: 2,
-                    short_name: 'VCDH',
-                    full_name: 'Vologda Central District Hospital'
-                },
-                doctor: {
-                    id: 4,
-                    last_name: 'CHEREVKOV',
-                    first_name: 'MIKHAIL',
-                    middle_name: 'NOKOLAYEVICH'
-                }
-            }, {
-                examination_id: 2,
-                patient: {
-                    id: 5,
-                    last_name: 'Bobyleva',
-                    first_name: 'Tamara',
-                    middle_name: 'Sergeevna',
-                },
-                studies: [{
-                    exam_id: 321,
-                    id: 1,
-                    short_name: 'COVID',
-                    full_name: 'COVID-19'
-                }],
-                facility: {
-                    id: 1,
-                    short_name: 'VCRH',
-                    full_name: 'Vologda Central Regional Hospital'
-                }
-            }]
-        });
     }
 
     protected onAddExaminationClick(): void
@@ -90,7 +63,7 @@ export default class ProcessingModuleExaminationsPanelComponent implements After
         this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
             label: Sftoomi.Translator.translate('views.processing.add_examination'),
             data: {
-                id: 1
+                id: 1 // TODO: implement
             } as ExaminationEditDialogData
         })
             .pipe(defaultIfEmpty({saved: false}))

@@ -95,18 +95,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         }
 
         let me: this = this,
-            data: FormData = new FormData(),
-            formValues: object = this.form.value;
-
-        for (const [key, value] of Object.entries(formValues)) {
-            let val: any = value;
-
-            if (val instanceof Date) {
-                val = Sftoomi.dateShort(value);
-            }
-
-            data.append(key, val);
-        }
+            formValues: object = this.form.value,
+            data: FormData = Sftoomi.formValuesToFormData(formValues);
 
         if (this.data.id) {
             data.append(this.idField, this.data.id.toString());

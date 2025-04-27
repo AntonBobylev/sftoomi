@@ -111,7 +111,7 @@ export default class AppTableComponent implements OnInit, OnDestroy
             url: this.url,
             data: formData,
             signal: this.queryController.signal,
-            success: function (_response: any, _request: XMLHttpRequest, data: any): void {
+            success: function (_response: any, _request: any, data: any): void {
                 me.isLoading.set(false);
 
                 me.totalRowsCount = data.total;
