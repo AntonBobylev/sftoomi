@@ -66,6 +66,11 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
         return this.studiesCollection.length;
     }
 
+    public getAddedStudiesControls(): FormControl[]
+    {
+        return this.studiesCollection.map((record: StudyCollectionRow): FormControl => record.control);
+    }
+
     protected onAddStudyClick(): void
     {
         this.addNewStudy();
@@ -165,6 +170,11 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
             }
 
             Sftoomi.removeArrayItemByIndex(me.studiesCollection, index);
+
+            let controlName: string | undefined = Sftoomi.getFormControlName(study.control);
+            if (controlName) {
+                me.form.removeControl(controlName);
+            }
         });
     }
 }
