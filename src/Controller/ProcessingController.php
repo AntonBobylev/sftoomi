@@ -12,6 +12,56 @@ final class ProcessingController extends AppCrudController
 {
     protected string $baseTable = "examination";
 
+    #[Route("/getExaminations", name: "get_examinations")]
+    public function getExaminations(Request $request): Response
+    {
+        $examinations = $this->getList(
+            $request,
+            ["id", "patient_id", "facility_id", "doctor_id"]
+        );
+
+        $data = $examinations["data"];
+        foreach ($data as &$row) {
+            $sql = "select s.id, s.short_name, s.full_name
+                    from examinations_studies es
+                        left join study s on s.id = es.study_id
+                    where es.examination_id = {$row["id"]}";
+            $row["studies"] = $this->connection->fetchAllAssociative($sql);
+
+            $sql = "select p.id, p.last_name, p.first_name, p.middle_name, p.dob, p.phone
+                    from examination e
+                        left join patient p on p.id = e.patient_id 
+                    where e.id = {$row["id"]}";
+            $row["patient"] = $this->connection->fetchAssociative($sql);
+
+            $sql = "select f.id, f.full_name, f.short_name
+                    from examination e
+                        left join facility f on f.id = e.facility_id
+                    where e.id = {$row["id"]}";
+            $row["facility"] = $this->connection->fetchAssociative($sql);
+
+            if (isset($row["doctor_id"])) {
+                $sql = "select d.id, d.last_name, d.first_name, d.middle_name
+                    from examination e
+                        left join doctor d on d.id = e.doctor_id
+                    where e.id = {$row["id"]}";
+                $row["doctor"] = $this->connection->fetchAssociative($sql);
+            }
+
+            unset(
+                $row["doctor_id"],
+                $row["facility_id"],
+                $row["patient_id"]
+            );
+        }
+        unset($row);
+
+        return new JsonResponse([
+            "data"  => $data,
+            "total" => $examinations["total"]
+        ]);
+    }
+
     #[Route("/getExamination", name: "get_examination")]
     public function getExamination(Request $request): Response
     {
@@ -60,6 +110,7 @@ final class ProcessingController extends AppCrudController
             ]
         ]);
     }
+
     #[Route("/saveExamination", name: "save_examination")]
     public function saveExamination(Request $request)
     {
