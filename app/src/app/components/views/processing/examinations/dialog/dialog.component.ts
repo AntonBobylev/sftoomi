@@ -47,6 +47,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
+    protected override readonly idField: string = 'examination_id';
+
     @ViewChild('facilityIdCtrl')
     protected readonly facilityIdCtrl!: AppComboBoxComponent;
 
@@ -166,6 +168,30 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
                 console.error(message);
             }
         });
+    }
+
+    protected override getAdditionalDataOnSave(data: FormData): FormData
+    {
+        let selectedPatientId: AppRemoteSelectRecord | null = this.form.get('patient_id')?.value as (AppRemoteSelectRecord | null);
+        data.set('patient_id', selectedPatientId?.id.toString() ?? '');
+
+        let selectedStudies: FormControl[] = this.studiesCtrl.getAddedStudiesControls(),
+            addedStudiesIds: number[] = [];
+
+        selectedStudies.forEach(function (studyControl: FormControl): void {
+            let controlName: string | undefined = Sftoomi.getFormControlName(studyControl);
+
+            for (let [key] of data.entries()) {
+                if (key === controlName) {
+                    addedStudiesIds.push(studyControl.value);
+                    data.delete(key);
+                }
+            }
+        });
+
+        data.set('study_ids', addedStudiesIds.join(','));
+
+        return data;
     }
 
     private onFacilitySelected(selectedFacilityId: string | null): void
