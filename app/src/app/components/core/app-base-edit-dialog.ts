@@ -13,6 +13,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected abstract readonly context: TuiDialogContext<any, any>;
     protected abstract readonly form: FormGroup;
 
+    protected readonly idField: string = 'id';
+
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     protected readonly Sftoomi = Sftoomi;
@@ -53,7 +55,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             data: FormData = new FormData();
 
         if (this.data.id) {
-            data.append('id', this.data.id.toString());
+            data.append(this.idField, this.data.id.toString());
         }
 
         me.isLoading.set(true);
@@ -107,7 +109,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         }
 
         if (this.data.id) {
-            data.append('id', this.data.id.toString());
+            data.append(this.idField, this.data.id.toString());
         }
 
         data = this.getAdditionalDataOnSave(data);
