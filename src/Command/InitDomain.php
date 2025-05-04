@@ -20,8 +20,7 @@ class InitDomain extends SftoomiCommand
                 "-uc",
                 InputOption::VALUE_NONE,
                 "Update of cpts required"
-            )
-        ;
+            );
     }
 
     /**
