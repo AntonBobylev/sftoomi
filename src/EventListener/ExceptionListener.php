@@ -9,6 +9,11 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
+    /**
+     * Controls how data returns to the client when exception thrown
+     *
+     * @noinspection PhpUnused
+     */
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
@@ -17,8 +22,7 @@ class ExceptionListener
         $contentType = $request->headers->get("Content-Type");
         $contentType = explode(";", $contentType)[0];
 
-        if ("multipart/form-data" === $contentType)
-        {
+        if ("multipart/form-data" === $contentType) {
             $response = new JsonResponse([
                 "message" => $exception->getMessage(),
                 "code"    => $exception->getCode(),
