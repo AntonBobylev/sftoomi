@@ -3,28 +3,13 @@
 namespace App\Controller;
 
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Exception;
-use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class AppCrudController extends AbstractController
+abstract class AppCrudController extends SftoomiController
 {
-    protected string $baseTable = "";
-
-    /** @var EntityManagerInterface */
-    protected EntityManagerInterface $entityManager;
-
-    /** @var Connection */
-    protected Connection $connection;
-
-    public function __construct(EntityManagerInterface $entityManager)
-    {
-        $this->entityManager = $entityManager;
-        $this->connection = $entityManager->getConnection();
-    }
+    protected string $baseTable;
 
     /**
      * @throws Exception
