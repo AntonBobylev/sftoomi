@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, signal, ViewChild, WritableSignal } from '@angular/core';
 import { TuiAccordion } from '@taiga-ui/experimental';
 import { TuiLoader } from '@taiga-ui/core';
 
@@ -23,6 +23,9 @@ import getExaminationsAPI from '../../../APIs/getExaminationsAPI';
 
 export default class ProcessingComponent implements OnDestroy
 {
+    @ViewChild('filtersCtrl')
+    protected readonly filtersCtrl!: ProcessingFiltersPanelComponent;
+
     protected readonly Sftoomi = Sftoomi;
 
     protected readonly loadUrl: string = '/getExaminations';
@@ -31,6 +34,11 @@ export default class ProcessingComponent implements OnDestroy
 
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
     protected examinations: WritableSignal<any[]> = signal<any[]>([]);
+
+    public getFiltersControl(): ProcessingFiltersPanelComponent
+    {
+        return this.filtersCtrl;
+    }
 
     ngOnDestroy(): void
     {

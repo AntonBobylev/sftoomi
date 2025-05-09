@@ -8,6 +8,9 @@ import Sftoomi from '../../../../class/Sftoomi';
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
 import ProcessingModuleExaminationsPanelTableComponent, { ProcessingModuleExaminationsPanelTableData, ProcessingModuleExaminationsPanelTableRowData } from './table/table.component';
 import ExaminationEditDialogComponent, { ExaminationEditDialogData } from './dialog/dialog.component';
+import ProcessingComponent from '../processing.component';
+
+import PopupMsgService from '../../../../services/popup-msg.service';
 
 import getExaminationsAPI from '../../../../APIs/getExaminationsAPI';
 
@@ -27,28 +30,33 @@ export default class ProcessingModuleExaminationsPanelComponent
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
 
     @Input() public data: WritableSignal<getExaminationsAPI['data']> = signal<getExaminationsAPI['data']>([]);
+    @Input({required: true}) public moduleCtrl!: ProcessingComponent;
 
     private readonly dialog: TuiDialogService = inject(TuiDialogService);
+    private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
     constructor()
     {
         let me: this = this;
         effect((): void => {
-            if (me.data().length > 0) {
-                let tableData: ProcessingModuleExaminationsPanelTableData = {
-                    rows: me.data().map(function (row): ProcessingModuleExaminationsPanelTableRowData {
-                        return {
-                            examination_id: row.id,
-                            patient: row.patient,
-                            doctor: row.doctor,
-                            facility: row.facility,
-                            studies: row.studies
-                        };
-                    })
-                };
-
-                me.tableCtrl.setData(tableData);
+            if (Sftoomi.isEmpty(me.data())) {
+                return;
             }
+
+            let tableData: ProcessingModuleExaminationsPanelTableData = {
+                rows: me.data().map(function (row): ProcessingModuleExaminationsPanelTableRowData {
+                    return {
+                        examination_id: row.id,
+                        date:           row.date,
+                        patient:        row.patient,
+                        doctor:         row.doctor,
+                        facility:       row.facility,
+                        studies:        row.studies
+                    };
+                })
+            };
+
+            me.tableCtrl.setData(tableData);
         });
     }
 
@@ -58,7 +66,7 @@ export default class ProcessingModuleExaminationsPanelComponent
         this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
             label: Sftoomi.Translator.translate('views.processing.add_examination'),
             data: {
-                //id: 1 // TODO: implement
+                date: me.moduleCtrl.getFiltersControl().getValues().examination_date
             } as ExaminationEditDialogData
         })
             .pipe(defaultIfEmpty({saved: false}))
@@ -71,7 +79,32 @@ export default class ProcessingModuleExaminationsPanelComponent
 
     protected onEditExaminationClick(): void
     {
-        // TODO: implement
+        let selectedRecords: ProcessingModuleExaminationsPanelTableRowData[] = this.tableCtrl.getSelectedRecords();
+        if (selectedRecords.length < 1) {
+            this.popupMsg.nothingSelected();
+
+            return;
+        }
+
+        if (selectedRecords.length > 1) {
+            this.popupMsg.moreThanOneSelected();
+
+            return;
+        }
+
+        let me: this = this;
+        this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
+            label: Sftoomi.format(Sftoomi.Translator.translate('views.processing.edit_examination'), [selectedRecords[0].examination_id]),
+            data: {
+                id: selectedRecords[0].examination_id
+            } as ExaminationEditDialogData
+        })
+            .pipe(defaultIfEmpty({saved: false}))
+            .subscribe((result: any): void => {
+                if (result?.saved) {
+                    me.tableCtrl.refresh();
+                }
+            });
     }
 
     protected onRemoveExaminationClick(): void

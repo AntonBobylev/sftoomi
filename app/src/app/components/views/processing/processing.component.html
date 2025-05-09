@@ -3,7 +3,8 @@
         <button [tuiAccordion]="true">{{ Sftoomi.Translator.translate('filters') }}</button>
         <tui-expand>
             <div class="filters-panel-wrapper">
-                <processing-module-filters-panel (onSearch)="search($event)"
+                <processing-module-filters-panel #filtersCtrl
+                                                 (onSearch)="search($event)"
                                                  (onClear)="search($event)"
                                                  (onLoaded)="search($event)"
                 />
@@ -21,7 +22,9 @@
             <button [tuiAccordion]="true">{{ Sftoomi.Translator.translate('examinations') }}</button>
             <tui-expand>
                 <div class="examinations-panel-wrapper">
-                    <processing-module-examinations-panel [data]="examinations" />
+                    <processing-module-examinations-panel [data]="examinations"
+                                                          [moduleCtrl]="this"
+                    />
                 </div>
             </tui-expand>
         </tui-accordion>

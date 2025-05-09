@@ -27,7 +27,7 @@ import Study from '../../../../../type/Study';
 
 export type ExaminationEditDialogData = {
     id?: number,
-    date?: string
+    date: Date
 };
 
 @Component({
@@ -99,6 +99,11 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         this.form.get('doctor_id')?.valueChanges.subscribe((selectedDoctorId): void => me.onDoctorSelected(selectedDoctorId));
     }
 
+    protected override get data(): ExaminationEditDialogData
+    {
+        return this.context.data;
+    }
+
     protected afterLoad(data: getExaminationAPI): void
     {
         this.facilitiesStore.set(data.lists.facilities.map(function (facility): AppComboboxRecord {
@@ -132,6 +137,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
             this.form.get('doctor_id')?.setValue(data.data.doctor_id ?? null);
 
             this.studiesCtrl.setValue(data.data.studies);
+        } else {
+            this.form.get('examination_date')?.setValue(moment(this.data.date).toDate());
         }
     }
 
