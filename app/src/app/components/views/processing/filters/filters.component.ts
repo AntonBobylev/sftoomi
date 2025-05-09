@@ -60,4 +60,10 @@ export default class ProcessingFiltersPanelComponent implements AfterViewInit
 
         this.onClear.emit(this.getValues());
     }
+
+    protected onExaminationDateClick(date: TuiDay): void
+    {
+        this.examinationDate = date;
+        this.onSearch.emit(this.getValues());
+    }
 }

@@ -3,7 +3,7 @@
 >
     <div class="day-selector-wrapper">
         <tui-calendar [value]="examinationDate"
-                      (dayClick)="examinationDate = $event"
+                      (dayClick)="onExaminationDateClick($event)"
         />
     </div>
 
