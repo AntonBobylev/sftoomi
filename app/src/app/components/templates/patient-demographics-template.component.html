@@ -49,9 +49,11 @@
     >
         {{ Sftoomi.Translator.translate('dob_full') }}
     </tui-input-date>
+
     <tui-error
         [formControl]="controls.dob"
         [error]="[] | tuiFieldError | async"
+        [style.display]="!controls.dob.errors ? 'none' : 'unset'"
     />
 
     <tui-input
