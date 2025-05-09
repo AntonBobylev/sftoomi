@@ -16,6 +16,7 @@ export type ProcessingModuleExaminationsPanelTableData = {
 
 export type ProcessingModuleExaminationsPanelTableRowData = {
     examination_id: number,
+    date: string,
     patient: {
         id: number
         first_name: string
@@ -53,6 +54,18 @@ export default class ProcessingModuleExaminationsPanelTableComponent
     public refresh(): void
     {
         // TODO: add an implementation
+    }
+
+    public getSelectedRecords(): ProcessingModuleExaminationsPanelTableRowData[]
+    {
+        let me: this = this,
+            records: ProcessingModuleExaminationsPanelTableRowData[] = [];
+
+        this.selectedRowsIndexes().forEach(function (index: number): void {
+            records.push(me.data().rows[index]);
+        });
+
+        return records;
     }
 
     public setData(data: ProcessingModuleExaminationsPanelTableData): void
