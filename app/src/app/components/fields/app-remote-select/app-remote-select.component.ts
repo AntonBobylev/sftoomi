@@ -39,7 +39,17 @@ export default class AppRemoteSelectComponent implements OnInit
     protected readonly store: WritableSignal<AppRemoteSelectRecord[]> = signal([]);
     protected readonly isLoading: WritableSignal<boolean> = signal(false);
 
-    protected readonly stringify = ({id}: AppRemoteSelectRecord): string => id.toString();
+    protected readonly stringify = function (record: number | AppRemoteSelectRecord | undefined): string {
+        if (!record) {
+            return '';
+        }
+
+        if (typeof record === 'number') {
+            return record.toString();
+        }
+
+        return record.id.toString();
+    };
 
     protected excludeItemsIds: number[] = [];
 
