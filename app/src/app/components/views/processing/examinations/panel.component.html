@@ -2,7 +2,7 @@
     <processing-module-examinations-panel-toolbar (onAdd)="onAddExaminationClick()"
                                                   (onEdit)="onEditExaminationClick()"
                                                   (onRemove)="onRemoveExaminationClick()"
-                                                  (onRefresh)="onRefreshClick()"
+                                                  (onRefresh)="onRefresh.emit()"
     />
     <processing-module-examinations-panel-table #tableCtrl />
 </div>

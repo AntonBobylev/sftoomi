@@ -30,7 +30,7 @@ export default class ProcessingComponent implements OnDestroy
 
     protected readonly loadUrl: string = '/getExaminations';
 
-    protected readonly queryController: AbortController = new AbortController();
+    protected queryController: AbortController = new AbortController();
 
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
     protected examinations: WritableSignal<any[]> = signal<any[]>([]);
@@ -49,6 +49,9 @@ export default class ProcessingComponent implements OnDestroy
     {
         let me: this = this,
             data: FormData = Sftoomi.formValuesToFormData(values);
+
+        this.queryController.abort();
+        this.queryController = new AbortController();
 
         me.isLoading.set(true);
         (new Fetcher).request({

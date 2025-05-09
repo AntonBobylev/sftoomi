@@ -1,4 +1,4 @@
-import { Component, effect, inject, Input, signal, ViewChild, WritableSignal } from '@angular/core';
+import { EventEmitter, Output, Component, effect, inject, Input, signal, ViewChild, WritableSignal } from '@angular/core';
 import { TuiDialogService } from '@taiga-ui/core';
 import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { defaultIfEmpty } from 'rxjs';
@@ -28,6 +28,8 @@ export default class ProcessingModuleExaminationsPanelComponent
 {
     @ViewChild('tableCtrl')
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
+
+    @Output() public onRefresh: EventEmitter<any> = new EventEmitter<any>();
 
     @Input() public data: WritableSignal<getExaminationsAPI['data']> = signal<getExaminationsAPI['data']>([]);
     @Input({required: true}) public moduleCtrl!: ProcessingComponent;
@@ -108,11 +110,6 @@ export default class ProcessingModuleExaminationsPanelComponent
     }
 
     protected onRemoveExaminationClick(): void
-    {
-        // TODO: implement
-    }
-
-    protected onRefreshClick(): void
     {
         // TODO: implement
     }

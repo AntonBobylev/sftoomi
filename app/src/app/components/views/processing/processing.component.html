@@ -24,6 +24,7 @@
                 <div class="examinations-panel-wrapper">
                     <processing-module-examinations-panel [data]="examinations"
                                                           [moduleCtrl]="this"
+                                                          (onRefresh)="search(filtersCtrl.getValues())"
                     />
                 </div>
             </tui-expand>
