@@ -8,7 +8,8 @@ type getExaminationAPI = {
         date?: string,
         patient_id?: string,
         facility_id?: string,
-        doctor_id?: string
+        doctor_id?: string,
+        studies: number[]
     },
     lists: {
         doctors: (Doctor & {

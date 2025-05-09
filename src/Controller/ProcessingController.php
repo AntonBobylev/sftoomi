@@ -80,7 +80,7 @@ final class ProcessingController extends AppCrudController
             $sql = "select study_id
                     from examinations_studies
                     where examination_id = $examinationId";
-            $data["studies"] = $this->connection->fetchAllNumeric($sql);
+            $data["studies"] = $this->connection->fetchFirstColumn($sql);
         }
 
         $sql = "select f.id, f.short_name, f.full_name,
