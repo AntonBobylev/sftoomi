@@ -10,6 +10,9 @@
                         size="s"
                         [tuiHint]="Sftoomi.Translator.translate('select_all')"
                         [ngModel]="false"
+                        [disabled]="Sftoomi.isEmpty(getAllRowsSignal()().rows)"
+                        [checked]="!Sftoomi.isEmpty(getAllRowsSignal()().rows) && getSelectedRecords().length === getAllRowsSignal()().rows.length"
+                        [indeterminate]="getSelectedRecords().length > 0 && getSelectedRecords().length !== getAllRowsSignal()().rows.length"
                         (click)="onSelectAllRowsClick(!selectAllCheckbox.control?.value)"
                     />
                 </th>
