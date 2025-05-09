@@ -14,7 +14,7 @@ abstract class AppCrudController extends SftoomiController
     /**
      * @throws Exception
      */
-    public function getList(Request $request, array $selectColumns): array
+    public function getList(Request $request, array $selectColumns, string | null $where = null): array
     {
         $limit = $request->request->get("limit");
         $start = $request->request->get("start");
@@ -22,12 +22,17 @@ abstract class AppCrudController extends SftoomiController
 
         $connection = $this->entityManager->getConnection();
 
-        $data = $connection->createQueryBuilder()
+        $query = $connection->createQueryBuilder()
             ->select($selectColumns)
             ->from($this->baseTable)
             ->setFirstResult($start)
-            ->setMaxResults($limit)
-            ->fetchAllAssociative();
+            ->setMaxResults($limit);
+
+        if (!empty($where)) {
+            $query->where($where);
+        }
+
+        $data = $query->fetchAllAssociative();
 
         $sql = sprintf("select count(*) from %s", $this->baseTable);
         $total = $connection->fetchOne($sql);
