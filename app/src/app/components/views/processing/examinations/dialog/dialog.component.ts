@@ -1,8 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { TuiButton, TuiDialogContext, TuiLoader, TuiSurface, TuiTitle } from '@taiga-ui/core';
+import { AsyncPipe } from '@angular/common';
+import { TuiFieldErrorPipe } from '@taiga-ui/kit';
+import { TuiButton, TuiDialogContext, TuiError, TuiLoader, TuiSurface, TuiTitle } from '@taiga-ui/core';
 import { injectContext } from '@taiga-ui/polymorpheus';
-import { TuiComboBoxModule, TuiInputDateModule, TuiTextfieldControllerModule } from '@taiga-ui/legacy';
+import { TuiComboBoxModule, TuiInputDateModule, TuiTextfieldControllerModule, TuiUnfinishedValidator } from '@taiga-ui/legacy';
 import { TuiCardLarge, TuiHeader } from '@taiga-ui/layout';
 import moment from 'moment/moment';
 
@@ -19,10 +21,13 @@ import AppStudiesComponent from '../../../../fields/app-studies/app-studies.comp
 import getPatientAPI from '../../../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../../../APIs/getExaminationAPI';
 
+import TuiDateToNativeTransformerDirective from '../../../../../directives/tui-date-to-native.directive';
+
 import Study from '../../../../../type/Study';
 
 export type ExaminationEditDialogData = {
-    id?: number
+    id?: number,
+    date?: string
 };
 
 @Component({
@@ -35,7 +40,9 @@ export type ExaminationEditDialogData = {
         AppRemoteSelectComponent, TuiCardLarge,
         TuiTitle, TuiHeader, TuiSurface,
         TuiComboBoxModule, TuiTextfieldControllerModule,
-        AppComboBoxComponent, AppStudiesComponent
+        AppComboBoxComponent, AppStudiesComponent, AsyncPipe,
+        TuiDateToNativeTransformerDirective, TuiError,
+        TuiFieldErrorPipe, TuiUnfinishedValidator
     ],
     styleUrl: './dialog.component.less',
     changeDetection: ChangeDetectionStrategy.OnPush
@@ -63,6 +70,9 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
     private readonly getPatientUrl: string = '/getPatient';
 
     protected readonly form: FormGroup = new FormGroup({
+        // Examination
+        examination_date:    new FormControl(null, [Validators.required]),
+
         // Patient
         patient_id:          new FormControl(null, [Validators.min(1)]),
         patient_last_name:   new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(255)]),
@@ -113,6 +123,16 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         }));
 
         this.lists = data.lists;
+
+        if (data.data.id) {
+            this.form.get('examination_date')?.setValue(moment(data.data.date).toDate());
+            this.form.get('patient_id')?.setValue(data.data.patient_id);
+
+            this.form.get('facility_id')?.setValue(data.data.facility_id);
+            this.form.get('doctor_id')?.setValue(data.data.doctor_id ?? null);
+
+            this.studiesCtrl.setValue(data.data.studies);
+        }
     }
 
     protected getPatientTemplateControls(): PatientDemographicsTemplateControls
@@ -126,16 +146,23 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
         }
     }
 
-    protected onPatientSelected(event: AppRemoteSelectRecord | null): void
+    protected onPatientSelected(event: number | AppRemoteSelectRecord | null): void
     {
         if (!event) {
             return;
         }
 
         let me: this = this,
-            data: FormData = new FormData();
+            data: FormData = new FormData(),
+            id: string;
 
-        data.append('id', event.id.toString());
+        if (typeof event === 'number') {
+            id = event.toString();
+        } else {
+            id = event.id.toString();
+        }
+
+        data.append('id', id);
 
         me.isLoading.set(true);
         new Fetcher().request({

@@ -12,6 +12,31 @@
                  tuiSurface="floating"
             >
                 <div tuiHeader>
+                    <div tuiTitle>{{ Sftoomi.Translator.translate('examination') }}</div>
+                </div>
+
+                <tui-input-date
+                    formControlName="examination_date"
+                    toNativeDate
+                    [tuiUnfinishedValidator]="Sftoomi.Translator.translate('validators.finish_filling_field')"
+                >
+                    {{ Sftoomi.Translator.translate('date') }}
+                </tui-input-date>
+                <tui-error
+                    formControlName="examination_date"
+                    [error]="[] | tuiFieldError | async"
+                    [style.display]="!form.get('examination_date')!.errors ? 'none' : 'unset'"
+                />
+
+                <!-- space filler -->
+                <span></span>
+            </div>
+
+            <div class="card"
+                 tuiCardLarge
+                 tuiSurface="floating"
+            >
+                <div tuiHeader>
                     <div tuiTitle>{{ Sftoomi.Translator.translate('patient') }}</div>
                 </div>
 
