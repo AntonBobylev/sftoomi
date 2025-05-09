@@ -20,7 +20,17 @@ export type AppRemoteMultiSelectRecord = AppRemoteSelectRecord;
 
 export default class AppRemoteMultiSelectComponent extends AppRemoteSelectComponent
 {
-    protected override readonly stringify = ({name}: AppRemoteMultiSelectRecord): string => name;
+    protected override readonly stringify = function (record: number | AppRemoteSelectRecord | undefined): string {
+        if (!record) {
+            return '';
+        }
+
+        if (typeof record === 'number') {
+            return record.toString();
+        }
+
+        return record.name;
+    };
 
     protected override valueChanged(selectedRecords: any): void
     {
