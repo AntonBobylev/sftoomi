@@ -1,12 +1,14 @@
 let usDictionary: object =  {
     add: 'Add',
     clear: 'Clear',
+    date: 'Date',
     dob: 'DoB',
     dob_full: 'Date of birth',
     doctor: 'Doctor',
     edit: 'Edit',
     error: 'Error',
     exam_id: 'Exam ID',
+    examination: 'Examination',
     examinations: 'Examinations',
     facility: 'Facility',
     filters: 'Filters',
@@ -64,6 +66,7 @@ let usDictionary: object =  {
         },
         processing: {
             add_examination: 'Add examination',
+            edit_examination: 'Edit examination #{0}',
             dialog: {
                 no_studies_added_tip: 'You need to add at least one study to save the examination'
             },

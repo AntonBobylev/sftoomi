@@ -1,12 +1,14 @@
 let ruDictionary: object =  {
     add: 'Добавить',
     clear: 'Очистить',
+    date: 'Дата',
     dob: 'ДР',
     dob_full: 'Дата рождения',
     doctor: 'Доктор',
     edit: 'Редактировать',
     error: 'Ошибка',
     exam_id: 'ID исследования',
+    examination: 'Обследование',
     examinations: 'Обследования',
     facility: 'Учреждение',
     filters: 'Фильтры',
@@ -63,7 +65,8 @@ let ruDictionary: object =  {
             }
         },
         processing: {
-            add_examination: 'Добавить обследование',
+            add_examination: 'Добавление обследования',
+            edit_examination: 'Редактирование обследования #{0}',
             dialog: {
                 no_studies_added_tip: 'Вы должны добавить хотя бы одно исследование, чтобы сохранить обследование'
             },
