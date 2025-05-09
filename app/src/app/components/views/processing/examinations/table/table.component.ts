@@ -49,6 +49,7 @@ export default class ProcessingModuleExaminationsPanelTableComponent
     protected readonly selectedRowsIndexes: WritableSignal<number[]> = signal<number[]>([]);
 
     protected readonly moment = moment;
+
     protected readonly Sftoomi = Sftoomi;
 
     public refresh(): void
