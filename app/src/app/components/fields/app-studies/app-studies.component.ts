@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, Input, signal, WritableSignal } from '@angular/core'
+import { Component, effect, Input, signal, WritableSignal } from '@angular/core'
 import { TuiButton, TuiHintDirective } from '@taiga-ui/core';
 import { TuiElasticContainer } from '@taiga-ui/kit';
 import { FormControl, Validators } from '@angular/forms';
@@ -27,10 +27,9 @@ type StudyCollectionRow = {
     styleUrl: './app-studies.component.scss'
 })
 
-export default class AppStudiesComponent extends AppBaseField implements AfterViewInit
+export default class AppStudiesComponent extends AppBaseField
 {
     @Input() public override label: string = Sftoomi.Translator.translate('studies');
-    @Input() public initialValues: (string | number)[] = [];
 
     @Input({required: true}) public store: WritableSignal<AppComboboxRecord[]> = signal<AppComboboxRecord[]>([]);
 
@@ -51,11 +50,10 @@ export default class AppStudiesComponent extends AppBaseField implements AfterVi
         });
     }
 
-
-    public ngAfterViewInit(): void
+    public setValue(studyIds: (string | number)[]): void
     {
         let me: this = this;
-        this.initialValues.forEach(function (studyId: string | number, index: number): void {
+        studyIds.forEach(function (studyId: string | number, index: number): void {
             me.addNewStudy();
             me.studiesCollection[index].control.setValue(studyId.toString());
         });
