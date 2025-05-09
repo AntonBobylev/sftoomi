@@ -41,10 +41,6 @@ export default class ProcessingModuleExaminationsPanelComponent
     {
         let me: this = this;
         effect((): void => {
-            if (Sftoomi.isEmpty(me.data())) {
-                return;
-            }
-
             let tableData: ProcessingModuleExaminationsPanelTableData = {
                 rows: me.data().map(function (row): ProcessingModuleExaminationsPanelTableRowData {
                     return {
@@ -57,6 +53,10 @@ export default class ProcessingModuleExaminationsPanelComponent
                     };
                 })
             };
+
+            if (!me.tableCtrl) {
+                return;
+            }
 
             me.tableCtrl.setData(tableData);
         });
