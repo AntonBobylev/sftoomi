@@ -15,9 +15,28 @@ final class ProcessingController extends AppCrudController
     #[Route("/getExaminations", name: "get_examinations")]
     public function getExaminations(Request $request): Response
     {
+        $filters = [];
+
+        $examinationDate = Fetcher::date($request->request->get("examination_date"));
+        if (!empty($examinationDate)) {
+            $filters[] = sprintf("date = '%s'", $examinationDate);
+        }
+
+        $examinationId = Fetcher::int($request->request->get("examination_id"));
+        if (!empty($examinationId)) {
+            $filters[] = sprintf("id = '%s'", $examinationId);
+        }
+
+        if (!empty($filters)) {
+            $filters = implode(" and ", $filters);
+        } else {
+            $filters = "true";
+        }
+
         $examinations = $this->getList(
             $request,
-            ["id", "patient_id", "facility_id", "doctor_id", "date"]
+            ["id", "patient_id", "facility_id", "doctor_id", "date"],
+            $filters
         );
 
         $data = $examinations["data"];
