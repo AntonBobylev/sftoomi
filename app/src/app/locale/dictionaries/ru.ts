@@ -33,6 +33,7 @@ let ruDictionary: object =  {
     study: 'Исследование',
     switch_language: 'Изменить язык',
     switch_theme: 'Поменять тему',
+    today: 'Сегодня',
     warning: 'Внимание',
 
     navigation: {

@@ -1,5 +1,15 @@
 import { AfterViewInit, Component, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
-import { TuiAppearance, TuiCalendar, TuiError, TuiIcon, TuiLabel, TuiLoader, TuiMarkerHandler, TuiTextfieldComponent } from '@taiga-ui/core';
+import {
+    TuiAppearance,
+    TuiButton,
+    TuiCalendar,
+    TuiError,
+    TuiIcon,
+    TuiLabel,
+    TuiLoader,
+    TuiMarkerHandler,
+    TuiTextfieldComponent
+} from '@taiga-ui/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TuiDay } from '@taiga-ui/cdk';
 import { AsyncPipe } from '@angular/common';
@@ -24,7 +34,7 @@ const ExaminationExistsMarker: [string] = ['var(--tui-status-positive)'];
         TuiCalendar, ReactiveFormsModule, AsyncPipe,
         TuiError, TuiFieldErrorPipe, TuiLabel,
         TuiTextfieldComponent, TuiInputNumberDirective,
-        TuiAppearance, TuiButtonGroup, TuiIcon, TuiLoader
+        TuiAppearance, TuiButtonGroup, TuiIcon, TuiLoader, TuiButton
     ],
     styleUrl: './filters.component.less'
 })
@@ -106,5 +116,10 @@ export default class ProcessingFiltersPanelComponent implements AfterViewInit
     {
         this.examinationDate = date;
         this.onSearch.emit(this.getValues());
+    }
+
+    protected onTodayClick(): void
+    {
+        this.onExaminationDateClick(TuiDay.fromLocalNativeDate(new Date()));
     }
 }

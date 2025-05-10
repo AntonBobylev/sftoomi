@@ -5,10 +5,23 @@
           class="main-form"
     >
         <div class="day-selector-wrapper">
-            <tui-calendar [value]="examinationDate"
-                          (dayClick)="onExaminationDateClick($event)"
-                          [markerHandler]="examinationCalendarMarkerHandler"
-            />
+            <div class="day-selector-calendar-wrapper">
+                <tui-calendar [value]="examinationDate"
+                              (dayClick)="onExaminationDateClick($event)"
+                              [markerHandler]="examinationCalendarMarkerHandler"
+                />
+            </div>
+
+            <div class="day-selector-wrapper-buttons-area">
+                <button
+                    size="s"
+                    tuiButton
+                    type="button"
+                    (click)="onTodayClick()"
+                >
+                    {{ Sftoomi.Translator.translate('today') }}
+                </button>
+            </div>
         </div>
 
         <tui-textfield>

@@ -33,6 +33,7 @@ let usDictionary: object =  {
     study: 'Study',
     switch_language: 'Switch language',
     switch_theme: 'Switch theme',
+    today: 'Today',
     warning: 'Warning',
 
     navigation: {
