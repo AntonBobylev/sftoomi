@@ -17,6 +17,7 @@
             iconStart="@tui.pencil"
             type="button"
             (click)="onEdit.emit()"
+            [disabled]="Sftoomi.isEmpty(data().rows)"
             tuiHint="{{ Sftoomi.Translator.translate('edit') }}"
         >
         </button>
@@ -27,6 +28,7 @@
             iconStart="@tui.circle-minus"
             type="button"
             (click)="onRemove.emit()"
+            [disabled]="Sftoomi.isEmpty(data().rows)"
             tuiHint="{{ Sftoomi.Translator.translate('remove') }}"
         >
         </button>

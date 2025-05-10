@@ -29,6 +29,9 @@ export default class ProcessingModuleExaminationsPanelComponent
     @ViewChild('tableCtrl')
     protected readonly tableCtrl!: ProcessingModuleExaminationsPanelTableComponent;
 
+    @ViewChild('toolbarCtrl')
+    protected readonly toolbarCtrl!: ProcessingModuleExaminationsPanelToolbarComponent;
+
     @Output() public onRefresh: EventEmitter<any> = new EventEmitter<any>();
 
     @Input() public data: WritableSignal<getExaminationsAPI['data']> = signal<getExaminationsAPI['data']>([]);
@@ -59,6 +62,12 @@ export default class ProcessingModuleExaminationsPanelComponent
             }
 
             me.tableCtrl.setData(tableData);
+
+            if (!me.toolbarCtrl) {
+                return;
+            }
+
+            me.toolbarCtrl.setData(tableData);
         });
     }
 

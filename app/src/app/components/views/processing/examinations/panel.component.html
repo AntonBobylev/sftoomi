@@ -1,5 +1,6 @@
 <div class="panel-wrapper">
-    <processing-module-examinations-panel-toolbar (onAdd)="onAddExaminationClick()"
+    <processing-module-examinations-panel-toolbar #toolbarCtrl
+                                                  (onAdd)="onAddExaminationClick()"
                                                   (onEdit)="onEditExaminationClick()"
                                                   (onRemove)="onRemoveExaminationClick()"
                                                   (onRefresh)="onRefresh.emit()"
