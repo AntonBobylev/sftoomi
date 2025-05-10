@@ -67,6 +67,7 @@ let ruDictionary: object =  {
         processing: {
             add_examination: 'Добавление обследования',
             edit_examination: 'Редактирование обследования #{0}',
+            no_examination_message: 'Обследования не найдены',
             dialog: {
                 no_studies_added_tip: 'Вы должны добавить хотя бы одно исследование, чтобы сохранить обследование'
             },

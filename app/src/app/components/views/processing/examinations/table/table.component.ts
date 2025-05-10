@@ -45,7 +45,7 @@ export type ProcessingModuleExaminationsPanelTableRowData = {
 
 export default class ProcessingModuleExaminationsPanelTableComponent
 {
-    private readonly data: WritableSignal<ProcessingModuleExaminationsPanelTableData> = signal<ProcessingModuleExaminationsPanelTableData>({rows: []});
+    protected readonly data: WritableSignal<ProcessingModuleExaminationsPanelTableData> = signal<ProcessingModuleExaminationsPanelTableData>({rows: []});
     protected readonly selectedRowsIndexes: WritableSignal<number[]> = signal<number[]>([]);
 
     protected readonly moment = moment;

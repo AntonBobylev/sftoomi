@@ -67,6 +67,7 @@ let usDictionary: object =  {
         processing: {
             add_examination: 'Add examination',
             edit_examination: 'Edit examination #{0}',
+            no_examination_message: 'No examinations found',
             dialog: {
                 no_studies_added_tip: 'You need to add at least one study to save the examination'
             },
