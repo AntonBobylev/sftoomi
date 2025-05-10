@@ -81,6 +81,18 @@ final class ProcessingController extends AppCrudController
         ]);
     }
 
+    #[Route("/getExaminationsFilters", name: "get_examinations_filters")]
+    public function getExaminationsFilters(): Response
+    {
+        $sql = "select distinct date
+                from examination";
+        $data["dates_with_examinations"] = $this->connection->fetchFirstColumn($sql);
+
+        return new JsonResponse([
+            "data" => $data
+        ]);
+    }
+
     #[Route("/getExamination", name: "get_examination")]
     public function getExamination(Request $request): Response
     {
