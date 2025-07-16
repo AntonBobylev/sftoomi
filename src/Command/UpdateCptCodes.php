@@ -43,7 +43,8 @@ class UpdateCptCodes extends SftoomiCommand
                     code varchar(10),
                     short_name varchar(100),
                     full_name varchar(255),
-                    key code (code)
+                    key code (code),
+                    index cpt(id, code)
                 )",
             self::CPT_TABLE_NAME
         );
