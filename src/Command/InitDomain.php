@@ -17,7 +17,7 @@ class InitDomain extends SftoomiCommand
             ->setDescription("Initialize freshly added domain")
             ->addOption(
                 "update-cpts",
-                "-uc",
+                "c",
                 InputOption::VALUE_NONE,
                 "Update of cpts required"
             );
