@@ -147,6 +147,7 @@ final class ProcessingController extends AppCrudController
     {
         $values = [
             "id"          => Fetcher::int($request->request->get("examination_id")),
+            "date"        => Fetcher::date($request->request->get("examination_date")),
             "facility_id" => Fetcher::int($request->request->get("facility_id")),
             "doctor_id"   => Fetcher::int($request->request->get("doctor_id"))
         ];
@@ -181,6 +182,7 @@ final class ProcessingController extends AppCrudController
         }
 
         $values["patient_id"] = $patientId;
+        $request->request->set("id", $values["id"]);
 
         try {
             $id = $this->save($request, $values)["id"];

@@ -206,8 +206,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedPatientId: AppRemoteSelectRecord | null = this.form.get('patient_id')?.value as (AppRemoteSelectRecord | null);
-        data.set('patient_id', selectedPatientId?.id.toString() ?? '');
+        let selectedPatientId: number | null = this.form.get('patient_id')?.value;
+        data.set('patient_id', selectedPatientId?.toString() ?? '');
 
         let selectedStudies: FormControl[] = this.studiesCtrl.getAddedStudiesControls(),
             addedStudiesIds: number[] = [];
