@@ -48,6 +48,10 @@ export default class FacilitiesTableComponent extends AppTableComponent
                 result += '<div>' + Sftoomi.humanShortName(doctor) + '</div>';
             });
 
+            if (Sftoomi.isEmpty(result)) {
+                result = Sftoomi.Translator.translate('not_set');
+            }
+
             return result;
         },
         styles: {

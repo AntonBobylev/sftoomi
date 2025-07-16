@@ -19,6 +19,7 @@ let ruDictionary: object =  {
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
+    not_set: 'Не установлено',
     on_offline_message: 'В данный момент вы не в сети, пожалуйста, установите Интернет соединение',
     patient: 'Пациент',
     phone: 'Телефон',
