@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import Sftoomi from '../../../../class/Sftoomi';
+import { TranslationOptions } from '../../../../class/Translator';
 
 import AppTableImports from '../../../core/app-table/app-table-imports';
 import AppTableComponent from '../../../core/app-table/app-table.component';
@@ -49,7 +50,7 @@ export default class FacilitiesTableComponent extends AppTableComponent
             });
 
             if (Sftoomi.isEmpty(result)) {
-                result = Sftoomi.Translator.translate('not_set');
+                result = Sftoomi.Translator.translate('not_set', [TranslationOptions.BRACES_AROUND, TranslationOptions.LOWERCASE]);
             }
 
             return result;

@@ -205,4 +205,17 @@ export default class Sftoomi
 
         return data;
     }
+
+    /**
+     * Useful when you need first letter to be big in sentence
+     *
+     * @param input
+     */
+    public static capitalizeString(input: any): string
+    {
+        if (typeof input !== 'string') {
+            return '';
+        }
+        return input[0].toUpperCase() + input.substring(1).toLowerCase();
+    }
 }

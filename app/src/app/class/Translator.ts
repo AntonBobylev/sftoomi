@@ -11,6 +11,13 @@ import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
 import { AppLocale } from '../type/AppLocale';
 
+export enum TranslationOptions {
+    BRACES_AROUND,
+    UPPERCASE,
+    LOWERCASE,
+    CAPITALIZE
+}
+
 export default class Translator
 {
     private readonly fallbackLocale: AppLocale = 'us';
@@ -65,7 +72,7 @@ export default class Translator
         return this.locale;
     }
 
-    public translate(value: string): string
+    public translate(value: string, options: TranslationOptions[] = []): string
     {
         let dictionary: object = this.getDictionary(),
             translatedValue: string | undefined = dictionary[value as keyof object];
@@ -80,7 +87,21 @@ export default class Translator
             translatedValue = value;
         }
 
-        return String(translatedValue);
+        translatedValue = String(translatedValue);
+
+        if (options.includes(TranslationOptions.CAPITALIZE)) {
+            translatedValue = Sftoomi.capitalizeString(translatedValue);
+        } else if (options.includes(TranslationOptions.LOWERCASE)) {
+            translatedValue = translatedValue.toLowerCase();
+        } else if (options.includes(TranslationOptions.UPPERCASE)) {
+            translatedValue = translatedValue.toUpperCase();
+        }
+
+        if (options.includes(TranslationOptions.BRACES_AROUND)) {
+            translatedValue = '(' +  translatedValue + ')';
+        }
+
+        return translatedValue;
     }
 
     /**
