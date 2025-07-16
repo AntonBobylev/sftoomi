@@ -88,7 +88,7 @@ final class FacilitiesController extends AppCrudController
 
             $id = $this->save($request, $values)["id"];
 
-            $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"));
+            $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"), []);
 
             $this->connection->delete("facilities_doctors", ["facility_id" => $id]);
             foreach ($facilityDoctorIds as $doctorId) {

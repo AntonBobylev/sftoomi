@@ -123,7 +123,7 @@ final class DoctorsController extends AppCrudController
     #[Route("/removeDoctor", name: "remove_doctor")]
     public function removeDoctor(DoctorRepository $doctorRepository, Request $request): Response
     {
-        $ids = Fetcher::intArray($request->request->get("ids"));
+        $ids = Fetcher::intArray($request->request->get("ids"), []);
 
         try {
             $this->connection->beginTransaction();
