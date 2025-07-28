@@ -32,7 +32,7 @@ export default class ProcessingComponent implements OnDestroy
 
     protected queryController: AbortController = new AbortController();
 
-    protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
+    protected isLoading: WritableSignal<boolean> = signal<boolean>(true);
     protected examinations: WritableSignal<any[]> = signal<any[]>([]);
 
     public getFiltersControl(): ProcessingFiltersPanelComponent
