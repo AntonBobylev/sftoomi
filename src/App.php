@@ -1,12 +1,12 @@
 <?php
 
-namespace App;
+/** @noinspection PhpIllegalPsrClassPathInspection */
 
 use App\Class\Constants;
 
-final class Dumper
+class App
 {
-    public static function log(mixed $data, string $filename = "dumps"): void
+    public static function logDump(mixed $data, string $filename = "dumps"): void
     {
         ob_start();
         var_dump($data);
