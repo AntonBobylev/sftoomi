@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Examination\Fixer as ExaminationFixer;
 use App\Class\Fetcher;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -143,7 +144,7 @@ final class ProcessingController extends AppCrudController
     }
 
     #[Route("/saveExamination", name: "save_examination")]
-    public function saveExamination(Request $request)
+    public function saveExamination(Request $request): JsonResponse
     {
         $values = [
             "id"          => Fetcher::int($request->request->get("examination_id")),
@@ -214,5 +215,21 @@ final class ProcessingController extends AppCrudController
         return new JsonResponse([
              "id" => $id
         ]);
+    }
+
+    #[Route("/removeExamination", name: "remove_examination")]
+    public function removeExamination(Request $request): JsonResponse
+    {
+        $examinationIds = Fetcher::intArray($request->request->get("examination_ids"));
+        if (empty($examinationIds)) {
+            throw new \InvalidArgumentException("You must specify examination id to remove the examination");
+        }
+
+        $examinationFixer = new ExaminationFixer($this->connection);
+        foreach ($examinationIds as $examinationId) {
+            $examinationFixer->remove($examinationId);
+        }
+
+        return new JsonResponse();
     }
 }
