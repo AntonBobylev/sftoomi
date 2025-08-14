@@ -40,6 +40,11 @@ export default class ProcessingComponent implements OnDestroy
         return this.filtersCtrl;
     }
 
+    public setIsLoading(isLoading: boolean): void
+    {
+        this.isLoading.set(isLoading);
+    }
+
     ngOnDestroy(): void
     {
         this.queryController.abort();

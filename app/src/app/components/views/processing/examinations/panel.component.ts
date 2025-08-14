@@ -4,6 +4,7 @@ import { PolymorpheusComponent } from '@taiga-ui/polymorpheus';
 import { defaultIfEmpty } from 'rxjs';
 
 import Sftoomi from '../../../../class/Sftoomi';
+import Fetcher from '../../../../class/Fetcher';
 
 import ProcessingModuleExaminationsPanelToolbarComponent from './toolbar/toolbar.component';
 import ProcessingModuleExaminationsPanelTableComponent, { ProcessingModuleExaminationsPanelTableData, ProcessingModuleExaminationsPanelTableRowData } from './table/table.component';
@@ -36,6 +37,8 @@ export default class ProcessingModuleExaminationsPanelComponent
 
     @Input() public data: WritableSignal<getExaminationsAPI['data']> = signal<getExaminationsAPI['data']>([]);
     @Input({required: true}) public moduleCtrl!: ProcessingComponent;
+
+    private readonly removeExaminationUrl: string = '/removeExamination';
 
     private readonly dialog: TuiDialogService = inject(TuiDialogService);
     private readonly popupMsg: PopupMsgService = inject(PopupMsgService);
@@ -120,6 +123,29 @@ export default class ProcessingModuleExaminationsPanelComponent
 
     protected onRemoveExaminationClick(): void
     {
-        // TODO: implement
+        let recordsToRemove: ProcessingModuleExaminationsPanelTableRowData[] = this.tableCtrl.getSelectedRecords();
+        if (Sftoomi.isEmpty(recordsToRemove)) {
+            this.popupMsg.nothingSelected();
+
+            return;
+        }
+
+        let ids: number[] = recordsToRemove.map((record: ProcessingModuleExaminationsPanelTableRowData): number => record.examination_id);
+
+        this.moduleCtrl.setIsLoading(true);
+        new Fetcher().request({
+            url: this.removeExaminationUrl,
+            data: Sftoomi.formValuesToFormData({examination_ids: ids.join(',')}),
+            success: (_response: any, _request: any, _data: any): void => {
+                this.onRefresh.emit()
+            },
+            failure: (code: any, message: any, _request: any): void => {
+                console.error(code);
+                console.error(message);
+            },
+            finally: (): void => {
+                this.moduleCtrl.setIsLoading(false);
+            }
+        })
     }
 }
