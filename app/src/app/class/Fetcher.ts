@@ -15,6 +15,7 @@ type RequestOptions = {
     params?: {}[],
     success?: Function,
     failure?: Function,
+    finally?: Function,
     method?: string,
     longRequest?: boolean,
     timeout?: number,
@@ -40,7 +41,8 @@ export default class Fetcher
             request: Request = options;
 
         let successCallback = request.success,
-            failureCallback = request.failure;
+            failureCallback = request.failure,
+            finallyCallback = request.finally;
 
         request.method = request.method || 'POST';
 
@@ -116,6 +118,11 @@ export default class Fetcher
                         failureCallback(error.response.data.message, formattedTrace, error.request)
                     }
                 );
+            })
+            .finally((): void => {
+                if (finallyCallback) {
+                    finallyCallback();
+                }
             });
     }
 }
