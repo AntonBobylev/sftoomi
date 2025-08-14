@@ -86,7 +86,7 @@ export default class ProcessingModuleExaminationsPanelComponent
             .pipe(defaultIfEmpty({saved: false}))
             .subscribe((result: any): void => {
                 if (result?.saved) {
-                    me.tableCtrl.refresh();
+                    this.onRefresh.emit()
                 }
             });
     }
@@ -106,7 +106,6 @@ export default class ProcessingModuleExaminationsPanelComponent
             return;
         }
 
-        let me: this = this;
         this.dialog.open(new PolymorpheusComponent(ExaminationEditDialogComponent), {
             label: Sftoomi.format(Sftoomi.Translator.translate('views.processing.edit_examination'), [selectedRecords[0].examination_id]),
             data: {
@@ -116,7 +115,7 @@ export default class ProcessingModuleExaminationsPanelComponent
             .pipe(defaultIfEmpty({saved: false}))
             .subscribe((result: any): void => {
                 if (result?.saved) {
-                    me.tableCtrl.refresh();
+                    this.onRefresh.emit()
                 }
             });
     }
@@ -137,13 +136,14 @@ export default class ProcessingModuleExaminationsPanelComponent
             url: this.removeExaminationUrl,
             data: Sftoomi.formValuesToFormData({examination_ids: ids.join(',')}),
             success: (_response: any, _request: any, _data: any): void => {
+                this.moduleCtrl.setIsLoading(false);
+
                 this.onRefresh.emit()
             },
             failure: (code: any, message: any, _request: any): void => {
                 console.error(code);
                 console.error(message);
-            },
-            finally: (): void => {
+
                 this.moduleCtrl.setIsLoading(false);
             }
         })
