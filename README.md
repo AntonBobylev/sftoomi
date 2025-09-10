@@ -14,6 +14,7 @@ SFTOOMI - system for the operations of medical institutions
   * Install packages there: `composer install`
   * Make the database: `php bin/console doctrine:database:create`
   * Apply all migrations: `php bin/console doctrine:migrations:migrate`
+  * Run the latest server command: `php bin/console app:init-domain`
 * Go to [app/src/environment.ts](app/src/environments/environment.ts) and copy it to environment.development.ts and configure as you need
 * In app folder: `ng serve`
 * Go to link Angular CLI command provided you. 
