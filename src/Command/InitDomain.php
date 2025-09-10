@@ -16,10 +16,10 @@ class InitDomain extends SftoomiCommand
             ->setName("app:init-domain")
             ->setDescription("Initialize freshly added domain")
             ->addOption(
-                "update-cpts",
-                "c",
+                "skip-cpts-update",
+                null,
                 InputOption::VALUE_NONE,
-                "Update of cpts required"
+                "Skip cpts update if this operation is not required"
             );
     }
 
@@ -28,11 +28,11 @@ class InitDomain extends SftoomiCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $mustUpdateCpts = $input->getOption("update-cpts");
+        $skipCptsUpdate = $input->getOption("skip-cpts-update");
 
         $output->writeln("Starting domain initialization...");
 
-        if ($mustUpdateCpts) {
+        if (!$skipCptsUpdate) {
             new UpdateCptCodes($this->connection)->execute($input, $output);
         }
 
