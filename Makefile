@@ -23,4 +23,4 @@ front-init:
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app i
 
 front-dev:
-	cd app && ng serve
+	@$(DOCKER_COMPOSE) exec -it php bash -c "cd app && ng serve --host 0.0.0.0"
