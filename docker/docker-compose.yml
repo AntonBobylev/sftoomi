@@ -20,6 +20,10 @@ services:
         build:
             context: .
             dockerfile: ./php/Dockerfile
+            args:
+                USER_ID: "${USER_ID}"
+                GROUP_ID: "${GROUP_ID}"
+                USER_NAME: "${USER_NAME}"
         ports:
             - ${PHP_PORT:-9000}:9000
         volumes:

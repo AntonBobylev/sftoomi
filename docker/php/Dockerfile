@@ -1,6 +1,13 @@
 FROM php:8.4.5-fpm
 ENV NODE_VERSION=22.14.0
 
+ARG USER_ID
+ARG GROUP_ID
+ARG USER_NAME
+
+RUN groupadd -g $GROUP_ID -o $USER_NAME || true
+RUN useradd -m -u $USER_ID -g $GROUP_ID -o -s /bin/bash $USER_NAME
+
 RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
     && pecl install apcu \
@@ -29,3 +36,6 @@ RUN curl -sS https://get.symfony.com/cli/installer | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
 
 WORKDIR /var/www/project
+
+USER ${USER_ID}
+RUN USER_NAME=${USER_NAME}
