@@ -44,7 +44,8 @@ let usDictionary: object =  {
         patients: 'Patients',
         processing: 'Processing',
         setup: 'Setup',
-        studies: 'Studies'
+        studies: 'Studies',
+        template: 'Template'
     },
 
     base_table: {

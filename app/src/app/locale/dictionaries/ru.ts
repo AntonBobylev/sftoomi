@@ -44,7 +44,8 @@ let ruDictionary: object =  {
         patients: 'Пациенты',
         processing: 'Процессинг',
         setup: 'Настройка',
-        studies: 'Исследования'
+        studies: 'Исследования',
+        template: 'Шаблон'
     },
 
     base_table: {
