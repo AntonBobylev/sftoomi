@@ -184,7 +184,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog im
 
                 me.form.get('patient_first_name')?.setValue(data.data.first_name.toUpperCase());
                 me.form.get('patient_last_name')?.setValue(data.data.last_name.toUpperCase());
-                me.form.get('patient_middle_name')?.setValue(data.data.middle_name.toUpperCase());
+                me.form.get('patient_middle_name')?.setValue(data.data.middle_name?.toUpperCase());
                 me.form.get('patient_phone')?.setValue(data.data.phone);
 
                 if (data.data.dob) {

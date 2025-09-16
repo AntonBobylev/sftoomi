@@ -50,7 +50,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         if (this.data.id) {
             this.form.get('first_name')?.setValue(data.data.first_name.toUpperCase());
             this.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
-            this.form.get('middle_name')?.setValue(data.data.middle_name.toUpperCase());
+            this.form.get('middle_name')?.setValue(data.data.middle_name?.toUpperCase());
             this.form.get('phone')?.setValue(data.data.phone);
 
             if (data.data.dob) {
