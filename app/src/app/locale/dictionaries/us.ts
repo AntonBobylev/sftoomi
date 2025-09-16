@@ -128,6 +128,11 @@ let usDictionary: object =  {
                 cpts: 'CPTs',
                 edit_title: 'Edit study #{0}'
             }
+        },
+        template: {
+            code_editor: {
+                placeholder: 'Type template code here...'
+            }
         }
     },
 

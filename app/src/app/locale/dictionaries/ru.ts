@@ -128,6 +128,11 @@ let ruDictionary: object =  {
                 cpts: 'CPT коды',
                 edit_title: 'Редактирование исследования #{0}'
             }
+        },
+        template: {
+            code_editor: {
+                placeholder: 'Напишите код шаблона здесь...'
+            }
         }
     },
 

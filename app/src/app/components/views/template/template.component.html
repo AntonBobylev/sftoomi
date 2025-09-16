@@ -1,11 +1,8 @@
 <div class="wrapper">
     <div style="height: 50%; overflow: auto;">
-        <code-editor [(ngModel)]="templateCode"
-                     [languages]="languages"
-                     language="html"
-                     [theme]="Sftoomi.Theme.isDarkMode()() ? 'dark' : 'light'"
-                     placeholder="Type template code here"
-                     indentWithTab
+        <app-code-editor [(code)]="templateCode"
+                         language="html"
+                         [placeholder]="Sftoomi.Translator.translate('views.template.code_editor.placeholder')"
         />
     </div>
 
