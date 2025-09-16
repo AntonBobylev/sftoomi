@@ -3,9 +3,18 @@
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
 use App\Class\Constants;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class App
 {
+    public static function getVars(): ParameterBagInterface
+    {
+        return new ParameterBag([
+            "templates_dir" => __DIR__ . "/../templates/"
+        ]);
+    }
+
     public static function logDump(mixed $data, string $filename = "dumps"): void
     {
         ob_start();
