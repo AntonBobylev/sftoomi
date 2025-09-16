@@ -9,6 +9,7 @@ import {
     tuiDateFormatProvider
 } from '@taiga-ui/core';
 import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
+import { provideCodeEditor } from '@ngstack/code-editor';
 import { of } from 'rxjs';
 
 import { routes } from './app.routes';
@@ -44,6 +45,7 @@ export const appConfig: ApplicationConfig = {
                 dismissible: false,
                 size: 'auto'
             }
-        }
+        },
+        provideCodeEditor()
     ]
 };
