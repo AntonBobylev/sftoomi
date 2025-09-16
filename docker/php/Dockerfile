@@ -10,6 +10,8 @@ RUN useradd -m -u $USER_ID -g $GROUP_ID -o -s /bin/bash $USER_NAME
 RUN chown -R ${USER_ID}:${GROUP_ID} /var/www && \
     chmod 755 -R /var/www
 
+RUN mkdir -p app/node_modules/.cache && chmod -R 777 app/node_modules/.cache
+
 RUN apt-get update && apt-get install -y zlib1g-dev g++ git libicu-dev zip libzip-dev zip \
     && docker-php-ext-install intl opcache pdo pdo_mysql \
     && pecl install apcu \
@@ -31,6 +33,7 @@ ENV PATH="/root/.nvm/versions/node/v${NODE_VERSION}/bin/:${PATH}"
 
 RUN apt-get install -y npm
 RUN npm i -g @angular/cli
+RUN npm i -g yarn
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
