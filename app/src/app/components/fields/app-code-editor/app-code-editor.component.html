@@ -1,0 +1,8 @@
+<code-editor [(ngModel)]="code"
+             [languages]="languages"
+             [language]="language"
+             [theme]="Sftoomi.Theme.isDarkMode()() ? 'dark' : 'light'"
+             (change)="codeChange.emit($event)"
+             [placeholder]="placeholder"
+             indentWithTab
+/>
