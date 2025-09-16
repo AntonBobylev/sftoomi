@@ -143,6 +143,10 @@ export default class AppTableComponent implements OnInit, OnDestroy
 
     protected get checked(): boolean | null
     {
+        if (this.data().length === 0) {
+            return false;
+        }
+
         const every: boolean = this.data().every(({selected}) => selected);
         const some: boolean = this.data().some(({selected}) => selected);
 
