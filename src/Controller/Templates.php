@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Class\Fetcher;
-use App\Repository\DoctorRepository;
-use Doctrine\DBAL\Exception;
+use App\Class\TemplateManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -21,14 +19,12 @@ final class Templates extends SftoomiController
             throw new \InvalidArgumentException("Template name cannot be empty");
         }
 
-        $filePath = sprintf("%s%s", \App::getVars()->get("templates_dir"), $templateName);
-        if (!$filesystem->exists($filePath)) {
-            throw new \RuntimeException("File doesn't exist by the path: \"$filePath\"");
-        }
+        $templateManager = new TemplateManager($filesystem);
+        $templateCode = $templateManager->getTemplate($templateName, [], true);
 
         return new JsonResponse([
             "data" => [
-                "template_code" => $filesystem->readFile($filePath)
+                "template_code" => $templateCode
             ]
         ]);
     }
