@@ -1,24 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="utf-8">
 
-<head>
-    <meta charset="utf-8">
+        <style>
+            .wrapper {
+                margin: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+            }
 
-    <style>
-    </style>
-    <title></title>
-</head>
+            .header {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: center;
+            }
+        </style>
 
-    <header>
-        // TODO: header here
-    </header>
-
+        <title></title>
+    </head>
     <body>
-        // TODO: body here
+        <div class="wrapper">
+            <div class="header">
+                <div>
+                    <div class="row">
+                        Patient: ${PATIENT_NAME}
+                    </div>
+                    <div class="row">
+                        Examination: ${EXAMINATION}
+                    </div>
+                    <div class="row">
+                        Doctor: ${DOCTOR_NAME}
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
-
-    <footer>
-        // TODO: footer here
-    </footer>
-
 </html>
