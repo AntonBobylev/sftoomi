@@ -45,7 +45,8 @@ let usDictionary: object =  {
         processing: 'Processing',
         setup: 'Setup',
         studies: 'Studies',
-        template: 'Template'
+        template: 'Template',
+        templates: 'Templates'
     },
 
     base_table: {
@@ -132,6 +133,17 @@ let usDictionary: object =  {
         template: {
             code_editor: {
                 placeholder: 'Type template code here...'
+            }
+        },
+        templates: {
+            dialog: {
+                add_title: 'Add template',
+                edit_title: 'Edit template #{0}'
+            },
+            table: {
+                columns: {
+                    name: 'Name'
+                }
             }
         }
     },

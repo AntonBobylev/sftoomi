@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class Templates extends SftoomiController
+final class TemplateController extends SftoomiController
 {
     #[Route("/loadTemplate", name: "load_template")]
     public function loadTemplate(Request $request, Filesystem $filesystem): Response
@@ -26,6 +26,24 @@ final class Templates extends SftoomiController
             "data" => [
                 "template_code" => $templateCode
             ]
+        ]);
+    }
+
+    #[Route('/getTemplates', name: 'get_templates')]
+    public function getTemplates(): Response
+    {
+        return new JsonResponse([
+            "data"  => [],
+            "total" => []
+        ]);
+    }
+
+    #[Route('/removeTemplate', name: 'remove_templates')]
+    public function removeTemplate(): Response
+    {
+        return new JsonResponse([
+            "data"  => [],
+            "total" => []
         ]);
     }
 }

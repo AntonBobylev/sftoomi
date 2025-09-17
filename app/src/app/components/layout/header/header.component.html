@@ -71,6 +71,14 @@
                     >
                         {{ Sftoomi.Translator.translate('navigation.studies') }}
                     </button>
+
+                    <button tuiOption
+                            type="button"
+                            [routerLink]="RoutesPaths.TEMPLATES"
+                            (click)="close()"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.templates') }}
+                    </button>
                 </tui-opt-group>
             </tui-data-list>
         </ng-template>

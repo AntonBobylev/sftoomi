@@ -45,7 +45,8 @@ let ruDictionary: object =  {
         processing: 'Процессинг',
         setup: 'Настройка',
         studies: 'Исследования',
-        template: 'Шаблон'
+        template: 'Шаблон',
+        templates: 'Шаблоны'
     },
 
     base_table: {
@@ -132,6 +133,17 @@ let ruDictionary: object =  {
         template: {
             code_editor: {
                 placeholder: 'Напишите код шаблона здесь...'
+            }
+        },
+        templates: {
+            dialog: {
+                add_title: 'Добавить шаблон',
+                edit_title: 'Редактировать шаблон #{0}'
+            },
+            table: {
+                columns: {
+                    name: 'Имя'
+                }
             }
         }
     },
