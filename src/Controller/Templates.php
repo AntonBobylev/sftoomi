@@ -27,7 +27,7 @@ final class Templates extends SftoomiController
         }
 
         return new JsonResponse([
-            "data"  => [
+            "data" => [
                 "template_code" => $filesystem->readFile($filePath)
             ]
         ]);
