@@ -11,7 +11,7 @@ class App
     public static function getVars(): ParameterBagInterface
     {
         return new ParameterBag([
-            "templates_dir" => __DIR__ . "/../templates/"
+            "templates_dir" => __DIR__ . "/../templates"
         ]);
     }
 
