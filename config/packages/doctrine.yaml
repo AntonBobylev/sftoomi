@@ -13,7 +13,8 @@ doctrine:
                 cpts|\
                 facilities_doctors|\
                 examinations_studies|\
-                studies_cpts\
+                studies_cpts|\
+                templates_studies\
             )$)~"
     orm:
         auto_generate_proxy_classes: true
