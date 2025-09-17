@@ -6,18 +6,17 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import Fetcher from '../../../class/Fetcher';
 
-import { SafePipe } from '../../../pipes/safe.pipe';
-
 import AppCodeEditorComponent from '../../fields/app-code-editor/app-code-editor.component';
+import { AppHtmlPreviewComponent } from '../../fields/app-html-preview.component';
 
 @Component({
     selector: 'template-module',
     templateUrl: './template.component.html',
     imports: [
-        SafePipe,
         FormsModule,
         AppCodeEditorComponent,
-        TuiLoader
+        TuiLoader,
+        AppHtmlPreviewComponent
     ],
     styleUrl: './template.component.less'
 })
