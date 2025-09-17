@@ -21,7 +21,7 @@ import { AppHtmlPreviewComponent } from '../../fields/app-html-preview.component
     styleUrl: './template.component.less'
 })
 
-export default class TemplateComponent implements AfterViewInit
+export default class TemplateModuleComponent implements AfterViewInit
 {
     protected templateCode: string = '';
 
