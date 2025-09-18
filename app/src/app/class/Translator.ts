@@ -1,5 +1,3 @@
-import {TuiLanguage, TUI_RUSSIAN_LANGUAGE, TUI_ENGLISH_LANGUAGE} from '@taiga-ui/i18n';
-
 import enDictionary from '../locale/dictionaries/us';
 import ruDictionary from '../locale/dictionaries/ru';
 
@@ -35,16 +33,6 @@ export default class Translator
         if (cookiesLocale) {
             this.locale = cookiesLocale as AppLocale;
         }
-    }
-
-    public getI18nLocale(): TuiLanguage
-    {
-        switch (this.locale) {
-            case "ru":
-                return TUI_RUSSIAN_LANGUAGE;
-        }
-
-        return TUI_ENGLISH_LANGUAGE;
     }
 
     public switchToTheNextLocale(): void

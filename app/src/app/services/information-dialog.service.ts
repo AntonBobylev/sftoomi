@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { TuiDialogService } from '@taiga-ui/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import Sftoomi from '../class/Sftoomi';
-import { DomSanitizer } from '@angular/platform-browser';
 
 export enum InformationDialogType {
     INFO,
@@ -16,7 +16,7 @@ export enum InformationDialogType {
 
 export default class InformationDialogService
 {
-    private readonly dialog: TuiDialogService = inject(TuiDialogService);
+    private readonly dialog: NzModalService = inject(NzModalService);
 
     constructor(private readonly domSanitizer: DomSanitizer) {}
 
@@ -35,10 +35,13 @@ export default class InformationDialogService
                 break;
         }
 
-        this.dialog.open(
-            this.domSanitizer.bypassSecurityTrustHtml(message),
-            {label: header, size: 'auto', dismissible: false}
-        ).subscribe((): void => {
+        let dialog: NzModalRef = this.dialog.create({
+            nzTitle: header,
+            nzContent: this.domSanitizer.bypassSecurityTrustHtml(message).toString(),
+            nzClosable: false
+        });
+
+        dialog.afterClose.subscribe((): void => {
             if (callback) {
                 callback();
             }

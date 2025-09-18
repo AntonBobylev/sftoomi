@@ -2,7 +2,6 @@ import { AbstractControl } from '@angular/forms';
 import moment from 'moment';
 
 import Translator from './Translator';
-import Theme from './Theme';
 
 import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
 
@@ -13,7 +12,6 @@ export default class Sftoomi
 {
     public static readonly Translator: Translator = new Translator();
     public static readonly Cookies: CookiesService = new CookiesService();
-    public static Theme: Theme; // initialized in AppComponent
     public static readonly Network: NetworkService = new NetworkService();
 
     /**

@@ -1,15 +1,7 @@
 import { Routes } from '@angular/router';
 
 import Sftoomi from './class/Sftoomi';
-
-import HomeComponent from './components/views/home/home.component';
-import ProcessingComponent from './components/views/processing/processing.component';
-import PatientsComponent from './components/views/patients/patients.component';
-import FacilitiesComponent from './components/views/facilities/facilities.component';
-import DoctorsComponent from './components/views/doctors/doctors.component';
-import StudiesComponent from './components/views/studies/studies.component';
-import TemplateComponent from './components/views/template/template.component';
-import TemplatesModuleComponent from './components/views/templates/templates.component';
+import HomeComponent from './views/home/home.component';
 
 const BASE_TITLE = 'SFTOOMI :: ';
 
@@ -28,32 +20,38 @@ export const routes: Routes = [{
     path: RoutesPaths.HOME,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.home'),
     component: HomeComponent
-}, {
-    path: RoutesPaths.PROCESSING,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.processing'),
-    component: ProcessingComponent
-}, {
-    path: RoutesPaths.PATIENTS,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.patients'),
-    component: PatientsComponent
-}, {
-    path: RoutesPaths.FACILITIES,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.facilities'),
-    component: FacilitiesComponent
-}, {
-    path: RoutesPaths.DOCTORS,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.doctors'),
-    component: DoctorsComponent
-}, {
-    path: RoutesPaths.STUDIES,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.studies'),
-    component: StudiesComponent
-}, {
-    path: RoutesPaths.TEMPLATE,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.template'),
-    component: TemplateComponent
-}, {
-    path: RoutesPaths.TEMPLATES,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.templates'),
-    component: TemplatesModuleComponent
 }];
+
+// export const routes: Routes = [{
+//     path: RoutesPaths.HOME,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.home'),
+//     component: HomeComponent
+// }, {
+//     path: RoutesPaths.PROCESSING,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.processing'),
+//     component: ProcessingComponent
+// }, {
+//     path: RoutesPaths.PATIENTS,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.patients'),
+//     component: PatientsComponent
+// }, {
+//     path: RoutesPaths.FACILITIES,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.facilities'),
+//     component: FacilitiesComponent
+// }, {
+//     path: RoutesPaths.DOCTORS,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.doctors'),
+//     component: DoctorsComponent
+// }, {
+//     path: RoutesPaths.STUDIES,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.studies'),
+//     component: StudiesComponent
+// }, {
+//     path: RoutesPaths.TEMPLATE,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.template'),
+//     component: TemplateComponent
+// }, {
+//     path: RoutesPaths.TEMPLATES,
+//     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.templates'),
+//     component: TemplatesModuleComponent
+// }];

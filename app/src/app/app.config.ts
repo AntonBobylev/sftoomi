@@ -1,49 +1,19 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { NG_EVENT_PLUGINS } from '@taiga-ui/event-plugins';
-import { TUI_LANGUAGE } from '@taiga-ui/i18n';
-import { provideAnimations } from '@angular/platform-browser/animations';
-import { provideRouter, withHashLocation } from '@angular/router';
-import {
-    TUI_DIALOG_OPTIONS,
-    TUI_FIRST_DAY_OF_WEEK,
-    tuiDateFormatProvider
-} from '@taiga-ui/core';
-import { tuiValidationErrorsProvider } from '@taiga-ui/kit';
-import { of } from 'rxjs';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
+import { en_US, provideNzI18n } from 'ng-zorro-antd/i18n';
+import { registerLocaleData } from '@angular/common';
+import en from '@angular/common/locales/en';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { provideHttpClient } from '@angular/common/http';
 
-import Sftoomi from './class/Sftoomi';
-
-import getTuiLocalDateFormat from './locale/getTuiLocalDateFormat';
-import getLocalFirstDayOfWeek from './locale/getLocalFirstDayOfWeek';
+registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-    providers: [
-        provideZoneChangeDetection({eventCoalescing: true}),
-        provideRouter(routes, withHashLocation()),
-        provideAnimations(),
-        NG_EVENT_PLUGINS,
-        tuiValidationErrorsProvider({
-            required: Sftoomi.Translator.translate('validators.field_required'),
-            maxlength: ({requiredLength}: {requiredLength: string}): string => Sftoomi.format(Sftoomi.Translator.translate('validators.max_length'), [requiredLength]),
-            only_letters: (): string => Sftoomi.Translator.translate('validators.only_letters_allowed')
-        }), {
-            provide: TUI_LANGUAGE,
-            useValue: of(Sftoomi.Translator.getI18nLocale())
-        },
-        tuiDateFormatProvider(getTuiLocalDateFormat()),
-        {
-            provide: TUI_FIRST_DAY_OF_WEEK,
-            useValue: getLocalFirstDayOfWeek()
-        },
-        {
-            provide: TUI_DIALOG_OPTIONS,
-            useValue: {
-                closeable: true,
-                dismissible: false,
-                size: 'auto'
-            }
-        }
-    ]
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideZonelessChangeDetection(),
+    provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient()
+  ]
 };

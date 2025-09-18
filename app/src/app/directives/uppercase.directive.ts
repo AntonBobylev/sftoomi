@@ -10,12 +10,16 @@ export default class UppercaseDirective
     {
     }
 
-    @HostListener('input', ['$event.target'])
-    protected onInput(input: HTMLInputElement): void
+    @HostListener('input', ['$event'])
+    protected onInput(event: Event): void
     {
+        const input = event.target as HTMLInputElement;
+        if (!input) {
+            return;
+        }
+
         const caretPos: number | null = input.selectionStart;
         this.control.control?.setValue(input.value.toUpperCase());
         input.setSelectionRange(caretPos, caretPos);
     }
-
 }
