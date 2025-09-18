@@ -1,18 +1,24 @@
 import { AbstractControl } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import moment from 'moment';
 
 import Translator from './Translator';
+import Dialog from './Dialog';
 
 import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
 
 import CookiesService from '../services/cookies.service';
-import NetworkService from '../services/network.service';
 
 export default class Sftoomi
 {
     public static readonly Translator: Translator = new Translator();
     public static readonly Cookies: CookiesService = new CookiesService();
-    public static readonly Network: NetworkService = new NetworkService();
+    public static readonly Dialog: Dialog = new Dialog();
+
+    public static init(dialog: NzModalService): void
+    {
+        Sftoomi.Dialog.init(dialog);
+    }
 
     /**
      * Returns current year number
