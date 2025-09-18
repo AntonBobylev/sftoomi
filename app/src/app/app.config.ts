@@ -11,9 +11,9 @@ import { provideHttpClient } from '@angular/common/http';
 registerLocaleData(en);
 
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection(),
-    provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient()
-  ]
+    providers: [
+        provideBrowserGlobalErrorListeners(),
+        provideZonelessChangeDetection(),
+        provideRouter(routes), provideNzI18n(en_US), provideAnimationsAsync(), provideHttpClient()
+    ]
 };
