@@ -2,9 +2,6 @@ import axios from 'axios';
 
 import { environment } from '../../environments/environment';
 
-import InformationDialogService, { InformationDialogType } from '../services/information-dialog.service';
-import ServiceLocator from '../services/locator.service';
-
 import Timeout from './Timeout';
 import Sftoomi from './Sftoomi';
 
@@ -28,17 +25,9 @@ type Request = {
 
 export default class Fetcher
 {
-    private readonly informationDialog: InformationDialogService;
-
-    constructor()
-    {
-        this.informationDialog = ServiceLocator.injector.get(InformationDialogService);
-    }
-
     public request(options: RequestOptions): void
     {
-        let me: this = this,
-            request: Request = options;
+        let request: Request = options;
 
         let successCallback = request.success,
             failureCallback = request.failure,
@@ -87,10 +76,7 @@ export default class Fetcher
                         message = `<div>${e.message}</div><div>${stackFormatted}</div>`;
                     }
 
-                    me.informationDialog.show(
-                        message,
-                        InformationDialogType.ERROR
-                    );
+                    console.error(message);
                 }
             })
             .catch((error): void => {
@@ -111,13 +97,7 @@ export default class Fetcher
                                             ${formattedTrace}
                                       </div>`;
 
-                me.informationDialog.show(
-                    message,
-                    InformationDialogType.ERROR,
-                    (): void => {
-                        failureCallback(error.response.data.message, formattedTrace, error.request)
-                    }
-                );
+                failureCallback(message, formattedTrace, error.request)
             })
             .finally((): void => {
                 if (finallyCallback) {
