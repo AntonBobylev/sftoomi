@@ -18,4 +18,16 @@ SFTOOMI - system for the operations of medical institutions
   * Run the latest server command: `php bin/console app:init-domain`
   * `cd app && npm i && exit`
 * `make front-dev`
-* Go to link Angular CLI provided you. 
+* Go to link Angular CLI provided you.
+
+# Some known bugs after installation
+* **nvm command doesn't want to install. Workaround: install it manually:**
+  * `make shell`
+  * `export NVM_DIR="/home/USERNAME/.nvm"` - Do not forget to change USERNAME to your username from docker/.env
+  * `curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash`
+  * `source ~/.nvm/nvm.sh`
+  * `nvm -v` - if it's ok the system will show you the version of the nvm
+* **ng command doesn't want to install. Workaround: install it manually:**
+  * `make shell`
+  * `npm i -g @angular/cli`
+  * `ng --version`  - if it's ok the system will show you the version of the nvm
