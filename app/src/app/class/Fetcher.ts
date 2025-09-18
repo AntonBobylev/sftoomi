@@ -7,16 +7,14 @@ import Sftoomi from './Sftoomi';
 
 type RequestOptions = {
     url: string,
-    module?: string,
     data?: FormData,
-    params?: {}[],
-    success?: Function,
-    failure?: Function,
-    finally?: Function,
     method?: string,
     longRequest?: boolean,
     timeout?: number,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    success?: Function,
+    failure?: Function,
+    finally?: Function
 };
 
 type Request = {
