@@ -1,20 +1,15 @@
 <nz-layout class="app-layout">
     <nz-header>
         <div class="logo">
-            <a>
+            <a [routerLink]="RoutesPaths.HOME">
                 <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
                 <h1>SFTOOMI</h1>
             </a>
         </div>
         <ul nz-menu class="top-nav" nzTheme="dark" nzMode="horizontal">
             <li nz-menu-item
-                routerLinkActive="ant-menu-item-selected"
-                [routerLink]="RoutesPaths.HOME"
-            >
-                {{ Sftoomi.Translator.translate('navigation.home') }}
-            </li>
-            <li nz-menu-item
-                routerLinkActive="ant-menu-item-selected"
+                nzMatchRouter
+                [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
                 [routerLink]="RoutesPaths.PATIENTS"
             >
                 {{ Sftoomi.Translator.translate('navigation.patients') }}

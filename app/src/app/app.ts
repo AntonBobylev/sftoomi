@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
@@ -10,7 +10,7 @@ import { RoutesPaths } from './app.routes';
 
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, NzLayoutModule, NzMenuModule, RouterLink, RouterLinkActive, NzModalModule],
+    imports: [RouterOutlet, NzLayoutModule, NzMenuModule, RouterLink, NzModalModule],
     templateUrl: './app.html',
     styleUrl: './app.scss'
 })
@@ -20,8 +20,18 @@ export class App
     protected readonly Sftoomi = Sftoomi;
     protected readonly RoutesPaths = RoutesPaths;
 
-    constructor(private readonly nzDialog: NzModalService)
+    constructor(private readonly nzDialog: NzModalService, private router: Router)
     {
         Sftoomi.init(nzDialog);
+    }
+
+    protected isRouteSelected(route: RoutesPaths): boolean
+    {
+        let currentRoute: string = this.router.url;
+        if (currentRoute === '/') {
+            currentRoute = '';
+        }
+
+        return route === currentRoute;
     }
 }
