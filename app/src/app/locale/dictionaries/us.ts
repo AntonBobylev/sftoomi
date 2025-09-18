@@ -138,7 +138,8 @@ let usDictionary: object =  {
         templates: {
             dialog: {
                 add_title: 'Add template',
-                edit_title: 'Edit template #{0}'
+                edit_title: 'Edit template #{0}',
+                name: 'Name'
             },
             table: {
                 columns: {

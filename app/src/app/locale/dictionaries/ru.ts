@@ -138,7 +138,8 @@ let ruDictionary: object =  {
         templates: {
             dialog: {
                 add_title: 'Добавить шаблон',
-                edit_title: 'Редактировать шаблон #{0}'
+                edit_title: 'Редактировать шаблон #{0}',
+                name: 'Имя'
             },
             table: {
                 columns: {
