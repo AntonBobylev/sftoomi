@@ -1,0 +1,34 @@
+<tui-loader
+    [inheritColor]="true"
+    [overlay]="false"
+    [showLoader]="isLoading()"
+>
+    <div class="wrapper"
+         [formGroup]="form"
+    >
+        <tui-textfield>
+            <label tuiLabel>{{ Sftoomi.Translator.translate('views.templates.dialog.name') }}</label>
+            <input
+                formControlName="name"
+                tuiTextfield
+            />
+
+            <tui-error formControlName="name"
+                       [error]="[] | tuiFieldError | async"
+            />
+        </tui-textfield>
+
+        <div class="actions">
+            <button
+                tuiButton
+                appearance="flat"
+                iconStart="check"
+                type="button"
+                [disabled]="form.invalid"
+                (click)="save()"
+            >
+                {{ Sftoomi.Translator.translate('save') }}
+            </button>
+        </div>
+    </div>
+</tui-loader>
