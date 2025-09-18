@@ -2,7 +2,11 @@ import { NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 
 import Sftoomi from './Sftoomi';
 
-import { InformationDialogType } from '../services/information-dialog.service';
+export enum DialogType {
+    INFO,
+    WARNING,
+    ERROR
+}
 
 export default class Dialog
 {
@@ -17,7 +21,7 @@ export default class Dialog
         this.initialized = true;
     }
 
-    public show(message: string, type: InformationDialogType = InformationDialogType.INFO, callback?: Function): void
+    public show(message: string, type: DialogType = DialogType.INFO, callback?: Function): void
     {
         if (!this.initialized) {
             console.error('Dialog is not initialized yet');
@@ -27,13 +31,13 @@ export default class Dialog
 
         let header;
         switch (type) {
-            case InformationDialogType.INFO:
+            case DialogType.INFO:
                 header = Sftoomi.Translator.translate('information');
                 break;
-            case InformationDialogType.WARNING:
+            case DialogType.WARNING:
                 header = Sftoomi.Translator.translate('warning');
                 break;
-            case InformationDialogType.ERROR:
+            case DialogType.ERROR:
                 header = Sftoomi.Translator.translate('error');
                 break;
         }
