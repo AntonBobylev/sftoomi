@@ -1,4 +1,5 @@
 let usDictionary: object =  {
+    ok: 'Ok',
     add: 'Add',
     clear: 'Clear',
     date: 'Date',

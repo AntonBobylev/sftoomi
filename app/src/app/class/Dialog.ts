@@ -45,7 +45,10 @@ export default class Dialog
         const dialog: NzModalRef = this.dialog.create({
             nzTitle: header,
             nzContent: message,
+            nzDraggable: true,
             nzClosable: false,
+            nzMaskClosable: false,
+            nzWidth: '50%',
             nzFooter: [{
                 label: Sftoomi.Translator.translate('ok'),
                 onClick: () => dialog.destroy()

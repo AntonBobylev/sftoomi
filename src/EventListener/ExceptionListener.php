@@ -17,26 +17,20 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        $request   = $event->getRequest();
 
-        $contentType = $request->headers->get("Content-Type");
-        $contentType = explode(";", $contentType)[0];
+        $response = new JsonResponse([
+            "message" => $exception->getMessage(),
+            "code"    => $exception->getCode(),
+            "trace"   => $exception->getTraceAsString()
+        ]);
 
-        if ("multipart/form-data" === $contentType) {
-            $response = new JsonResponse([
-                "message" => $exception->getMessage(),
-                "code"    => $exception->getCode(),
-                "trace"   => $exception->getTraceAsString()
-            ]);
-
-            if ($exception instanceof HttpExceptionInterface) {
-                $response->setStatusCode($exception->getStatusCode());
-                $response->headers->replace($exception->getHeaders());
-            } else {
-                $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
-            }
-
-            $event->setResponse($response);
+        if ($exception instanceof HttpExceptionInterface) {
+            $response->setStatusCode($exception->getStatusCode());
+            $response->headers->replace($exception->getHeaders());
+        } else {
+            $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
+        $event->setResponse($response);
     }
 }

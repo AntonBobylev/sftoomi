@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 
 import Timeout from './Timeout';
 import Sftoomi from './Sftoomi';
+import { DialogType } from './Dialog';
 
 type RequestOptions = {
     url: string,
@@ -41,11 +42,9 @@ export default class Fetcher
             request.timeout = Timeout.timeoutLong;
         }
 
-        if (request.data) {
-            request.headers = { "Content-Type": "multipart/form-data" }
-        }
+        request.headers = { 'Content-Type': 'multipart/form-data' };
 
-        request.url = Sftoomi.format('{0}{1}', [environment.baseUrl, request.url])
+        request.url = Sftoomi.format('{0}{1}', [environment.baseUrl, request.url]);
 
         axios(request)
             .then((response): void => {
@@ -74,11 +73,19 @@ export default class Fetcher
                         message = `<div>${e.message}</div><div>${stackFormatted}</div>`;
                     }
 
-                    console.error(message);
+                    Sftoomi.Dialog.show(
+                        message,
+                        DialogType.ERROR,
+                        (): void => {
+                            if (failureCallback) {
+                                failureCallback(response, response.request, response.data);
+                            }
+                        }
+                    );
                 }
             })
             .catch((error): void => {
-                if (typeof failureCallback !== 'function' || error.code === 'ERR_CANCELED') {
+                if (error.code === 'ERR_CANCELED') {
                     return;
                 }
 
@@ -95,7 +102,7 @@ export default class Fetcher
                                             ${formattedTrace}
                                       </div>`;
 
-                failureCallback(message, formattedTrace, error.request)
+                Sftoomi.Dialog.show(message, DialogType.ERROR);
             })
             .finally((): void => {
                 if (finallyCallback) {
