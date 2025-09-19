@@ -1,5 +1,8 @@
 .greeting-label {
     font-size: xx-large;
-    text-align: center;
-    line-height: 10mm;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
 }
