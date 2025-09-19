@@ -1,20 +1,25 @@
 <nz-layout class="app-layout">
     <nz-header>
-        <div class="logo">
-            <a [routerLink]="RoutesPaths.HOME">
-                <img src="favicon.ico" alt="logo">
-                <h1>SFTOOMI</h1>
-            </a>
+        <div class="left">
+            <div class="logo">
+                <a [routerLink]="RoutesPaths.HOME">
+                    <img src="favicon.ico" alt="logo">
+                    <h1>SFTOOMI</h1>
+                </a>
+            </div>
+            <ul nz-menu class="top-nav" nzTheme="dark" nzMode="horizontal">
+                <li nz-menu-item
+                    nzMatchRouter
+                    [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
+                    [routerLink]="RoutesPaths.PATIENTS"
+                >
+                    {{ Sftoomi.Translator.translate('navigation.patients') }}
+                </li>
+            </ul>
         </div>
-        <ul nz-menu class="top-nav" nzTheme="dark" nzMode="horizontal">
-            <li nz-menu-item
-                nzMatchRouter
-                [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
-                [routerLink]="RoutesPaths.PATIENTS"
-            >
-                {{ Sftoomi.Translator.translate('navigation.patients') }}
-            </li>
-        </ul>
+        <div class="right">
+            * switch language button here *
+        </div>
     </nz-header>
     <nz-content>
         <div class="inner-content">
