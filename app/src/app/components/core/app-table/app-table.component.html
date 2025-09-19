@@ -3,12 +3,18 @@
           [nzBordered]="isBordered"
           [nzTotal]="getTotalRowsCount()"
           [nzNoResult]="noDataCaption"
-          [nzScroll]="{ x: '100%', y: '100%' }"
+          nzTableLayout="fixed"
 >
     <thead>
         <tr>
             @for(column of columns; track column.name) {
-                <th [nzWidth]="column.header.widthPx ?? null">{{ column.header.caption }}</th>
+                <th [nzWidth]="column.header.widthPx ? column.header.widthPx + 'px' : null">
+                    <span class="cell"
+                          [ngStyle]="column.header.extraStyles"
+                    >
+                        {{ column.header.caption }}
+                    </span>
+                </th>
             }
         </tr>
     </thead>
@@ -16,7 +22,11 @@
         @for (row of data(); track row) {
             <tr>
                 @for(column of getColumnsNames(); track column) {
-                    <td>{{ row[column] }}</td>
+                    <td>
+                        <span class="cell">
+                            {{ row[column] }}
+                        </span>
+                    </td>
                 }
             </tr>
         }

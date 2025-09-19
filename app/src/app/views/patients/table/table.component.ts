@@ -13,7 +13,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 @Component({
     selector: 'patients-table',
     templateUrl: '../../../components/core/app-table/app-table.component.html',
-    styleUrl: '../../../components/core/app-table/app-table.component.html',
+    styleUrl: '../../../components/core/app-table/app-table.component.scss',
     imports: [ AppTableImports ]
 })
 
@@ -22,7 +22,11 @@ export default class PatientsTableComponent extends AppTableComponent
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',
         header: {
-            caption: Sftoomi.Translator.translate('id')
+            caption: Sftoomi.Translator.translate('id'),
+            widthPx: '10', // TODO: doesn't work
+            extraStyles: {
+                justifyContent: 'center'
+            }
         }
     }, {
         name: 'last_name',

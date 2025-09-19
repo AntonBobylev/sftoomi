@@ -4,7 +4,8 @@ type AppTableColumn = {
     valueRenderer?: Function,
     header: {
         caption: string,
-        widthPx?: string
+        widthPx?: string,
+        extraStyles?: object
     }
 };
 

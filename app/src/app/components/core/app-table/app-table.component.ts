@@ -13,7 +13,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 @Component({
     selector: 'app-table',
     templateUrl: './app-table.component.html',
-    imports: [ AppTableImports ],
+    imports: [AppTableImports],
     styleUrl: './app-table.component.scss'
 })
 
