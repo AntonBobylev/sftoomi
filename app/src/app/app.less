@@ -1,3 +1,5 @@
+@import '../theme';
+
 :host {
   display: flex;
 }
@@ -15,7 +17,7 @@
   height: 64px;
   padding-right: 24px;
   line-height: 64px;
-  background: #001529;
+  background: @layout-header-background;
 }
 
 .logo img {
@@ -35,12 +37,8 @@
   vertical-align: middle;
 }
 
-nz-content {
-  padding: 24px 50px;
-}
-
 .inner-content {
   padding: 24px;
-  background: #fff;
+  background: @layout-body-background;
   height: 100%;
 }

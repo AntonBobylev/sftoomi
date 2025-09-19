@@ -12,7 +12,7 @@ import { RoutesPaths } from './app.routes';
     selector: 'app-root',
     imports: [RouterOutlet, NzLayoutModule, NzMenuModule, RouterLink, NzModalModule],
     templateUrl: './app.html',
-    styleUrl: './app.scss'
+    styleUrl: './app.less'
 })
 
 export class App
