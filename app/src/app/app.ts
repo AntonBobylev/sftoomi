@@ -8,9 +8,14 @@ import Sftoomi from './class/Sftoomi';
 
 import { RoutesPaths } from './app.routes';
 
+import LanguageSwitcherComponent from './components/misc/language-switcher/language-switcher.component';
+
 @Component({
     selector: 'app-root',
-    imports: [RouterOutlet, NzLayoutModule, NzMenuModule, RouterLink, NzModalModule],
+    imports: [
+        RouterOutlet, NzLayoutModule, NzMenuModule,
+        RouterLink, NzModalModule, LanguageSwitcherComponent
+    ],
     templateUrl: './app.html',
     styleUrl: './app.less'
 })
