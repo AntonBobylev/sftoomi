@@ -35,17 +35,7 @@ export default class AppTableComponent implements AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.isLoading.set(true);
-        new Fetcher().request({
-            url: this.loadUrl,
-            timeout: this.loadTimeout,
-            success: (_response: any, _request: any, result: getPatientsAPI): void => {
-                this.data.set(this.convertReceivedDataToTableData(result.data));
-            },
-            finally: (): void => {
-                this.isLoading.set(false);
-            }
-        });
+        this.refresh();
     }
 
     protected getColumnsNames(): string[]
@@ -84,5 +74,20 @@ export default class AppTableComponent implements AfterViewInit
         })
 
         return data;
+    }
+
+    private refresh(): void
+    {
+        this.isLoading.set(true);
+        new Fetcher().request({
+            url: this.loadUrl,
+            timeout: this.loadTimeout,
+            success: (_response: any, _request: any, result: getPatientsAPI): void => {
+                this.data.set(this.convertReceivedDataToTableData(result.data));
+            },
+            finally: (): void => {
+                this.isLoading.set(false);
+            }
+        });
     }
 }
