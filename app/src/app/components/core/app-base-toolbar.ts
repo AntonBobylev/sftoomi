@@ -1,4 +1,4 @@
-import { Directive, inject, Input, OnDestroy } from '@angular/core';
+import { Directive, inject, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 
 import Sftoomi from '../../class/Sftoomi';
 import Fetcher from '../../class/Fetcher';
@@ -24,6 +24,10 @@ export default abstract class AppBaseToolbar implements OnDestroy
     protected readonly queryController: AbortController = new AbortController();
 
     protected abstract openEditDialog(title: string, id?: number): void;
+
+    constructor(protected readonly viewContainerRef: ViewContainerRef)
+    {
+    }
 
     protected onRefreshClick(): void
     {
