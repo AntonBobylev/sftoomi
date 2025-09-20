@@ -3,7 +3,13 @@
           [nzBordered]="isBordered"
           [nzTotal]="total()"
           [nzNoResult]="noDataCaption"
-          [nzScroll]="{ y: 'calc(100vh - 200px)' }"
+          [nzScroll]="{ y: 'calc(100vh - 160px)' }"
+          [nzPageSize]="pageSize"
+          [nzPageIndex]="currentPageIndex"
+          (nzPageIndexChange)="onPageIndexChange($event)"
+          (nzPageSizeChange)="onPageSizeChange($event)"
+          nzShowPagination
+          nzShowSizeChanger
 >
     <thead>
         <tr>

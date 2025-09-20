@@ -32,6 +32,11 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly isBordered: boolean = true;
     protected readonly selectionRequired: boolean = true;
 
+    protected readonly usePagination: boolean = true;
+
+    protected pageSize: number = 50;
+    protected currentPageIndex: number = 1;
+
     ngAfterViewInit(): void
     {
         this.refresh();
@@ -40,6 +45,19 @@ export default class AppTableComponent implements AfterViewInit
     protected getColumnsNames(): string[]
     {
         return this.columns.map((column: AppTableColumn): string => column.name);
+    }
+
+    protected onPageIndexChange(newPageIndex: number): void
+    {
+        this.currentPageIndex = newPageIndex;
+        this.refresh();
+    }
+
+    protected onPageSizeChange(newPageSize: number): void
+    {
+        this.pageSize = newPageSize;
+        this.currentPageIndex = 1;
+        this.refresh();
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]
@@ -72,10 +90,17 @@ export default class AppTableComponent implements AfterViewInit
 
     private refresh(): void
     {
+        let data: FormData = new FormData();
+        if (this.usePagination) {
+            data.append('limit', this.pageSize.toString());
+            data.append('start', (this.currentPageIndex - 1).toString());
+        }
+
         this.isLoading.set(true);
         new Fetcher().request({
             url: this.loadUrl,
             timeout: this.loadTimeout,
+            data: data,
             success: (_response: any, _request: any, result: any): void => {
                 this.data.set(this.convertReceivedDataToTableData(result.data));
                 this.total.set(result.total ?? 0);
