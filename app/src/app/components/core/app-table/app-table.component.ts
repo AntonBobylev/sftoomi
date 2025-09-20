@@ -6,8 +6,6 @@ import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 
-import getPatientsAPI from '../../../APIs/getPatientsAPI'
-
 import AppTableColumn from '../../../type/AppTableColumn';
 
 @Component({
@@ -20,6 +18,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 export default class AppTableComponent implements AfterViewInit
 {
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
+    protected readonly total: WritableSignal<number> = signal<number>(0);
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
@@ -41,11 +40,6 @@ export default class AppTableComponent implements AfterViewInit
     protected getColumnsNames(): string[]
     {
         return this.columns.map((column: AppTableColumn): string => column.name);
-    }
-
-    protected getTotalRowsCount(): number
-    {
-        return this.data().length + 1;
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]
@@ -82,8 +76,9 @@ export default class AppTableComponent implements AfterViewInit
         new Fetcher().request({
             url: this.loadUrl,
             timeout: this.loadTimeout,
-            success: (_response: any, _request: any, result: getPatientsAPI): void => {
+            success: (_response: any, _request: any, result: any): void => {
                 this.data.set(this.convertReceivedDataToTableData(result.data));
+                this.total.set(result.total ?? 0);
             },
             finally: (): void => {
                 this.isLoading.set(false);

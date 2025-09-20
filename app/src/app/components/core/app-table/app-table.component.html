@@ -1,13 +1,13 @@
 <nz-table [nzData]="data()"
           [nzLoading]="isLoading()"
           [nzBordered]="isBordered"
-          [nzTotal]="getTotalRowsCount()"
+          [nzTotal]="total()"
           [nzNoResult]="noDataCaption"
-          nzTableLayout="fixed"
+          [nzScroll]="{ y: 'calc(100vh - 200px)' }"
 >
     <thead>
         <tr>
-            @for(column of columns; track column.name) {
+            @for (column of columns; track column.name) {
                 <th [nzWidth]="column.header.widthPx ? column.header.widthPx + 'px' : null">
                     <span class="cell"
                           [ngStyle]="column.header.extraStyles"
