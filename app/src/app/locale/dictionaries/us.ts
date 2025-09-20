@@ -50,20 +50,8 @@ let usDictionary: object =  {
         templates: 'Templates'
     },
 
-    base_table: {
-        items_per_page: 'items per page',
-        rows: 'rows'
-    },
-
     views: {
         patients: {
-            table: {
-                columns: {
-                    dob: {
-                        width: '120px'
-                    }
-                }
-            },
             dialog: {
                 add_title: 'Add patient',
                 edit_title: 'Edit patient #{0}'

@@ -49,20 +49,8 @@ let ruDictionary: object =  {
         templates: 'Шаблоны'
     },
 
-    base_table: {
-        items_per_page: 'строк на странице',
-        rows: 'строки'
-    },
-
     views: {
         patients: {
-            table: {
-                columns: {
-                    dob: {
-                        width: '130px'
-                    }
-                }
-            },
             dialog: {
                 add_title: 'Добавление пациента',
                 edit_title: 'Редактирование пациента #{0}'
