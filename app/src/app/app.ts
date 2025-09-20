@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 
 import Sftoomi from './class/Sftoomi';
 
@@ -25,9 +26,13 @@ export class App
     protected readonly Sftoomi = Sftoomi;
     protected readonly RoutesPaths = RoutesPaths;
 
-    constructor(private readonly nzDialog: NzModalService, private router: Router)
+    constructor(
+        private readonly nzDialog: NzModalService,
+        private readonly nzI18nService: NzI18nService,
+        private router: Router
+    )
     {
-        Sftoomi.init(nzDialog);
+        Sftoomi.init(nzDialog, nzI18nService);
     }
 
     protected isRouteSelected(route: RoutesPaths): boolean

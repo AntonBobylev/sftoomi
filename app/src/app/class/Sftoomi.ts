@@ -1,5 +1,6 @@
 import { AbstractControl } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { NzI18nService } from 'ng-zorro-antd/i18n';
 import moment from 'moment';
 
 import Translator from './Translator';
@@ -15,9 +16,10 @@ export default class Sftoomi
     public static readonly Cookies: CookiesService = new CookiesService();
     public static readonly Dialog: Dialog = new Dialog();
 
-    public static init(dialog: NzModalService): void
+    public static init(dialog: NzModalService, nzI18nService: NzI18nService): void
     {
         Sftoomi.Dialog.init(dialog);
+        Sftoomi.Translator.init(nzI18nService)
     }
 
     /**

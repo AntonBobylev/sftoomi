@@ -1,3 +1,5 @@
+import { en_US, NzI18nService, ru_RU } from 'ng-zorro-antd/i18n';
+
 import enDictionary from '../locale/dictionaries/us';
 import ruDictionary from '../locale/dictionaries/ru';
 
@@ -26,6 +28,10 @@ export default class Translator
         'ru'
     ];
 
+    private initialized: boolean = false;
+
+    private i18n!: NzI18nService;
+
     constructor()
     {
         let cookiesLocale: string = new CookiesService().getCookie(SftoomiCookie.SFTOOMI_LOCALE);
@@ -33,6 +39,15 @@ export default class Translator
         if (cookiesLocale) {
             this.locale = cookiesLocale as AppLocale;
         }
+    }
+
+    public init(i18n: NzI18nService): void
+    {
+        this.i18n = i18n;
+
+        this.initialized = true;
+
+        this.applyFrameworkLocale();
     }
 
     public switchToTheNextLocale(): void
@@ -45,6 +60,10 @@ export default class Translator
         }
 
         this.locale = this.availableLocales[nextLocaleIndex];
+
+        if (this.initialized) {
+            this.applyFrameworkLocale();
+        }
 
         Sftoomi.Cookies.setCookie(
             SftoomiCookie.SFTOOMI_LOCALE,
@@ -121,5 +140,22 @@ export default class Translator
         }
 
         return enDictionary;
+    }
+
+    private applyFrameworkLocale(): void
+    {
+        let frameworkLocale;
+        switch (this.locale) {
+            case 'ru':
+                frameworkLocale = ru_RU;
+                break;
+            case 'us':
+            default:
+                frameworkLocale = en_US;
+                break;
+
+        }
+
+        this.i18n.setLocale(frameworkLocale);
     }
 };
