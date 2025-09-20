@@ -21,6 +21,11 @@ export default class Dialog
         this.initialized = true;
     }
 
+    public getInstance(): NzModalService
+    {
+        return this.dialog;
+    }
+
     public show(message: string, type: DialogType = DialogType.INFO, callback?: Function): void
     {
         if (!this.initialized) {
