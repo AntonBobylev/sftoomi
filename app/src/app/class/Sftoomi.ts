@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import moment from 'moment';
@@ -223,5 +223,21 @@ export default class Sftoomi
             return '';
         }
         return input[0].toUpperCase() + input.substring(1).toLowerCase();
+    }
+
+    /**
+     * Useful in forms
+     *
+     * @param form
+     * @param fieldName
+     */
+    public static isFieldRequired(form: FormGroup, fieldName: string): boolean
+    {
+        const fieldCtrl = form.get(fieldName);
+        if (!fieldCtrl || !fieldCtrl.validator) {
+            return false;
+        }
+
+        return fieldCtrl.hasValidator(Validators.required);
     }
 }
