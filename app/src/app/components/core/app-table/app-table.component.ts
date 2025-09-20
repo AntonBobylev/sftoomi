@@ -27,6 +27,9 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly loadUrl!: string;
     protected readonly loadTimeout: number = Timeout.timeout;
 
+    protected readonly toolbarHeight: string = '40px';
+    protected readonly toolbar: any | undefined;
+
     protected readonly noDataCaption: string = Sftoomi.Translator.translate('no_data_to_display');
 
     protected readonly isBordered: boolean = true;
@@ -42,9 +45,39 @@ export default class AppTableComponent implements AfterViewInit
         this.refresh();
     }
 
-    protected getColumnsNames(): string[]
+    public setIsLoading(isLoading: boolean): void
     {
-        return this.columns.map((column: AppTableColumn): string => column.name);
+        this.isLoading.set(isLoading);
+    }
+
+    public refresh(): void
+    {
+        let data: FormData = new FormData();
+        if (this.usePagination) {
+            data.append('limit', this.pageSize.toString());
+            data.append('start', (this.currentPageIndex - 1).toString());
+        }
+
+        this.isLoading.set(true);
+        new Fetcher().request({
+            url: this.loadUrl,
+            timeout: this.loadTimeout,
+            data: data,
+            success: (_response: any, _request: any, result: any): void => {
+                this.data.set(this.convertReceivedDataToTableData(result.data));
+                this.total.set(result.total ?? 0);
+            },
+            finally: (): void => {
+                this.isLoading.set(false);
+            }
+        });
+    }
+
+    public getSelection(): any[]
+    {
+        return this.data().filter(function (row: any): boolean {
+            return row.selected;
+        });
     }
 
     protected onPageIndexChange(newPageIndex: number): void
@@ -58,6 +91,16 @@ export default class AppTableComponent implements AfterViewInit
         this.pageSize = newPageSize;
         this.currentPageIndex = 1;
         this.refresh();
+    }
+
+    protected getTableHeight(): string
+    {
+        let height: string = '100%';
+        if (this.toolbar) {
+            height = Sftoomi.format('calc(100% - {0})', [this.toolbarHeight]);
+        }
+
+        return height;
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]
@@ -86,28 +129,5 @@ export default class AppTableComponent implements AfterViewInit
         })
 
         return data;
-    }
-
-    private refresh(): void
-    {
-        let data: FormData = new FormData();
-        if (this.usePagination) {
-            data.append('limit', this.pageSize.toString());
-            data.append('start', (this.currentPageIndex - 1).toString());
-        }
-
-        this.isLoading.set(true);
-        new Fetcher().request({
-            url: this.loadUrl,
-            timeout: this.loadTimeout,
-            data: data,
-            success: (_response: any, _request: any, result: any): void => {
-                this.data.set(this.convertReceivedDataToTableData(result.data));
-                this.total.set(result.total ?? 0);
-            },
-            finally: (): void => {
-                this.isLoading.set(false);
-            }
-        });
     }
 }
