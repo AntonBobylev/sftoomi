@@ -5,6 +5,7 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import PatientsTableToolbarComponent from './toolbar/toolbar.component';
 
 import getPatientsAPI from '../../../APIs/getPatientsAPI';
 
@@ -61,4 +62,6 @@ export default class PatientsTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getPatients';
+
+    protected override readonly toolbar: any | undefined = PatientsTableToolbarComponent;
 }
