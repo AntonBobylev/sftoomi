@@ -6,6 +6,9 @@ type AppTableColumn = {
         caption: string,
         widthPx?: string,
         extraStyles?: object
+    },
+    dataCell?: {
+        extraStyles?: object
     }
 };
 

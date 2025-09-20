@@ -27,10 +27,12 @@
     <tbody>
         @for (row of data(); track row) {
             <tr>
-                @for(column of getColumnsNames(); track column) {
+                @for (column of columns; track column.name) {
                     <td>
-                        <span class="cell">
-                            {{ row[column] }}
+                        <span class="cell"
+                              [ngStyle]="column.dataCell?.extraStyles ?? null"
+                        >
+                            {{ row[column.name] }}
                         </span>
                     </td>
                 }

@@ -23,7 +23,11 @@ export default class PatientsTableComponent extends AppTableComponent
         name: 'id',
         header: {
             caption: Sftoomi.Translator.translate('id'),
-            widthPx: '10', // TODO: doesn't work
+            extraStyles: {
+                justifyContent: 'center'
+            }
+        },
+        dataCell: {
             extraStyles: {
                 justifyContent: 'center'
             }
