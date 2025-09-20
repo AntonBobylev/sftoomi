@@ -1,0 +1,29 @@
+@if (parentFormGroup.get(fieldName)?.dirty || parentFormGroup.get(fieldName)?.touched) {
+    @if (parentFormGroup.get(fieldName)!.hasError('maxlength')) {
+        <span>
+            {{
+                Sftoomi.format(
+                    Sftoomi.Translator.translate('validators.max_length'),
+                    [
+                        parentFormGroup.get(fieldName)?.errors?.['maxlength'].requiredLength
+                    ]
+                )
+            }}
+        </span>
+    } @else if (parentFormGroup.get(fieldName)!.hasError('minlength')) {
+        <span>
+            {{
+                Sftoomi.format(
+                    Sftoomi.Translator.translate('validators.max_length'),
+                    [
+                        parentFormGroup.get(fieldName)?.errors?.['minlength'].requiredLength
+                    ]
+                )
+            }}
+        </span>
+    } @else if (parentFormGroup.get(fieldName)!.hasError('required')) {
+        <span>{{ Sftoomi.Translator.translate('validators.field_required') }}</span>
+    } @else if (parentFormGroup.get(fieldName)!.hasError('only_letters')) {
+        <span>{{ Sftoomi.Translator.translate('validators.only_letters_allowed') }}</span>
+    }
+}
