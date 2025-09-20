@@ -1,0 +1,148 @@
+import { AfterViewInit, Directive, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { FormGroup } from '@angular/forms';
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
+
+import Sftoomi from '../../class/Sftoomi';
+import Fetcher from '../../class/Fetcher';
+
+import PopupMsgService from '../../services/popup-msg.service';
+
+import { DialogType } from '../../class/Dialog';
+
+@Directive()
+export default abstract class AppBaseEditDialog implements AfterViewInit, OnDestroy
+{
+    protected abstract readonly form: FormGroup;
+
+    protected readonly idField: string = 'id';
+
+    protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
+
+    protected readonly Sftoomi = Sftoomi;
+
+    protected readonly fetchExtraRequestOnLoad: boolean = false;
+
+    protected abstract readonly loadUrl: string;
+    protected abstract readonly saveUrl: string;
+
+    protected abstract afterLoad(data: any): void;
+
+    protected readonly popupMsg: PopupMsgService = inject(PopupMsgService);
+
+    protected readonly data: any = inject(NZ_MODAL_DATA);
+
+    protected readonly queryController: AbortController = new AbortController();
+
+    ngOnDestroy(): void
+    {
+        this.queryController.abort();
+    }
+
+    ngAfterViewInit(): void
+    {
+        this.load();
+    }
+
+    protected load(): void
+    {
+        if (!this.fetchExtraRequestOnLoad) {
+            return;
+        }
+
+        let me: this = this,
+            data: FormData = new FormData();
+
+        if (this.data.id) {
+            data.append(this.idField, this.data.id.toString());
+        }
+
+        me.isLoading.set(true);
+        new Fetcher().request({
+            url: this.loadUrl,
+            data: data,
+            signal: this.queryController.signal,
+            success: function (_response: any, _request: any, data: any): void {
+                me.isLoading.set(false);
+
+                me.afterLoad(data);
+            },
+            failure: function (_code: any, message: any, _request: any): void {
+                me.isLoading.set(false);
+
+                if (message === 'canceled') {
+                    return;
+                }
+
+                Sftoomi.Dialog.show(message, DialogType.ERROR)
+            }
+        })
+    }
+
+    protected save(): void
+    {
+        if (!this.isPreValid()) {
+            return;
+        }
+
+        this.validate();
+        if (this.form.invalid) {
+            this.popupMsg.formInvalid();
+
+            return;
+        }
+
+        let me: this = this,
+            formValues: object = this.form.value,
+            data: FormData = Sftoomi.formValuesToFormData(formValues);
+
+        if (this.data.id) {
+            data.append(this.idField, this.data.id.toString());
+        }
+
+        data = this.getAdditionalDataOnSave(data);
+
+        me.isLoading.set(true);
+        new Fetcher().request({
+            url: this.saveUrl,
+            data: data,
+            signal: this.queryController.signal,
+            success: function (_response: any, _request: any, data: any): void {
+                me.isLoading.set(false);
+
+                me.afterSave(data);
+            },
+            failure: function (_code: any, message: any, _request: any): void {
+                me.isLoading.set(false);
+
+                if (message === 'canceled') {
+                    return;
+                }
+
+                Sftoomi.Dialog.show(message, DialogType.ERROR)
+            }
+        })
+    }
+
+    protected afterSave(_data: any): void
+    {
+    };
+
+    protected getAdditionalDataOnSave(data: FormData): FormData
+    {
+        return data;
+    }
+
+    protected validate(): void
+    {
+        for (const [_key, control] of Object.entries(this.form.controls)) {
+            control.markAsDirty();
+            control.markAsTouched();
+        }
+    }
+
+    protected isPreValid(): boolean
+    {
+        // implement in child
+        return true;
+    }
+}
