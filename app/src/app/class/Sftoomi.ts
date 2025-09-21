@@ -53,7 +53,7 @@ export default class Sftoomi
     /**
      * @param date
      */
-    public static dateShort(date?: string | null | Date): string | null
+    public static dateShort(date?: string | null | Date): string
     {
         if (!date) {
             return '';

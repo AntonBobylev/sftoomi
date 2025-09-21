@@ -62,7 +62,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        data.set('dob', Sftoomi.dateShort(this.form.get('dob')?.value) ?? '');
+        data.set('dob', Sftoomi.dateShort(this.form.get('dob')?.value));
 
         return data;
     }
