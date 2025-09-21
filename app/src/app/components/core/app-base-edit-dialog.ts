@@ -1,6 +1,6 @@
 import { AfterViewInit, Directive, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
+import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 
 import Sftoomi from '../../class/Sftoomi';
 import Fetcher from '../../class/Fetcher';
@@ -33,6 +33,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected readonly queryController: AbortController = new AbortController();
 
+    constructor(private readonly dialog: NzModalRef)
+    {
+    }
+
     ngOnDestroy(): void
     {
         this.queryController.abort();
@@ -49,25 +53,23 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             return;
         }
 
-        let me: this = this,
-            data: FormData = new FormData();
-
+        let data: FormData = new FormData();
         if (this.data.id) {
             data.append(this.idField, this.data.id.toString());
         }
 
-        me.isLoading.set(true);
+        this.isLoading.set(true);
         new Fetcher().request({
             url: this.loadUrl,
             data: data,
             signal: this.queryController.signal,
-            success: function (_response: any, _request: any, data: any): void {
-                me.isLoading.set(false);
+            success: (_response: any, _request: any, data: any): void => {
+                this.isLoading.set(false);
 
-                me.afterLoad(data);
+                this.afterLoad(data);
             },
-            failure: function (_code: any, message: any, _request: any): void {
-                me.isLoading.set(false);
+            failure: (_code: any, message: any, _request: any): void => {
+                this.isLoading.set(false);
 
                 if (message === 'canceled') {
                     return;
@@ -91,8 +93,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             return;
         }
 
-        let me: this = this,
-            formValues: object = this.form.value,
+        let formValues: object = this.form.value,
             data: FormData = Sftoomi.formValuesToFormData(formValues);
 
         if (this.data.id) {
@@ -101,24 +102,26 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
         data = this.getAdditionalDataOnSave(data);
 
-        me.isLoading.set(true);
+        this.isLoading.set(true);
         new Fetcher().request({
             url: this.saveUrl,
             data: data,
             signal: this.queryController.signal,
-            success: function (_response: any, _request: any, data: any): void {
-                me.isLoading.set(false);
+            success: (_response: any, _request: any, data: any): void => {
+                this.isLoading.set(false);
 
-                me.afterSave(data);
+                this.afterSave(data);
+
+                this.dialog.close(true);
             },
-            failure: function (_code: any, message: any, _request: any): void {
-                me.isLoading.set(false);
+            failure: (_code: any, message: any, _request: any): void => {
+                this.isLoading.set(false);
 
                 if (message === 'canceled') {
                     return;
                 }
 
-                Sftoomi.Dialog.show(message, DialogType.ERROR)
+                Sftoomi.Dialog.show(message, DialogType.ERROR, (): void => this.dialog.close(false))
             }
         })
     }
