@@ -1,0 +1,16 @@
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <patient-demographics-template [form]="form" />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

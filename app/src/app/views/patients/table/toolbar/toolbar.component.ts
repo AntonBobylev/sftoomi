@@ -5,6 +5,7 @@ import { NzIconDirective } from 'ng-zorro-antd/icon';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
+
 import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
 
 @Component({
@@ -30,24 +31,14 @@ export default class PatientsTableToolbarComponent extends AppBaseToolbar
             nzContent: PatientEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
-            nzData: {
-                id: id
-            },
-            nzOnOk: () => new Promise(resolve => setTimeout(resolve, 1000)),
-            nzFooter: [
-                {
-                    label: Sftoomi.Translator.translate('save'),
-                    type: 'primary',
-                    shape: 'round',
-                    onClick: componentInstance => {
-                        console.log(componentInstance!.getValues());
-                    }
-                }
-            ]
+            nzCentered: true,
+            nzData: { id: id }
         });
 
-        modal.afterClose.subscribe((): void => {
-            this.table.refresh();
+        modal.afterClose.subscribe((isSaved: boolean = false): void => {
+            if (isSaved) {
+                this.table.refresh();
+            }
         });
     }
 }
