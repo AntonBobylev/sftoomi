@@ -34,7 +34,7 @@
         </tr>
     </thead>
     <tbody>
-        @for (row of data(); track row) {
+        @for (row of data(); track row + $index) {
             <tr>
                 @for (column of columns; track column.name) {
                     <td>
