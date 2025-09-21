@@ -95,6 +95,10 @@ class Fetcher
         string $format = Constants::SQL_DEFAULT_DATE_FORMAT
     ): string | null
     {
+        if (empty($value)) {
+            return $default;
+        }
+
         if (self::isNull($value)) {
             return $default;
         }
