@@ -35,6 +35,9 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly isBordered: boolean = true;
     protected readonly selectionRequired: boolean = true;
 
+    protected selectionInHeaderChecked: boolean = false;
+    protected selectionInHeaderIntermediate: boolean = false;
+
     protected readonly usePagination: boolean = true;
 
     protected pageSize: number = 50;
@@ -66,6 +69,8 @@ export default class AppTableComponent implements AfterViewInit
             success: (_response: any, _request: any, result: any): void => {
                 this.data.set(this.convertReceivedDataToTableData(result.data));
                 this.total.set(result.total ?? 0);
+
+                this.refreshCheckedStatus();
             },
             finally: (): void => {
                 this.isLoading.set(false);
@@ -103,6 +108,29 @@ export default class AppTableComponent implements AfterViewInit
         return height;
     }
 
+    protected onAllChecked(selected: boolean): void
+    {
+        this.data().map((row) => {
+            row.selected = selected;
+
+            return row;
+        });
+
+        this.refreshCheckedStatus();
+    }
+
+    protected refreshCheckedStatus(): void
+    {
+        this.selectionInHeaderChecked = this.data().every((row) => row.selected);
+        this.selectionInHeaderIntermediate = this.data().some((row) => row.selected) && !this.selectionInHeaderChecked;
+    }
+
+    protected onRowCheck(checked: boolean, row: any): void
+    {
+        row.selected = checked;
+        this.refreshCheckedStatus();
+    }
+
     private convertReceivedDataToTableData(data: any[]): any[]
     {
         data.forEach((row: any): void => {
@@ -130,4 +158,6 @@ export default class AppTableComponent implements AfterViewInit
 
         return data;
     }
+
+    protected readonly Sftoomi = Sftoomi;
 }

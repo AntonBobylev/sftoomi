@@ -22,6 +22,14 @@
 >
     <thead>
         <tr>
+            @if (selectionRequired) {
+                <th
+                    [nzChecked]="selectionInHeaderChecked"
+                    [nzIndeterminate]="selectionInHeaderIntermediate"
+                    [nz-tooltip]="Sftoomi.Translator.translate('select_all')"
+                    (nzCheckedChange)="onAllChecked($event)"
+                ></th>
+            }
             @for (column of columns; track column.name) {
                 <th [nzWidth]="column.header.widthPx ? column.header.widthPx + 'px' : null">
                     <span class="cell"
@@ -36,6 +44,11 @@
     <tbody>
         @for (row of data(); track row + $index) {
             <tr>
+                <td
+                    [nzChecked]="row.selected"
+                    (nzCheckedChange)="onRowCheck($event, row)"
+                ></td>
+
                 @for (column of columns; track column.name) {
                     <td>
                         <span class="cell"
