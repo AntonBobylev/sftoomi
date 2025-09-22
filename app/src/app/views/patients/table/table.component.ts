@@ -57,7 +57,8 @@ export default class PatientsTableComponent extends AppTableComponent
     }, {
         name: 'phone',
         header: {
-            caption: Sftoomi.Translator.translate('phone')
+            caption: Sftoomi.Translator.translate('phone'),
+            tooltipRenderer: (): string => Sftoomi.Translator.translate('views.patients.phone_column_header_tooltip')
         }
     }];
 

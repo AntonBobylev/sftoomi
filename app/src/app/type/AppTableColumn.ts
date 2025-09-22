@@ -5,9 +5,11 @@ type AppTableColumn = {
     header: {
         caption: string,
         widthPx?: string,
+        tooltipRenderer?: Function,
         extraStyles?: object
     },
     dataCell?: {
+        tooltipRenderer?: Function,
         extraStyles?: object
     }
 };

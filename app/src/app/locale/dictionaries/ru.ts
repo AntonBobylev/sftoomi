@@ -54,7 +54,8 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление пациента',
                 edit_title: 'Редактирование пациента #{0}'
-            }
+            },
+            phone_column_header_tooltip: 'Сотовый номер пациента'
         },
         processing: {
             add_examination: 'Добавление обследования',

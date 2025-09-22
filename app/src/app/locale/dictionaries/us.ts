@@ -55,7 +55,8 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add patient',
                 edit_title: 'Edit patient #{0}'
-            }
+            },
+            phone_column_header_tooltip: 'Patient\'s cell phone'
         },
         processing: {
             add_examination: 'Add examination',

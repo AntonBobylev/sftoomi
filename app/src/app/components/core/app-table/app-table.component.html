@@ -34,6 +34,7 @@
                 <th [nzWidth]="column.header.widthPx ? column.header.widthPx + 'px' : null">
                     <span class="cell"
                           [ngStyle]="column.header.extraStyles"
+                          [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer() : null"
                     >
                         {{ column.header.caption }}
                     </span>
@@ -53,6 +54,7 @@
                     <td>
                         <span class="cell"
                               [ngStyle]="column.dataCell?.extraStyles ?? null"
+                              [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
                         >
                             {{ row[column.name] }}
                         </span>
