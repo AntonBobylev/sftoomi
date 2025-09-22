@@ -7,13 +7,15 @@ import Sftoomi from '../../../../class/Sftoomi';
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
 
 import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
     selector: 'patients-table-toolbar',
     templateUrl: './toolbar.component.html',
     imports: [
         NzButtonComponent,
-        NzIconDirective
+        NzIconDirective,
+        NzTooltipDirective
     ]
 })
 

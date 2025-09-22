@@ -3,6 +3,7 @@
             nzType="default"
             nzShape="circle"
             (click)="onAddClick($event)"
+            [nz-tooltip]="Sftoomi.Translator.translate('add')"
     >
         <nz-icon nzType="plus" />
     </button>
@@ -10,6 +11,7 @@
             nzType="default"
             nzShape="circle"
             (click)="onEditClick($event)"
+            [nz-tooltip]="Sftoomi.Translator.translate('edit')"
     >
         <nz-icon nzType="edit" />
     </button>
@@ -17,6 +19,7 @@
             nzType="default"
             nzShape="circle"
             (click)="onRemoveClick($event)"
+            [nz-tooltip]="Sftoomi.Translator.translate('remove')"
     >
         <nz-icon nzType="delete" />
     </button>
@@ -24,6 +27,7 @@
             nzType="default"
             nzShape="circle"
             (click)="onRefreshClick()"
+            [nz-tooltip]="Sftoomi.Translator.translate('refresh')"
     >
         <nz-icon nzType="retweet" />
     </button>
