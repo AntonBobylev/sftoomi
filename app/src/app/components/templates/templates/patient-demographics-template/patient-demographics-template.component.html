@@ -7,10 +7,18 @@
                 {{ Sftoomi.Translator.translate('last_name') }}
             </nz-form-label>
             <nz-form-control [nzErrorTip]="lastNameError">
-                <input nz-input
-                       formControlName="last_name"
-                       id="last_name"
-                />
+                <nz-input-group [nzSuffix]="lastNameClearTpl">
+                    <input nz-input
+                           formControlName="last_name"
+                           id="last_name"
+                    />
+
+                    <ng-template #lastNameClearTpl
+                                 [ngTemplateOutlet]="clearTpl"
+                                 [ngTemplateOutletContext]="{control: form.get('last_name')}"
+                    >
+                    </ng-template>
+                </nz-input-group>
 
                 <ng-template #lastNameError>
                     <form-error fieldName="last_name"
@@ -26,10 +34,18 @@
                 {{ Sftoomi.Translator.translate('first_name') }}
             </nz-form-label>
             <nz-form-control [nzErrorTip]="firstNameError">
-                <input nz-input
-                       formControlName="first_name"
-                       id="first_name"
-                />
+                <nz-input-group [nzSuffix]="firstNameClearTpl">
+                    <input nz-input
+                           formControlName="first_name"
+                           id="first_name"
+                    />
+
+                    <ng-template #firstNameClearTpl
+                                 [ngTemplateOutlet]="clearTpl"
+                                 [ngTemplateOutletContext]="{control: form.get('first_name')}"
+                    >
+                    </ng-template>
+                </nz-input-group>
 
                 <ng-template #firstNameError>
                     <form-error fieldName="first_name"
@@ -45,10 +61,18 @@
                 {{ Sftoomi.Translator.translate('middle_name') }}
             </nz-form-label>
             <nz-form-control [nzErrorTip]="middleNameError">
-                <input nz-input
-                       formControlName="middle_name"
-                       id="middle_name"
-                />
+                <nz-input-group [nzSuffix]="middleNameClearTpl">
+                    <input nz-input
+                           formControlName="middle_name"
+                           id="middle_name"
+                    />
+
+                    <ng-template #middleNameClearTpl
+                                 [ngTemplateOutlet]="clearTpl"
+                                 [ngTemplateOutletContext]="{control: form.get('middle_name')}"
+                    >
+                    </ng-template>
+                </nz-input-group>
 
                 <ng-template #middleNameError>
                     <form-error fieldName="middle_name"
@@ -80,3 +104,16 @@
         </nz-form-item>
     </form>
 </div>
+
+<ng-template #clearTpl
+             let-control='control'
+>
+    @if (control?.value) {
+        <i nz-icon
+           class="ant-input-clear-icon"
+           nzTheme="fill"
+           nzType="close-circle"
+           (click)="control?.reset()"
+        ></i>
+    }
+</ng-template>
