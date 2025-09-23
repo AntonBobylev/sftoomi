@@ -8,7 +8,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 
-import PatientDemographicsTemplateComponent from '../../../components/templates/templates/patient-demographics-template/patient-demographics-template.component';
+import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';
 
 import getPatientAPI from '../../../APIs/getPatientAPI';
 

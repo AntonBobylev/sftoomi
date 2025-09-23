@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import Sftoomi from '../../../../class/Sftoomi';
+import Sftoomi from '../../../class/Sftoomi';
 
 @Component({
     selector: 'form-error',

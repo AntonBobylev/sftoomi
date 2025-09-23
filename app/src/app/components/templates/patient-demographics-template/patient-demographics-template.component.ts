@@ -5,11 +5,11 @@ import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzFormControlComponent, NzFormDirective, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
-import Sftoomi from '../../../../class/Sftoomi';
+import Sftoomi from '../../../class/Sftoomi';
 
 import FormErrorComponent from '../form-error/form-error.component';
 
-import getDatePickerLocalDateFormat from '../../../../locale/getDatePickerLocalDateFormat';
+import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NgTemplateOutlet } from '@angular/common';
 
