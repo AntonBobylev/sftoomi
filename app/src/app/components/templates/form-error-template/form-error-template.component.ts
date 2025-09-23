@@ -5,13 +5,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 import Sftoomi from '../../../class/Sftoomi';
 
 @Component({
-    selector: 'form-error',
-    templateUrl: './form-error.component.html',
+    selector: 'form-error-template',
+    templateUrl: './form-error-template.component.html',
     imports: [],
-    styleUrl: './form-error.component.scss'
+    styleUrl: './form-error-template.component.scss'
 })
 
-export default class FormErrorComponent
+export default class FormErrorTemplateComponent
 {
     @Input({required: true}) fieldName!: string
     @Input({required: true}) parentFormGroup!: FormGroup
