@@ -10,6 +10,7 @@
                 <nz-input-group [nzSuffix]="lastNameClearTpl">
                     <input nz-input
                            formControlName="last_name"
+                           uppercase
                            id="last_name"
                     />
 
@@ -36,6 +37,7 @@
             <nz-form-control [nzErrorTip]="firstNameError">
                 <nz-input-group [nzSuffix]="firstNameClearTpl">
                     <input nz-input
+                           uppercase
                            formControlName="first_name"
                            id="first_name"
                     />
@@ -63,6 +65,7 @@
             <nz-form-control [nzErrorTip]="middleNameError">
                 <nz-input-group [nzSuffix]="middleNameClearTpl">
                     <input nz-input
+                           uppercase
                            formControlName="middle_name"
                            id="middle_name"
                     />

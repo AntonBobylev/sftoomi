@@ -11,6 +11,8 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import FormErrorTemplateComponent from '../form-error-template/form-error-template.component';
 
+import UppercaseDirective from '../../../directives/uppercase.directive';
+
 import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 
 @Component({
@@ -28,7 +30,8 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
         NzDatePickerComponent,
         NzInputGroupComponent,
         NzIconDirective,
-        NgTemplateOutlet
+        NgTemplateOutlet,
+        UppercaseDirective
     ],
     styleUrl: './patient-demographics-template.component.less'
 })
