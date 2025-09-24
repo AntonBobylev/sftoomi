@@ -22,6 +22,7 @@ export default class PatientsTableComponent extends AppTableComponent
 {
     protected override readonly columns: AppTableColumn[] = [{
         name: 'id',
+        width: '60px',
         header: {
             caption: Sftoomi.Translator.translate('id'),
             extraStyles: {
@@ -35,16 +36,19 @@ export default class PatientsTableComponent extends AppTableComponent
         }
     }, {
         name: 'last_name',
+        width: '200px',
         header: {
             caption: Sftoomi.Translator.translate('last_name')
         }
     }, {
         name: 'first_name',
+        width: '200px',
         header: {
             caption: Sftoomi.Translator.translate('first_name')
         }
     }, {
         name: 'middle_name',
+        width: '200px',
         header: {
             caption: Sftoomi.Translator.translate('middle_name')
         }

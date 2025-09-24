@@ -23,20 +23,21 @@
     <thead>
         <tr>
             @if (selectionRequired) {
-                <th
-                    [nzChecked]="selectionInHeaderChecked"
+                <th [nzChecked]="selectionInHeaderChecked"
                     [nzIndeterminate]="selectionInHeaderIntermediate"
                     [nz-tooltip]="Sftoomi.Translator.translate('select_all')"
                     (nzCheckedChange)="onAllChecked($event)"
+                    style="width: 40px"
                 ></th>
             }
             @for (column of columns; track column.name) {
-                <th [nzWidth]="column.header.widthPx ? column.header.widthPx + 'px' : null">
+                <th style="width: {{ column.width }}">
                     <span class="cell"
                           [ngStyle]="column.header.extraStyles"
-                          [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer() : null"
                     >
-                        {{ column.header.caption }}
+                        <span [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer() : null">
+                            {{ column.header.caption }}
+                        </span>
                     </span>
                 </th>
             }
@@ -52,12 +53,13 @@
 
                 @for (column of columns; track column.name) {
                     <td>
-                        <span class="cell"
-                              [ngStyle]="column.dataCell?.extraStyles ?? null"
-                              [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
+                        <div class="cell"
+                             [style.max-width]="column.width"
+                             [ngStyle]="column.dataCell?.extraStyles ?? null"
+                             [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
                         >
                             {{ row[column.name] }}
-                        </span>
+                        </div>
                     </td>
                 }
             </tr>

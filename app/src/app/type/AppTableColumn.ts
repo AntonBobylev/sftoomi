@@ -2,9 +2,9 @@ type AppTableColumn = {
     name: string,
     resizable?: boolean,
     valueRenderer?: Function,
+    width?: string,
     header: {
         caption: string,
-        widthPx?: string,
         tooltipRenderer?: Function,
         extraStyles?: object
     },
