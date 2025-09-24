@@ -34,7 +34,7 @@ abstract class AppCrudController extends SftoomiController
 
         $data = $query->fetchAllAssociative();
 
-        $sql = sprintf("select count(*) from %s", $this->baseTable);
+        $sql = "select found_rows()";
         $total = $connection->fetchOne($sql);
 
         return [
