@@ -157,6 +157,7 @@ let usDictionary: object =  {
     },
 
     validators: {
+        phone_number_is_invalid: 'Phone number is invalid',
         field_required: 'This field is required',
         max_length: 'Maximum allowed length — {0}',
         min_length: 'Minimum allowed length — {0}',
