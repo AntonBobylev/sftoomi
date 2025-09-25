@@ -113,12 +113,20 @@
             </nz-form-label>
 
             <nz-form-control [nzErrorTip]="phoneError">
-                <input nz-input
-                       uppercase
-                       formControlName="phone"
-                       [maskito]="phoneMask"
-                       id="phone"
-                />
+                <nz-input-group [nzSuffix]="phoneClearTpl">
+                    <input nz-input
+                           uppercase
+                           formControlName="phone"
+                           [maskito]="phoneMask"
+                           id="phone"
+                    />
+
+                    <ng-template #phoneClearTpl
+                                 [ngTemplateOutlet]="clearTpl"
+                                 [ngTemplateOutletContext]="{control: form.get('phone')}"
+                    >
+                    </ng-template>
+                </nz-input-group>
 
                 <ng-template #phoneError>
                     <form-error-template fieldName="phone"
