@@ -105,6 +105,28 @@
                 </ng-template>
             </nz-form-control>
         </nz-form-item>
+        <nz-form-item>
+            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'phone')"
+                           nzFor="phone"
+            >
+                {{ Sftoomi.Translator.translate('phone') }}
+            </nz-form-label>
+
+            <nz-form-control [nzErrorTip]="phoneError">
+                <input nz-input
+                       uppercase
+                       formControlName="phone"
+                       [maskito]="phoneMask"
+                       id="phone"
+                />
+
+                <ng-template #phoneError>
+                    <form-error-template fieldName="phone"
+                                         [parentFormGroup]="form"
+                    />
+                </ng-template>
+            </nz-form-control>
+        </nz-form-item>
     </form>
 </div>
 
