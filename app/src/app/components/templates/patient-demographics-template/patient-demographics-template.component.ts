@@ -13,8 +13,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import phoneMask from '../../../misc/phone-mask-generator';
 
 import FormErrorTemplateComponent from '../form-error-template/form-error-template.component';
-
-import UppercaseDirective from '../../../directives/uppercase.directive';
+import AppTextfieldComponent from '../../core/app-textfield/app-textfield.component';
 
 import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 
@@ -26,7 +25,7 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
         NzFormItemComponent, NzFormLabelComponent, NzFormControlComponent,
         NzColDirective, FormErrorTemplateComponent, NzDatePickerComponent,
         NzInputGroupComponent, NzIconDirective, NgTemplateOutlet,
-        UppercaseDirective, MaskitoDirective
+        MaskitoDirective, AppTextfieldComponent
     ],
     styleUrl: './patient-demographics-template.component.less'
 })
