@@ -15,6 +15,13 @@
                 >
                     {{ Sftoomi.Translator.translate('navigation.patients') }}
                 </li>
+                <li nz-menu-item
+                    nzMatchRouter
+                    [nzSelected]="isRouteSelected(RoutesPaths.REFERRING_FACILITES)"
+                    [routerLink]="RoutesPaths.REFERRING_FACILITES"
+                >
+                    {{ Sftoomi.Translator.translate('navigation.referring_facilities') }}
+                </li>
             </ul>
         </div>
         <div class="right">

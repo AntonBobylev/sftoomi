@@ -1,14 +1,17 @@
 import { Routes } from '@angular/router';
 
 import Sftoomi from './class/Sftoomi';
+
 import HomeComponent from './views/home/home.component';
 import PatientsComponent from './views/patients/patients.component';
+import ReferringFacilitiesComponent from './views/referring-facilities/referring-facilities.component';
 
 const BASE_TITLE = 'SFTOOMI :: ';
 
 export enum RoutesPaths {
     HOME = '',
-    PATIENTS = 'patients'
+    PATIENTS = 'patients',
+    REFERRING_FACILITES = 'referring-facilities'
 }
 
 export const routes: Routes = [{
@@ -19,4 +22,8 @@ export const routes: Routes = [{
     path: RoutesPaths.PATIENTS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.patients'),
     component: PatientsComponent
+}, {
+    path: RoutesPaths.REFERRING_FACILITES,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.referring_facilities'),
+    component: ReferringFacilitiesComponent
 }];

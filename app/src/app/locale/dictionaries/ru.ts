@@ -20,7 +20,8 @@ let ruDictionary: object =  {
 
     navigation: {
         home: 'Домашняя',
-        patients: 'Пациенты'
+        patients: 'Пациенты',
+        referring_facilities: 'Направляющие учреждения'
     },
 
     views: {

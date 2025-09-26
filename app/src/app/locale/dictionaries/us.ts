@@ -20,7 +20,8 @@ let usDictionary: object =  {
 
     navigation: {
         home: 'Home',
-        patients: 'Patients'
+        patients: 'Patients',
+        referring_facilities: 'Referring facilities'
     },
 
     views: {
@@ -34,6 +35,9 @@ let usDictionary: object =  {
         home: {
             greetings_label: 'Welcome to the SFTOOMI application!'
         },
+        referring_facilities: {
+
+        }
     },
 
     validators: {
