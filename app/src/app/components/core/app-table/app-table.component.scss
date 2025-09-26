@@ -8,6 +8,13 @@
 nz-table {
     height: 100%;
 
+    thead tr:nth-child(1) th{
+        background: white;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
     ::ng-deep {
         nz-spin {
             height: 100%;
