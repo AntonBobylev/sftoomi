@@ -24,6 +24,6 @@ export const routes: Routes = [{
     component: PatientsComponent
 }, {
     path: RoutesPaths.REFERRING_FACILITES,
-    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.referring_facilities'),
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.referring_facilities'),
     component: ReferringFacilitiesComponent
 }];

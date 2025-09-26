@@ -16,11 +16,12 @@
                     {{ Sftoomi.Translator.translate('navigation.patients') }}
                 </li>
                 <li nz-menu-item
-                    nzMatchRouter
-                    [nzSelected]="isRouteSelected(RoutesPaths.REFERRING_FACILITES)"
-                    [routerLink]="RoutesPaths.REFERRING_FACILITES"
+                    nz-dropdown
+                    [nzDropdownMenu]="setupMenu"
+                    [class.ant-menu-item-selected]="false"
                 >
-                    {{ Sftoomi.Translator.translate('navigation.referring_facilities') }}
+                    {{ Sftoomi.Translator.translate('navigation.setup.caption') }}
+                    <nz-icon nzType="down" />
                 </li>
             </ul>
         </div>
@@ -34,3 +35,15 @@
         </div>
     </nz-content>
 </nz-layout>
+
+
+<nz-dropdown-menu #setupMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.REFERRING_FACILITES"
+        >
+            {{ Sftoomi.Translator.translate('navigation.setup.referring_facilities') }}
+        </li>
+    </ul>
+</nz-dropdown-menu>

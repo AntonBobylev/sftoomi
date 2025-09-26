@@ -21,7 +21,10 @@ let ruDictionary: object =  {
     navigation: {
         home: 'Домашняя',
         patients: 'Пациенты',
-        referring_facilities: 'Направляющие учреждения'
+        setup: {
+            caption: 'Настройка',
+            referring_facilities: 'Направляющие учреждения'
+        }
     },
 
     views: {

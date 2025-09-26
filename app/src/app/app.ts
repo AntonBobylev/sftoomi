@@ -10,12 +10,14 @@ import Sftoomi from './class/Sftoomi';
 import { RoutesPaths } from './app.routes';
 
 import LanguageSwitcherComponent from './components/misc/language-switcher/language-switcher.component';
+import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 @Component({
     selector: 'app-root',
     imports: [
         RouterOutlet, NzLayoutModule, NzMenuModule,
-        RouterLink, NzModalModule, LanguageSwitcherComponent
+        RouterLink, NzModalModule, LanguageSwitcherComponent, NzDropDownDirective, NzDropdownMenuComponent, NzIconDirective
     ],
     templateUrl: './app.html',
     styleUrl: './app.less'

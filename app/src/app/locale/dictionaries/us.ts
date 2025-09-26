@@ -21,7 +21,10 @@ let usDictionary: object =  {
     navigation: {
         home: 'Home',
         patients: 'Patients',
-        referring_facilities: 'Referring facilities'
+        setup: {
+            caption: 'Setup',
+            referring_facilities: 'Referring facilities'
+        }
     },
 
     views: {
