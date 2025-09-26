@@ -1,14 +1,13 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 
-import Sftoomi from '../../../class/Sftoomi';
-
 import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
+import AppUppercaseAbleField from '../app-uppercase-able-field';
 
 @Component({
     selector: 'app-textfield',
@@ -22,30 +21,6 @@ import FormErrorTemplateComponent from '../../templates/form-error-template/form
     styleUrl: './app-textfield.component.scss'
 })
 
-export default class AppTextfieldComponent
+export default class AppTextfieldComponent extends AppUppercaseAbleField
 {
-    @Input({required: true}) public form!: FormGroup;
-    @Input({required: true}) public name!: string;
-    @Input({required: true}) public label!: string;
-
-    @Input() public useUppercase: boolean = false;
-
-    @Output() public onChange: EventEmitter<any> = new EventEmitter<any>();
-
-    protected readonly Sftoomi = Sftoomi;
-
-    protected onInput(event: any): void
-    {
-        if (!this.form.get(this.name)?.value) {
-            this.onChange.emit(event.data);
-
-            return;
-        }
-
-        if (this.useUppercase) {
-            this.form.get(this.name)!.setValue((this.form.get(this.name)?.value).toUpperCase());
-        }
-
-        this.onChange.emit(event.data);
-    }
 }
