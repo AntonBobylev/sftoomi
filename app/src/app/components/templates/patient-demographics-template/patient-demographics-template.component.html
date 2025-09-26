@@ -21,48 +21,9 @@
                         [form]="form"
         />
 
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'phone')"
-                           nzFor="phone"
-            >
-                {{ Sftoomi.Translator.translate('phone') }}
-            </nz-form-label>
-
-            <nz-form-control [nzErrorTip]="phoneError">
-                <nz-input-group [nzSuffix]="phoneClearTpl">
-                    <input nz-input
-
-                           formControlName="phone"
-                           [maskito]="phoneMask"
-                           id="phone"
-                    />
-
-                    <ng-template #phoneClearTpl
-                                 [ngTemplateOutlet]="clearTpl"
-                                 [ngTemplateOutletContext]="{control: form.get('phone')}"
-                    >
-                    </ng-template>
-                </nz-input-group>
-
-                <ng-template #phoneError>
-                    <form-error-template fieldName="phone"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
+        <app-phone [label]="Sftoomi.Translator.translate('phone')"
+                   name="phone"
+                   [form]="form"
+        />
     </form>
 </div>
-
-<ng-template #clearTpl
-             let-control='control'
->
-    @if (control?.value) {
-        <i nz-icon
-           class="ant-input-clear-icon"
-           nzTheme="fill"
-           nzType="close-circle"
-           (click)="control?.reset()"
-        ></i>
-    }
-</ng-template>
