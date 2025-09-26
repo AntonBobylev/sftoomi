@@ -15,27 +15,12 @@
                        [form]="form"
                        [useUppercase]="true"
         />
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'dob')"
-                           nzFor="dob"
-            >
-                {{ Sftoomi.Translator.translate('dob_full') }}
-            </nz-form-label>
 
-            <nz-form-control [nzErrorTip]="dobError">
-                <nz-date-picker formControlName="dob"
-                                id="dob"
-                                style="width: 100%"
-                                [nzFormat]="getDatePickerLocalDateFormat()"
-                />
+        <app-datepicker [label]="Sftoomi.Translator.translate('dob_full')"
+                        name="dob"
+                        [form]="form"
+        />
 
-                <ng-template #dobError>
-                    <form-error-template fieldName="dob"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
         <nz-form-item>
             <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'phone')"
                            nzFor="phone"
