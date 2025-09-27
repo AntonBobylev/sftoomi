@@ -1,122 +1,29 @@
 <div class="wrapper">
     <form nz-form [formGroup]="form">
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'last_name')"
-                           nzFor="last_name"
-            >
-                {{ Sftoomi.Translator.translate('last_name') }}
-            </nz-form-label>
-            <nz-form-control [nzErrorTip]="lastNameError">
-                <nz-input-group [nzSuffix]="lastNameClearTpl">
-                    <input nz-input
-                           formControlName="last_name"
-                           uppercase
-                           id="last_name"
-                    />
+        <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
+                       name="last_name"
+                       [form]="form"
+                       [useUppercase]="true"
+        />
+        <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
+                       name="first_name"
+                       [form]="form"
+                       [useUppercase]="true"
+        />
+        <app-textfield [label]="Sftoomi.Translator.translate('middle_name')"
+                       name="middle_name"
+                       [form]="form"
+                       [useUppercase]="true"
+        />
 
-                    <ng-template #lastNameClearTpl
-                                 [ngTemplateOutlet]="clearTpl"
-                                 [ngTemplateOutletContext]="{control: form.get('last_name')}"
-                    >
-                    </ng-template>
-                </nz-input-group>
+        <app-datepicker [label]="Sftoomi.Translator.translate('dob_full')"
+                        name="dob"
+                        [form]="form"
+        />
 
-                <ng-template #lastNameError>
-                    <form-error-template fieldName="last_name"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'first_name')"
-                           nzFor="first_name"
-            >
-                {{ Sftoomi.Translator.translate('first_name') }}
-            </nz-form-label>
-            <nz-form-control [nzErrorTip]="firstNameError">
-                <nz-input-group [nzSuffix]="firstNameClearTpl">
-                    <input nz-input
-                           uppercase
-                           formControlName="first_name"
-                           id="first_name"
-                    />
-
-                    <ng-template #firstNameClearTpl
-                                 [ngTemplateOutlet]="clearTpl"
-                                 [ngTemplateOutletContext]="{control: form.get('first_name')}"
-                    >
-                    </ng-template>
-                </nz-input-group>
-
-                <ng-template #firstNameError>
-                    <form-error-template fieldName="first_name"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'middle_name')"
-                           nzFor="middle_name"
-            >
-                {{ Sftoomi.Translator.translate('middle_name') }}
-            </nz-form-label>
-            <nz-form-control [nzErrorTip]="middleNameError">
-                <nz-input-group [nzSuffix]="middleNameClearTpl">
-                    <input nz-input
-                           uppercase
-                           formControlName="middle_name"
-                           id="middle_name"
-                    />
-
-                    <ng-template #middleNameClearTpl
-                                 [ngTemplateOutlet]="clearTpl"
-                                 [ngTemplateOutletContext]="{control: form.get('middle_name')}"
-                    >
-                    </ng-template>
-                </nz-input-group>
-
-                <ng-template #middleNameError>
-                    <form-error-template fieldName="middle_name"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
-        <nz-form-item>
-            <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, 'dob')"
-                           nzFor="dob"
-            >
-                {{ Sftoomi.Translator.translate('dob_full') }}
-            </nz-form-label>
-
-            <nz-form-control [nzErrorTip]="dobError">
-                <nz-date-picker formControlName="dob"
-                                id="dob"
-                                style="width: 100%"
-                                [nzFormat]="getDatePickerLocalDateFormat()"
-                />
-
-                <ng-template #dobError>
-                    <form-error-template fieldName="dob"
-                                         [parentFormGroup]="form"
-                    />
-                </ng-template>
-            </nz-form-control>
-        </nz-form-item>
+        <app-phone [label]="Sftoomi.Translator.translate('phone')"
+                   name="phone"
+                   [form]="form"
+        />
     </form>
 </div>
-
-<ng-template #clearTpl
-             let-control='control'
->
-    @if (control?.value) {
-        <i nz-icon
-           class="ant-input-clear-icon"
-           nzTheme="fill"
-           nzType="close-circle"
-           (click)="control?.reset()"
-        ></i>
-    }
-</ng-template>

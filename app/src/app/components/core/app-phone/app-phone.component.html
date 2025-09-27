@@ -1,0 +1,42 @@
+<nz-form-item [formGroup]="form">
+    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
+                   [nzFor]="name"
+    >
+        {{ label }}
+    </nz-form-label>
+
+    <nz-form-control [nzErrorTip]="errorTpl">
+        <nz-input-group [nzSuffix]="clearTpl">
+            <input nz-input
+                   [formControlName]="name"
+                   [maskito]="phoneMask"
+                   [id]="name"
+            />
+
+            <ng-template #clearTpl
+                         [ngTemplateOutlet]="clearTpl"
+                         [ngTemplateOutletContext]="{control: form.get(name)}"
+            >
+            </ng-template>
+        </nz-input-group>
+
+        <ng-template #errorTpl>
+            <form-error-template [fieldName]="name"
+                                 [parentFormGroup]="form"
+            />
+        </ng-template>
+    </nz-form-control>
+</nz-form-item>
+
+<ng-template #clearTpl
+             let-control='control'
+>
+    @if (control?.value) {
+        <i nz-icon
+           class="ant-input-clear-icon"
+           nzTheme="fill"
+           nzType="close-circle"
+           (click)="control?.reset()"
+        ></i>
+    }
+</ng-template>

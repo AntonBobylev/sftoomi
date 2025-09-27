@@ -1,52 +1,30 @@
 let ruDictionary: object =  {
     add: 'Добавить',
-    clear: 'Очистить',
-    date: 'Дата',
-    dob: 'ДР',
     dob_full: 'Дата рождения',
-    doctor: 'Доктор',
     edit: 'Редактировать',
     error: 'Ошибка',
-    exam_id: 'ID исследования',
-    examination: 'Обследование',
-    examinations: 'Обследования',
-    facility: 'Учреждение',
-    filters: 'Фильтры',
     first_name: 'Имя',
-    full_name: 'Полное имя',
     id: 'ID',
     information: 'Информация',
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
-    not_set: 'Не установлено',
-    on_offline_message: 'В данный момент вы не в сети, пожалуйста, установите Интернет соединение',
-    patient: 'Пациент',
+    ok: 'OK',
     phone: 'Телефон',
     refresh: 'Обновить',
     remove: 'Удалить',
     save: 'Сохранить',
-    search: 'Поиск',
     select_all: 'Выбрать всё',
-    short_name: 'Короткое имя',
-    staff: 'Персонал',
-    studies: 'Исследования',
-    study: 'Исследование',
     switch_language: 'Изменить язык',
-    switch_theme: 'Поменять тему',
-    today: 'Сегодня',
     warning: 'Внимание',
 
     navigation: {
-        doctors: 'Доктора',
-        facilities: 'Учреждения',
         home: 'Домашняя',
         patients: 'Пациенты',
-        processing: 'Процессинг',
-        setup: 'Настройка',
-        studies: 'Исследования',
-        template: 'Шаблон',
-        templates: 'Шаблоны'
+        setup: {
+            caption: 'Настройка',
+            referring_facilities: 'Направляющие учреждения'
+        }
     },
 
     views: {
@@ -57,113 +35,17 @@ let ruDictionary: object =  {
             },
             phone_column_header_tooltip: 'Сотовый номер пациента'
         },
-        processing: {
-            add_examination: 'Добавление обследования',
-            edit_examination: 'Редактирование обследования #{0}',
-            no_examination_message: 'Обследования не найдены',
-            dialog: {
-                no_studies_added_tip: 'Вы должны добавить хотя бы одно исследование, чтобы сохранить обследование'
-            },
-            filters: {
-                examination_id: 'ID обследования'
-            }
+        home: {
+            greetings_label: 'Добро пожаловать в SFTOOMI!'
         },
-        facilities: {
-            table: {
-                columns: {
-                    doctors: 'Доктора'
-                }
-            },
-            dialog: {
-                add_title: 'Добавление учреждения',
-                edit_title: 'Редактирование учреждения #{0}',
-                tabs: {
-                    common: {
-                        title: 'Общее'
-                    },
-                    doctors: {
-                        title: 'Доктора'
-                    }
-                }
-            }
-        },
-        doctors: {
-            table: {
-                columns: {
-                    facilities: 'Учреждения'
-                }
-            },
-            dialog: {
-                add_title: 'Добавление доктора',
-                edit_title: 'Редактирование доктора #{0}',
-
-                tabs: {
-                    common: {
-                        title: 'Общее'
-                    },
-                    facilities: {
-                        title: 'Учреждения'
-                    }
-                }
-            }
-        },
-        studies: {
-            table: {
-                columns: {
-                    study_cpts: 'CPT коды'
-                }
-            },
-            dialog: {
-                add_title: 'Добавление исследования',
-                cpts: 'CPT коды',
-                edit_title: 'Редактирование исследования #{0}'
-            }
-        },
-        template: {
-            code_editor: {
-                placeholder: 'Напишите код шаблона здесь...'
-            }
-        },
-        templates: {
-            dialog: {
-                add_title: 'Добавить шаблон',
-                edit_title: 'Редактировать шаблон #{0}',
-                name: 'Имя'
-            },
-            table: {
-                columns: {
-                    name: 'Имя'
-                }
-            }
-        }
-    },
-
-    fields: {
-        item_selector: {
-            available: 'Возможное',
-            move_all_left: 'Переместить всё влево',
-            move_all_right: 'Переместить всё вправо',
-            move_left: 'Переместить влево',
-            move_right: 'Переместить вправо',
-            selected: 'Выбранное'
-        },
-        remote_select: {
-            tip: 'Наберите минимальное количество символов: {0}'
-        },
-        studies: {
-            add_study: 'Добавить исследование'
-        }
     },
 
     validators: {
+        phone_number_is_invalid: 'Неверный номер телефона',
         field_required: 'Это обязательное поле!',
         max_length: 'Максимально разрешенная длина — {0}',
         min_length: 'Минимально разрешенная длина — {0}',
         only_letters_allowed: 'Разрешены только буквы'
-    },
-
-    home: {
-        greetings_label: 'Добро пожаловать в SFTOOMI!'
     },
 
     popup: {

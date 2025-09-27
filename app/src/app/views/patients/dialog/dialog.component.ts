@@ -13,6 +13,7 @@ import PatientDemographicsTemplateComponent from '../../../components/templates/
 import getPatientAPI from '../../../APIs/getPatientAPI';
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
+import phoneValidator from '../../../validators/phone.validator';
 
 export type PatientEditDialogData = {
     id?: number
@@ -43,7 +44,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()]),
         dob:         new FormControl<Date   | null>(null),
-        phone:       new FormControl<string | null>(null, [Validators.maxLength(16)])
+        phone:       new FormControl<string | null>(null, [phoneValidator()])
     });
 
     protected afterLoad(data: getPatientAPI): void
