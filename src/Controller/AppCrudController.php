@@ -68,8 +68,10 @@ abstract class AppCrudController extends SftoomiController
     /**
      * @throws Exception
      */
-    public function save(Request $request, array $values): array
+    public function save(Request $request, array $values, array $requiredFields = []): array
     {
+        $this->assertAllRequiredFieldsSet($requiredFields, $values);
+
         $id = $request->request->get("id");
 
         $connection = $this->entityManager->getConnection();
@@ -104,7 +106,7 @@ abstract class AppCrudController extends SftoomiController
         $ids = $request->request->get("ids");
 
         if (empty($ids)) {
-            throw new RuntimeException("At least one id is required for removal operation");
+            throw new RuntimeException("At least one ID is required for removal operation");
         }
 
         $ids = explode(",", $ids);
@@ -115,5 +117,28 @@ abstract class AppCrudController extends SftoomiController
         }
 
         $this->entityManager->flush();
+    }
+
+    protected function assertAllRequiredFieldsSet(array $requiredFields, array $values): void
+    {
+        if (empty($requiredFields)) {
+            return;
+        }
+
+        if (empty($values)) {
+            throw new \InvalidArgumentException(sprintf(
+                "Required fields for the operation: %s",
+                implode(", ", $requiredFields)
+            ));
+        }
+
+        foreach ($requiredFields as $field) {
+            if (empty($values[$field])) {
+                throw new \InvalidArgumentException(sprintf(
+                    "Field %s is required",
+                    $field
+                ));
+            }
+        }
     }
 }

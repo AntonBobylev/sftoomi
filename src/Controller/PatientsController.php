@@ -63,10 +63,26 @@ final class PatientsController extends AppCrudController
             "dob"         => Fetcher::date($request->request->get("dob"))
         ];
 
-        $id = $this->save($request, $values)["id"];
+        if (!empty($values["last_name"])) {
+            $values["last_name"] = strtoupper($values["last_name"]);
+        }
+
+        if (!empty($values["first_name"])) {
+            $values["first_name"] = strtoupper($values["first_name"]);
+        }
+
+        if (!empty($values["middle_name"])) {
+            $values["middle_name"] = strtoupper($values["middle_name"]);
+        }
+
+        $result = $this->save(
+            $request,
+            $values,
+            ["last_name", "first_name"]
+        );
 
         return new JsonResponse([
-            "id" => $id
+            "id" => $result["id"]
         ]);
 
     }
