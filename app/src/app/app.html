@@ -45,5 +45,11 @@
         >
             {{ Sftoomi.Translator.translate('navigation.setup.referring_facilities') }}
         </li>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.REFERRING_DOCTORS"
+        >
+            {{ Sftoomi.Translator.translate('navigation.setup.referring_doctors') }}
+        </li>
     </ul>
 </nz-dropdown-menu>
