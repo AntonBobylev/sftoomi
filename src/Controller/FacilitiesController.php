@@ -86,17 +86,24 @@ final class FacilitiesController extends AppCrudController
         try {
             $this->connection->beginTransaction();
 
-            $id = $this->save($request, $values)["id"];
+            $data = $this->save(
+                $request,
+                $values,
+                [
+                    "short_name",
+                    "full_name"
+                ]
+            );
 
             $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"), []);
 
-            $this->connection->delete("facilities_doctors", ["facility_id" => $id]);
+            $this->connection->delete("facilities_doctors", ["facility_id" => $data["id"]]);
             foreach ($facilityDoctorIds as $doctorId) {
                 $this->connection->insert(
                     "facilities_doctors",
                     [
                         "doctor_id"   => $doctorId,
-                        "facility_id" => $id
+                        "facility_id" => $data["id"]
                     ]
                 );
             }
@@ -107,7 +114,7 @@ final class FacilitiesController extends AppCrudController
         $this->connection->commit();
 
         return new JsonResponse([
-            "id" => $id
+            "id" => $data["id"]
         ]);
     }
 
