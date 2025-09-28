@@ -73,7 +73,7 @@ export default class ReferringDoctorsTableComponent extends AppTableComponent
                 );
             });
 
-            return '<div>'+ lines.concat() +'</div>';
+            return `<div>${lines.join('')}</div>`;
         }
     }];
 
