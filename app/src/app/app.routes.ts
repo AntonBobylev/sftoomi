@@ -11,7 +11,7 @@ const BASE_TITLE = 'SFTOOMI :: ';
 export enum RoutesPaths {
     HOME = '',
     PATIENTS = 'patients',
-    REFERRING_FACILITES = 'referring-facilities'
+    REFERRING_FACILITIES = 'referring-facilities'
 }
 
 export const routes: Routes = [{
@@ -23,7 +23,7 @@ export const routes: Routes = [{
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.patients'),
     component: PatientsComponent
 }, {
-    path: RoutesPaths.REFERRING_FACILITES,
+    path: RoutesPaths.REFERRING_FACILITIES,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.referring_facilities'),
     component: ReferringFacilitiesComponent
 }];
