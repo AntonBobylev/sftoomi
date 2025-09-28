@@ -44,6 +44,7 @@ let ruDictionary: object =  {
         referring_facilities: {
             dialog: {
                 add_title: 'Добавление направляющего учреждения',
+                doctors: 'Врачи',
                 edit_title: 'Редактирование направляющего учреждения #{0}',
                 width: 500
             }
