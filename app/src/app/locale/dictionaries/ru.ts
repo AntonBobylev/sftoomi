@@ -57,6 +57,17 @@ let ruDictionary: object =  {
         }
     },
 
+    fields: {
+        item_selector: {
+            available: 'Доступно',
+            move_all_left: 'Переместить все влево',
+            move_all_right: 'Переместить все вправо',
+            move_left: 'Переместить влево',
+            move_right: 'Переместить вправо',
+            selected: 'Выбрано'
+        }
+    },
+
     validators: {
         phone_number_is_invalid: 'Неверный номер телефона',
         field_required: 'Это обязательное поле!',

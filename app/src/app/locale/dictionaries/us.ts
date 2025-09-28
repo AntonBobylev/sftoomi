@@ -57,6 +57,17 @@ let usDictionary: object =  {
         }
     },
 
+    fields: {
+        item_selector: {
+            available: 'Available',
+            move_all_left: 'Move all left',
+            move_all_right: 'Move all right',
+            move_left: 'Move left',
+            move_right: 'Move right',
+            selected: 'Selected'
+        }
+    },
+
     validators: {
         phone_number_is_invalid: 'Phone number is invalid',
         field_required: 'This field is required',

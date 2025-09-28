@@ -1,0 +1,53 @@
+<div class="field-wrapper">
+    @if (label) {
+        <nz-form-label [nzRequired]="required">
+            {{ label }}
+        </nz-form-label>
+    }
+    <div class="wrapper">
+        <app-item-selector-data-list #left
+                                     [title]="Sftoomi.Translator.translate('fields.item_selector.available')"
+        />
+        <div class="action-buttons-wrapper">
+            <button nz-button
+                    nzType="primary"
+                    nzShape="round"
+                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_all_right')"
+                    (click)="onMoveAllRightClick()"
+            >
+                <nz-icon nzType="double-right" />
+            </button>
+
+            <button nz-button
+                    nzType="primary"
+                    nzShape="round"
+                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_right')"
+                    (click)="onMoveRightClick()"
+            >
+                <nz-icon nzType="right" />
+            </button>
+
+            <button nz-button
+                    nzType="primary"
+                    nzShape="round"
+                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_left')"
+                    (click)="onMoveLeftClick()"
+            >
+                <nz-icon nzType="left" />
+            </button>
+
+            <button nz-button
+                    nzType="primary"
+                    nzShape="round"
+                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_all_left')"
+                    (click)="onMoveAllLeftClick()"
+            >
+                <nz-icon nzType="double-left" />
+            </button>
+        </div>
+
+        <app-item-selector-data-list #right
+                                     [title]="Sftoomi.Translator.translate('fields.item_selector.selected')"
+        />
+    </div>
+</div>

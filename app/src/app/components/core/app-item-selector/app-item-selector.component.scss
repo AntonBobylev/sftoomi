@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    app-item-selector-data-list {
+        width: 50%;
+        max-height: 200px;
+    }
+
+    .action-buttons-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}
