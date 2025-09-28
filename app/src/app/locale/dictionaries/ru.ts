@@ -10,6 +10,7 @@ let ruDictionary: object =  {
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
+    not_set: 'Не установлено',
     ok: 'OK',
     phone: 'Телефон',
     refresh: 'Обновить',
@@ -50,6 +51,14 @@ let ruDictionary: object =  {
             }
         },
         referring_doctors: {
+            table: {
+                columns: {
+                    facilities: {
+                        caption: 'Учреждения',
+                        tooltip: 'Учреждения, в которых состоит врач'
+                    }
+                },
+            },
             dialog: {
                 add_title: 'Добавление направляющего врача',
                 edit_title: 'Редактирование направляющего врача #{0}',

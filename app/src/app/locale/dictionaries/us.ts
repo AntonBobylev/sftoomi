@@ -10,6 +10,7 @@ let usDictionary: object =  {
     last_name: 'Last name',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
+    not_set: 'Not set',
     ok: 'OK',
     phone: 'Phone',
     refresh: 'Refresh',
@@ -50,6 +51,14 @@ let usDictionary: object =  {
             }
         },
         referring_doctors: {
+            table: {
+                columns: {
+                    facilities: {
+                        caption: 'Facilities',
+                        tooltip: 'Current doctor assigned facilities'
+                    }
+                },
+            },
             dialog: {
                 add_title: 'Add referring doctor',
                 edit_title: 'Edit referring doctor #{0}',
