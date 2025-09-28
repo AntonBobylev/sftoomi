@@ -59,7 +59,9 @@
                              [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
                         >
                             @if (column.rawHtml) {
-                                <span [innerHTML]="row[column.name] | safe"></span>
+                                <span [innerHTML]="row[column.name] | safe"
+                                      style="max-height: 100px; overflow: auto; width: 100%;"
+                                ></span>
                             } @else {
                                 {{ row[column.name] }}
                             }
