@@ -5,6 +5,7 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import ReferringDoctorsTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
@@ -52,5 +53,5 @@ export default class ReferringDoctorsTableComponent extends AppTableComponent
 
     protected override readonly loadUrl: string = '/getDoctors';
 
-    // protected override readonly toolbar: any | undefined = ReferringFacilitiesTableToolbarComponent;
+    protected override readonly toolbar: any | undefined = ReferringDoctorsTableToolbarComponent;
 }
