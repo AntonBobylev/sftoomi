@@ -4,7 +4,7 @@ export function onlyLettersValidator(): ValidatorFn
 {
     return (control: AbstractControl) : ValidationErrors | null =>
     {
-        const valid = /^[a-zA-ZА-я\s]*$/.test(control.value);
+        const valid = /^[a-zA-ZА-яёЁ\s]*$/.test(control.value);
 
         return valid
             ? null
