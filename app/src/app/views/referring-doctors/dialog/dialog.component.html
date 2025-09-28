@@ -1,0 +1,32 @@
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <app-textfield name="last_name"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('last_name')"
+                   [useUppercase]="true"
+    />
+
+    <app-textfield name="first_name"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('first_name')"
+                   [useUppercase]="true"
+    />
+
+    <app-textfield name="middle_name"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('middle_name')"
+                   [useUppercase]="true"
+    />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

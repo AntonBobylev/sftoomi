@@ -6,6 +6,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
+import ReferringDoctorEditDialogComponent, { ReferringDoctorEditDialogData } from '../../dialog/dialog.component';
 
 @Component({
     selector: 'referring-doctors-table-toolbar',
@@ -26,20 +27,20 @@ export default class ReferringDoctorsTableToolbarComponent extends AppBaseToolba
 
     protected openEditDialog(title: string, id?: number): void
     {
-        // const modal = Sftoomi.Dialog.getInstance().create<ReferringFacilityEditDialogComponent, ReferringFacilityEditDialogData>({
-        //     nzTitle: title,
-        //     nzContent: ReferringFacilityEditDialogComponent,
-        //     nzViewContainerRef: this.viewContainerRef,
-        //     nzMaskClosable: false,
-        //     nzCentered: true,
-        //     nzWidth: parseInt(Sftoomi.Translator.translate('views.referring_doctors.dialog.width')),
-        //     nzData: { id: id }
-        // });
-        //
-        // modal.afterClose.subscribe((isSaved: boolean = false): void => {
-        //     if (isSaved) {
-        //         this.table.refresh();
-        //     }
-        // });
+        const modal = Sftoomi.Dialog.getInstance().create<ReferringDoctorEditDialogComponent, ReferringDoctorEditDialogData>({
+            nzTitle: title,
+            nzContent: ReferringDoctorEditDialogComponent,
+            nzViewContainerRef: this.viewContainerRef,
+            nzMaskClosable: false,
+            nzCentered: true,
+            nzWidth: parseInt(Sftoomi.Translator.translate('views.referring_doctors.dialog.width')),
+            nzData: { id: id }
+        });
+
+        modal.afterClose.subscribe((isSaved: boolean = false): void => {
+            if (isSaved) {
+                this.table.refresh();
+            }
+        });
     }
 }

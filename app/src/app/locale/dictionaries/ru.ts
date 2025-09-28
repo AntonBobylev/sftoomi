@@ -47,6 +47,13 @@ let ruDictionary: object =  {
                 edit_title: 'Редактирование направляющего учреждения #{0}',
                 width: 500
             }
+        },
+        referring_doctors: {
+            dialog: {
+                add_title: 'Добавление направляющего врача',
+                edit_title: 'Редактирование направляющего врача #{0}',
+                width: 500
+            }
         }
     },
 
