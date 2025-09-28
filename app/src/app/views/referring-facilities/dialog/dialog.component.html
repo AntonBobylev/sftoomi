@@ -1,0 +1,24 @@
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <app-textfield name="short_name"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('short_name')"
+    />
+
+    <app-textfield name="full_name"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('full_name')"
+    />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

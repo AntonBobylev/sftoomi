@@ -33,7 +33,7 @@ let usDictionary: object =  {
         patients: {
             dialog: {
                 add_title: 'Add patient',
-                edit_title: 'Edit patient #{0}'
+                edit_title: 'Edit patient #{0}',
             },
             phone_column_header_tooltip: 'Patient\'s cell phone'
         },
@@ -42,8 +42,9 @@ let usDictionary: object =  {
         },
         referring_facilities: {
             dialog: {
-                add_title: 'Add referring facilities',
-                edit_title: 'Edit referring facility #{0}'
+                add_title: 'Add referring facility',
+                edit_title: 'Edit referring facility #{0}',
+                width: 400
             }
         }
     },

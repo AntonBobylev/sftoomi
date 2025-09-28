@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
 
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import ReferringFacilityEditDialogComponent, { ReferringFacilityEditDialogData } from '../../dialog/dialog.component';
 
 @Component({
     selector: 'referring-facilities-table-toolbar',
@@ -27,13 +28,13 @@ export default class ReferringFacilitiesTableToolbarComponent extends AppBaseToo
 
     protected openEditDialog(title: string, id?: number): void
     {
-        /*const modal = Sftoomi.Dialog.getInstance().create<PatientEditDialogComponent, PatientEditDialogData>({
+        const modal = Sftoomi.Dialog.getInstance().create<ReferringFacilityEditDialogComponent, ReferringFacilityEditDialogData>({
             nzTitle: title,
-            nzContent: PatientEditDialogComponent,
+            nzContent: ReferringFacilityEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
-            nzWidth: 400,
+            nzWidth: parseInt(Sftoomi.Translator.translate('views.referring_facilities.dialog.width')),
             nzData: { id: id }
         });
 
@@ -41,6 +42,6 @@ export default class ReferringFacilitiesTableToolbarComponent extends AppBaseToo
             if (isSaved) {
                 this.table.refresh();
             }
-        });*/
+        });
     }
 }
