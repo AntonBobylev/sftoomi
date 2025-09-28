@@ -7,10 +7,11 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 
+import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 
 import getFacilityAPI from '../../../APIs/getFacilityAPI';
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 
 export type ReferringFacilityEditDialogData = {
     id?: number
