@@ -43,6 +43,14 @@ let ruDictionary: object =  {
             greetings_label: 'Добро пожаловать в SFTOOMI!'
         },
         referring_facilities: {
+            table: {
+                columns: {
+                    doctors: {
+                        caption: 'Врачи',
+                        tooltip: 'Врачи, которые привязаны к учреждению'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Добавление направляющего учреждения',
                 doctors: 'Врачи',
@@ -57,7 +65,7 @@ let ruDictionary: object =  {
                         caption: 'Учреждения',
                         tooltip: 'Учреждения, в которых состоит врач'
                     }
-                },
+                }
             },
             dialog: {
                 add_title: 'Добавление направляющего врача',

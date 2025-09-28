@@ -43,6 +43,14 @@ let usDictionary: object =  {
             greetings_label: 'Welcome to the SFTOOMI application!'
         },
         referring_facilities: {
+            table: {
+                columns: {
+                    doctors: {
+                        caption: 'Doctors',
+                        tooltip: 'Doctors assigned to the facility'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Add referring facility',
                 doctors: 'Doctors',
@@ -55,9 +63,9 @@ let usDictionary: object =  {
                 columns: {
                     facilities: {
                         caption: 'Facilities',
-                        tooltip: 'Current doctor assigned facilities'
+                        tooltip: 'Facilities to which the doctor is assigned'
                     }
-                },
+                }
             },
             dialog: {
                 add_title: 'Add referring doctor',
