@@ -64,15 +64,15 @@ final class PatientsController extends AppCrudController
         ];
 
         if (!empty($values["last_name"])) {
-            $values["last_name"] = strtoupper($values["last_name"]);
+            $values["last_name"] = mb_strtoupper($values["last_name"]);
         }
 
         if (!empty($values["first_name"])) {
-            $values["first_name"] = strtoupper($values["first_name"]);
+            $values["first_name"] = mb_strtoupper($values["first_name"]);
         }
 
         if (!empty($values["middle_name"])) {
-            $values["middle_name"] = strtoupper($values["middle_name"]);
+            $values["middle_name"] = mb_strtoupper($values["middle_name"]);
         }
 
         $result = $this->save(

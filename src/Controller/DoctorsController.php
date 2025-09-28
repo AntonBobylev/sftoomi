@@ -84,9 +84,29 @@ final class DoctorsController extends AppCrudController
             "middle_name" => Fetcher::trim($request->request->get("middle_name"))
         ];
 
+        if (!empty($values["last_name"])) {
+            $values["last_name"] = mb_strtoupper($values["last_name"]);
+        }
+
+        if (!empty($values["first_name"])) {
+            $values["first_name"] = mb_strtoupper($values["first_name"]);
+        }
+
+        if (!empty($values["middle_name"])) {
+            $values["middle_name"] = mb_strtoupper($values["middle_name"]);
+        }
+
         try {
             $this->connection->beginTransaction();
-            $id = $this->save($request, $values)["id"];
+
+            $result = $this->save(
+                $request,
+                $values,
+                [
+                    "last_name",
+                    "first_name"
+                ]
+            );
 
             $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
 
@@ -94,12 +114,12 @@ final class DoctorsController extends AppCrudController
                 throw new \RuntimeException("Doctor must be assigned at least to one facility");
             }
 
-            $this->connection->delete("facilities_doctors", ["doctor_id" => $id]);
+            $this->connection->delete("facilities_doctors", ["doctor_id" => $result["id"]]);
             foreach ($doctorFacilitiesIds as $facilityId) {
                 $this->connection->insert(
                     "facilities_doctors",
                     [
-                        "doctor_id"   => $id,
+                        "doctor_id"   => $result["id"],
                         "facility_id" => $facilityId
                     ]
                 );
@@ -113,7 +133,7 @@ final class DoctorsController extends AppCrudController
         $this->connection->commit();
 
         return new JsonResponse([
-            "id" => $id
+            "id" => $result["id"]
         ]);
     }
 
