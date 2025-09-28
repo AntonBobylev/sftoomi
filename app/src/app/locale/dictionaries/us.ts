@@ -4,17 +4,19 @@ let usDictionary: object =  {
     edit: 'Edit',
     error: 'Error',
     first_name: 'First name',
+    full_name: 'Full name',
     id: 'ID',
     information: 'Information',
     last_name: 'Last name',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
-    ok: 'Ok',
+    ok: 'OK',
     phone: 'Phone',
     refresh: 'Refresh',
     remove: 'Remove',
     save: 'Save',
     select_all: 'Select all',
+    short_name: 'Short name',
     switch_language: 'Switch language',
     warning: 'Warning',
 
@@ -39,7 +41,10 @@ let usDictionary: object =  {
             greetings_label: 'Welcome to the SFTOOMI application!'
         },
         referring_facilities: {
-
+            dialog: {
+                add_title: 'Add referring facilities',
+                edit_title: 'Edit referring facility #{0}'
+            }
         }
     },
 

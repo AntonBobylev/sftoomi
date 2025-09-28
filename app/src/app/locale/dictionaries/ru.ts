@@ -4,6 +4,7 @@ let ruDictionary: object =  {
     edit: 'Редактировать',
     error: 'Ошибка',
     first_name: 'Имя',
+    full_name: 'Полное имя',
     id: 'ID',
     information: 'Информация',
     last_name: 'Фамилия',
@@ -15,6 +16,7 @@ let ruDictionary: object =  {
     remove: 'Удалить',
     save: 'Сохранить',
     select_all: 'Выбрать всё',
+    short_name: 'Сокращенное имя',
     switch_language: 'Изменить язык',
     warning: 'Внимание',
 
@@ -38,6 +40,12 @@ let ruDictionary: object =  {
         home: {
             greetings_label: 'Добро пожаловать в SFTOOMI!'
         },
+        referring_facilities: {
+            dialog: {
+                add_title: 'Добавление направляющего учреждения',
+                edit_title: 'Редактирование направляющего учреждения #{0}'
+            }
+        }
     },
 
     validators: {
