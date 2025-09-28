@@ -58,7 +58,11 @@
                              [ngStyle]="column.dataCell?.extraStyles ?? null"
                              [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
                         >
-                            {{ row[column.name] }}
+                            @if (column.rawHtml) {
+                                <span [innerHTML]="row[column.name] | safe"></span>
+                            } @else {
+                                {{ row[column.name] }}
+                            }
                         </div>
                     </td>
                 }

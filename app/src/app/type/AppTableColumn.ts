@@ -2,6 +2,7 @@ type AppTableColumn = {
     name: string,
     resizable?: boolean,
     valueRenderer?: Function,
+    rawHtml?: boolean,
     width?: string,
     header: {
         caption: string,
