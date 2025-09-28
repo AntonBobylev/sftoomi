@@ -19,11 +19,16 @@
                    [useUppercase]="true"
     />
 
+    <app-item-selector #facilitiesItemSelectorCtrl
+                       [label]="Sftoomi.Translator.translate('views.referring_doctors.dialog.facilities')"
+                       [required]="true"
+    />
+
     <div *nzModalFooter>
         <button nz-button
                 nzType="primary"
                 nzShape="round"
-                [disabled]="form.invalid"
+                [disabled]="isSaveButtonDisabled()"
                 (click)="save()"
         >
             {{ Sftoomi.Translator.translate('save') }}

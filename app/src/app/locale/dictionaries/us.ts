@@ -52,6 +52,7 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add referring doctor',
                 edit_title: 'Edit referring doctor #{0}',
+                facilities: 'Facilities',
                 width: 400
             }
         }
