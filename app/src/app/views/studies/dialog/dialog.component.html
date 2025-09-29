@@ -11,7 +11,8 @@
                    [label]="Sftoomi.Translator.translate('full_name')"
     />
 
-    <app-combo name="study_cpts"
+    <app-combo #studyCptsCtrl
+               name="study_cpts"
                [form]="form"
                label="CPTs"
                remoteUrl="/lookupCpt"

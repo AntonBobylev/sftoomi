@@ -58,7 +58,7 @@ final class StudiesController extends AppCrudController
                     where id = $studyId";
             $study = $this->connection->fetchAssociative($sql);
 
-            $sql = "select cpts.id, cpts.code as name, cpts.full_name as tooltip
+            $sql = "select cpts.id as value, concat('(', cpts.code, '): ', cpts.short_name) as caption
                     from studies_cpts scpts
                         left join cpts on cpts.id = scpts.cpt_id
                     where scpts.study_id = $studyId";
