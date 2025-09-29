@@ -148,7 +148,7 @@ final class StudiesController extends AppCrudController
         }
 
         $excludeIds = $request->request->get("exclude_ids");
-        $sql = "select id, code as name, full_name as tooltip
+        $sql = "select id as value, concat('(', code, '): ', short_name) as caption
                 from cpts
                 where (short_name like '%$query%' or full_name like '%$query%' or code like '%$query%')";
         if (!empty($excludeIds)) {
