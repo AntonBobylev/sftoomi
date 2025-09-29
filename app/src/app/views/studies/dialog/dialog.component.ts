@@ -8,6 +8,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppComboComponent from '../../../components/core/app-combo/app-combo.component';
 
 import getStudyAPI from '../../../APIs/getStudyAPI';
 
@@ -21,7 +22,7 @@ export type StudiesEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent
+        AppTextfieldComponent, AppComboComponent
     ],
     styleUrl: './dialog.component.scss'
 })
@@ -37,7 +38,8 @@ export default class StudiesEditDialogComponent extends AppBaseEditDialog
 
     protected readonly form: FormGroup = new FormGroup({
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),
-        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required])
+        full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),
+        study_cpts: new FormControl<number[] | null>(null, [Validators.required])
     });
 
     protected afterLoad(data: getStudyAPI): void

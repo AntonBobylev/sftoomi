@@ -11,7 +11,13 @@
                    [label]="Sftoomi.Translator.translate('full_name')"
     />
 
-    // TODO: add cpts remote combo
+    <app-combo name="study_cpts"
+               [form]="form"
+               label="CPTs"
+               remoteUrl="/lookupCpt"
+               [useClear]="true"
+               [multiple]="true"
+    />
 
     <div *nzModalFooter>
         <button nz-button
