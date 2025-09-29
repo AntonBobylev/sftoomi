@@ -10,7 +10,7 @@ let usDictionary: object =  {
     last_name: 'Last name',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
-    not_set: 'Not set',
+    not_set_tip: '(not set)',
     ok: 'OK',
     phone: 'Phone',
     refresh: 'Refresh',

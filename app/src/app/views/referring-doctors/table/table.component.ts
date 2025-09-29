@@ -61,7 +61,7 @@ export default class ReferringDoctorsTableComponent extends AppTableComponent
         rawHtml: true,
         valueRenderer: (facilities: getDoctorsAPI['data'][0]['doctor_facilities']): string => {
             if (Sftoomi.isEmpty(facilities)) {
-                return Sftoomi.Translator.translate('not_set');
+                return Sftoomi.Translator.translate('not_set_tip');
             }
 
             let lines: string[] = [];

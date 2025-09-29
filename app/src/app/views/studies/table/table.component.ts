@@ -58,7 +58,7 @@ export default class StudiesTableComponent extends AppTableComponent
         rawHtml: true,
         valueRenderer: (cpts: getStudiesAPI['data'][0]['study_cpts']): string => {
             if (Sftoomi.isEmpty(cpts)) {
-                return Sftoomi.Translator.translate('not_set');
+                return Sftoomi.Translator.translate('not_set_tip');
             }
 
             let lines: string[] = [];

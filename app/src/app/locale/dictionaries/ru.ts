@@ -10,7 +10,7 @@ let ruDictionary: object =  {
     last_name: 'Фамилия',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
-    not_set: 'Не установлено',
+    not_set_tip: '(не установлено)',
     ok: 'OK',
     phone: 'Телефон',
     refresh: 'Обновить',
