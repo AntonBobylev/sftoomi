@@ -1,0 +1,11 @@
+{
+    "doctor": {
+        "idField": "id",
+        "references": {
+            "facilities_doctors": {
+                "idField": "doctor_id",
+                "onDelete": "update"
+            }
+        }
+    }
+}

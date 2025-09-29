@@ -11,7 +11,8 @@ class App
     public static function getVars(): ParameterBagInterface
     {
         return new ParameterBag([
-            "templates_dir" => __DIR__ . "/../templates"
+            "templates_dir"                    => __DIR__ . "/../templates",
+            "entities_relationships_file_path" => __DIR__ . "/../config/entities-relationships.json"
         ]);
     }
 
