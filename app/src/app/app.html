@@ -51,5 +51,11 @@
         >
             {{ Sftoomi.Translator.translate('navigation.setup.referring_doctors') }}
         </li>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.STUDIES"
+        >
+            {{ Sftoomi.Translator.translate('navigation.setup.studies') }}
+        </li>
     </ul>
 </nz-dropdown-menu>

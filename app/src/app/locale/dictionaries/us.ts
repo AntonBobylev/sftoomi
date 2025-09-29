@@ -26,8 +26,9 @@ let usDictionary: object =  {
         patients: 'Patients',
         setup: {
             caption: 'Setup',
+            referring_doctors: 'Referring doctors',
             referring_facilities: 'Referring facilities',
-            referring_doctors: 'Referring doctors'
+            studies: 'Studies'
         }
     },
 

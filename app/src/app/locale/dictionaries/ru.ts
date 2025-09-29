@@ -26,8 +26,9 @@ let ruDictionary: object =  {
         patients: 'Пациенты',
         setup: {
             caption: 'Настройка',
+            referring_doctors: 'Направляющие доктора',
             referring_facilities: 'Направляющие учреждения',
-            referring_doctors: 'Направляющие доктора'
+            studies: 'Обследования'
         }
     },
 
