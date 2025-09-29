@@ -38,6 +38,9 @@ export default class StudiesTableComponent extends AppTableComponent
         width: '200px',
         header: {
             caption: Sftoomi.Translator.translate('short_name')
+        },
+        dataCell: {
+            tooltipRenderer: (row: getStudiesAPI['data'][0]): string => row.short_name
         }
     }, {
         name: 'full_name',
@@ -48,8 +51,8 @@ export default class StudiesTableComponent extends AppTableComponent
     }, {
         name: 'study_cpts',
         header: {
-            caption: Sftoomi.Translator.translate('full_name'),
-            tooltipRenderer: (): string => 'CPT codes assigned to the current study'
+            caption: Sftoomi.Translator.translate('views.studies.table.columns.cpts.caption'),
+            tooltipRenderer: (): string => Sftoomi.Translator.translate('views.studies.table.columns.cpts.tooltip')
         },
         rawHtml: true,
         valueRenderer: (cpts: getStudiesAPI['data'][0]['study_cpts']): string => {

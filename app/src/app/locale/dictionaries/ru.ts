@@ -74,6 +74,16 @@ let ruDictionary: object =  {
                 facilities: 'Учреждения',
                 width: 500
             }
+        },
+        studies: {
+            table: {
+                columns: {
+                    cpts: {
+                        caption: 'CPT',
+                        tooltip: 'CPT коды, которые привязаны к текущему обследованию'
+                    }
+                }
+            }
         }
     },
 

@@ -74,6 +74,16 @@ let usDictionary: object =  {
                 facilities: 'Facilities',
                 width: 400
             }
+        },
+        studies: {
+            table: {
+                columns: {
+                    cpts: {
+                        caption: 'CPTs',
+                        tooltip: 'CPT codes assigned to the current study'
+                    }
+                }
+            }
         }
     },
 
