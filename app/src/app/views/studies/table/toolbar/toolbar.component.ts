@@ -7,6 +7,8 @@ import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
 
+import StudiesEditDialogComponent, { StudiesEditDialogData } from '../../dialog/dialog.component';
+
 @Component({
     selector: 'studies-table-toolbar',
     templateUrl: './toolbar.component.html',
@@ -26,9 +28,9 @@ export default class StudiesTableToolbarComponent extends AppBaseToolbar
 
     protected openEditDialog(title: string, id?: number): void
     {
-        /*const modal = Sftoomi.Dialog.getInstance().create<ReferringFacilityEditDialogComponent, ReferringFacilityEditDialogData>({
+        const modal = Sftoomi.Dialog.getInstance().create<StudiesEditDialogComponent, StudiesEditDialogData>({
             nzTitle: title,
-            nzContent: ReferringFacilityEditDialogComponent,
+            nzContent: StudiesEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
@@ -40,6 +42,6 @@ export default class StudiesTableToolbarComponent extends AppBaseToolbar
             if (isSaved) {
                 this.table.refresh();
             }
-        });*/
+        });
     }
 }

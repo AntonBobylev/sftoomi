@@ -83,6 +83,11 @@ let usDictionary: object =  {
                         tooltip: 'CPT codes assigned to the current study'
                     }
                 }
+            },
+            dialog: {
+                add_title: 'Add study',
+                edit_title: 'Edit study #{0}',
+                width: 400
             }
         }
     },
