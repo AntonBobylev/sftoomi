@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Repository\DoctorRepository;
 use Doctrine\DBAL\Exception;
@@ -141,17 +142,15 @@ final class DoctorsController extends AppCrudController
      * @throws Exception
      */
     #[Route("/removeDoctor", name: "remove_doctor")]
-    public function removeDoctor(DoctorRepository $doctorRepository, Request $request): Response
+    public function removeDoctor(Request $request): Response
     {
         $ids = Fetcher::intArray($request->request->get("ids"), []);
 
         try {
             $this->connection->beginTransaction();
-            foreach ($ids as $id) {
-                $this->connection->delete("facilities_doctors", ["doctor_id" => $id]);
-            }
 
-            $this->remove($doctorRepository, $request);
+            new EntityManipulator($this->connection)
+                ->remove($this->baseTable, $ids);
         } catch (\Exception $e) {
             $this->connection->rollback();
 
