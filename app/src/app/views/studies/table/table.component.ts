@@ -5,6 +5,7 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import StudiesTableToolbarComponent from './toolbar/toolbar.component';
 
 import getStudiesAPI from '../../../APIs/getStudiesAPI';
 
@@ -75,5 +76,5 @@ export default class StudiesTableComponent extends AppTableComponent
 
     protected override readonly loadUrl: string = '/getStudies';
 
-    // protected override readonly toolbar: any | undefined = ReferringFacilitiesTableToolbarComponent;
+    protected override readonly toolbar: any | undefined = StudiesTableToolbarComponent;
 }
