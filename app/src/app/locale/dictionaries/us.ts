@@ -34,6 +34,14 @@ let usDictionary: object =  {
     },
 
     views: {
+        examinations: {
+            table: {
+                columns: {
+                    patient: 'Patient',
+                    studies: 'Studies'
+                }
+            }
+        },
         patients: {
             dialog: {
                 add_title: 'Add patient',

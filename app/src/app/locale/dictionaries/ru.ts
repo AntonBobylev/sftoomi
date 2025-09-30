@@ -34,6 +34,14 @@ let ruDictionary: object =  {
     },
 
     views: {
+        examinations: {
+            table: {
+                columns: {
+                    patient: 'Пациент',
+                    studies: 'Обследования'
+                }
+            }
+        },
         patients: {
             dialog: {
                 add_title: 'Добавление пациента',
