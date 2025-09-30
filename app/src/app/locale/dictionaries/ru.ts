@@ -1,6 +1,7 @@
 let ruDictionary: object =  {
     add: 'Добавить',
     dob_full: 'Дата рождения',
+    dob_short: 'ДР',
     edit: 'Редактировать',
     error: 'Ошибка',
     first_name: 'Имя',

@@ -1,6 +1,7 @@
 let usDictionary: object =  {
     add: 'Add',
     dob_full: 'Date of birth',
+    dob_short: 'DoB',
     edit: 'Edit',
     error: 'Error',
     first_name: 'First name',
