@@ -1,0 +1,12 @@
+.wrapper {
+    height: 100%;
+    display: flex;
+
+    .filters-wrapper {
+        flex: 1;
+    }
+
+    examinations-table {
+        width: 70%;
+    }
+}
