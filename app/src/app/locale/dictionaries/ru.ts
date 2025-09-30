@@ -44,8 +44,12 @@ let ruDictionary: object =  {
                         facility: 'Учреждение'
                     },
                     patient: 'Пациент',
-                    studies: 'Обследования'
+                    studies: 'Исследования'
                 }
+            },
+            dialog: {
+                add_title: 'Добавление исследования',
+                edit_title: 'Редактирование исследования #{0}',
             }
         },
         patients: {

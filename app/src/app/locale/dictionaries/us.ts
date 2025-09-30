@@ -46,6 +46,10 @@ let usDictionary: object =  {
                     patient: 'Patient',
                     studies: 'Studies'
                 }
+            },
+            dialog: {
+                add_title: 'Add examination',
+                edit_title: 'Edit examination #{0}',
             }
         },
         patients: {

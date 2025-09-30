@@ -5,11 +5,12 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import ExaminationsTableToolbarComponent from './toolbar/toolbar.component';
 import ExaminationsTablePatientColumnComponent from './patient-column/patient-column.component';
 import ExaminationsTableStudiesColumnComponent from './studies-column/studies-column.component';
+import ExaminationsTableReferringColumnComponent from './referring-column/referring-column.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
-import ExaminationsTableReferringColumnComponent from './referring-column/referring-column.component';
 
 @Component({
     selector: 'examinations-table',
@@ -58,5 +59,5 @@ export default class ExaminationsTableComponent extends AppTableComponent
 
     protected override readonly loadUrl: string = '/getExaminations';
 
-    // protected override readonly toolbar: any | undefined = PatientsTableToolbarComponent;
+    protected override readonly toolbar: any | undefined = ExaminationsTableToolbarComponent;
 }
