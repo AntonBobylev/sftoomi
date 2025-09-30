@@ -6,6 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
 import ExaminationsTablePatientColumnComponent from './patient-column/patient-column.component';
+import ExaminationsTableStudiesColumnComponent from './studies-column/studies-column.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
@@ -43,7 +44,8 @@ export default class ExaminationsTableComponent extends AppTableComponent
         name: 'studies',
         header: {
             caption: Sftoomi.Translator.translate('views.examinations.table.columns.studies')
-        }
+        },
+        customColumnComponent: ExaminationsTableStudiesColumnComponent
     }];
 
     protected override readonly loadUrl: string = '/getExaminations';

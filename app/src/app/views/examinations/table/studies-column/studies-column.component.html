@@ -1,0 +1,22 @@
+<div class="wrapper">
+    @for (exam of rowData.studies; track exam.exam_id) {
+        <div class="exam-wrapper">
+            <div class="overflowed-text">
+                <div class="overflowed-text">
+                    <span>{{ Sftoomi.Translator.translate('id') }}:&nbsp;</span>
+                    <span>{{ exam.exam_id }}</span>
+                </div>
+                <div class="overflowed-text"
+                     [nz-tooltip]="exam.full_name"
+                >
+                    <span>{{ exam.short_name }}</span>
+                </div>
+            </div>
+        </div>
+
+        @if (!$last) {
+            <nz-divider style="width: 1px; height: 40px"
+                        nzType="vertical" nzVariant="solid"></nz-divider>
+        }
+    }
+</div>

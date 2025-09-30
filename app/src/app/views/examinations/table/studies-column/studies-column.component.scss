@@ -1,0 +1,18 @@
+.wrapper {
+    display: flex;
+    gap: 10px;
+
+    .exam-wrapper {
+        max-width: 200px;
+    }
+}
+
+.overflowed-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.ant-divider {
+    border-left: 1px solid rgba(0, 0, 0, 0.13);
+}
