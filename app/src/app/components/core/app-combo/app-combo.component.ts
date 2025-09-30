@@ -5,6 +5,7 @@ import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 
 import Sftoomi from '../../../class/Sftoomi';
+import { DialogType } from '../../../class/Dialog';
 
 import AppBaseField from '../app-base-field';
 import Fetcher from '../../../class/Fetcher';
@@ -77,7 +78,7 @@ export default class AppComboComponent extends AppBaseField
                 this.setData(result.data);
             },
             failure: (_code: any, message: any, _request: any): void => {
-                debugger;
+                Sftoomi.Dialog.show(message, DialogType.ERROR);
             },
             finally: (): void => {
                 this.isLoading.set(false);
