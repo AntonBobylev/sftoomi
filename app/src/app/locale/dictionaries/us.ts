@@ -50,6 +50,21 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add examination',
                 edit_title: 'Edit examination #{0}',
+                blocks: {
+                    common: {
+                        header: 'Common',
+                        date: 'Date'
+                    },
+                    patient: {
+                        header: 'Patient'
+                    },
+                    referring: {
+                        header: 'Referring'
+                    },
+                    studies: {
+                        header: 'Studies'
+                    }
+                }
             }
         },
         patients: {

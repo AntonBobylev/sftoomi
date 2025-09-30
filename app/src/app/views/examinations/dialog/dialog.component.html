@@ -1,0 +1,51 @@
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <div class="blocks-row">
+        <div class="blocks-wrapper">
+            <div class="block">
+                <span class="header">
+                    {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.common.header') }}
+                </span>
+
+                <app-datepicker name="date"
+                                [form]="form"
+                                [label]="Sftoomi.Translator.translate('views.examinations.dialog.blocks.common.date')"
+                />
+            </div>
+            <div class="block">
+                <span class="header">
+                    {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.patient.header') }}
+                </span>
+                // TODO: implement
+            </div>
+        </div>
+    </div>
+    <div class="blocks-row">
+        <div class="blocks-wrapper">
+            <div class="block">
+                <span class="header">
+                    {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.referring.header') }}
+                </span>
+                // TODO: implement
+            </div>
+            <div class="block">
+                <span class="header">
+                    {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.studies.header') }}
+                </span>
+                // TODO: implement
+            </div>
+        </div>
+    </div>
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

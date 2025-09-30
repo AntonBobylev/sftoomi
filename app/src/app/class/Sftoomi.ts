@@ -63,6 +63,22 @@ export default class Sftoomi
     }
 
     /**
+     * @param date
+     */
+    public static stringToDate(date?: string | null | Date): Date | null
+    {
+        if (!date) {
+            return null;
+        }
+
+        if (date instanceof Date) {
+            return date
+        }
+
+        return moment(date).toDate();
+    }
+
+    /**
      * Formats line with passed arguments
      * Example:
      *  format: 'Our {0} project called {1}'

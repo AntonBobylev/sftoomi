@@ -7,6 +7,8 @@ import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
 
+import ExaminationEditDialogComponent, { ExaminationEditDialogData } from '../../dialog/dialog.component';
+
 @Component({
     selector: 'examinations-table-toolbar',
     templateUrl: './toolbar.component.html',
@@ -26,13 +28,13 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
 
     protected openEditDialog(title: string, id?: number): void
     {
-        /*const modal = Sftoomi.Dialog.getInstance().create<PatientEditDialogComponent, PatientEditDialogData>({
+        const modal = Sftoomi.Dialog.getInstance().create<ExaminationEditDialogComponent, ExaminationEditDialogData>({
             nzTitle: title,
-            nzContent: PatientEditDialogComponent,
+            nzContent: ExaminationEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
-            nzWidth: 400,
+            nzWidth: 800,
             nzData: { id: id }
         });
 
@@ -40,6 +42,6 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
             if (isSaved) {
                 this.table.refresh();
             }
-        });*/
+        });
     }
 }

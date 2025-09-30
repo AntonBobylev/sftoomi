@@ -98,11 +98,8 @@ final class ProcessingController extends AppCrudController
     {
         $data = [];
 
-        $examinationId = Fetcher::int($request->request->get("examination_id"));
+        $examinationId = Fetcher::int($request->request->get("id"));
         if (isset($examinationId)) {
-            $request->request->set("id", $examinationId);
-            $request->request->remove("examination_id");
-
             $data = $this->getOne(
                 $request,
                 ["id", "patient_id", "facility_id", "doctor_id", "date"]

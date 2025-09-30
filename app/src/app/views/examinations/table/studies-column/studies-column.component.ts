@@ -9,7 +9,7 @@ import ExaminationsTableComponent from '../table.component';
 @Component({
     selector: 'examinations-table-studies-column',
     templateUrl: './studies-column.component.html',
-    styleUrl: './studies-column.component.scss',
+    styleUrl: './studies-column.component.less',
     imports: [NzTooltipDirective, NzDividerComponent]
 })
 

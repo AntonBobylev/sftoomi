@@ -48,8 +48,23 @@ let ruDictionary: object =  {
                 }
             },
             dialog: {
-                add_title: 'Добавление исследования',
-                edit_title: 'Редактирование исследования #{0}',
+                add_title: 'Добавление обследования',
+                edit_title: 'Редактирование обследования #{0}',
+                blocks: {
+                    common: {
+                        header: 'Общее',
+                        date: 'Дата'
+                    },
+                    patient: {
+                        header: 'Пациент'
+                    },
+                    referring: {
+                        header: 'Направление'
+                    },
+                    studies: {
+                        header: 'Исследования'
+                    }
+                }
             }
         },
         patients: {
