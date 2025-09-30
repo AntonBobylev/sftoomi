@@ -58,7 +58,11 @@
                              [ngStyle]="column.dataCell?.extraStyles ?? null"
                              [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
                         >
-                            @if (column.rawHtml) {
+                            @if (column.customColumnComponent) {
+                                <ng-container *ngComponentOutlet="column.customColumnComponent;
+                                                                 inputs: { table: this, rowData: row }"
+                                />
+                            } @else if (column.rawHtml) {
                                 <span [innerHTML]="row[column.name] | safe"
                                       style="max-height: 100px; overflow: auto; width: 100%;"
                                 ></span>

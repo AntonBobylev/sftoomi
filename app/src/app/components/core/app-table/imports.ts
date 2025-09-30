@@ -9,9 +9,9 @@ export default [
     NgStyle,
     NzTableComponent,
     NzThMeasureDirective,
-    NgComponentOutlet,
     NzThSelectionComponent,
     NzTdAddOnComponent,
     NzTooltipDirective,
-    SafePipe
+    SafePipe,
+    NgComponentOutlet
 ]

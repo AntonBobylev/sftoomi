@@ -3,6 +3,7 @@ type AppTableColumn = {
     resizable?: boolean,
     valueRenderer?: Function,
     rawHtml?: boolean,
+    customColumnComponent?: any,
     width?: string,
     header: {
         caption: string,
