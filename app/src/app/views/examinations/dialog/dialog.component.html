@@ -35,6 +35,14 @@
                            [useClear]="true"
                            [useSearch]="true"
                 />
+
+                <app-combo #doctorCtrl
+                           name="doctor_id"
+                           [form]="form"
+                           [label]="Sftoomi.Translator.translate('views.examinations.dialog.blocks.referring.doctor')"
+                           [useClear]="true"
+                           [useSearch]="true"
+                />
             </div>
             <div class="block">
                 <span class="header">

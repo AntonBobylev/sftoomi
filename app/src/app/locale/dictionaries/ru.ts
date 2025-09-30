@@ -60,7 +60,8 @@ let ruDictionary: object =  {
                     },
                     referring: {
                         header: 'Направление',
-                        facility: 'Учреждение'
+                        facility: 'Учреждение',
+                        doctor: 'Врач'
                     },
                     studies: {
                         header: 'Исследования'

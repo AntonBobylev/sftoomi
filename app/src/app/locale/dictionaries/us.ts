@@ -60,7 +60,8 @@ let usDictionary: object =  {
                     },
                     referring: {
                         header: 'Referring',
-                        facility: 'Facility'
+                        facility: 'Facility',
+                        doctor: 'Doctor'
                     },
                     studies: {
                         header: 'Studies'
