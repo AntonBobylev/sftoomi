@@ -27,7 +27,14 @@
                 <span class="header">
                     {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.referring.header') }}
                 </span>
-                // TODO: implement
+
+                <app-combo #facilityCtrl
+                           name="facility_id"
+                           [form]="form"
+                           [label]="Sftoomi.Translator.translate('views.examinations.dialog.blocks.referring.facility')"
+                           [useClear]="true"
+                           [useSearch]="true"
+                />
             </div>
             <div class="block">
                 <span class="header">
