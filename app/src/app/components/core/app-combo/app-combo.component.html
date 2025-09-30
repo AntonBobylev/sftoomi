@@ -12,7 +12,7 @@
                    [nzShowArrow]="Sftoomi.isEmpty(remoteUrl)"
                    [nzServerSearch]="Sftoomi.isEmpty(remoteUrl)"
                    (nzOnSearch)="search($event)"
-                   (selectionchange)="data.set([])"
+                   (selectionchange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
                    [nzMode]="multiple ? 'multiple' : 'default'"
         >

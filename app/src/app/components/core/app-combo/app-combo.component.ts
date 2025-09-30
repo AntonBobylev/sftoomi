@@ -85,4 +85,13 @@ export default class AppComboComponent extends AppBaseField
             }
         });
     }
+
+    protected onSelectionChange(): void
+    {
+        if (Sftoomi.isEmpty(this.remoteUrl)) {
+            return;
+        }
+
+        this.data.set([]);
+    }
 }
