@@ -1,7 +1,13 @@
 <div class="wrapper"
      [formGroup]="form"
 >
-    <patient-demographics-template [form]="form" />
+    <patient-demographics-template [form]="form"
+                                   lastNameCtrlName="last_name"
+                                   firstNameCtrlName="first_name"
+                                   middleNameCtrlName="middle_name"
+                                   dobNameCtrlName="dob"
+                                   phoneNameCtrlName="phone"
+    />
 
     <div *nzModalFooter>
         <button nz-button

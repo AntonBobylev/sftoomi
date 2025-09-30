@@ -22,5 +22,11 @@ export default class PatientDemographicsTemplateComponent
 {
     @Input({required: true}) public form!: FormGroup;
 
+    @Input({required: true, alias: 'lastNameCtrlName'})   public lastName!: string;
+    @Input({required: true, alias: 'firstNameCtrlName'})  public firstName!: string;
+    @Input({required: true, alias: 'middleNameCtrlName'}) public middleName!: string;
+    @Input({required: true, alias: 'dobNameCtrlName'})    public dobName!: string;
+    @Input({required: true, alias: 'phoneNameCtrlName'})  public phoneName!: string;
+
     protected readonly Sftoomi = Sftoomi;
 }
