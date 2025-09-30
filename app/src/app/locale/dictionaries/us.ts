@@ -38,6 +38,11 @@ let usDictionary: object =  {
         examinations: {
             table: {
                 columns: {
+                    referring: {
+                        caption: 'Referring',
+                        doctor: 'Doctor',
+                        facility: 'Facility'
+                    },
                     patient: 'Patient',
                     studies: 'Studies'
                 }

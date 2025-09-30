@@ -9,6 +9,7 @@ import ExaminationsTablePatientColumnComponent from './patient-column/patient-co
 import ExaminationsTableStudiesColumnComponent from './studies-column/studies-column.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
+import ExaminationsTableReferringColumnComponent from './referring-column/referring-column.component';
 
 @Component({
     selector: 'examinations-table',
@@ -40,6 +41,13 @@ export default class ExaminationsTableComponent extends AppTableComponent
             caption: Sftoomi.Translator.translate('views.examinations.table.columns.patient')
         },
         customColumnComponent: ExaminationsTablePatientColumnComponent
+    }, {
+        name: 'referring',
+        width: '200px',
+        header: {
+            caption: Sftoomi.Translator.translate('views.examinations.table.columns.referring.caption')
+        },
+        customColumnComponent: ExaminationsTableReferringColumnComponent
     }, {
         name: 'studies',
         header: {

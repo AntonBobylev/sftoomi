@@ -38,6 +38,11 @@ let ruDictionary: object =  {
         examinations: {
             table: {
                 columns: {
+                    referring: {
+                        caption: 'Направление',
+                        doctor: 'Врач',
+                        facility: 'Учреждение'
+                    },
                     patient: 'Пациент',
                     studies: 'Обследования'
                 }

@@ -1,3 +1,5 @@
+@use  '../../../../../styles.scss';
+
 .wrapper {
     display: flex;
     gap: 10px;
@@ -5,12 +7,6 @@
     .exam-wrapper {
         max-width: 200px;
     }
-}
-
-.overflowed-text {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
 .ant-divider {
