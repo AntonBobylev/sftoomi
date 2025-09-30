@@ -22,6 +22,7 @@ let usDictionary: object =  {
     warning: 'Warning',
 
     navigation: {
+        examinations: 'Examinations',
         home: 'Home',
         patients: 'Patients',
         setup: {

@@ -7,6 +7,7 @@ import PatientsComponent from './views/patients/patients.component';
 import ReferringFacilitiesComponent from './views/referring-facilities/referring-facilities.component';
 import ReferringDoctorsComponent from './views/referring-doctors/referring-doctors.component';
 import StudiesComponent from './views/studies/studies.component';
+import ExaminationsComponent from './views/examinations/examinations.component';
 
 const BASE_TITLE = 'SFTOOMI :: ';
 
@@ -15,7 +16,8 @@ export enum RoutesPaths {
     PATIENTS = 'patients',
     REFERRING_FACILITIES = 'referring-facilities',
     REFERRING_DOCTORS = 'referring-doctors',
-    STUDIES = 'studies'
+    STUDIES = 'studies',
+    EXAMINATIONS = 'examinations'
 }
 
 export const routes: Routes = [{
@@ -38,4 +40,8 @@ export const routes: Routes = [{
     path: RoutesPaths.STUDIES,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.studies'),
     component: StudiesComponent
+}, {
+    path: RoutesPaths.EXAMINATIONS,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.examinations'),
+    component: ExaminationsComponent
 }];
