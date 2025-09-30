@@ -24,7 +24,7 @@ export default class AppTableComponent implements AfterViewInit
 
     protected readonly columns: AppTableColumn[] = [];
 
-    protected readonly loadUrl!: string;
+    protected readonly loadUrl: string | undefined;
     protected readonly loadTimeout: number = Timeout.timeout;
 
     protected readonly toolbarHeight: string = '40px';
@@ -55,6 +55,10 @@ export default class AppTableComponent implements AfterViewInit
 
     public refresh(): void
     {
+        if (Sftoomi.isEmpty(this.loadUrl)) {
+            return;
+        }
+
         let data: FormData = new FormData();
         if (this.usePagination) {
             data.append('limit', this.pageSize.toString());
@@ -63,7 +67,7 @@ export default class AppTableComponent implements AfterViewInit
 
         this.isLoading.set(true);
         new Fetcher().request({
-            url: this.loadUrl,
+            url: this.loadUrl!,
             timeout: this.loadTimeout,
             data: data,
             success: (_response: any, _request: any, result: any): void => {
