@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Class\EntityManipulator;
 use App\Class\Fetcher;
-use App\Repository\StudyRepository;
 use Doctrine\DBAL\Exception;
 use InvalidArgumentException;
 use RuntimeException;
@@ -116,26 +114,10 @@ final class StudiesController extends AppCrudController
         ]);
     }
 
-    /**
-     * @throws Exception
-     */
     #[Route("/removeStudy", name: "remove_study")]
-    public function removeStudy(StudyRepository $studyRepository, Request $request): Response
+    public function removeStudy(Request $request): Response
     {
-        try {
-            $this->connection->beginTransaction();
-
-            $ids = Fetcher::intArray($request->request->get("ids"));
-
-            new EntityManipulator($this->connection)
-                ->remove($this->baseTable, $ids);
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-
-            throw new RuntimeException("Failed to remove study due to error: " . $e->getMessage());
-        }
-
-        $this->connection->commit();
+        $this->remove($request);
 
         return new JsonResponse([]);
     }

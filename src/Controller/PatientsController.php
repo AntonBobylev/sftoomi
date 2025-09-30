@@ -88,9 +88,9 @@ final class PatientsController extends AppCrudController
     }
 
     #[Route("/removePatient", name: "remove_patient")]
-    public function removePatient(PatientRepository $patientRepository, Request $request): Response
+    public function removePatient(Request $request): Response
     {
-        $this->remove($patientRepository, $request);
+        $this->remove($request);
 
         return new JsonResponse([]);
     }

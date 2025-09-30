@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
+use App\Class\Fetcher;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use RuntimeException;
@@ -96,27 +98,30 @@ abstract class AppCrudController extends SftoomiController
     }
 
     /**
-     * @param ServiceEntityRepository $entityRepository
      * @param Request $request
      *
      * @return void
      */
-    public function remove(ServiceEntityRepository $entityRepository, Request $request): void
+    public function remove(Request $request): void
     {
-        $ids = $request->request->get("ids");
+        $ids = Fetcher::intArray($request->request->get("ids"));
 
         if (empty($ids)) {
             throw new RuntimeException("At least one ID is required for removal operation");
         }
 
-        $ids = explode(",", $ids);
+        try {
+            $this->connection->beginTransaction();
 
-        $entities = $entityRepository->findBy(["id" => $ids]);
-        foreach ($entities as $entity) {
-            $this->entityManager->remove($entity);
+            new EntityManipulator($this->connection)
+                ->remove($this->baseTable, $ids);
+        } catch (\Exception $e) {
+            $this->connection->rollback();
+
+            throw new \RuntimeException("Failed to remove an entity due to error: " . $e->getMessage());
         }
 
-        $this->entityManager->flush();
+        $this->connection->commit();
     }
 
     protected function assertAllRequiredFieldsSet(array $requiredFields, array $values): void

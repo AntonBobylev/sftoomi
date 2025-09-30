@@ -16,5 +16,17 @@
                 "onDelete": "update"
             }
         }
+    },
+    "examination": {
+        "idField": "id",
+        "references": {
+            "examinations_studies": {
+                "idField": "examination_id",
+                "onDelete": "update"
+            }
+        }
+    },
+    "patient": {
+        "idField": "id"
     }
 }

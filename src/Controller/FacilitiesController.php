@@ -119,9 +119,9 @@ final class FacilitiesController extends AppCrudController
     }
 
     #[Route("/removeFacility", name: "remove_facility")]
-    public function removeFacility(FacilityRepository $facilityRepository, Request $request): Response
+    public function removeFacility(Request $request): Response
     {
-        $this->remove($facilityRepository, $request);
+        $this->remove($request);
 
         return new JsonResponse([]);
     }

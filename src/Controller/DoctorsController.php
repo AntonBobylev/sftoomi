@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Class\EntityManipulator;
 use App\Class\Fetcher;
-use App\Repository\DoctorRepository;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -138,26 +136,10 @@ final class DoctorsController extends AppCrudController
         ]);
     }
 
-    /**
-     * @throws Exception
-     */
     #[Route("/removeDoctor", name: "remove_doctor")]
     public function removeDoctor(Request $request): Response
     {
-        $ids = Fetcher::intArray($request->request->get("ids"), []);
-
-        try {
-            $this->connection->beginTransaction();
-
-            new EntityManipulator($this->connection)
-                ->remove($this->baseTable, $ids);
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-
-            throw new \RuntimeException("Failed to remove the doctor due to error: " . $e->getMessage());
-        }
-
-        $this->connection->commit();
+        $this->remove($request);
 
         return new JsonResponse([]);
     }
