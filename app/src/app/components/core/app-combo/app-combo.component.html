@@ -9,14 +9,14 @@
                    [nzAllowClear]="useClear"
                    [nzPlaceHolder]="placeholder"
                    [formControlName]="name"
-                   [nzShowArrow]="Sftoomi.isEmpty(remoteUrl)"
+                   [nzShowArrow]="true"
                    [nzServerSearch]="Sftoomi.isEmpty(remoteUrl)"
                    (nzOnSearch)="search($event)"
                    (selectionchange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
                    [nzMode]="multiple ? 'multiple' : 'default'"
         >
-            @for (record of data(); track record.value) {
+            @for (record of listOfOptions(); track record.value) {
                 <nz-option [nzLabel]="record.caption"
                            [nzValue]="record.value"
                 />

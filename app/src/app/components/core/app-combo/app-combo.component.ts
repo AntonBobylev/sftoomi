@@ -6,9 +6,9 @@ import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } fro
 
 import Sftoomi from '../../../class/Sftoomi';
 import { DialogType } from '../../../class/Dialog';
+import Fetcher from '../../../class/Fetcher';
 
 import AppBaseField from '../app-base-field';
-import Fetcher from '../../../class/Fetcher';
 
 import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
 
@@ -39,6 +39,7 @@ export default class AppComboComponent extends AppBaseField
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
 
     protected data: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
+    protected listOfOptions: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     private queryController: AbortController = new AbortController();
@@ -46,11 +47,14 @@ export default class AppComboComponent extends AppBaseField
     public setData(records: AppComboRecord[]): void
     {
         this.data.set(records);
+        this.listOfOptions.set(this.data());
     }
 
     protected search(query: string): void
     {
         if (Sftoomi.isEmpty(this.remoteUrl)) {
+            this.filterOptions(query);
+
             return;
         }
 
@@ -93,5 +97,19 @@ export default class AppComboComponent extends AppBaseField
         }
 
         this.data.set([]);
+    }
+
+    private filterOptions(query: string): void
+    {
+        this.listOfOptions.set([]);
+
+        let newListOfOptions: AppComboRecord[] = [];
+        this.data().forEach((record: AppComboRecord): void => {
+            if (record.caption.toString().toLowerCase().startsWith(query.toLowerCase())) {
+                newListOfOptions.push(record);
+            }
+        });
+
+        this.listOfOptions.set(newListOfOptions);
     }
 }
