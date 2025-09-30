@@ -1,0 +1,8 @@
+<div style="font-weight: bold">{{ Sftoomi.humanShortName(rowData.patient) }}</div>
+<div>
+    <span [nz-tooltip]="Sftoomi.Translator.translate('dob_full')">
+        {{ Sftoomi.Translator.translate('dob_short') }}:
+    </span>
+    <span>{{ rowData.patient.dob ? Sftoomi.dateShort(rowData.patient.dob) : Sftoomi.Translator.translate('not_set_tip') }}</span>
+</div>
+<div>{{ Sftoomi.Translator.translate('phone') }}: {{ rowData.patient.phone }}</div>

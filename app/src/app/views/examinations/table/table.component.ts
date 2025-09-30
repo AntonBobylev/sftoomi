@@ -5,6 +5,7 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import ExaminationsTablePatientColumnComponent from './patient-column/patient-column.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
@@ -37,14 +38,7 @@ export default class ExaminationsTableComponent extends AppTableComponent
         header: {
             caption: Sftoomi.Translator.translate('views.examinations.table.columns.patient')
         },
-        rawHtml: true,
-        valueRenderer: (patient: any): string => {
-            return `<div>
-                        <div>${Sftoomi.humanShortName(patient)}</div>
-                        <div>${Sftoomi.Translator.translate('dob_short')}: ${patient.dob ? Sftoomi.dateShort(patient.dob) : Sftoomi.Translator.translate('not_set_tip')}</div>
-                        <div>${Sftoomi.Translator.translate('phone')}: ${patient.phone}</div>
-                    </div>`;
-        }
+        customColumnComponent: ExaminationsTablePatientColumnComponent
     }, {
         name: 'studies',
         header: {
