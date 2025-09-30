@@ -121,7 +121,8 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление обследования',
                 edit_title: 'Редактирование обследования #{0}',
-                width: 500
+                width: 500,
+                cpts: 'CPT'
             }
         }
     },
