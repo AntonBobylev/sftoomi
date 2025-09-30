@@ -7,5 +7,14 @@
                 "onDelete": "update"
             }
         }
+    },
+    "study": {
+        "idField": "id",
+        "references": {
+            "studies_cpts": {
+                "idField": "study_id",
+                "onDelete": "update"
+            }
+        }
     }
 }

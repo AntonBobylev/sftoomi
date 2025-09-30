@@ -30,7 +30,7 @@ class EntityManipulator
         }
 
         foreach ($ids as $id) {
-            if (!empty($entityTableConfig["references"])) {
+            if (!empty($entityTableConfig) && !empty($entityTableConfig["references"])) {
                 foreach ($entityTableConfig["references"] as $table => $config) {
                     $this->processReference(
                         $id,

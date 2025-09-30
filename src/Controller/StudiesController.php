@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Repository\StudyRepository;
 use Doctrine\DBAL\Exception;
@@ -124,7 +125,10 @@ final class StudiesController extends AppCrudController
         try {
             $this->connection->beginTransaction();
 
-            $this->remove($studyRepository, $request);
+            $ids = Fetcher::intArray($request->request->get("ids"));
+
+            new EntityManipulator($this->connection)
+                ->remove($this->baseTable, $ids);
         } catch (\Exception $e) {
             $this->connection->rollback();
 
