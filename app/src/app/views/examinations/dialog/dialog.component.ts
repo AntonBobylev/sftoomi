@@ -116,7 +116,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
                 this.form.get('patient_last_name')?.setValue(data.data.last_name);
                 this.form.get('patient_first_name')?.setValue(data.data.first_name);
                 this.form.get('patient_middle_name')?.setValue(data.data.middle_name);
-                this.form.get('patient_dob')?.setValue(data.data.dob);
+                this.form.get('patient_dob')?.setValue(Sftoomi.stringToDate(data.data.dob));
                 this.form.get('patient_phone')?.setValue(data.data.phone);
             },
             failure: (_code: any, message: any, _request: any): void => {
