@@ -8,6 +8,7 @@ import ExaminationsTableComponent from '../table.component';
 @Component({
     selector: 'examinations-table-patient-column',
     templateUrl: './patient-column.component.html',
+    styleUrl: './patient-column.component.less',
     imports: [ NzTooltipDirective ]
 })
 
