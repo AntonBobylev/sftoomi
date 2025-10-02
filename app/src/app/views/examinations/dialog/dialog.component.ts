@@ -12,6 +12,8 @@ import AppDatepickerComponent from '../../../components/core/app-datepicker/app-
 import AppComboComponent, { AppComboRecord } from '../../../components/core/app-combo/app-combo.component';
 import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';
 
+import phoneValidator from '../../../validators/phone.validator';
+
 import getPatientAPI from '../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../APIs/getExaminationAPI';
 
@@ -55,11 +57,11 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         patient_id:          new FormControl<AppComboRecord | null>(null),
         facility_id:         new FormControl<AppComboRecord | null>(null, [Validators.required]),
         doctor_id:           new FormControl<AppComboRecord | null>(null),
-        patient_last_name:   new FormControl<string | null>(null,[Validators.required]),
-        patient_first_name:  new FormControl<string | null>(null,[Validators.required]),
+        patient_last_name:   new FormControl<string | null>(null, [Validators.required]),
+        patient_first_name:  new FormControl<string | null>(null, [Validators.required]),
         patient_middle_name: new FormControl<string | null>(null),
         patient_dob:         new FormControl<string | null>(null),
-        patient_phone:       new FormControl<string | null>(null)
+        patient_phone:       new FormControl<string | null>(null, [phoneValidator()])
     });
 
     protected afterLoad(data: getExaminationAPI): void
