@@ -14,7 +14,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 @Component({
     selector: 'referring-facilities-table',
     templateUrl: '../../../components/core/app-table/app-table.component.html',
-    styleUrl: '../../../components/core/app-table/app-table.component.scss',
+    styleUrl: '../../../components/core/app-table/app-table.component.less',
     imports: [ AppTableImports ]
 })
 

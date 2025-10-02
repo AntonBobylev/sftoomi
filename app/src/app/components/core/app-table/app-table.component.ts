@@ -12,7 +12,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
     selector: 'app-table',
     templateUrl: './app-table.component.html',
     imports: [AppTableImports],
-    styleUrl: './app-table.component.scss'
+    styleUrl: './app-table.component.less'
 })
 
 export default class AppTableComponent implements AfterViewInit
