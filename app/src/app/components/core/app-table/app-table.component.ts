@@ -1,12 +1,10 @@
-import { AfterViewInit, Component, inject, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
 import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
-
-import ResponsiveLayoutService from '../../../services/responsive-layout.service';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
@@ -44,8 +42,6 @@ export default class AppTableComponent implements AfterViewInit
 
     protected pageSize: number = 50;
     protected currentPageIndex: number = 1;
-
-    protected readonly responsiveLayoutService = inject(ResponsiveLayoutService);
 
     ngAfterViewInit(): void
     {

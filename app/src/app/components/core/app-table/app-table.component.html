@@ -20,7 +20,7 @@
           nzShowSizeChanger
           [style.height]="getTableHeight()"
 >
-    @if (responsiveLayoutService.isSmallWidth()) {
+    @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
         <ng-container *ngTemplateOutlet="mobileTableTpl" />
     } @else {
         <thead>
