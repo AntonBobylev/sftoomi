@@ -6,14 +6,14 @@
     </nz-form-label>
 
     <nz-form-control [nzErrorTip]="errorTpl">
-        <nz-input-group [nzSuffix]="clearTpl">
+        <nz-input-group [nzSuffix]="phoneClearTpl">
             <input nz-input
                    [formControlName]="name"
                    [maskito]="phoneMask"
                    [id]="name"
             />
 
-            <ng-template #clearTpl
+            <ng-template #phoneClearTpl
                          [ngTemplateOutlet]="clearTpl"
                          [ngTemplateOutletContext]="{control: form.get(name)}"
             >
