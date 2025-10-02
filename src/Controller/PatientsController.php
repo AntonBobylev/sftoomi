@@ -118,10 +118,10 @@ final class PatientsController extends AppCrudController
      */
     private function tryLookupPatient(string $query, ?string $excludeIds): array
     {
-        $sql = "select id, last_name, first_name, middle_name
+        $sql = "select id, last_name, first_name, middle_name, dob, phone
                 from patient
                 where (
-                    id like '%$query%' or
+                    id = '$query' or
                     last_name like '%$query%' or
                     first_name like '%$query%' or
                     middle_name like '%$query%'
@@ -133,14 +133,16 @@ final class PatientsController extends AppCrudController
 
         $patients = $this->connection->fetchAllAssociative($sql);
         foreach ($patients as &$patient) {
-            $patient["tooltip"] = Format::humanShortName($patient);
-            $patient["name"] = $patient["id"];
+            $data = [
+                "value"   => $patient["id"],
+                "caption" => sprintf(
+                    "%s (#%s)",
+                    Format::humanShortName($patient),
+                    $patient["id"]
+                )
+            ];
 
-            unset(
-                $patient["last_name"],
-                $patient["first_name"],
-                $patient["middle_name"]
-            );
+            $patient = $data;
         }
         unset($patient);
 

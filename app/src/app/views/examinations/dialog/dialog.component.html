@@ -17,7 +17,27 @@
                 <span class="header">
                     {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.patient.header') }}
                 </span>
-                // TODO: implement
+
+                <div class="field">
+                    <app-combo #patientIdCtrl
+                               [form]="form"
+                               name="patient_id"
+                               [label]="Sftoomi.Translator.translate('views.examinations.dialog.blocks.patient.patient_id')"
+                               remoteUrl="/lookupPatient"
+                               [useClear]="true"
+                               (selectionChange)="onPatientSelected($event)"
+                               style="width: 100%"
+                    />
+
+                    <patient-demographics-template [form]="form"
+                                                   lastNameCtrlName="patient_last_name"
+                                                   firstNameCtrlName="patient_first_name"
+                                                   middleNameCtrlName="patient_middle_name"
+                                                   dobNameCtrlName="patient_dob"
+                                                   phoneNameCtrlName="patient_phone"
+                                                   style="width: 100%"
+                    />
+                </div>
             </div>
         </div>
     </div>

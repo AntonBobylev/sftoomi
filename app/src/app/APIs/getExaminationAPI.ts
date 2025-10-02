@@ -1,6 +1,7 @@
 import Doctor from '../type/Doctor';
 import Facility from '../type/Facility';
 import Study from '../type/Study';
+import Patient from '../type/Patient';
 
 type getExaminationAPI = {
     data: {
@@ -9,7 +10,8 @@ type getExaminationAPI = {
         patient_id?: string,
         facility_id?: string,
         doctor_id?: string,
-        studies: number[]
+        studies: number[],
+        patient: Patient
     },
     lists: {
         doctors: (Doctor & {

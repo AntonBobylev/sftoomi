@@ -56,7 +56,8 @@ let ruDictionary: object =  {
                         date: 'Дата'
                     },
                     patient: {
-                        header: 'Пациент'
+                        header: 'Пациент',
+                        patient_id: 'ID пациента'
                     },
                     referring: {
                         header: 'Направление',

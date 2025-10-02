@@ -56,7 +56,8 @@ let usDictionary: object =  {
                         date: 'Date'
                     },
                     patient: {
-                        header: 'Patient'
+                        header: 'Patient',
+                        patient_id: 'Patient ID'
                     },
                     referring: {
                         header: 'Referring',

@@ -109,6 +109,12 @@ final class ProcessingController extends AppCrudController
                     from examinations_studies
                     where examination_id = $examinationId";
             $data["studies"] = $this->connection->fetchFirstColumn($sql);
+
+            $sql = "select p.id, last_name, first_name, middle_name, dob, phone
+                    from examination ex
+                        left join patient p on p.id = ex.patient_id
+                    where ex.id = $examinationId";
+            $data["patient"] = $this->connection->fetchAssociative($sql);
         }
 
         $sql = "select f.id, f.short_name, f.full_name,
