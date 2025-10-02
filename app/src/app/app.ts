@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
+import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
+import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+
 import Sftoomi from './class/Sftoomi';
 
 import { RoutesPaths } from './app.routes';
@@ -18,7 +21,10 @@ import ResponsiveLayoutService from './services/responsive-layout.service';
     selector: 'app-root',
     imports: [
         RouterOutlet, NzLayoutModule, NzMenuModule,
-        RouterLink, NzModalModule, LanguageSwitcherComponent, NzDropDownDirective, NzDropdownMenuComponent, NzIconDirective
+        RouterLink, NzModalModule, LanguageSwitcherComponent,
+        NzDropDownDirective, NzDropdownMenuComponent,
+        NzIconDirective, NgTemplateOutlet,
+        NzButtonComponent, NgClass,
     ],
     templateUrl: './app.html',
     styleUrl: './app.less'

@@ -31,6 +31,9 @@ let ruDictionary: object =  {
             referring_doctors: 'Направляющие доктора',
             referring_facilities: 'Направляющие учреждения',
             studies: 'Обследования'
+        },
+        mobile_view: {
+            button_caption: 'МЕНЮ'
         }
     },
 

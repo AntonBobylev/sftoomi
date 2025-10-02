@@ -31,6 +31,9 @@ let usDictionary: object =  {
             referring_doctors: 'Referring doctors',
             referring_facilities: 'Referring facilities',
             studies: 'Studies'
+        },
+        mobile_view: {
+            button_caption: 'MENU'
         }
     },
 
