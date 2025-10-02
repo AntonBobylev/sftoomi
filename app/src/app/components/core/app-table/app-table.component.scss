@@ -39,6 +39,37 @@ nz-table {
         .ant-table-body {
             height: 100%;
 
+            .mobile-table {
+                .select-all-checkbox {
+                    padding: 5px;
+                }
+
+                .selected-mobile-cell {
+                    border: 1px solid rgba(0, 0, 0, 0.5) !important;
+                }
+
+                .mobile-cell {
+                    padding-bottom: 5px;
+
+                    .mobile-cell-checkbox {
+                        padding: 5px;
+                    }
+
+                    .mobile-cell-block {
+                        width: 100%;
+
+                        table {
+                            tr {
+                                display: flex;
+                                td {
+                                    padding: 5px
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
             table {
                 table-layout: auto !important;
 
