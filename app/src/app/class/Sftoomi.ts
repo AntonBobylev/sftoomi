@@ -9,6 +9,7 @@ import Dialog from './Dialog';
 import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
 
 import CookiesService from '../services/cookies.service';
+import ResponsiveLayoutService from '../services/responsive-layout.service';
 
 export default class Sftoomi
 {
@@ -16,10 +17,13 @@ export default class Sftoomi
     public static readonly Cookies: CookiesService = new CookiesService();
     public static readonly Dialog: Dialog = new Dialog();
 
-    public static init(dialog: NzModalService, nzI18nService: NzI18nService): void
+    public static responsiveLayoutService: ResponsiveLayoutService | undefined = undefined;
+
+    public static init(dialog: NzModalService, nzI18nService: NzI18nService, responsiveLayoutService: ResponsiveLayoutService): void
     {
         Sftoomi.Dialog.init(dialog);
         Sftoomi.Translator.init(nzI18nService)
+        Sftoomi.responsiveLayoutService = responsiveLayoutService
     }
 
     /**

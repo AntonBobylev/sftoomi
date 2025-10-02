@@ -6,7 +6,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
     providedIn: 'root'
 })
 
-export class ResponsiveLayoutService
+export default class ResponsiveLayoutService
 {
     breakpointObserver = inject(BreakpointObserver);
 

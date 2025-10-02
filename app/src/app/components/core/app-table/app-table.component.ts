@@ -6,7 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 
-import { ResponsiveLayoutService } from '../../../services/responsive-layout.service';
+import ResponsiveLayoutService from '../../../services/responsive-layout.service';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
