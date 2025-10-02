@@ -1,4 +1,4 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, EventEmitter, Input, Output, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzColDirective } from 'ng-zorro-antd/grid';
@@ -37,6 +37,8 @@ export default class AppComboComponent extends AppBaseField
 
     @Input() public remoteUrl: string | undefined;
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
+
+    @Output() public selectionChange: EventEmitter<AppComboRecord['value']> = new EventEmitter<AppComboRecord['value']>();
 
     protected data: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
     protected listOfOptions: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
@@ -92,6 +94,8 @@ export default class AppComboComponent extends AppBaseField
 
     protected onSelectionChange(): void
     {
+        this.selectionChange.emit(this.form.get(this.name)?.value);
+
         if (Sftoomi.isEmpty(this.remoteUrl)) {
             return;
         }
