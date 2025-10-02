@@ -1,10 +1,15 @@
 <div class="wrapper">
     <img style="clip-path: circle();"
+         [style.width]="Sftoomi.responsiveLayoutService?.isSmallWidth() ? '300px' : null"
          src="graphics/sftoomi-logo-colored.png"
          alt="logo"
     >
 
-    <p class="greeting-label">
+    <p [ngClass]="{
+           'greeting-label': !Sftoomi.responsiveLayoutService?.isSmallWidth(),
+           'greeting-label-mobile': Sftoomi.responsiveLayoutService?.isSmallWidth()
+       }"
+    >
         {{ Sftoomi.Translator.translate('views.home.greetings_label') }}
     </p>
 </div>
