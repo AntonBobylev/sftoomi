@@ -20,7 +20,7 @@
           nzShowSizeChanger
           [style.height]="getTableHeight()"
 >
-    @if (false) {
+    @if (true) {
         <ng-container *ngTemplateOutlet="mobileTableTpl"/>
     } @else {
         <thead>
@@ -38,7 +38,7 @@
                         <span class="cell"
                               [ngStyle]="column.header.extraStyles"
                         >
-                            <span [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer() : null">
+                            <span [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer!() : null">
                                 {{ column.header.caption }}
                             </span>
                         </span>
@@ -49,10 +49,11 @@
         <tbody>
             @for (row of data(); track row + $index) {
                 <tr>
-                    <td
-                        [nzChecked]="row.selected"
-                        (nzCheckedChange)="onRowCheck($event, row)"
-                    ></td>
+                    @if (selectionRequired) {
+                        <td [nzChecked]="row.selected"
+                            (nzCheckedChange)="onRowCheck($event, row)"
+                        ></td>
+                    }
 
                     @for (column of columns; track column.name) {
                         <td>
@@ -85,30 +86,50 @@
 
 <ng-template #mobileTableTpl>
     <tbody class="mobile-table">
-        <div nz-checkbox
-             [nzChecked]="selectionInHeaderChecked"
-             [nzIndeterminate]="selectionInHeaderIntermediate"
-             (nzCheckedChange)="onAllChecked($event)"
-             class="select-all-checkbox"
-        >
-            {{ Sftoomi.Translator.translate('select_all') }}
-        </div>
+        @if (selectionRequired) {
+            <div nz-checkbox
+                 [nzChecked]="selectionInHeaderChecked"
+                 [nzIndeterminate]="selectionInHeaderIntermediate"
+                 (nzCheckedChange)="onAllChecked($event)"
+                 class="select-all-checkbox"
+            >
+                {{ Sftoomi.Translator.translate('select_all') }}
+            </div>
+        }
         @for (row of data(); track row + $index) {
             <tr>
                 <td [class.selected-mobile-cell]="row.selected"
                     class="mobile-cell"
                 >
-                    <div nz-checkbox
-                         class="mobile-cell-checkbox"
-                         [nzChecked]="row.selected"
-                         (nzCheckedChange)="onRowCheck($event, row)"
-                    ></div>
+                    @if (selectionRequired) {
+                        <div nz-checkbox
+                             class="mobile-cell-checkbox"
+                             [nzChecked]="row.selected"
+                             (nzCheckedChange)="onRowCheck($event, row)"
+                        ></div>
+                    }
+
                     <div class="mobile-cell-block">
                         <table>
                             @for (column of columns; track column.name) {
                                 <tr style="display: flex">
                                     <td style="flex: 1; font-weight: bold">{{ column.header.caption }}:</td>
-                                    <td style="flex: 2">{{ row[column.name] }}</td>
+
+                                    <td style="flex: 2">
+                                        @if (column.customColumnComponent) {
+                                            <ng-container *ngComponentOutlet="column.customColumnComponent;
+                                                                     inputs: { table: this, rowData: row }"
+                                            />
+                                        } @else if (column.rawHtml) {
+                                            <span [innerHTML]="row[column.name] | safe"
+                                                style="max-height: 100px; overflow: auto; width: 100%;"
+                                            ></span>
+                                        } @else {
+                                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+                                                {{ row[column.name] }}
+                                            </span>
+                                        }
+                                    </td>
                                 </tr>
                             }
                         </table>
