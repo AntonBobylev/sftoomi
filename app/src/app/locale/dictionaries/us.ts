@@ -53,6 +53,7 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add examination',
                 edit_title: 'Edit examination #{0}',
+                no_studies_added_tip: 'You need to add at least one study to save the examination',
                 blocks: {
                     common: {
                         header: 'Common',

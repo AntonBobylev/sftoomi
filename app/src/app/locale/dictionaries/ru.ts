@@ -53,6 +53,7 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление обследования',
                 edit_title: 'Редактирование обследования #{0}',
+                no_studies_added_tip: 'Вы должны добавить хотя бы одно исследование, чтобы сохранить обследование',
                 blocks: {
                     common: {
                         header: 'Общее',

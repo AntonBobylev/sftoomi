@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -11,6 +11,7 @@ import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component';
 import AppComboComponent, { AppComboRecord } from '../../../components/core/app-combo/app-combo.component';
 import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';
+import AppStudiesSelectorComponent from '../../../components/fields/app-studies-selector/app-studies-selector.component';
 
 import phoneValidator from '../../../validators/phone.validator';
 
@@ -28,7 +29,7 @@ export type ExaminationEditDialogData = {
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
         AppDatepickerComponent, AppComboComponent,
-        PatientDemographicsTemplateComponent
+        PatientDemographicsTemplateComponent, AppStudiesSelectorComponent
     ],
     styleUrl: './dialog.component.less'
 })
@@ -43,6 +44,9 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     @ViewChild('doctorCtrl')
     protected readonly doctorCtrl!: AppComboComponent;
+
+    @ViewChild('studiesSelectorCtrl')
+    protected readonly studiesSelectorCtrl!: AppStudiesSelectorComponent;
 
     protected override readonly data: ExaminationEditDialogData = inject(NZ_MODAL_DATA);
 
@@ -61,8 +65,11 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         patient_first_name:  new FormControl<string | null>(null, [Validators.required]),
         patient_middle_name: new FormControl<string | null>(null),
         patient_dob:         new FormControl<string | null>(null),
-        patient_phone:       new FormControl<string | null>(null, [phoneValidator()])
+        patient_phone:       new FormControl<string | null>(null, [phoneValidator()]),
+        studies: new FormControl
     });
+
+    protected readonly studiesStore: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
 
     protected afterLoad(data: getExaminationAPI): void
     {
@@ -80,6 +87,13 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             }
         }));
 
+        this.studiesStore.set(data.lists.studies.map((study): AppComboRecord => {
+            return {
+                caption: study.short_name,
+                value:   study.id
+            }
+        }));
+
         if (Sftoomi.isEmpty(data.data)) {
             return;
         }
@@ -94,6 +108,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         }]);
 
         this.form.get('patient_id')?.setValue(data.data.patient_id);
+        this.studiesSelectorCtrl.setValue(data.data.studies);
     }
 
     protected onPatientSelected(patientId: AppComboRecord['value']): void
@@ -126,5 +141,40 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
                 this.isLoading.set(false);
             }
         })
+    }
+
+    protected override getAdditionalDataOnSave(data: FormData): FormData
+    {
+        // TODO: add patient_id field implementation
+
+        let selectedStudies: FormControl[] = this.studiesSelectorCtrl.getAddedStudiesControls(),
+            addedStudiesIds: number[] = [];
+
+        selectedStudies.forEach(function (studyControl: FormControl): void {
+            let controlName: string | undefined = Sftoomi.getFormControlName(studyControl);
+
+            for (let [key] of data.entries()) {
+                if (key === controlName) {
+                    addedStudiesIds.push(studyControl.value);
+                    data.delete(key);
+                }
+            }
+        });
+
+        data.set('study_ids', addedStudiesIds.join(','));
+
+        return data;
+    }
+
+    protected override isPreValid(): boolean
+    {
+        let addedStudiesCount: number = this.studiesSelectorCtrl.getAddedStudiesCount();
+        if (addedStudiesCount < 1) {
+            this.popupMsg.warning(Sftoomi.Translator.translate('views.examinations.dialog.no_studies_added_tip'));
+
+            return false;
+        }
+
+        return true;
     }
 }

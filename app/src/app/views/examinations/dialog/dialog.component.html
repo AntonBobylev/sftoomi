@@ -68,7 +68,13 @@
                 <span class="header">
                     {{ Sftoomi.Translator.translate('views.examinations.dialog.blocks.studies.header') }}
                 </span>
-                // TODO: implement
+
+                <app-studies-selector #studiesSelectorCtrl
+                                      name="studies"
+                                      [form]="form"
+                                      label=""
+                                      [store]="studiesStore"
+                />
             </div>
         </div>
     </div>
