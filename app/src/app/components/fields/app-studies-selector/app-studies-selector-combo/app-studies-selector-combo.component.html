@@ -1,0 +1,15 @@
+<div [formGroup]="form"
+     style="width: 100%"
+>
+    <nz-select nzShowSearch
+               [nzPlaceHolder]="Sftoomi.Translator.translate('fields.studies_selector.combo.placeholder')"
+               [formControlName]="name"
+               style="width: 100%"
+    >
+        @for (record of store(); track record.value) {
+            <nz-option [nzLabel]="record.caption"
+                       [nzValue]="record.value"
+            />
+        }
+    </nz-select>
+</div>

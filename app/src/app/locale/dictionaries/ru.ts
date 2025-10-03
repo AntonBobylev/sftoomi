@@ -141,6 +141,13 @@ let ruDictionary: object =  {
             move_left: 'Переместить влево',
             move_right: 'Переместить вправо',
             selected: 'Выбрано'
+        },
+        studies_selector: {
+            caption: 'Исследования',
+            add_study: 'Добавить исследование',
+            combo: {
+                placeholder: 'Выберите исследование'
+            }
         }
     },
 

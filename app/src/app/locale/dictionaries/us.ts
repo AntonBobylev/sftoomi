@@ -141,6 +141,13 @@ let usDictionary: object =  {
             move_left: 'Move left',
             move_right: 'Move right',
             selected: 'Selected'
+        },
+        studies_selector: {
+            caption: 'Studies',
+            add_study: 'Add study',
+            combo: {
+                placeholder: 'Select the study'
+            }
         }
     },
 
