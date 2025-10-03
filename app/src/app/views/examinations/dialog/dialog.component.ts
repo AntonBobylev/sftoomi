@@ -56,17 +56,19 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
     protected readonly loadUrl: string = '/getExamination';
     protected readonly saveUrl: string = '/saveExamination';
 
+    protected override readonly idField: string = 'examination_id';
+
     protected readonly form: FormGroup = new FormGroup({
-        date:                new FormControl<Date           | null>(null, [Validators.required]),
+        examination_date:    new FormControl<Date           | null>(null, [Validators.required]),
         patient_id:          new FormControl<AppComboRecord | null>(null),
         facility_id:         new FormControl<AppComboRecord | null>(null, [Validators.required]),
         doctor_id:           new FormControl<AppComboRecord | null>(null),
         patient_last_name:   new FormControl<string | null>(null, [Validators.required]),
         patient_first_name:  new FormControl<string | null>(null, [Validators.required]),
         patient_middle_name: new FormControl<string | null>(null),
-        patient_dob:         new FormControl<string | null>(null),
+        patient_dob:         new FormControl<Date   | null>(null),
         patient_phone:       new FormControl<string | null>(null, [phoneValidator()]),
-        studies: new FormControl
+        studies:             new FormControl
     });
 
     protected readonly studiesStore: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
@@ -98,7 +100,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             return;
         }
 
-        this.form.get('date')?.setValue(Sftoomi.stringToDate(data.data.date));
+        this.form.get('examination_date')?.setValue(Sftoomi.stringToDate(data.data.date));
         this.form.get('facility_id')?.setValue(data.data.facility_id);
         this.form.get('doctor_id')?.setValue(data.data.doctor_id);
 
@@ -145,8 +147,6 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        // TODO: add patient_id field implementation
-
         let selectedStudies: FormControl[] = this.studiesSelectorCtrl.getAddedStudiesControls(),
             addedStudiesIds: number[] = [];
 
