@@ -27,12 +27,12 @@ class Format
         }
 
         $last = trim($last);
-        $first = substr(trim($first), 0, 1);
+        $first = mb_substr(trim($first), 0, 1);
         if ($first != "") {
             $first .= ".";
         }
 
-        $middle = substr(trim($middle), 0, 1);
+        $middle = mb_substr(trim($middle), 0, 1);
         if ($middle != "") {
             $middle .= ".";
         }
