@@ -4,13 +4,13 @@ import StudiesTableComponent from './table/table.component';
 
 
 @Component({
-    selector: 'app-studies',
+    selector: 'app-studies-module',
     templateUrl: './studies.component.html',
     imports: [
         StudiesTableComponent
     ],
     styleUrl: './studies.component.scss'
 })
-export default class StudiesComponent
+export default class StudiesModuleComponent
 {
 }

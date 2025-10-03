@@ -6,7 +6,7 @@ import HomeComponent from './views/home/home.component';
 import PatientsComponent from './views/patients/patients.component';
 import ReferringFacilitiesComponent from './views/referring-facilities/referring-facilities.component';
 import ReferringDoctorsComponent from './views/referring-doctors/referring-doctors.component';
-import StudiesComponent from './views/studies/studies.component';
+import StudiesModuleComponent from './views/studies/studies.component';
 import ExaminationsComponent from './views/examinations/examinations.component';
 
 const BASE_TITLE = 'SFTOOMI :: ';
@@ -39,7 +39,7 @@ export const routes: Routes = [{
 }, {
     path: RoutesPaths.STUDIES,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.studies'),
-    component: StudiesComponent
+    component: StudiesModuleComponent
 }, {
     path: RoutesPaths.EXAMINATIONS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.examinations'),
