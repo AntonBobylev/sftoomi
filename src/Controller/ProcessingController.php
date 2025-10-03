@@ -192,14 +192,30 @@ final class ProcessingController extends AppCrudController
         try {
             $id = $this->save($request, $values)["id"];
 
-            $studyIds = Fetcher::intArray($request->request->get("study_ids"));
+            $newStudyIds = Fetcher::intArray($request->request->get("study_ids"));
 
-            if (empty($studyIds)) {
+            if (empty($newStudyIds)) {
                 throw new \RuntimeException("You must specify at least one study to save the examination");
             }
 
-            $this->connection->delete("examinations_studies", ["examination_id" => $id]);
-            foreach ($studyIds as $studyId) {
+            $sql = "select exam_id, study_id
+                    from examinations_studies
+                    where examination_id = $id";
+            $currentExaminationStudies = $this->connection->fetchAllAssociative($sql);
+
+            $examIdsToRemove = [];
+            foreach ($currentExaminationStudies as $row) {
+                if (!in_array($row["study_id"], $newStudyIds)) {
+                    $examIdsToRemove[] = $row["exam_id"];
+                }
+            }
+
+            foreach ($examIdsToRemove as $examId) {
+                $this->connection->delete("examinations_studies", ["exam_id" => $examId]);
+            }
+
+            $newStudyIdsToAdd = array_diff($newStudyIds, array_column($currentExaminationStudies, "study_id"));
+            foreach ($newStudyIdsToAdd as $studyId) {
                 $this->connection->insert(
                     "examinations_studies",
                     [
