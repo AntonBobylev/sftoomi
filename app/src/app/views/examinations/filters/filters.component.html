@@ -1,12 +1,30 @@
-<div>
-    <form [formGroup]="form"
-          class="main-form"
-    >
-        Filters
+<nz-card nzTitle="Filters">
+    <div class="wrapper">
+        <form [formGroup]="form"
+              class="main-form"
+        >
+            <app-numberfield name="examination_id"
+                             [form]="form"
+                             label="Examination ID"
+            />
+        </form>
 
-        <app-numberfield name="examination_id"
-                        [form]="form"
-                        label="Examination ID"
-        />
-    </form>
-</div>
+        <div class="actions">
+            <button nz-button
+                    nzType="primary"
+                    (click)="clearForm()"
+            >
+                <nz-icon nzType="clear" />
+                Clear
+            </button>
+
+            <button nz-button
+                    nzType="primary"
+                    (click)="onSearch.emit(getValues())"
+            >
+                <nz-icon nzType="search" />
+                Search
+            </button>
+        </div>
+    </div>
+</nz-card>

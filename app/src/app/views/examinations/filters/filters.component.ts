@@ -1,5 +1,8 @@
 import { AfterViewInit, Component, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NzButtonComponent } from 'ng-zorro-antd/button'
+import { NzIconDirective } from 'ng-zorro-antd/icon'
+import { NzCardComponent } from 'ng-zorro-antd/card'
 
 import Fetcher from '../../../class/Fetcher';
 import Sftoomi from '../../../class/Sftoomi';
@@ -19,7 +22,10 @@ export type ProcessingFiltersPanelOut = {
     templateUrl: './filters.component.html',
     imports: [
         ReactiveFormsModule,
-        AppNumberfieldComponent
+        AppNumberfieldComponent,
+        NzButtonComponent,
+        NzIconDirective,
+        NzCardComponent
     ],
     styleUrl: './filters.component.less'
 })
