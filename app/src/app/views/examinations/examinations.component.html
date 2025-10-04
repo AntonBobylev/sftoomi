@@ -1,6 +1,18 @@
 <div class="wrapper">
-    <div class="filters-wrapper">
-        <examinations-module-filters-panel />
-    </div>
-    <examinations-table />
+    <nz-layout>
+        <nz-sider nzCollapsible nzWidth="250px"
+                  [(nzCollapsed)]="isFiltersCollapsed"
+        >
+            <div class="filters-wrapper">
+                <examinations-module-filters-panel [class.hidden]="isFiltersCollapsed"/>
+                <div [class.hidden]="!isFiltersCollapsed"
+                     class="hidden-filters-caption"
+                >
+                    Filters
+                </div>
+            </div>
+        </nz-sider>
+
+        <examinations-table />
+    </nz-layout>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 
 import ExaminationsTableComponent from './table/table.component';
 import { ExaminationsFiltersComponent } from './filters/filters.component';
@@ -8,12 +9,14 @@ import { ExaminationsFiltersComponent } from './filters/filters.component';
     templateUrl: './examinations.component.html',
     imports: [
         ExaminationsTableComponent,
-        ExaminationsFiltersComponent
+        ExaminationsFiltersComponent,
+        NzLayoutComponent,
+        NzSiderComponent
     ],
-    styleUrl: './examinations.component.scss'
+    styleUrl: './examinations.component.less'
 })
 
 export default class ExaminationsComponent
 {
-
+    protected isFiltersCollapsed: boolean = true;
 }
