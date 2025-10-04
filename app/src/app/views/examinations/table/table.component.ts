@@ -59,5 +59,7 @@ export default class ExaminationsTableComponent extends AppTableComponent
 
     protected override readonly loadUrl: string = '/getExaminations';
 
+    protected override readonly lazyLoad: boolean = true;
+
     protected override readonly toolbar: any | undefined = ExaminationsTableToolbarComponent;
 }
