@@ -1,6 +1,8 @@
 <div class="wrapper">
     <nz-layout>
-        <nz-sider nzCollapsible nzWidth="250px"
+        <nz-sider nzCollapsible
+                  nzWidth="250px"
+                  [nzCollapsedWidth]="40"
                   [(nzCollapsed)]="isFiltersCollapsed"
         >
             <div class="filters-wrapper">
@@ -8,7 +10,7 @@
                 <div [class.hidden]="!isFiltersCollapsed"
                      class="hidden-filters-caption"
                 >
-                    Filters
+                    {{ Sftoomi.Translator.translate('filters') }}
                 </div>
             </div>
         </nz-sider>

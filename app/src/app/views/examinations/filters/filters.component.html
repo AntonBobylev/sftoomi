@@ -1,11 +1,16 @@
-<nz-card nzTitle="Filters">
+<nz-card [nzTitle]="Sftoomi.Translator.translate('filters')">
     <div class="wrapper">
         <form [formGroup]="form"
               class="main-form"
         >
+            <app-datepicker [label]="Sftoomi.Translator.translate('views.examinations.filters.examination_date')"
+                            name="examination_date"
+                            [form]="form"
+            />
+
             <app-numberfield name="examination_id"
                              [form]="form"
-                             label="Examination ID"
+                             [label]="Sftoomi.Translator.translate('views.examinations.filters.examination_id')"
             />
         </form>
 

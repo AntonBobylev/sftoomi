@@ -4,6 +4,7 @@ let usDictionary: object =  {
     dob_short: 'DoB',
     edit: 'Edit',
     error: 'Error',
+    filters: 'Фильтры',
     first_name: 'First name',
     full_name: 'Full name',
     id: 'ID',
@@ -49,6 +50,10 @@ let usDictionary: object =  {
                     patient: 'Patient',
                     studies: 'Studies'
                 }
+            },
+            filters: {
+                examination_date: 'Examination date',
+                examination_id: 'Examination ID'
             },
             dialog: {
                 add_title: 'Add examination',

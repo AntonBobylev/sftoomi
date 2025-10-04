@@ -4,6 +4,7 @@ let ruDictionary: object =  {
     dob_short: 'ДР',
     edit: 'Редактировать',
     error: 'Ошибка',
+    filters: 'Фильтры',
     first_name: 'Имя',
     full_name: 'Полное имя',
     id: 'ID',
@@ -49,6 +50,10 @@ let ruDictionary: object =  {
                     patient: 'Пациент',
                     studies: 'Исследования'
                 }
+            },
+            filters: {
+                examination_date: 'Дата обследования',
+                examination_id: 'ID обследования'
             },
             dialog: {
                 add_title: 'Добавление обследования',

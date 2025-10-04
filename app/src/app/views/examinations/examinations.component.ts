@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 
+import Sftoomi from '../../class/Sftoomi'
+
 import ExaminationsTableComponent from './table/table.component';
 import { ExaminationsFiltersComponent } from './filters/filters.component';
 
@@ -18,5 +20,7 @@ import { ExaminationsFiltersComponent } from './filters/filters.component';
 
 export default class ExaminationsComponent
 {
-    protected isFiltersCollapsed: boolean = true;
+    protected isFiltersCollapsed: boolean = false;
+
+    protected readonly Sftoomi = Sftoomi
 }

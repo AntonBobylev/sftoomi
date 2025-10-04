@@ -9,6 +9,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import { DialogType } from '../../../class/Dialog';
 
 import AppNumberfieldComponent from '../../../components/core/app-numberfield/app-numberfield.component'
+import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component'
 
 import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
 
@@ -25,7 +26,8 @@ export type ProcessingFiltersPanelOut = {
         AppNumberfieldComponent,
         NzButtonComponent,
         NzIconDirective,
-        NzCardComponent
+        NzCardComponent,
+        AppDatepickerComponent
     ],
     styleUrl: './filters.component.less'
 })
@@ -37,11 +39,14 @@ export class ExaminationsFiltersComponent implements AfterViewInit
     @Output() public onLoaded: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
 
     protected readonly form: FormGroup = new FormGroup({
-        examination_id: new FormControl<number | null>(null, [Validators.min(1), Validators.max(Sftoomi.Constants.types.int.unsigned)])
+        examination_date: new FormControl<Date | null>(null),
+        examination_id:   new FormControl<number | null>(null, [Validators.min(1), Validators.max(Sftoomi.Constants.types.int.unsigned)])
     });
 
     protected readonly data: WritableSignal<getExaminationsFiltersAPI['data'] | undefined> = signal<getExaminationsFiltersAPI['data'] | undefined>(undefined);
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
+
+    protected readonly Sftoomi = Sftoomi
 
     private readonly getExaminationsFiltersUrl: string = '/getExaminationsFilters';
 
