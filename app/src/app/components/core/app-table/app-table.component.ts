@@ -35,6 +35,8 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly isBordered: boolean = true;
     protected readonly selectionRequired: boolean = true;
 
+    protected readonly lazyLoad: boolean = false;
+
     protected selectionInHeaderChecked: boolean = false;
     protected selectionInHeaderIntermediate: boolean = false;
 
@@ -45,7 +47,9 @@ export default class AppTableComponent implements AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.refresh();
+        if (!this.lazyLoad) {
+            this.refresh();
+        }
     }
 
     public setIsLoading(isLoading: boolean): void
@@ -53,13 +57,13 @@ export default class AppTableComponent implements AfterViewInit
         this.isLoading.set(isLoading);
     }
 
-    public refresh(): void
+    public refresh(filters?: FormData): void
     {
         if (Sftoomi.isEmpty(this.loadUrl)) {
             return;
         }
 
-        let data: FormData = new FormData();
+        let data: FormData = filters ? filters : new FormData();
         if (this.usePagination) {
             data.append('limit', this.pageSize.toString());
             data.append('start', (this.currentPageIndex - 1).toString());
