@@ -1,5 +1,6 @@
 let usDictionary: object =  {
     add: 'Add',
+    clear: 'Clear',
     dob_full: 'Date of birth',
     dob_short: 'DoB',
     edit: 'Edit',
@@ -18,6 +19,7 @@ let usDictionary: object =  {
     refresh: 'Refresh',
     remove: 'Remove',
     save: 'Save',
+    search: 'Search',
     select_all: 'Select all',
     short_name: 'Short name',
     switch_language: 'Switch language',

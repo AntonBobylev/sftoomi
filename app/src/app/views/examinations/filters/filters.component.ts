@@ -13,7 +13,7 @@ import AppDatepickerComponent from '../../../components/core/app-datepicker/app-
 
 import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
 
-export type ProcessingFiltersPanelOut = {
+export type ExaminationsFiltersPanelOut = {
     examination_date: Date,
     examination_id:   number | null
 }
@@ -22,24 +22,20 @@ export type ProcessingFiltersPanelOut = {
     selector: 'examinations-module-filters-panel',
     templateUrl: './filters.component.html',
     imports: [
-        ReactiveFormsModule,
-        AppNumberfieldComponent,
-        NzButtonComponent,
-        NzIconDirective,
-        NzCardComponent,
-        AppDatepickerComponent
+        ReactiveFormsModule, AppNumberfieldComponent, NzButtonComponent,
+        NzIconDirective, NzCardComponent, AppDatepickerComponent
     ],
     styleUrl: './filters.component.less'
 })
 
-export class ExaminationsFiltersComponent implements AfterViewInit
+export default class ExaminationsFiltersComponent implements AfterViewInit
 {
-    @Output() public onSearch: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
-    @Output() public onClear: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
-    @Output() public onLoaded: EventEmitter<ProcessingFiltersPanelOut> = new EventEmitter<ProcessingFiltersPanelOut>();
+    @Output() public onSearch: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
+    @Output() public onClear:  EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
+    @Output() public onLoaded: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
 
     protected readonly form: FormGroup = new FormGroup({
-        examination_date: new FormControl<Date | null>(null),
+        examination_date: new FormControl<Date | null>(null, [Validators.required]),
         examination_id:   new FormControl<number | null>(null, [Validators.min(1), Validators.max(Sftoomi.Constants.types.int.unsigned)])
     });
 
@@ -52,8 +48,9 @@ export class ExaminationsFiltersComponent implements AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.isLoading.set(true);
+        this.clearForm();
 
+        this.isLoading.set(true);
         new Fetcher().request({
             url: this.getExaminationsFiltersUrl,
             success: (_response: any, _request: any, data: getExaminationsFiltersAPI): void => {
@@ -79,27 +76,30 @@ export class ExaminationsFiltersComponent implements AfterViewInit
         })
     }
 
-    public getValues(): ProcessingFiltersPanelOut
+    public getValues(): ExaminationsFiltersPanelOut
     {
         return {
-            examination_date: new Date(),
+            examination_date: this.form.get('examination_date')?.value,
             examination_id:   this.form.get('examination_id')?.value ?? ''
         };
     }
 
     public clearForm(): void
     {
+        this.form.get('examination_date')?.setValue(new Date());
         this.form.get('examination_id')?.setValue(null);
 
         this.onClear.emit(this.getValues());
     }
 
-    protected onExaminationDateClick(date: any): void
+    protected onSearchClick(): void
     {
-         this.onSearch.emit(this.getValues());
-    }
+        if (this.form.invalid) {
+            Sftoomi.popupMsgService?.formInvalid();
 
-    protected onTodayClick(): void
-    {
+            return;
+        }
+
+        this.onSearch.emit(this.getValues());
     }
 }

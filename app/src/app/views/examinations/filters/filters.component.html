@@ -21,15 +21,15 @@
                     (click)="clearForm()"
             >
                 <nz-icon nzType="clear" />
-                Clear
+                {{ Sftoomi.Translator.translate('clear') }}
             </button>
 
             <button nz-button
                     nzType="primary"
-                    (click)="onSearch.emit(getValues())"
+                    (click)="onSearchClick()"
             >
                 <nz-icon nzType="search" />
-                Search
+                {{ Sftoomi.Translator.translate('search') }}
             </button>
         </div>
     </div>

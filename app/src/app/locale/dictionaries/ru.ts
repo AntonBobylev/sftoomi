@@ -1,5 +1,6 @@
 let ruDictionary: object =  {
     add: 'Добавить',
+    clear: 'Очистить',
     dob_full: 'Дата рождения',
     dob_short: 'ДР',
     edit: 'Редактировать',
@@ -18,6 +19,7 @@ let ruDictionary: object =  {
     refresh: 'Обновить',
     remove: 'Удалить',
     save: 'Сохранить',
+    search: 'Поиск',
     select_all: 'Выбрать всё',
     short_name: 'Сокращенное имя',
     switch_language: 'Изменить язык',

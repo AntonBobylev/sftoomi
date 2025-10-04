@@ -6,7 +6,12 @@
                   [(nzCollapsed)]="isFiltersCollapsed"
         >
             <div class="filters-wrapper">
-                <examinations-module-filters-panel [class.hidden]="isFiltersCollapsed"/>
+                <examinations-module-filters-panel #filtersCtrl
+                                                   [class.hidden]="isFiltersCollapsed"
+                                                   (onLoaded)="filtersLoaded($event)"
+                                                   (onSearch)="onSearch($event)"
+                                                   (onClear)="onClear($event)"
+                />
                 <div [class.hidden]="!isFiltersCollapsed"
                      class="hidden-filters-caption"
                 >
@@ -15,6 +20,6 @@
             </div>
         </nz-sider>
 
-        <examinations-table />
+        <examinations-table #tableCtrl />
     </nz-layout>
 </div>
