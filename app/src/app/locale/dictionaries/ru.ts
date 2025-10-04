@@ -153,11 +153,13 @@ let ruDictionary: object =  {
     },
 
     validators: {
-        phone_number_is_invalid: 'Неверный номер телефона',
         field_required: 'Это обязательное поле!',
-        max_length: 'Максимально разрешенная длина — {0}',
-        min_length: 'Минимально разрешенная длина — {0}',
-        only_letters_allowed: 'Разрешены только буквы'
+        max_length: 'Максимальная длина — {0}',
+        max_value: 'Максимальное значение: {0}',
+        min_length: 'Минимальная длина — {0}',
+        min_value: 'Минимальное значение: {0}',
+        only_letters_allowed: 'Разрешены только буквы',
+        phone_number_is_invalid: 'Неверный номер телефона'
     },
 
     popup: {

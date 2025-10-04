@@ -153,11 +153,13 @@ let usDictionary: object =  {
     },
 
     validators: {
-        phone_number_is_invalid: 'Phone number is invalid',
         field_required: 'This field is required',
         max_length: 'Maximum allowed length — {0}',
+        max_value: 'Maximum allowed value is {0}',
         min_length: 'Minimum allowed length — {0}',
-        only_letters_allowed: 'Only letters allowed'
+        min_value: 'Minimum allowed value is {0}',
+        only_letters_allowed: 'Only letters allowed',
+        phone_number_is_invalid: 'Phone number is invalid',
     },
 
     popup: {
