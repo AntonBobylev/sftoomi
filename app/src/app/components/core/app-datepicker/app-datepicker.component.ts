@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -22,5 +22,7 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
 })
 export default class AppDatepickerComponent extends AppBaseField
 {
+    @Input() public isInline: boolean = false;
+
     protected readonly getDatePickerLocalDateFormat = getDatePickerLocalDateFormat;
 }

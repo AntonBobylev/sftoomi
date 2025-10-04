@@ -8,7 +8,8 @@
     <nz-form-control [nzErrorTip]="errorTpl">
         <nz-date-picker [formControlName]="name"
                         [id]="name"
-                        style="width: 100%"
+                        [nzInline]="isInline"
+                        style="width: 100%; justify-content: center;"
                         [nzFormat]="getDatePickerLocalDateFormat()"
         />
 
