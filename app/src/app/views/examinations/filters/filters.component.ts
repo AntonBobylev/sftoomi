@@ -12,6 +12,7 @@ import AppNumberfieldComponent from '../../../components/core/app-numberfield/ap
 import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component'
 
 import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
+import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 
 export type ExaminationsFiltersPanelOut = {
     examination_date: Date,
@@ -27,7 +28,7 @@ export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut
     templateUrl: './filters.component.html',
     imports: [
         ReactiveFormsModule, AppNumberfieldComponent, NzButtonComponent,
-        NzIconDirective, NzCardComponent, AppDatepickerComponent
+        NzIconDirective, NzCardComponent, AppDatepickerComponent, AppLoadingSpinnerComponent
     ],
     styleUrl: './filters.component.less'
 })
@@ -58,8 +59,6 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
         new Fetcher().request({
             url: this.getExaminationsFiltersUrl,
             success: (_response: any, _request: any, data: getExaminationsFiltersAPI): void => {
-                this.isLoading.set(false);
-
                 if (Sftoomi.isEmpty(data.data)) {
                     return;
                 }
@@ -69,13 +68,14 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
                 this.onLoaded.emit(this.getValues());
             },
             failure: (_code: any, message: any, _request: any): void => {
-                this.isLoading.set(false);
-
                 if (message === 'canceled') {
                     return;
                 }
 
                 Sftoomi.Dialog.show(message, DialogType.ERROR);
+            },
+            finally: (): void => {
+                this.isLoading.set(false);
             }
         })
     }

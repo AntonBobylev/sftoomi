@@ -1,0 +1,25 @@
+@import './theme';
+
+.overflowed-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.loading-spinner-wrapper {
+    position: absolute;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    background-color: @layout-body-background;
+    opacity: 70%;
+    padding: inherit;
+    left: 0;
+    right: 0;
+}
