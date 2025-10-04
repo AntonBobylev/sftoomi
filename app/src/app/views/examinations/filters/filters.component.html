@@ -9,6 +9,7 @@
                             name="examination_date"
                             [form]="form"
                             [isInline]="true"
+                            (onValueChanged)="onDateChanged($event)"
             />
 
             <app-numberfield name="examination_id"

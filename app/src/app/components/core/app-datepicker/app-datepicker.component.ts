@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -20,9 +20,18 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
         ReactiveFormsModule
     ]
 })
-export default class AppDatepickerComponent extends AppBaseField
+export default class AppDatepickerComponent extends AppBaseField implements AfterViewInit
 {
     @Input() public isInline: boolean = false;
 
+    @Output() public onValueChanged: EventEmitter<Date | null> = new EventEmitter<Date | null>();
+
     protected readonly getDatePickerLocalDateFormat = getDatePickerLocalDateFormat;
+
+    ngAfterViewInit(): void
+    {
+        this.form.get(this.name)?.valueChanges.subscribe((date: Date | null): void => {
+            this.onValueChanged.emit(date);
+        });
+    }
 }

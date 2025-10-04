@@ -109,4 +109,13 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
 
         this.onSearch.emit(this.getValues());
     }
+
+    protected onDateChanged(date: Date | null): void
+    {
+        if (Sftoomi.isEmpty(date) || this.form.invalid) {
+            return;
+        }
+
+        this.onSearchClick();
+    }
 }
