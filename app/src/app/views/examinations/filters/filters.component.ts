@@ -16,7 +16,11 @@ import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
 export type ExaminationsFiltersPanelOut = {
     examination_date: Date,
     examination_id:   number | null
-}
+};
+
+export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut & {
+    doSearch: boolean
+};
 
 @Component({
     selector: 'examinations-module-filters-panel',
@@ -31,7 +35,7 @@ export type ExaminationsFiltersPanelOut = {
 export default class ExaminationsFiltersComponent implements AfterViewInit
 {
     @Output() public onSearch: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
-    @Output() public onClear:  EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
+    @Output() public onClear:  EventEmitter<ExaminationsFiltersPanelClearEventData> = new EventEmitter<ExaminationsFiltersPanelClearEventData>();
     @Output() public onLoaded: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
 
     protected readonly form: FormGroup = new FormGroup({
@@ -48,7 +52,7 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
 
     ngAfterViewInit(): void
     {
-        this.clearForm();
+        this.clearForm(false);
 
         this.isLoading.set(true);
         new Fetcher().request({
@@ -84,12 +88,15 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
         };
     }
 
-    public clearForm(): void
+    public clearForm(doSearch: boolean = true): void
     {
         this.form.get('examination_date')?.setValue(new Date());
         this.form.get('examination_id')?.setValue(null);
 
-        this.onClear.emit(this.getValues());
+        this.onClear.emit(Sftoomi.mergeObjects(
+            this.getValues(),
+            { doSearch: doSearch || false }
+        ) as ExaminationsFiltersPanelClearEventData);
     }
 
     protected onSearchClick(): void

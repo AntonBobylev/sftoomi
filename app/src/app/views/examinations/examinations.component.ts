@@ -1,24 +1,22 @@
-import { Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 
 import Sftoomi from '../../class/Sftoomi'
 
 import ExaminationsTableComponent from './table/table.component';
-import ExaminationsFiltersComponent, { ExaminationsFiltersPanelOut } from './filters/filters.component';
+import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, ExaminationsFiltersPanelOut } from './filters/filters.component';
 
 @Component({
     selector: 'app-examinations',
     templateUrl: './examinations.component.html',
     imports: [
-        ExaminationsTableComponent,
-        ExaminationsFiltersComponent,
-        NzLayoutComponent,
-        NzSiderComponent
+        ExaminationsTableComponent, ExaminationsFiltersComponent,
+        NzLayoutComponent, NzSiderComponent
     ],
     styleUrl: './examinations.component.less'
 })
 
-export default class ExaminationsComponent
+export default class ExaminationsComponent implements AfterViewInit
 {
     @ViewChild('filtersCtrl')
     protected readonly filtersCtrl!: ExaminationsFiltersComponent;
@@ -30,6 +28,11 @@ export default class ExaminationsComponent
 
     protected readonly Sftoomi = Sftoomi
 
+    ngAfterViewInit(): void
+    {
+        this.tableCtrl.setIsLoading(true);
+    }
+
     protected filtersLoaded(values: ExaminationsFiltersPanelOut): void
     {
         this.search(values);
@@ -40,13 +43,16 @@ export default class ExaminationsComponent
         this.search(values);
     }
 
-    protected onClear(values: ExaminationsFiltersPanelOut): void
+    protected onClear(values: ExaminationsFiltersPanelClearEventData): void
     {
-        this.search(values);
+        if (values.doSearch) {
+            this.search(values);
+        }
     }
 
     private search(values: ExaminationsFiltersPanelOut): void
     {
+        this.tableCtrl.setIsLoading(true);
         this.tableCtrl.refresh(Sftoomi.formValuesToFormData(values));
     }
 }
