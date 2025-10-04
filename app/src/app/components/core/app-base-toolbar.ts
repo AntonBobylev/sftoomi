@@ -1,11 +1,9 @@
-import { Directive, inject, Input, OnDestroy, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnDestroy, ViewContainerRef } from '@angular/core';
 
 import Sftoomi from '../../class/Sftoomi';
 import Fetcher from '../../class/Fetcher';
 
 import AppTableComponent from './app-table/app-table.component';
-
-import PopupMsgService from '../../services/popup-msg.service';
 
 @Directive()
 export default abstract class AppBaseToolbar implements OnDestroy
@@ -18,8 +16,6 @@ export default abstract class AppBaseToolbar implements OnDestroy
     protected abstract readonly removeUrl: string;
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
-
-    protected readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
     protected readonly queryController: AbortController = new AbortController();
 
@@ -47,13 +43,13 @@ export default abstract class AppBaseToolbar implements OnDestroy
 
         let selectedRecords: any[] = this.table.getSelection();
         if (selectedRecords.length < 1) {
-            this.popupMsg.nothingSelected();
+            Sftoomi.popupMsgService?.nothingSelected();
 
             return;
         }
 
         if (selectedRecords.length > 1) {
-            this.popupMsg.moreThanOneSelected();
+            Sftoomi.popupMsgService?.moreThanOneSelected();
 
             return;
         }
@@ -71,7 +67,7 @@ export default abstract class AppBaseToolbar implements OnDestroy
 
         let selectedRecords: any[] = this.table.getSelection();
         if (selectedRecords.length < 1) {
-            this.popupMsg.nothingSelected();
+            Sftoomi.popupMsgService?.nothingSelected();
 
             return;
         }

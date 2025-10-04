@@ -5,8 +5,6 @@ import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 import Sftoomi from '../../class/Sftoomi';
 import Fetcher from '../../class/Fetcher';
 
-import PopupMsgService from '../../services/popup-msg.service';
-
 import { DialogType } from '../../class/Dialog';
 
 @Directive()
@@ -26,8 +24,6 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected abstract readonly saveUrl: string;
 
     protected abstract afterLoad(data: any): void;
-
-    protected readonly popupMsg: PopupMsgService = inject(PopupMsgService);
 
     protected readonly data: any = inject(NZ_MODAL_DATA);
 
@@ -88,7 +84,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
         this.validate();
         if (this.form.invalid) {
-            this.popupMsg.formInvalid();
+            Sftoomi.popupMsgService?.formInvalid();
 
             return;
         }

@@ -170,7 +170,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
     {
         let addedStudiesCount: number = this.studiesSelectorCtrl.getAddedStudiesCount();
         if (addedStudiesCount < 1) {
-            this.popupMsg.warning(Sftoomi.Translator.translate('views.examinations.dialog.no_studies_added_tip'));
+            Sftoomi.popupMsgService?.warning(Sftoomi.Translator.translate('views.examinations.dialog.no_studies_added_tip'));
 
             return false;
         }

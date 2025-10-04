@@ -16,6 +16,7 @@ import { RoutesPaths } from './app.routes';
 import LanguageSwitcherComponent from './components/misc/language-switcher/language-switcher.component';
 
 import ResponsiveLayoutService from './services/responsive-layout.service';
+import PopupMsgService from './services/popup-msg.service'
 
 @Component({
     selector: 'app-root',
@@ -39,10 +40,16 @@ export class App
         private readonly nzDialog: NzModalService,
         private readonly nzI18nService: NzI18nService,
         private readonly responsiveLayoutService: ResponsiveLayoutService,
+        private readonly popupMsgService: PopupMsgService,
         private readonly router: Router
     )
     {
-        Sftoomi.init(nzDialog, nzI18nService, responsiveLayoutService);
+        Sftoomi.init(
+            nzDialog,
+            nzI18nService,
+            responsiveLayoutService,
+            popupMsgService
+        );
     }
 
     protected isRouteSelected(route: RoutesPaths): boolean

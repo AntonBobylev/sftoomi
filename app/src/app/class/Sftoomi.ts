@@ -11,6 +11,7 @@ import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
 
 import CookiesService from '../services/cookies.service';
 import ResponsiveLayoutService from '../services/responsive-layout.service';
+import PopupMsgService from '../services/popup-msg.service'
 
 export default class Sftoomi
 {
@@ -20,12 +21,19 @@ export default class Sftoomi
     public static readonly Constants: Constants = new Constants();
 
     public static responsiveLayoutService: ResponsiveLayoutService | undefined = undefined;
+    public static popupMsgService: PopupMsgService | undefined;
 
-    public static init(dialog: NzModalService, nzI18nService: NzI18nService, responsiveLayoutService: ResponsiveLayoutService): void
+    public static init(
+        dialog: NzModalService,
+        nzI18nService: NzI18nService,
+        responsiveLayoutService: ResponsiveLayoutService,
+        popupMsgService: PopupMsgService
+    ): void
     {
         Sftoomi.Dialog.init(dialog);
-        Sftoomi.Translator.init(nzI18nService)
-        Sftoomi.responsiveLayoutService = responsiveLayoutService
+        Sftoomi.Translator.init(nzI18nService);
+        Sftoomi.responsiveLayoutService = responsiveLayoutService;
+        Sftoomi.popupMsgService = popupMsgService;
     }
 
     /**
