@@ -5,6 +5,7 @@ import moment from 'moment';
 
 import Translator from './Translator';
 import Dialog from './Dialog';
+import Constants from './Constants'
 
 import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
 
@@ -16,6 +17,7 @@ export default class Sftoomi
     public static readonly Translator: Translator = new Translator();
     public static readonly Cookies: CookiesService = new CookiesService();
     public static readonly Dialog: Dialog = new Dialog();
+    public static readonly Constants: Constants = new Constants();
 
     public static responsiveLayoutService: ResponsiveLayoutService | undefined = undefined;
 
