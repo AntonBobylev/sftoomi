@@ -57,6 +57,11 @@ export default class AppTableComponent implements AfterViewInit
         this.isLoading.set(isLoading);
     }
 
+    public isLoadingNow(): boolean
+    {
+        return this.isLoading();
+    }
+
     public refresh(filters?: FormData): void
     {
         if (Sftoomi.isEmpty(this.loadUrl)) {
