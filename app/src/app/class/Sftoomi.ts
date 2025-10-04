@@ -270,4 +270,18 @@ export default class Sftoomi
 
         return fieldCtrl.hasValidator(Validators.required);
     }
+
+    /**
+     * Merges second object into the first
+     *
+     * @param where
+     * @param what
+     */
+    public static mergeObjects(where: Object, what: Object): object
+    {
+        return {
+            ...where,
+            ...what
+        };
+    }
 }
