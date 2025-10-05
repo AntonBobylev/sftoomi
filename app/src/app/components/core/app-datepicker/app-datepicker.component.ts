@@ -22,6 +22,7 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
         ReactiveFormsModule
     ]
 })
+
 export default class AppDatepickerComponent extends AppBaseField implements AfterViewInit
 {
     @Input() public isInline: boolean = false;
@@ -42,12 +43,12 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
             return false;
         }
 
-        return this.datesForHighlighting.some((date: Date): boolean => this.isSameDay(date, currentDate));
+        return this.datesForHighlighting.some((date: Date): boolean => Sftoomi.twoDatesEqual(date, currentDate));
     }
 
     protected isToday(date: Date): boolean
     {
-        return this.isSameDay(new Date(), date);
+        return Sftoomi.twoDatesEqual(new Date(), date);
     }
 
     protected isSelected(date: Date): boolean
@@ -57,15 +58,6 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
             return false;
         }
 
-        return this.isSameDay(date, currentSelectedDate);
-
-    }
-
-    // TODO: move to SFTOOMI class
-    private isSameDay(date1: Date, date2: Date): boolean
-    {
-        return date1.getDate() === date2.getDate() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getFullYear() === date2.getFullYear();
+        return Sftoomi.twoDatesEqual(date, currentSelectedDate);
     }
 }

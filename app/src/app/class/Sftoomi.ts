@@ -284,4 +284,17 @@ export default class Sftoomi
             ...what
         };
     }
+
+    /**
+     * Makes sure two passed dates are equal
+     *
+     * @param firstDate
+     * @param secondDate
+     */
+    public static twoDatesEqual(firstDate: Date, secondDate: Date): boolean
+    {
+        return firstDate.getDate()     === secondDate.getDate()
+            && firstDate.getMonth()    === secondDate.getMonth()
+            && firstDate.getFullYear() === secondDate.getFullYear();
+    }
 }
