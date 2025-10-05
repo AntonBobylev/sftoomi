@@ -12,6 +12,9 @@ import FormErrorTemplateComponent from '../../templates/form-error-template/form
 
 import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 
+import AppDatePickerScrollMonthDirective from './scroll.directive'
+
+
 @Component({
     selector: 'app-datepicker',
     templateUrl: './app-datepicker.component.html',
@@ -19,7 +22,7 @@ import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDate
     imports: [
         FormErrorTemplateComponent, NzColDirective, NzDatePickerComponent,
         NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule, AppDatePickerScrollMonthDirective
     ]
 })
 
