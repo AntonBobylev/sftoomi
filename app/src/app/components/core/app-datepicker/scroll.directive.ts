@@ -2,6 +2,8 @@ import { Directive, HostListener } from '@angular/core';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
 
 import Sftoomi from '../../../class/Sftoomi'
+import moment from 'moment'
+import getMomentLocalDateFormat from '../../../locale/getMomentLocalDateFormat'
 
 @Directive({
     selector: 'nz-date-picker[AppDatePickerScrollMonth]'
@@ -24,9 +26,9 @@ export default class AppDatePickerScrollMonthDirective
 
     private navigateMonth(direction: number): void
     {
-        const currentValue: string = Sftoomi.dateShort(this.datePicker.inputValue);
-        if (Sftoomi.isEmpty(currentValue)) {
-            const newDate = new Date(currentValue);
+        const currentValue: string = this.datePicker.inputValue;
+        if (!Sftoomi.isEmpty(currentValue)) {
+            const newDate: Date = moment(currentValue, getMomentLocalDateFormat().date).toDate();
             newDate.setMonth(newDate.getMonth() + direction);
             this.datePicker.writeValue(newDate);
         }
