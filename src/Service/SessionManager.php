@@ -3,29 +3,32 @@
 namespace App\Service;
 
 use App\Entity\User;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 
-class SessionManager
+final readonly class SessionManager
 {
-    public function __construct(
-        private EntityManagerInterface $entityManager
-    ) {}
+    private Connection $connection;
+    
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+        $this->connection = $this->entityManager->getConnection();
+    }
 
     public function createSession(User $user): string
     {
-        $connection = $this->entityManager->getConnection();
         $sessionId = bin2hex(random_bytes(64));
         $lifetime = time() + 3600;
 
         $sessionData = [
-            'user_id' => $user->getId(),
-            'login' => $user->getLogin(),
-            'firstName' => $user->getFirstName(),
-            'lastName' => $user->getLastName(),
-            'roles' => $user->getRoles()
+            "user_id"   => $user->getId(),
+            "login"     => $user->getLogin(),
+            "firstName" => $user->getFirstName(),
+            "lastName"  => $user->getLastName(),
+            "roles"     => $user->getRoles()
         ];
 
-        $connection->executeStatement(
+        $this->connection->executeStatement(
             "INSERT INTO sessions (session_id, session_data, session_lifetime, session_time) VALUES (?, ?, ?, ?)",
             [
                 $sessionId,
@@ -40,21 +43,22 @@ class SessionManager
 
     public function validateSession(string $sessionId): ?array
     {
-        $connection = $this->entityManager->getConnection();
+        if (rand(1, 100) === 1) {
+            $this->cleanupExpiredSessions();
+        }
 
-        $session = $connection->executeQuery(
+        $session = $this->connection->executeQuery(
             "SELECT session_data FROM sessions WHERE session_id = ? AND session_lifetime > ?",
             [$sessionId, time()]
         )->fetchAssociative();
 
         if ($session) {
-            // Обновляем время сессии
-            $connection->executeStatement(
+            $this->connection->executeStatement(
                 "UPDATE sessions SET session_lifetime = ? WHERE session_id = ?",
                 [time() + 3600, $sessionId]
             );
 
-            return unserialize($session['session_data']);
+            return unserialize($session["session_data"]);
         }
 
         return null;
@@ -62,8 +66,7 @@ class SessionManager
 
     public function deleteSession(string $sessionId): void
     {
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement(
+        $this->connection->executeStatement(
             "DELETE FROM sessions WHERE session_id = ?",
             [$sessionId]
         );
@@ -71,8 +74,7 @@ class SessionManager
 
     public function cleanupExpiredSessions(): void
     {
-        $connection = $this->entityManager->getConnection();
-        $connection->executeStatement(
+        $this->connection->executeStatement(
             "DELETE FROM sessions WHERE session_lifetime <= ?",
             [time()]
         );
