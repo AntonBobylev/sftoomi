@@ -65,6 +65,46 @@ class AuthController extends AbstractController
         ], Response::HTTP_CREATED);
     }
 
+    #[Route("/login", name: "login", methods: ["GET"])]
+    public function loginPage(): JsonResponse
+    {
+        // Для GET запроса просто возвращаем информацию о том, что нужно использовать POST
+        return new JsonResponse([
+            "message" => "Please use POST method to login",
+            "example" => [
+                "method" => "POST",
+                "url" => "/login",
+                "content_type" => "application/x-www-form-urlencoded",
+                "body" => "login=username&password=password"
+            ]
+        ]);
+    }
+
+    #[Route("/login", name: "login_post", methods: ["POST"])]
+    public function login(): JsonResponse
+    {
+        // Этот метод будет перехвачен Symfony Security
+        $user = $this->getUser();
+
+        if (!$user) {
+            return new JsonResponse([
+                "success" => false,
+                "error" => "Authentication failed"
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        return new JsonResponse([
+            "success" => true,
+            "message" => "Login successful",
+            "user" => [
+                "id" => $user->getId(),
+                "login" => $user->getLogin(),
+                "firstName" => $user->getFirstName(),
+                "lastName" => $user->getLastName()
+            ]
+        ]);
+    }
+
     #[Route("/me", name: "me", methods: ["GET"])]
     public function me(SessionInterface $session): JsonResponse
     {
