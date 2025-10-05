@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Output, signal, ViewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { NzIconDirective } from 'ng-zorro-antd/icon'
@@ -35,12 +35,15 @@ export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut
 
 export default class ExaminationsFiltersComponent implements AfterViewInit
 {
+    @ViewChild('examinationDatePickerCtrl')
+    protected readonly examinationDatePickerCtrl!: AppDatepickerComponent;
+
     @Output() public onSearch: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
     @Output() public onClear:  EventEmitter<ExaminationsFiltersPanelClearEventData> = new EventEmitter<ExaminationsFiltersPanelClearEventData>();
     @Output() public onLoaded: EventEmitter<ExaminationsFiltersPanelOut> = new EventEmitter<ExaminationsFiltersPanelOut>();
 
     protected readonly form: FormGroup = new FormGroup({
-        examination_date: new FormControl<Date | null>(null, [Validators.required]),
+        examination_date: new FormControl<Date   | null>(null, [Validators.required]),
         examination_id:   new FormControl<number | null>(null, [Validators.min(1), Validators.max(Sftoomi.Constants.types.int.unsigned)])
     });
 
@@ -64,6 +67,10 @@ export default class ExaminationsFiltersComponent implements AfterViewInit
                 }
 
                 this.data.set(data.data);
+
+                this.examinationDatePickerCtrl.datesForHighlighting = data.data.dates_with_examinations.map((date: string): Date => {
+                    return Sftoomi.stringToDate(date)!;
+                });
 
                 this.onLoaded.emit(this.getValues());
             },
