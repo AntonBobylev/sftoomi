@@ -1,8 +1,9 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, Input } from '@angular/core';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
+import moment from 'moment'
 
 import Sftoomi from '../../../class/Sftoomi'
-import moment from 'moment'
+
 import getMomentLocalDateFormat from '../../../locale/getMomentLocalDateFormat'
 
 @Directive({
@@ -10,6 +11,8 @@ import getMomentLocalDateFormat from '../../../locale/getMomentLocalDateFormat'
 })
 export default class AppDatePickerScrollMonthDirective
 {
+    @Input() public AppDatePickerScrollMonth: boolean = true;
+
     constructor(private datePicker: NzDatePickerComponent)
     {
     }
@@ -17,6 +20,10 @@ export default class AppDatePickerScrollMonthDirective
     @HostListener('wheel', ['$event'])
     onWheel(event: WheelEvent): void
     {
+        if (!this.AppDatePickerScrollMonth) {
+            return;
+        }
+
         event.preventDefault();
 
         event.deltaY < 0

@@ -12,7 +12,7 @@
                         style="width: 100%; justify-content: center;"
                         [nzFormat]="getDatePickerLocalDateFormat()"
                         [nzDateRender]="dateRenderTpl"
-                        AppDatePickerScrollMonth
+                        [AppDatePickerScrollMonth]="isInline"
         />
 
         <ng-template #errorTpl>
