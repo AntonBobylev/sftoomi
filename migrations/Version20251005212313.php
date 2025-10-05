@@ -28,6 +28,5 @@ final class Version20251005212313 extends AbstractMigration
     public function down(Schema $schema): void
     {
         $this->addSql('DROP TABLE sessions');
-
     }
 }
