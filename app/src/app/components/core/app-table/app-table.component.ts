@@ -134,6 +134,13 @@ export default class AppTableComponent implements AfterViewInit
 
     protected refreshCheckedStatus(): void
     {
+        if (Sftoomi.isEmpty(this.data())) {
+            this.selectionInHeaderChecked = false;
+            this.selectionInHeaderIntermediate = false;
+
+            return;
+        }
+
         this.selectionInHeaderChecked = this.data().every((row) => row.selected);
         this.selectionInHeaderIntermediate = this.data().some((row) => row.selected) && !this.selectionInHeaderChecked;
     }
