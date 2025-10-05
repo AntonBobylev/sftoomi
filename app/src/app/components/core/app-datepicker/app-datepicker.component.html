@@ -11,12 +11,25 @@
                         [nzInline]="isInline"
                         style="width: 100%; justify-content: center;"
                         [nzFormat]="getDatePickerLocalDateFormat()"
+                        [nzDateRender]="dateRenderTpl"
         />
 
         <ng-template #errorTpl>
             <form-error-template [fieldName]="name"
                                  [parentFormGroup]="form"
             />
+        </ng-template>
+
+        <ng-template #dateRenderTpl let-current>
+            <div class="custom-date-cell">
+                <div class="date-content"
+                     [class.today]="isToday(current)"
+                     [class.highlight-date]="shouldHighlightDate(current)"
+                     [class.selected]="isSelected(current)"
+                >
+                    {{ current.getDate() }}
+                </div>
+            </div>
         </ng-template>
     </nz-form-control>
 </nz-form-item>
