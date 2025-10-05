@@ -32,6 +32,7 @@
         "@maskito/core": "^3.11.0",
         "@maskito/kit": "^3.11.0",
         "@maskito/phone": "^3.11.0",
+        "@types/moment": "^2.11.29",
         "axios": "^1.12.2",
         "moment": "^2.30.1",
         "ng-zorro-antd": "^20.3.1",
