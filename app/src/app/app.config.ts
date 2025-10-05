@@ -5,9 +5,11 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, inject, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
-import { en_US, ru_RU, NZ_I18N } from 'ng-zorro-antd/i18n';
+import { en_US, ru_RU, NZ_I18N, NZ_DATE_CONFIG } from 'ng-zorro-antd/i18n';
 
 import { routes } from './app.routes';
+
+import getFirstDayOfWeek from './locale/getFirstDayOfWeek'
 
 registerLocaleData(en);
 registerLocaleData(ru);
@@ -31,6 +33,12 @@ export const appConfig: ApplicationConfig = {
             }
         },
         provideAnimationsAsync(),
-        provideHttpClient()
+        provideHttpClient(),
+        {
+            provide: NZ_DATE_CONFIG,
+            useValue: {
+                firstDayOfWeek: getFirstDayOfWeek()
+            }
+        },
     ]
 };
