@@ -15,17 +15,3 @@ services:
     App\EventListener\ExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
-
-    session.handler.pdo:
-        class: Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
-        arguments:
-            - '%env(DATABASE_URL)%'
-            - {
-                db_table: 'sessions',
-                db_id_col: 'session_id',
-                db_data_col: 'session_data',
-                db_lifetime_col: 'session_lifetime',
-                db_time_col: 'session_time'
-            }
-
-    App\Session\PdoSessionFactory: ~
