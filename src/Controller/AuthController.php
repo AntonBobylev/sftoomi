@@ -105,33 +105,6 @@ final class AuthController extends AbstractController
         ]);
     }
 
-    #[Route("/me", name: "me", methods: ["GET"])]
-    public function me(Request $request, SessionManager $sessionManager): JsonResponse
-    {
-        $sessionId = $request->headers->get("X-Session-ID");
-
-        if (!$sessionId) {
-            return new JsonResponse([
-                "success" => false,
-                "error"   => "Session ID required"
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        $sessionData = $sessionManager->validateSession($sessionId);
-
-        if (!$sessionData) {
-            return new JsonResponse([
-                "success" => false,
-                "error"   => "Invalid or expired session"
-            ], Response::HTTP_UNAUTHORIZED);
-        }
-
-        return new JsonResponse([
-            "success" => true,
-            "user" => $sessionData
-        ]);
-    }
-
     #[Route("/logout", name: "logout", methods: ["GET"])]
     public function logout(Request $request, SessionManager $sessionManager): JsonResponse
     {
