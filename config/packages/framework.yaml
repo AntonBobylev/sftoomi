@@ -2,4 +2,4 @@ framework:
     secret: '%env(APP_SECRET)%'
 
     session:
-        enabled: false  # Отключаем встроенные сессии
+        enabled: false
