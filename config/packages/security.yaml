@@ -15,19 +15,6 @@ security:
             security: false
 
         main:
-            lazy: true
-            provider: app_user_provider
-            json_login:
-                check_path: login
-                username_path: login
-                password_path: password
+            security: false
 
-    access_control:
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/login-db, roles: PUBLIC_ACCESS }
-        - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/check-auth, roles: PUBLIC_ACCESS }
-        - { path: ^/me-db, roles: PUBLIC_ACCESS }
-        - { path: ^/logout-db, roles: PUBLIC_ACCESS }
-        - { path: ^/debug-, roles: PUBLIC_ACCESS }
-        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+    access_control: []
