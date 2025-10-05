@@ -39,7 +39,10 @@ class AuthController extends AbstractController
 
         $user = new User();
         $user->setLogin($data["login"]);
-        $user->setPassword($passwordHasher->hashPassword($user, $data["password"]));
+
+        $hashedPassword = $passwordHasher->hashPassword($user, $data["password"]);
+        $user->setPassword($hashedPassword);
+
         $user->setRoles(["ROLE_USER"]);
 
         if (isset($data["firstName"])) {
@@ -65,25 +68,26 @@ class AuthController extends AbstractController
         ], Response::HTTP_CREATED);
     }
 
-    #[Route("/login", name: "login", methods: ["GET"])]
-    public function loginPage(): JsonResponse
+    #[Route("/login", name: "login_docs", methods: ["GET"])]
+    public function loginDocs(): JsonResponse
     {
-        // Для GET запроса просто возвращаем информацию о том, что нужно использовать POST
         return new JsonResponse([
-            "message" => "Please use POST method to login",
+            "message" => "Use POST method with JSON to login",
             "example" => [
                 "method" => "POST",
                 "url" => "/login",
-                "content_type" => "application/x-www-form-urlencoded",
-                "body" => "login=username&password=password"
+                "content_type" => "application/json",
+                "body" => [
+                    "login" => "username",
+                    "password" => "password"
+                ]
             ]
         ]);
     }
 
-    #[Route("/login", name: "login_post", methods: ["POST"])]
+    #[Route("/login", name: "login", methods: ["POST"])]
     public function login(): JsonResponse
     {
-        // Этот метод будет перехвачен Symfony Security
         $user = $this->getUser();
 
         if (!$user) {
@@ -100,7 +104,8 @@ class AuthController extends AbstractController
                 "id" => $user->getId(),
                 "login" => $user->getLogin(),
                 "firstName" => $user->getFirstName(),
-                "lastName" => $user->getLastName()
+                "lastName" => $user->getLastName(),
+                "roles" => $user->getRoles()
             ]
         ]);
     }
