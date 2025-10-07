@@ -28,6 +28,7 @@ let ruDictionary: object =  {
     navigation: {
         examinations: 'Обследования',
         home: 'Домашняя',
+        login: 'Вход',
         patients: 'Пациенты',
         setup: {
             caption: 'Настройка',
@@ -41,6 +42,11 @@ let ruDictionary: object =  {
     },
 
     views: {
+        login: {
+            login: 'Логин',
+            logon: 'Войти',
+            password: 'Пароль'
+        },
         examinations: {
             table: {
                 columns: {

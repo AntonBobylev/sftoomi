@@ -1,0 +1,46 @@
+@import "../../../theme";
+
+.wrapper {
+    width: 100%;
+    height: 100%;
+    background: @layout-header-background;
+    background: radial-gradient(circle, @layout-header-background 50%, @primary-color 100%);
+
+    .form-wrapper {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .form {
+            min-width: 300px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-radius: 5px;
+            padding: 20px;
+            border: 1px solid @primary-color;
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+            gap: 10px;
+
+            .header {
+                display: flex;
+                width: 100%;
+                height: 50px;
+                justify-content: center;
+                align-items: center;
+                color: white;
+                font-size: 30px;
+            }
+
+            ::ng-deep {
+                .ant-form-item-label label {
+                    color: white;
+                }
+            }
+        }
+    }
+}

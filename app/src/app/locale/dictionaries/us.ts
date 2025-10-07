@@ -28,6 +28,7 @@ let usDictionary: object =  {
     navigation: {
         examinations: 'Examinations',
         home: 'Home',
+        login: 'Login',
         patients: 'Patients',
         setup: {
             caption: 'Setup',
@@ -41,6 +42,11 @@ let usDictionary: object =  {
     },
 
     views: {
+        login: {
+            login: 'Login',
+            logon: 'Logon',
+            password: 'Password'
+        },
         examinations: {
             table: {
                 columns: {

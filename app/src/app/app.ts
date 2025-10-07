@@ -50,6 +50,14 @@ export class App
             responsiveLayoutService,
             popupMsgService
         );
+
+        if (!Sftoomi.Auth.isAuthorized()) {
+            this.router.navigateByUrl(RoutesPaths.LOGIN, {
+                state: {
+                    last_route: this.router.url
+                }
+            }).then();
+        }
     }
 
     protected isRouteSelected(route: RoutesPaths): boolean

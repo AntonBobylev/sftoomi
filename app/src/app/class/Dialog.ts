@@ -53,7 +53,7 @@ export default class Dialog
             nzDraggable: true,
             nzClosable: false,
             nzMaskClosable: false,
-            nzWidth: '50%',
+            nzCentered: true,
             nzFooter: [{
                 label: Sftoomi.Translator.translate('ok'),
                 onClick: () => dialog.destroy()

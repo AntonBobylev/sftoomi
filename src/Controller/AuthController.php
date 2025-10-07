@@ -26,7 +26,7 @@ final class AuthController extends AbstractController
             return new JsonResponse([
                 "success" => false,
                 "error"   => "Login and password are required"
-            ], Response::HTTP_BAD_REQUEST);
+            ]);
         }
 
         $existingUser = $entityManager->getRepository(User::class)->findOneBy(["login" => $data["login"]]);
@@ -34,7 +34,7 @@ final class AuthController extends AbstractController
             return new JsonResponse([
                 "success" => false,
                 "error"   => "User with this login already exists"
-            ], Response::HTTP_CONFLICT);
+            ]);
         }
 
         $user = new User();
@@ -66,7 +66,7 @@ final class AuthController extends AbstractController
                 "lastName"  => $user->getLastName(),
                 "createdAt" => $user->getCreatedAt()->format("Y-m-d H:i:s")
             ]
-        ], Response::HTTP_CREATED);
+        ]);
     }
 
     #[Route("/login", name: "login", methods: ["POST"])]
@@ -86,7 +86,7 @@ final class AuthController extends AbstractController
             return new JsonResponse([
                 "success" => false,
                 "error"   => "Invalid credentials"
-            ], Response::HTTP_UNAUTHORIZED);
+            ]);
         }
 
         $sessionId = $sessionManager->createSession($user);

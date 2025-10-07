@@ -1,45 +1,50 @@
 <nz-layout class="app-layout">
-    <nz-header [ngClass]="{'mobile-view-header': Sftoomi.responsiveLayoutService?.isSmallWidth()}">
-        <div class="left">
-            <div class="logo">
-                <a [routerLink]="RoutesPaths.HOME">
-                    <img src="graphics/sftoomi-logo.png" alt="logo">
-                    @if (!Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-                        <h1>SFTOOMI</h1>
-                    }
-                </a>
-            </div>
-            @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-                <button nz-dropdown
-                        [nzDropdownMenu]="mobileMenu"
-                        nz-button
-                        nzType="primary"
-                >
-                    {{ Sftoomi.Translator.translate('navigation.mobile_view.button_caption') }}
-                    <nz-icon nzType="down" />
-                </button>
+    @if (Sftoomi.Auth.isAuthorized()) {
+        <nz-header [ngClass]="{'mobile-view-header': Sftoomi.responsiveLayoutService?.isSmallWidth()}">
+            <div class="left">
+                <div class="logo">
+                    <a [routerLink]="RoutesPaths.HOME">
+                        <img src="graphics/sftoomi-logo.png" alt="logo">
+                        @if (!Sftoomi.responsiveLayoutService?.isSmallWidth()) {
+                            <h1>SFTOOMI</h1>
+                        }
+                    </a>
+                </div>
+                @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
+                    <button nz-dropdown
+                            [nzDropdownMenu]="mobileMenu"
+                            nz-button
+                            nzType="primary"
+                    >
+                        {{ Sftoomi.Translator.translate('navigation.mobile_view.button_caption') }}
+                        <nz-icon nzType="down" />
+                    </button>
 
-                <nz-dropdown-menu #mobileMenu="nzDropdownMenu">
-                    <ng-container *ngTemplateOutlet="mobileMenuTpl" />
-                    <ng-template #mobileMenuTpl
+                    <nz-dropdown-menu #mobileMenu="nzDropdownMenu">
+                        <ng-container *ngTemplateOutlet="mobileMenuTpl" />
+                        <ng-template #mobileMenuTpl
+                                     [ngTemplateOutlet]="mainMenuTpl"
+                                     [ngTemplateOutletContext]="{isHorizontal: false}"
+                        />
+                    </nz-dropdown-menu>
+                } @else {
+                    <ng-container *ngTemplateOutlet="desktopMenuTpl" />
+                    <ng-template #desktopMenuTpl
                                  [ngTemplateOutlet]="mainMenuTpl"
-                                 [ngTemplateOutletContext]="{isHorizontal: false}"
+                                 [ngTemplateOutletContext]="{isHorizontal: true}"
                     />
-                </nz-dropdown-menu>
-            } @else {
-                <ng-container *ngTemplateOutlet="desktopMenuTpl" />
-                <ng-template #desktopMenuTpl
-                             [ngTemplateOutlet]="mainMenuTpl"
-                             [ngTemplateOutletContext]="{isHorizontal: true}"
-                />
-            }
-        </div>
-        <div class="right">
-            <language-switcher />
-        </div>
-    </nz-header>
+                }
+            </div>
+            <div class="right">
+                <language-switcher />
+            </div>
+        </nz-header>
+    }
+
     <nz-content>
-        <div class="inner-content">
+        <div class="inner-content"
+             [class.inner-content-padding]="Sftoomi.Auth.isAuthorized()"
+        >
             <router-outlet></router-outlet>
         </div>
     </nz-content>

@@ -1,0 +1,26 @@
+<div class="wrapper">
+    <div class="form-wrapper">
+        <div class="form">
+            <div class="header">SFTOOMI</div>
+
+            <app-textfield name="login"
+                           [form]="form"
+                           [label]="Sftoomi.Translator.translate('views.login.login')"
+            />
+
+            <app-textfield name="password"
+                           [form]="form"
+                           [label]="Sftoomi.Translator.translate('views.login.password')"
+            />
+
+            <button nz-button
+                    nzType="primary"
+                    [disabled]="form.invalid"
+                    style="margin-top: 30px"
+                    (click)="onLogonClick()"
+            >
+                {{ Sftoomi.Translator.translate('views.login.logon') }}
+            </button>
+        </div>
+    </div>
+</div>
