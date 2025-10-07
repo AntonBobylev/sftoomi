@@ -1,4 +1,4 @@
-FROM php:8.4.5-fpm
+FROM php:8.4.13-fpm
 ENV NODE_VERSION=22.14.0
 
 ARG USER_ID

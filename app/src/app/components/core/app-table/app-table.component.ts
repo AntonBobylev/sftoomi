@@ -1,10 +1,12 @@
-import { AfterViewInit, Component, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
 import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
+
+import AppBaseFilters from '../app-base-filters';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 
@@ -17,6 +19,8 @@ import AppTableColumn from '../../../type/AppTableColumn';
 
 export default class AppTableComponent implements AfterViewInit
 {
+    @Input() public filtersCtrl: AppBaseFilters | undefined;
+
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
 
@@ -67,6 +71,10 @@ export default class AppTableComponent implements AfterViewInit
         if (Sftoomi.isEmpty(this.loadUrl)) {
             return;
         }
+
+        filters = filters
+            ? filters
+            : !Sftoomi.isEmpty(this.filtersCtrl) ? Sftoomi.formValuesToFormData(this.filtersCtrl!.getValues()) : undefined;
 
         let data: FormData = filters ? filters : new FormData();
         if (this.usePagination) {
