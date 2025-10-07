@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Class\Fetcher;
 use App\Entity\User;
 use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,7 +19,8 @@ final class AuthController extends AbstractController
         Request $request,
         UserPasswordHasherInterface $passwordHasher,
         EntityManagerInterface $entityManager
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $data = json_decode($request->getContent(), true);
 
         if (!isset($data["login"]) || !isset($data["password"])) {
@@ -74,11 +75,10 @@ final class AuthController extends AbstractController
         Request $request,
         SessionManager $sessionManager,
         EntityManagerInterface $entityManager
-    ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
-
-        $login = $data["login"] ?? "";
-        $password = $data["password"] ?? "";
+    ): JsonResponse
+    {
+        $login = Fetcher::trim($request->request->get("login"));
+        $password = Fetcher::trim($request->request->get("password"));
 
         $user = $entityManager->getRepository(User::class)->findOneBy(["login" => $login]);
 
