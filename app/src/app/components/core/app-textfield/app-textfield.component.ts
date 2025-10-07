@@ -1,5 +1,5 @@
 import { NgTemplateOutlet } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 import { NzColDirective } from 'ng-zorro-antd/grid';
@@ -23,4 +23,16 @@ import AppUppercaseAbleField from '../app-uppercase-able-field';
 
 export default class AppTextfieldComponent extends AppUppercaseAbleField
 {
+    @Input() public securedInput: boolean = false;
+
+    protected isSecuredInputVisible: boolean = false;
+
+    protected getFieldType(): string
+    {
+        if (this.securedInput) {
+            return this.isSecuredInputVisible ? 'text' : 'password';
+        }
+
+        return 'text';
+    }
 }

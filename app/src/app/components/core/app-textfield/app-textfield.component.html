@@ -5,14 +5,15 @@
         {{ label }}
     </nz-form-label>
     <nz-form-control [nzErrorTip]="errorTipTpl">
-        <nz-input-group [nzSuffix]="fieldClearTpl">
+        <nz-input-group [nzSuffix]="fieldSuffixTpl">
             <input nz-input
+                   [type]="getFieldType()"
                    [formControlName]="name"
                    (input)="onInput($event)"
                    [id]="name"
             />
 
-            <ng-template #fieldClearTpl
+            <ng-template #fieldSuffixTpl
                          [ngTemplateOutlet]="clearTpl"
                          [ngTemplateOutletContext]="{control: form.get(name)}"
             >
@@ -31,6 +32,14 @@
 <ng-template #clearTpl
              let-control='control'
 >
+    @if (securedInput) {
+        <nz-icon
+            class="ant-input-password-icon"
+            [nzType]="isSecuredInputVisible ? 'eye-invisible' : 'eye'"
+            (click)="isSecuredInputVisible = !isSecuredInputVisible"
+        />
+    }
+
     @if (control?.value) {
         <i nz-icon
            class="ant-input-clear-icon"
