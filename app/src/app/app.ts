@@ -51,6 +51,8 @@ export class App
             popupMsgService
         );
 
+        Sftoomi.Auth.tryRestoreSession();
+
         if (!Sftoomi.Auth.isAuthorized()) {
             this.router.navigateByUrl(RoutesPaths.LOGIN, {
                 state: {

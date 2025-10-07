@@ -62,7 +62,7 @@ export default class LoginComponent
                     return;
                 }
 
-                Sftoomi.Auth.authorize(result.session_id, result.user.user_id);
+                Sftoomi.Auth.authorize(result.session_id, result.user.id);
                 this.goOut();
             },
             failure: (_code: any, message: any, _request: any): void => {
