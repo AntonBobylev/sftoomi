@@ -33,7 +33,7 @@ export default class LoginComponent
 
     constructor(private readonly router: Router)
     {
-        if (Sftoomi.Auth.isAuthorized()) {
+        if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
             this.goOut();
         }
     }

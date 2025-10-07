@@ -51,15 +51,25 @@ export class App
             popupMsgService
         );
 
-        Sftoomi.Auth.tryRestoreSession();
+        Sftoomi.Auth.tryRestoreSession((): void => {
+            let lastUrl: string = this.router.url;
 
-        if (!Sftoomi.Auth.isAuthorized()) {
-            this.router.navigateByUrl(RoutesPaths.LOGIN, {
-                state: {
-                    last_route: this.router.url
-                }
-            }).then();
-        }
+            if (!Sftoomi.Auth.getIsAuthorizedSignal()()) {
+                this.router.navigateByUrl(RoutesPaths.LOGIN, {
+                    state: {
+                        last_route: lastUrl
+                    }
+                }).then();
+
+                return;
+            }
+
+            if (lastUrl.slice(1) === RoutesPaths.LOGIN) {
+                lastUrl = RoutesPaths.HOME;
+            }
+
+            this.router.navigateByUrl(lastUrl).then();
+        });
     }
 
     protected isRouteSelected(route: RoutesPaths): boolean

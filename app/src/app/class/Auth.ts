@@ -1,54 +1,80 @@
+import { signal, WritableSignal } from '@angular/core'
+
 import Sftoomi from './Sftoomi';
+import Fetcher from './Fetcher'
+import { DialogType } from './Dialog'
 
 import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
 export default class Auth
 {
-    private authorized: boolean = false;
+    private authorized: WritableSignal<boolean> = signal<boolean>(false);
 
     private sessionId: string | null = null;
     private userId:    number | null = null;
 
-    public isAuthorized(): boolean
+    private checkAuthorizedUrl: string = '/checkAuthorized';
+
+    public getIsAuthorizedSignal(): WritableSignal<boolean>
     {
         return this.authorized;
     }
 
-    public tryRestoreSession(): void
+    public tryRestoreSession(callback: Function): void
     {
         let sessionId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION),
             userId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_USER);
 
         if (!Sftoomi.isEmpty(sessionId) && !Sftoomi.isEmpty(userId)) {
-            this.authorize(
-                sessionId,
-                parseInt(userId)
-            );
+            new Fetcher().request({
+                url: this.checkAuthorizedUrl,
+                success: (_response: any, _request: any, result: any): void => {
+                    if (!result.success) {
+                        this.unAuthorize();
+
+                        return;
+                    }
+
+                    this.authorize(
+                        sessionId,
+                        parseInt(userId)
+                    );
+                },
+                failure: (_code: any, message: any, _request: any): void => {
+                    Sftoomi.Dialog.show(message, DialogType.ERROR);
+                    this.unAuthorize();
+                },
+                finally: callback
+            });
+
+            return;
         }
+
+        callback();
     }
 
     public authorize(sessionId: string, userId: number): void
     {
-        this.authorized = true;
+        this.authorized.set(true);
         this.sessionId = sessionId;
         this.userId = userId;
 
         Sftoomi.Cookies.setCookie(
             SftoomiCookie.SFTOOMI_SESSION,
             this.sessionId,
-            365
+            1
         );
 
         Sftoomi.Cookies.setCookie(
             SftoomiCookie.SFTOOMI_USER,
             this.userId.toString(),
-            365
+            1
         );
     }
 
     public unAuthorize(): void
     {
-        this.authorized = false;
+        this.authorized.set(false);
         this.sessionId = null;
         this.userId = null;
 

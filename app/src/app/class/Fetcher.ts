@@ -6,6 +6,8 @@ import Timeout from './Timeout';
 import Sftoomi from './Sftoomi';
 import { DialogType } from './Dialog';
 
+import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration'
+
 type RequestOptions = {
     url: string,
     data?: FormData,
@@ -42,7 +44,10 @@ export default class Fetcher
             request.timeout = Timeout.timeoutLong;
         }
 
-        request.headers = { 'Content-Type': 'multipart/form-data' };
+        request.headers = {
+            'Content-Type': 'multipart/form-data',
+            'X-Session-ID': Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION)
+        };
 
         request.url = Sftoomi.format('{0}{1}', [environment.baseUrl, request.url]);
 

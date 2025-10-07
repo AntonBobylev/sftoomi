@@ -1,5 +1,5 @@
 <nz-layout class="app-layout">
-    @if (Sftoomi.Auth.isAuthorized()) {
+    @if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
         <nz-header [ngClass]="{'mobile-view-header': Sftoomi.responsiveLayoutService?.isSmallWidth()}">
             <div class="left">
                 <div class="logo">
@@ -43,7 +43,7 @@
 
     <nz-content>
         <div class="inner-content"
-             [class.inner-content-padding]="Sftoomi.Auth.isAuthorized()"
+             [class.inner-content-padding]="Sftoomi.Auth.getIsAuthorizedSignal()()"
         >
             <router-outlet></router-outlet>
         </div>
