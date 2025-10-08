@@ -1,7 +1,9 @@
 <div class="wrapper">
     <app-loading-spinner [isLoading]="isLoading()" />
     <div class="form-wrapper">
-        <div class="form">
+        <div class="form"
+             (keydown)="$event.key === 'Enter' && form.valid ? onLogonClick() : null"
+        >
             <div class="header">SFTOOMI</div>
 
             <app-textfield name="login"
