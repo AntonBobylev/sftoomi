@@ -12,9 +12,12 @@ class CorsListener
         $request = $event->getRequest();
         $response = $event->getResponse();
 
-        // Handle preflight requests
         if ($request->getMethod() === "OPTIONS") {
             $response->setStatusCode(Response::HTTP_OK);
+        }
+
+        if (empty($_ENV["FRONT_URL"])) {
+            throw new \RuntimeException("FRONT_URL environment variable is not defined");
         }
 
         $response->headers->set("Access-Control-Allow-Origin", $_ENV["FRONT_URL"]);
