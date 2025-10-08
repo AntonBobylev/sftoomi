@@ -8,12 +8,14 @@ import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
 export default class Auth
 {
-    private authorized: WritableSignal<boolean> = signal<boolean>(false);
+    private readonly authorized: WritableSignal<boolean> = signal<boolean>(false);
 
     private sessionId: string | null = null;
     private userId:    number | null = null;
 
-    private checkAuthorizedUrl: string = '/checkAuthorized';
+    private readonly checkAuthorizedUrl: string = '/checkAuthorized';
+    private readonly logonUrl: string = '/login';
+    private readonly logoutUrl: string = '/logout';
 
     public getIsAuthorizedSignal(): WritableSignal<boolean>
     {
@@ -53,7 +55,62 @@ export default class Auth
         callback();
     }
 
-    public authorize(sessionId: string, userId: number): void
+    public login(
+        login: string, password: string,
+        isLoading?: WritableSignal<boolean>,
+        successCallback?: Function,
+        failureCallback?: Function
+    ): void
+    {
+        let data: FormData = new FormData();
+
+        data.append('login', login);
+        data.append('password', password);
+
+        isLoading?.set(true);
+        new Fetcher().request({
+            url: this.logonUrl,
+            data: data,
+            success: (_response: any, _request: any, result: any): void => {
+                if (!result.success) {
+                    Sftoomi.Dialog.show(result.error, DialogType.ERROR);
+
+                    return;
+                }
+
+                Sftoomi.Auth.authorize(result.session_id, result.user.id);
+                Sftoomi.runMethodIfExists(successCallback);
+            },
+            failure: (_code: any, message: any, _request: any): void => {
+                Sftoomi.Dialog.show(message, DialogType.ERROR);
+                Sftoomi.runMethodIfExists(failureCallback);
+            },
+            finally: (): void => {
+                isLoading?.set(false);
+            }
+        });
+    }
+
+    public logout(
+        isLoading?: WritableSignal<boolean>,
+        successCallback?: Function,
+        failureCallback?: Function,
+    ): void
+    {
+        new Fetcher().request({
+            url: this.logoutUrl,
+            success: (_response: any, _request: any, _result: any): void => {
+                this.unAuthorize();
+                Sftoomi.runMethodIfExists(successCallback);
+            },
+            failure: (_code: any, message: any, _request: any): void => {
+                Sftoomi.Dialog.show(message, DialogType.ERROR);
+                Sftoomi.runMethodIfExists(failureCallback);
+            }
+        });
+    }
+
+    private authorize(sessionId: string, userId: number): void
     {
         this.authorized.set(true);
         this.sessionId = sessionId;
@@ -72,7 +129,7 @@ export default class Auth
         );
     }
 
-    public unAuthorize(): void
+    private unAuthorize(): void
     {
         this.authorized.set(false);
         this.sessionId = null;

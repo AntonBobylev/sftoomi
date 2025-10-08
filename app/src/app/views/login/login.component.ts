@@ -22,7 +22,6 @@ export default class LoginComponent
 {
     protected readonly Sftoomi = Sftoomi
 
-    protected readonly logonUrl: string = '/login';
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
@@ -46,32 +45,14 @@ export default class LoginComponent
             return;
         }
 
-        let data: FormData = new FormData();
-
-        data.append('login', this.form.get('login')?.value);
-        data.append('password', this.form.get('password')?.value);
-
-        this.isLoading.set(true);
-        new Fetcher().request({
-            url: this.logonUrl,
-            data: data,
-            success: (_response: any, _request: any, result: any): void => {
-                if (!result.success) {
-                    Sftoomi.Dialog.show(result.error, DialogType.ERROR);
-
-                    return;
-                }
-
-                Sftoomi.Auth.authorize(result.session_id, result.user.id);
+        Sftoomi.Auth.login(
+            this.form.get('login')?.value,
+            this.form.get('password')?.value,
+            this.isLoading,
+            (): void => {
                 this.goOut();
-            },
-            failure: (_code: any, message: any, _request: any): void => {
-                Sftoomi.Dialog.show(message, DialogType.ERROR);
-            },
-            finally: (): void => {
-                this.isLoading.set(false);
             }
-        });
+        );
     }
 
     private goOut(): void
