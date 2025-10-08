@@ -77,6 +77,7 @@ final class AuthController extends AbstractController
         EntityManagerInterface $entityManager
     ): JsonResponse
     {
+        sleep(5);
         $login = Fetcher::trim($request->request->get("login"));
         $password = Fetcher::trim($request->request->get("password"));
 
@@ -109,6 +110,7 @@ final class AuthController extends AbstractController
     public function checkAuthorized(Request $request, SessionManager $sessionManager): JsonResponse
     {
         $sessionId = Fetcher::trim($request->headers->get("X-Session-ID"));
+        sleep(5);
 
         if (empty($sessionId)) {
             return new JsonResponse([
@@ -136,6 +138,7 @@ final class AuthController extends AbstractController
     public function logout(Request $request, SessionManager $sessionManager): JsonResponse
     {
         $sessionId = $request->headers->get("X-Session-ID");
+        sleep(5);
 
         if ($sessionId) {
             $sessionManager->deleteSession($sessionId);

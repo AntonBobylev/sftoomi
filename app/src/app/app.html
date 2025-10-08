@@ -1,4 +1,5 @@
 <nz-layout class="app-layout">
+    <app-loading-spinner [isLoading]="isLoading()" />
     @if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
         <nz-header [ngClass]="{'mobile-view-header': Sftoomi.responsiveLayoutService?.isSmallWidth()}">
             <div class="left">
@@ -37,6 +38,13 @@
             </div>
             <div class="right">
                 <language-switcher />
+                <button nz-button
+                        nzType="primary"
+                        (click)="onLogoutClick()"
+                        [nz-tooltip]="Sftoomi.Translator.translate('logout')"
+                >
+                    <nz-icon nzType="logout"></nz-icon>
+                </button>
             </div>
         </nz-header>
     }

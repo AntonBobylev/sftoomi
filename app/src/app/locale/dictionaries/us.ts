@@ -11,6 +11,7 @@ let usDictionary: object =  {
     id: 'ID',
     information: 'Information',
     last_name: 'Last name',
+    logout: 'Logout',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
     not_set_tip: '(not set)',

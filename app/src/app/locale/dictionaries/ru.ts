@@ -11,6 +11,7 @@ let ruDictionary: object =  {
     id: 'ID',
     information: 'Информация',
     last_name: 'Фамилия',
+    logout: 'Выйти',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
     not_set_tip: '(не установлено)',

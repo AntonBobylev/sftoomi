@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { NgClass, NgTemplateOutlet } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
@@ -8,6 +8,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
 import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from './class/Sftoomi';
 
@@ -17,6 +18,7 @@ import LanguageSwitcherComponent from './components/misc/language-switcher/langu
 
 import ResponsiveLayoutService from './services/responsive-layout.service';
 import PopupMsgService from './services/popup-msg.service'
+import AppLoadingSpinnerComponent from './components/misc/app-loading-spinner/app-loading-spinner.component';
 
 @Component({
     selector: 'app-root',
@@ -25,7 +27,7 @@ import PopupMsgService from './services/popup-msg.service'
         RouterLink, NzModalModule, LanguageSwitcherComponent,
         NzDropDownDirective, NzDropdownMenuComponent,
         NzIconDirective, NgTemplateOutlet,
-        NzButtonComponent, NgClass,
+        NzButtonComponent, NgClass, NzTooltipDirective, AppLoadingSpinnerComponent
     ],
     templateUrl: './app.html',
     styleUrl: './app.less'
@@ -36,6 +38,8 @@ export class App
     protected readonly Sftoomi = Sftoomi;
     protected readonly RoutesPaths = RoutesPaths;
 
+    protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
+
     constructor(
         private readonly nzDialog: NzModalService,
         private readonly nzI18nService: NzI18nService,
@@ -44,6 +48,8 @@ export class App
         private readonly router: Router
     )
     {
+        this.isLoading.set(true);
+
         Sftoomi.init(
             nzDialog,
             nzI18nService,
@@ -59,7 +65,9 @@ export class App
                     state: {
                         last_route: lastUrl
                     }
-                }).then();
+                }).then((): void => {
+                    this.isLoading.set(false);
+                });
 
                 return;
             }
@@ -68,7 +76,9 @@ export class App
                 lastUrl = RoutesPaths.HOME;
             }
 
-            this.router.navigateByUrl(lastUrl).then();
+            this.router.navigateByUrl(lastUrl).then((): void => {
+                this.isLoading.set(false);
+            });
         });
     }
 
@@ -80,5 +90,15 @@ export class App
         }
 
         return route === currentRoute;
+    }
+
+    protected onLogoutClick(): void
+    {
+        Sftoomi.Auth.logout(
+            this.isLoading,
+            (): void => {
+                this.router.navigateByUrl(RoutesPaths.LOGIN).then();
+            }
+        );
     }
 }
