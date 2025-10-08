@@ -1,19 +1,21 @@
 import { Component, signal, WritableSignal } from '@angular/core'
 import { Router } from '@angular/router'
-import Sftoomi from '../../class/Sftoomi'
-import { RoutesPaths } from '../../app.routes'
-import AppTextfieldComponent from '../../components/core/app-textfield/app-textfield.component'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
-import Fetcher from '../../class/Fetcher'
-import { DialogType } from '../../class/Dialog'
+
+import Sftoomi from '../../class/Sftoomi'
+import { RoutesPaths } from '../../app.routes'
+
+import AppTextfieldComponent from '../../components/core/app-textfield/app-textfield.component'
+import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinner/app-loading-spinner.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     imports: [
         AppTextfieldComponent,
-        NzButtonComponent
+        NzButtonComponent,
+        AppLoadingSpinnerComponent
     ],
     styleUrl: './login.component.less'
 })
@@ -21,7 +23,6 @@ import { DialogType } from '../../class/Dialog'
 export default class LoginComponent
 {
     protected readonly Sftoomi = Sftoomi
-
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
