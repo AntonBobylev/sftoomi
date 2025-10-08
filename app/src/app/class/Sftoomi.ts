@@ -299,4 +299,16 @@ export default class Sftoomi
             && firstDate.getMonth()    === secondDate.getMonth()
             && firstDate.getFullYear() === secondDate.getFullYear();
     }
+
+    /**
+     * Makes sure passed method exists and runs it
+     *
+     * @param method
+     */
+    public static runMethodIfExists(method?: Function): any
+    {
+        if (method) {
+            return method();
+        }
+    }
 }
