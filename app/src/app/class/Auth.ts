@@ -97,6 +97,7 @@ export default class Auth
         failureCallback?: Function,
     ): void
     {
+        isLoading?.set(true);
         new Fetcher().request({
             url: this.logoutUrl,
             success: (_response: any, _request: any, _result: any): void => {
@@ -106,6 +107,9 @@ export default class Auth
             failure: (_code: any, message: any, _request: any): void => {
                 Sftoomi.Dialog.show(message, DialogType.ERROR);
                 Sftoomi.runMethodIfExists(failureCallback);
+            },
+            finally: (): void => {
+                isLoading?.set(false);
             }
         });
     }
