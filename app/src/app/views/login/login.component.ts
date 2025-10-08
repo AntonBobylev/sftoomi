@@ -8,6 +8,7 @@ import { RoutesPaths } from '../../app.routes'
 
 import AppTextfieldComponent from '../../components/core/app-textfield/app-textfield.component'
 import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinner/app-loading-spinner.component';
+import LanguageSwitcherComponent from '../../components/misc/language-switcher/language-switcher.component';
 
 @Component({
     selector: 'app-login',
@@ -15,7 +16,8 @@ import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinne
     imports: [
         AppTextfieldComponent,
         NzButtonComponent,
-        AppLoadingSpinnerComponent
+        AppLoadingSpinnerComponent,
+        LanguageSwitcherComponent
     ],
     styleUrl: './login.component.less'
 })
