@@ -14,7 +14,7 @@
             />
 
             <ng-template #fieldSuffixTpl
-                         [ngTemplateOutlet]="clearTpl"
+                         [ngTemplateOutlet]="suffixTpl"
                          [ngTemplateOutletContext]="{control: form.get(name)}"
             >
             </ng-template>
@@ -29,23 +29,25 @@
 </nz-form-item>
 
 
-<ng-template #clearTpl
+<ng-template #suffixTpl
              let-control='control'
 >
-    @if (securedInput) {
-        <nz-icon
-            class="ant-input-password-icon"
-            [nzType]="isSecuredInputVisible ? 'eye-invisible' : 'eye'"
-            (click)="isSecuredInputVisible = !isSecuredInputVisible"
-        />
-    }
+    <span style="display: flex; gap: 5px">
+        @if (securedInput) {
+            <nz-icon
+                class="ant-input-password-icon"
+                [nzType]="isSecuredInputVisible ? 'eye-invisible' : 'eye'"
+                (click)="isSecuredInputVisible = !isSecuredInputVisible"
+            />
+        }
 
-    @if (control?.value) {
-        <i nz-icon
-           class="ant-input-clear-icon"
-           nzTheme="fill"
-           nzType="close-circle"
-           (click)="control?.reset()"
-        ></i>
-    }
+        @if (control?.value) {
+            <i nz-icon
+               class="ant-input-clear-icon"
+               nzTheme="fill"
+               nzType="close-circle"
+               (click)="control?.reset()"
+            ></i>
+        }
+    </span>
 </ng-template>
