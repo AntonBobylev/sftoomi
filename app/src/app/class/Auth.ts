@@ -32,7 +32,7 @@ export default class Auth
                 url: this.checkAuthorizedUrl,
                 success: (_response: any, _request: any, result: any): void => {
                     if (!result.success) {
-                        this.unAuthorize();
+                        this.unAuthorize(false);
 
                         return;
                     }
@@ -44,7 +44,7 @@ export default class Auth
                 },
                 failure: (_code: any, message: any, _request: any): void => {
                     Sftoomi.Dialog.show(message, DialogType.ERROR);
-                    this.unAuthorize();
+                    this.unAuthorize(false);
                 },
                 finally: callback
             });
@@ -133,13 +133,15 @@ export default class Auth
         );
     }
 
-    private unAuthorize(): void
+    private unAuthorize(cleanCookies: boolean = true): void
     {
         this.authorized.set(false);
         this.sessionId = null;
         this.userId = null;
 
-        Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_SESSION);
-        Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_USER);
+        if (cleanCookies) {
+            Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_SESSION);
+            Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_USER);
+        }
     }
 }
