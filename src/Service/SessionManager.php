@@ -38,6 +38,8 @@ final readonly class SessionManager
             ]
         );
 
+        $this->cleanupExpiredSessions();
+
         return $sessionId;
     }
 
