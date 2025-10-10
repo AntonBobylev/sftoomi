@@ -149,6 +149,21 @@ let usDictionary: object =  {
                 width: 400,
                 cpts: 'CPTs'
             }
+        },
+        users: {
+            table: {
+                columns: {
+                    login: {
+                        caption: 'Login'
+                    },
+                    roles: {
+                        caption: 'Roles'
+                    },
+                    created_at: {
+                        caption: 'Created at'
+                    }
+                }
+            }
         }
     },
 

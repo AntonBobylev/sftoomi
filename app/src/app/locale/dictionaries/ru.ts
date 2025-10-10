@@ -149,6 +149,21 @@ let ruDictionary: object =  {
                 width: 500,
                 cpts: 'CPT'
             }
+        },
+        users: {
+            table: {
+                columns: {
+                    login: {
+                        caption: 'Логин'
+                    },
+                    roles: {
+                        caption: 'Роли'
+                    },
+                    created_at: {
+                        caption: 'Когда создан'
+                    }
+                }
+            }
         }
     },
 
