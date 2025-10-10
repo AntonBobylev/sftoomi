@@ -6,6 +6,8 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
 
+import getUsersAPI from '../../../APIs/getUsersAPI';
+
 import AppTableColumn from '../../../type/AppTableColumn';
 
 @Component({
@@ -54,13 +56,27 @@ export default class UsersTableComponent extends AppTableComponent
         width: '200px',
         header: {
             caption: Sftoomi.Translator.translate('views.users.table.columns.roles.caption')
+        },
+        rawHtml: true,
+        valueRenderer: (value: getUsersAPI['data'][0]['roles']): string => {
+            let roles = JSON.parse(value);
+            if (Sftoomi.isEmpty(roles)) {
+                return Sftoomi.Translator.translate('not_set_tip');
+            }
+
+            let prettyFormattedRoles: string = '';
+            roles.forEach((role: string): void => {
+                prettyFormattedRoles += '<li>' + role + '</li>';
+            });
+
+            return '<ul style="margin: 0">' + prettyFormattedRoles + '</ul>';
         }
     }, {
         name: 'created_at',
         header: {
             caption: Sftoomi.Translator.translate('views.users.table.columns.created_at.caption')
         },
-        valueRenderer: (value: any): string => Sftoomi.dateTime(value) // TODO: describe
+        valueRenderer: (value: getUsersAPI['data'][0]['created_at']): string => Sftoomi.dateTime(value)
     }];
 
     protected override readonly loadUrl: string = '/getUsers';
