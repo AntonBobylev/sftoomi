@@ -31,6 +31,10 @@ let ruDictionary: object =  {
         home: 'Домашняя',
         login: 'Вход',
         patients: 'Пациенты',
+        administration: {
+            caption: 'Администрирование',
+            users: 'Пользователи'
+        },
         setup: {
             caption: 'Настройка',
             referring_doctors: 'Направляющие доктора',

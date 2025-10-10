@@ -22,18 +22,10 @@
                     </button>
 
                     <nz-dropdown-menu #mobileMenu="nzDropdownMenu">
-                        <ng-container *ngTemplateOutlet="mobileMenuTpl" />
-                        <ng-template #mobileMenuTpl
-                                     [ngTemplateOutlet]="mainMenuTpl"
-                                     [ngTemplateOutletContext]="{isHorizontal: false}"
-                        />
+                        <ng-container *ngTemplateOutlet="mainMenuTpl; context: {isHorizontal: false}" />
                     </nz-dropdown-menu>
                 } @else {
-                    <ng-container *ngTemplateOutlet="desktopMenuTpl" />
-                    <ng-template #desktopMenuTpl
-                                 [ngTemplateOutlet]="mainMenuTpl"
-                                 [ngTemplateOutletContext]="{isHorizontal: true}"
-                    />
+                    <ng-container *ngTemplateOutlet="mainMenuTpl; context: {isHorizontal: true}" />
                 }
             </div>
             <div class="right">
@@ -60,6 +52,14 @@
 
 <ng-template #mainMenuTpl let-isHorizontal='isHorizontal'>
     <ul nz-menu class="top-nav" nzTheme="dark" [nzMode]="isHorizontal ? 'horizontal' : 'vertical'">
+        <li nz-menu-item
+            nz-dropdown
+            [nzDropdownMenu]="administrationMenu"
+            [class.ant-menu-item-selected]="false"
+        >
+            {{ Sftoomi.Translator.translate('navigation.administration.caption') }}
+            <nz-icon nzType="down" />
+        </li>
         <li nz-menu-item
             nzMatchRouter
             [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
@@ -104,6 +104,17 @@
             [routerLink]="RoutesPaths.STUDIES"
         >
             {{ Sftoomi.Translator.translate('navigation.setup.studies') }}
+        </li>
+    </ul>
+</nz-dropdown-menu>
+
+<nz-dropdown-menu #administrationMenu="nzDropdownMenu">
+    <ul nz-menu>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.USERS"
+        >
+            {{ Sftoomi.Translator.translate('navigation.administration.users') }}
         </li>
     </ul>
 </nz-dropdown-menu>

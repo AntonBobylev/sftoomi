@@ -9,6 +9,7 @@ import ReferringDoctorsComponent from './views/referring-doctors/referring-docto
 import StudiesModuleComponent from './views/studies/studies.component';
 import ExaminationsComponent from './views/examinations/examinations.component';
 import LoginComponent from './views/login/login.component'
+import UsersModuleComponent from './views/users/users.component';
 
 const BASE_TITLE = 'SFTOOMI :: ';
 
@@ -20,6 +21,7 @@ export enum RoutesPaths {
     STUDIES = 'studies',
     EXAMINATIONS = 'examinations',
     LOGIN = 'login',
+    USERS = 'users'
 }
 
 export const routes: Routes = [{
@@ -50,4 +52,8 @@ export const routes: Routes = [{
     path: RoutesPaths.LOGIN,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.login'),
     component: LoginComponent
+}, {
+    path: RoutesPaths.USERS,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.administration.users'),
+    component: UsersModuleComponent
 }];

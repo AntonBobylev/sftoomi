@@ -31,6 +31,10 @@ let usDictionary: object =  {
         home: 'Home',
         login: 'Login',
         patients: 'Patients',
+        administration: {
+            caption: 'Administration',
+            users: 'Users'
+        },
         setup: {
             caption: 'Setup',
             referring_doctors: 'Referring doctors',
