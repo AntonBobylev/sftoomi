@@ -35,7 +35,10 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
             nzMaskClosable: false,
             nzCentered: true,
             nzWidth: 800,
-            nzData: { id: id }
+            nzData: {
+                id: id,
+                examination_date: this.table.filtersCtrl?.getValues().examination_date
+            }
         });
 
         modal.afterClose.subscribe((isSaved: boolean = false): void => {

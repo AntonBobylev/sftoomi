@@ -19,7 +19,8 @@ import getPatientAPI from '../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../APIs/getExaminationAPI';
 
 export type ExaminationEditDialogData = {
-    id?: number
+    id?: number,
+    examination_date?: Date
 };
 
 @Component({
@@ -97,6 +98,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         }));
 
         if (Sftoomi.isEmpty(data.data)) {
+            this.form.get('examination_date')?.setValue(this.data.examination_date ?? new Date());
+
             return;
         }
 
