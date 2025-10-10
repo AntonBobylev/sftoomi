@@ -81,6 +81,18 @@ export default class Sftoomi
     /**
      * @param date
      */
+    public static dateTime(date?: string | null | Date): string
+    {
+        if (!date) {
+            return '';
+        }
+
+        return moment(date).format(getMomentLocalDateFormat().date_time);
+    }
+
+    /**
+     * @param date
+     */
     public static stringToDate(date?: string | null | Date): Date | null
     {
         if (!date) {
