@@ -5,6 +5,7 @@ import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
+import UsersTableToolbarComponent from './toolbar/toolbar.component';
 
 import getUsersAPI from '../../../APIs/getUsersAPI';
 
@@ -81,5 +82,5 @@ export default class UsersTableComponent extends AppTableComponent
 
     protected override readonly loadUrl: string = '/getUsers';
 
-    // protected override readonly toolbar: any | undefined = OwnComponent;
+    protected override readonly toolbar: any | undefined = UsersTableToolbarComponent;
 }

@@ -163,6 +163,10 @@ let ruDictionary: object =  {
                         caption: 'Когда создан'
                     }
                 }
+            },
+            dialog: {
+                add_title: 'Добавление пользователя',
+                edit_title: 'Редактирование пользователя #{0}'
             }
         }
     },

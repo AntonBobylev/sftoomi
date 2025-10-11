@@ -163,6 +163,10 @@ let usDictionary: object =  {
                         caption: 'Created at'
                     }
                 }
+            },
+            dialog: {
+                add_title: 'Add user',
+                edit_title: 'Edit user #{0}'
             }
         }
     },
