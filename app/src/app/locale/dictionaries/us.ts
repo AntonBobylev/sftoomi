@@ -166,8 +166,11 @@ let usDictionary: object =  {
             },
             dialog: {
                 add_title: 'Add user',
+                disabled: 'Disabled',
                 edit_title: 'Edit user #{0}',
-                login: 'Login'
+                force_to_change_password: 'Force to change a password',
+                login: 'Login',
+                reset_password: 'Reset password'
             }
         }
     },

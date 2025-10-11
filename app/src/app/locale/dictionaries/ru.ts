@@ -166,8 +166,11 @@ let ruDictionary: object =  {
             },
             dialog: {
                 add_title: 'Добавление пользователя',
+                disabled: 'Выключен',
                 edit_title: 'Редактирование пользователя #{0}',
-                login: 'Логин'
+                force_to_change_password: 'Обязать сменить пароль',
+                login: 'Логин',
+                reset_password: 'Сбросить пароль'
             }
         }
     },
