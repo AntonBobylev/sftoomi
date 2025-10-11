@@ -28,4 +28,20 @@ final class UsersController extends AppCrudController
             "total" => $patients["total"]
         ]);
     }
+
+    /**
+     * @throws Exception
+     */
+    #[Route("/getUser", name: "get_user")]
+    public function getUserApi(Request $request): Response
+    {
+        $data = [];
+        if ($request->request->has("id")) {
+            $data = $this->getOne($request, ["id", "login", "last_name", "first_name"]);
+        }
+
+        return new JsonResponse([
+            "data" => $data
+        ]);
+    }
 }
