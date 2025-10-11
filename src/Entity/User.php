@@ -43,6 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: false)]
     private bool $disabled = false;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $contactId = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -174,6 +177,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDisabled(bool $disabled): static
     {
         $this->disabled = $disabled;
+
+        return $this;
+    }
+
+    public function getContactId(): ?int
+    {
+        return $this->contactId;
+    }
+
+    public function setContactId(?int $contactId): static
+    {
+        $this->contactId = $contactId;
 
         return $this;
     }
