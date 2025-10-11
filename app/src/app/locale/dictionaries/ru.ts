@@ -167,10 +167,13 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление пользователя',
                 disabled: 'Выключен',
+                disabled_tooltip: 'Система заблокирует доступ этому пользователю',
                 edit_title: 'Редактирование пользователя #{0}',
                 force_to_change_password: 'Обязать сменить пароль',
+                force_to_change_password_tooltip: 'Система разлогинит пользователя и в следующий раз, когда он попытается войти, она запросит его сменить пароль',
                 login: 'Логин',
-                reset_password: 'Сбросить пароль'
+                reset_password: 'Сбросить пароль',
+                reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail'
             }
         }
     },

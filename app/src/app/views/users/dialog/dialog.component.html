@@ -19,16 +19,19 @@
     <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.reset_password')"
                   name="reset_password"
                   [form]="form"
+                  [tooltip]="Sftoomi.Translator.translate('views.users.dialog.reset_password_tooltip')"
     />
 
     <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password')"
                   name="force_to_change_password"
                   [form]="form"
+                  [tooltip]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password_tooltip')"
     />
 
     <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.disabled')"
                   name="disabled"
                   [form]="form"
+                  [tooltip]="Sftoomi.Translator.translate('views.users.dialog.disabled_tooltip')"
     />
 
     <div *nzModalFooter>

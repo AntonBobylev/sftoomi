@@ -167,10 +167,13 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add user',
                 disabled: 'Disabled',
+                disabled_tooltip: 'The system will restrict an access to this user',
                 edit_title: 'Edit user #{0}',
                 force_to_change_password: 'Force to change a password',
+                force_to_change_password_tooltip: 'System will logout the user and next time he tries to logon it will require to change the password',
                 login: 'Login',
-                reset_password: 'Reset password'
+                reset_password: 'Reset password',
+                reset_password_tooltip: 'Generate the new password and send it via email'
             }
         }
     },
