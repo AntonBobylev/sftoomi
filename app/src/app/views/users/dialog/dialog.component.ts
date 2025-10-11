@@ -6,6 +6,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 
@@ -21,7 +22,7 @@ export type UserEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent
+        AppTextfieldComponent, AppCheckboxComponent
     ],
     styleUrl: './dialog.component.scss'
 })
@@ -48,8 +49,11 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
     {
         if (this.data.id) {
             this.form.get('login')?.setValue(data.data.login);
+            this.form.get('reset_password')?.setValue(data.data.reset_password);
+            this.form.get('force_to_change_password')?.setValue(data.data.force_to_change_password);
             this.form.get('first_name')?.setValue(data.data.first_name);
             this.form.get('last_name')?.setValue(data.data.last_name);
+            this.form.get('disabled')?.setValue(data.data.disabled);
         }
     }
 
