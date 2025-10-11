@@ -32,7 +32,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $lastName = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    private ?\DateTimeImmutable $createdAt;
+
+    #[ORM\Column(nullable: false)]
+    private bool $resetPassword = false;
+
+    #[ORM\Column(nullable: false)]
+    private bool $forceToChangePassword = false;
+
+    #[ORM\Column(nullable: false)]
+    private bool $disabled = false;
 
     public function __construct()
     {
@@ -131,5 +140,41 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getSalt(): ?string
     {
         return null;
+    }
+
+    public function isResetPassword(): ?bool
+    {
+        return $this->resetPassword;
+    }
+
+    public function setResetPassword(bool $resetPassword): static
+    {
+        $this->resetPassword = $resetPassword;
+
+        return $this;
+    }
+
+    public function isForceToChangePassword(): ?bool
+    {
+        return $this->forceToChangePassword;
+    }
+
+    public function setForceToChangePassword(bool $forceToChangePassword): static
+    {
+        $this->forceToChangePassword = $forceToChangePassword;
+
+        return $this;
+    }
+
+    public function isDisabled(): ?bool
+    {
+        return $this->disabled;
+    }
+
+    public function setDisabled(bool $disabled): static
+    {
+        $this->disabled = $disabled;
+
+        return $this;
     }
 }

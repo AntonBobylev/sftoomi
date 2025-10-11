@@ -37,7 +37,10 @@ final class UsersController extends AppCrudController
     {
         $data = [];
         if ($request->request->has("id")) {
-            $data = $this->getOne($request, ["id", "login", "last_name", "first_name"]);
+            $data = $this->getOne($request, [
+                "id", "login", "last_name", "first_name",
+                "disabled", "reset_password", "force_to_change_password"
+            ]);
         }
 
         return new JsonResponse([
