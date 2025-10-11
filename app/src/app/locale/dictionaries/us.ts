@@ -173,7 +173,9 @@ let usDictionary: object =  {
                 force_to_change_password_tooltip: 'System will logout the user and next time he tries to logon it will require to change the password',
                 login: 'Login',
                 reset_password: 'Reset password',
-                reset_password_tooltip: 'Generate the new password and send it via email'
+                reset_password_tooltip: 'Generate the new password and send it via email',
+                common_panel_title: 'Common',
+                contacts_panel_title: 'Contacts'
             }
         }
     },

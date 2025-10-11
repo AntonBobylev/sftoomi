@@ -173,7 +173,9 @@ let ruDictionary: object =  {
                 force_to_change_password_tooltip: 'Система разлогинит пользователя и в следующий раз, когда он попытается войти, она запросит его сменить пароль',
                 login: 'Логин',
                 reset_password: 'Сбросить пароль',
-                reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail'
+                reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail',
+                common_panel_title: 'Общее',
+                contacts_panel_title: 'Контакты'
             }
         }
     },

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
+import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
 
@@ -22,7 +23,8 @@ export type UserEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent, AppCheckboxComponent
+        AppTextfieldComponent, AppCheckboxComponent,
+        NzCollapseComponent, NzCollapsePanelComponent
     ],
     styleUrl: './dialog.component.scss'
 })
