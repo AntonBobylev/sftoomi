@@ -7,6 +7,8 @@ import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
 
+import UserEditDialogComponent, { UserEditDialogData } from '../../dialog/dialog.component';
+
 @Component({
     selector: 'users-table-toolbar',
     templateUrl: './toolbar.component.html',
@@ -26,9 +28,9 @@ export default class UsersTableToolbarComponent extends AppBaseToolbar
 
     protected openEditDialog(title: string, id?: number): void
     {
-        /*const modal = Sftoomi.Dialog.getInstance().create<PatientEditDialogComponent, PatientEditDialogData>({
+        const modal = Sftoomi.Dialog.getInstance().create<UserEditDialogComponent, UserEditDialogData>({
             nzTitle: title,
-            nzContent: PatientEditDialogComponent,
+            nzContent: UserEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
@@ -40,6 +42,6 @@ export default class UsersTableToolbarComponent extends AppBaseToolbar
             if (isSaved) {
                 this.table.refresh();
             }
-        });*/
+        });
     }
 }

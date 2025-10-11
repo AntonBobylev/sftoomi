@@ -1,0 +1,29 @@
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <app-textfield [label]="Sftoomi.Translator.translate('views.users.dialog.login')"
+                   name="login"
+                   [form]="form"
+    />
+
+    <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
+                   name="last_name"
+                   [form]="form"
+    />
+
+    <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
+                   name="first_name"
+                   [form]="form"
+    />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

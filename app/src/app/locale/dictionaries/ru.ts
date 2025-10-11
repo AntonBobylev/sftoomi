@@ -166,7 +166,8 @@ let ruDictionary: object =  {
             },
             dialog: {
                 add_title: 'Добавление пользователя',
-                edit_title: 'Редактирование пользователя #{0}'
+                edit_title: 'Редактирование пользователя #{0}',
+                login: 'Логин'
             }
         }
     },

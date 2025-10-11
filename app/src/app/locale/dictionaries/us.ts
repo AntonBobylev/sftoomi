@@ -166,7 +166,8 @@ let usDictionary: object =  {
             },
             dialog: {
                 add_title: 'Add user',
-                edit_title: 'Edit user #{0}'
+                edit_title: 'Edit user #{0}',
+                login: 'Login'
             }
         }
     },
