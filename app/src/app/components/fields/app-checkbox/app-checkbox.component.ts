@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import AppBaseField from '../../core/app-base-field';
 
@@ -9,7 +10,8 @@ import AppBaseField from '../../core/app-base-field';
     templateUrl: './app-checkbox.component.html',
     imports: [
         NzCheckboxComponent,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        NzTooltipDirective
     ],
     styleUrl: './app-checkbox.component.less'
 })
