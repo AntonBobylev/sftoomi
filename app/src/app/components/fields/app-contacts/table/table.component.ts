@@ -5,6 +5,7 @@ import AppTableImports from '../../../core/app-table/imports';
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppTableComponent from '../../../core/app-table/app-table.component';
+import AppContactsTableToolbarComponent from './toolbar/toolbar.component';
 
 import AppTableColumn from '../../../../type/AppTableColumn';
 
@@ -66,4 +67,6 @@ export default class AppContactsTableComponent extends AppTableComponent
     }];
 
     protected override usePagination: boolean = false;
+
+    protected override toolbar = AppContactsTableToolbarComponent;
 }
