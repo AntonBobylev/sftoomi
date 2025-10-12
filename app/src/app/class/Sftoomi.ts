@@ -323,4 +323,31 @@ export default class Sftoomi
             return method();
         }
     }
+
+    public static numberToOrdinal(value: any): string
+    {
+        let num: number;
+        try {
+            num = parseInt(value);
+        } catch {
+            return '';
+        }
+
+        num++; // because the order starts from 0
+
+        if (num <= 0) {
+            return '';
+        }
+
+        const prefix: string = num + '-',
+              lastDigit: number  = num % 10,
+              lastTwoDigits: number = num % 100;
+
+        switch (Sftoomi.Translator.getLocale()) {
+            case 'ru':
+                return prefix + (lastTwoDigits >= 11 && lastTwoDigits <= 19 ? 'ый' : lastDigit === 2 ? 'ой' : lastDigit === 3 ? 'ий' : 'ый');
+            case 'us':
+                return prefix + (lastTwoDigits >= 11 && lastTwoDigits <= 13 ? 'th' : lastDigit === 1 ? 'st' : lastDigit === 2 ? 'nd' : lastDigit === 3 ? 'rd' : 'th');
+        }
+    }
 }
