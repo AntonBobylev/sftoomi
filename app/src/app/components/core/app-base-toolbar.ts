@@ -4,6 +4,7 @@ import Sftoomi from '../../class/Sftoomi';
 import Fetcher from '../../class/Fetcher';
 
 import AppTableComponent from './app-table/app-table.component';
+import { AppContactsTableRecord } from '../fields/app-contacts/table/table.component';
 
 @Directive()
 export default abstract class AppBaseToolbar implements OnDestroy
@@ -13,7 +14,7 @@ export default abstract class AppBaseToolbar implements OnDestroy
     protected abstract readonly editDialogAddTitle: string;
     protected abstract readonly editDialogEditTitle: string;
 
-    protected abstract readonly removeUrl: string;
+    protected readonly removeUrl?: string;
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
@@ -65,6 +66,12 @@ export default abstract class AppBaseToolbar implements OnDestroy
     {
         event.stopPropagation();
 
+        if (!this.removeUrl) {
+            this.onLocalRemove();
+
+            return;
+        }
+
         let selectedRecords: any[] = this.table.getSelection();
         if (selectedRecords.length < 1) {
             Sftoomi.popupMsgService?.nothingSelected();
@@ -98,5 +105,22 @@ export default abstract class AppBaseToolbar implements OnDestroy
     ngOnDestroy(): void
     {
         this.queryController.abort();
+    }
+
+    private onLocalRemove(): void
+    {
+        let selectedRows: any[] = this.table.getSelection();
+        if (Sftoomi.isEmpty(selectedRows)) {
+            Sftoomi.popupMsgService?.nothingSelected();
+
+            return;
+        }
+
+        let currentRows: AppContactsTableRecord[] = this.table.getData();
+        selectedRows.forEach((selectedRow: AppContactsTableRecord): void => {
+            currentRows = currentRows.filter((row: AppContactsTableRecord): boolean => row !== selectedRow);
+        });
+
+        this.table.setData(currentRows);
     }
 }

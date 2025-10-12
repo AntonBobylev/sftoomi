@@ -68,7 +68,18 @@ export default class AppTableComponent implements AfterViewInit
 
     public setData(data: any[]): void
     {
-        this.data.set(this.convertReceivedDataToTableData(data));
+        let conversionRequired: boolean = Sftoomi.isEmpty(this.data());
+        if (conversionRequired) {
+            this.convertReceivedDataToTableData(data);
+        }
+
+        this.data.set(data);
+        this.refreshCheckedStatus();
+    }
+
+    public getData(): any[]
+    {
+        return this.data();
     }
 
     public refresh(filters?: FormData): void
