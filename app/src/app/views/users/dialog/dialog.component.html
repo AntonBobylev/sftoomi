@@ -1,59 +1,55 @@
-<div class="wrapper"
-     [formGroup]="form"
->
-    <nz-collapse>
-        <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.common_panel_title')"
-                           [nzActive]="true"
-        >
-            <app-textfield [label]="Sftoomi.Translator.translate('views.users.dialog.login')"
-                           name="login"
-                           [form]="form"
-            />
+<nz-collapse [formGroup]="form">
+    <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.common_panel_title')"
+                       [nzActive]="true"
+    >
+        <app-textfield [label]="Sftoomi.Translator.translate('views.users.dialog.login')"
+                       name="login"
+                       [form]="form"
+        />
 
-            <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
-                           name="last_name"
-                           [form]="form"
-            />
+        <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
+                       name="last_name"
+                       [form]="form"
+        />
 
-            <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
-                           name="first_name"
-                           [form]="form"
-            />
+        <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
+                       name="first_name"
+                       [form]="form"
+        />
 
-            <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.reset_password')"
-                          name="reset_password"
-                          [form]="form"
-                          [tooltip]="Sftoomi.Translator.translate('views.users.dialog.reset_password_tooltip')"
-            />
+        <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.reset_password')"
+                      name="reset_password"
+                      [form]="form"
+                      [tooltip]="Sftoomi.Translator.translate('views.users.dialog.reset_password_tooltip')"
+        />
 
-            <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password')"
-                          name="force_to_change_password"
-                          [form]="form"
-                          [tooltip]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password_tooltip')"
-            />
+        <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password')"
+                      name="force_to_change_password"
+                      [form]="form"
+                      [tooltip]="Sftoomi.Translator.translate('views.users.dialog.force_to_change_password_tooltip')"
+        />
 
-            <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.disabled')"
-                          name="disabled"
-                          [form]="form"
-                          [tooltip]="Sftoomi.Translator.translate('views.users.dialog.disabled_tooltip')"
-            />
-        </nz-collapse-panel>
+        <app-checkbox [label]="Sftoomi.Translator.translate('views.users.dialog.disabled')"
+                      name="disabled"
+                      [form]="form"
+                      [tooltip]="Sftoomi.Translator.translate('views.users.dialog.disabled_tooltip')"
+        />
+    </nz-collapse-panel>
 
-        <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.contacts_panel_title')"
-                           [nzActive]="true"
-        >
-            // TODO: implement
-        </nz-collapse-panel>
-    </nz-collapse>
+    <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.contacts_panel_title')"
+                       [nzActive]="true"
+    >
+        // TODO: implement
+    </nz-collapse-panel>
+</nz-collapse>
 
-    <div *nzModalFooter>
-        <button nz-button
-                nzType="primary"
-                nzShape="round"
-                [disabled]="form.invalid"
-                (click)="save()"
-        >
-            {{ Sftoomi.Translator.translate('save') }}
-        </button>
-    </div>
+<div *nzModalFooter>
+    <button nz-button
+            nzType="primary"
+            nzShape="round"
+            [disabled]="form.invalid"
+            (click)="save()"
+    >
+        {{ Sftoomi.Translator.translate('save') }}
+    </button>
 </div>
