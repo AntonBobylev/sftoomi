@@ -19,3 +19,8 @@ services:
     App\EventListener\CorsListener:
         tags:
             - { name: kernel.event_listener, event: kernel.response }
+
+    contacts:
+        class: App\Class\Contacts
+        arguments:
+            - '@doctrine.dbal.default_connection'

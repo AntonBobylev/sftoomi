@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Contacts;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -33,14 +34,21 @@ final class UsersController extends AppCrudController
      * @throws Exception
      */
     #[Route("/getUser", name: "get_user")]
-    public function getUserApi(Request $request): Response
+    public function getUserApi(Request $request, Contacts $contacts): Response
     {
         $data = [];
         if ($request->request->has("id")) {
             $data = $this->getOne($request, [
                 "id", "login", "last_name", "first_name",
-                "disabled", "reset_password", "force_to_change_password"
+                "disabled", "reset_password", "force_to_change_password",
+                "contact_id"
             ]);
+
+            if (!empty($data)) {
+                $data["contacts"] = $contacts->get($data["contact_id"]);
+            }
+
+            unset($data["contact_id"]);
         }
 
         return new JsonResponse([
