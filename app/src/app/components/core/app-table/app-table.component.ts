@@ -66,6 +66,11 @@ export default class AppTableComponent implements AfterViewInit
         return this.isLoading();
     }
 
+    public setData(data: any[]): void
+    {
+        this.data.set(this.convertReceivedDataToTableData(data));
+    }
+
     public refresh(filters?: FormData): void
     {
         if (Sftoomi.isEmpty(this.loadUrl)) {
