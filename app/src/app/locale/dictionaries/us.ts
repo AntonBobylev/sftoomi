@@ -195,6 +195,11 @@ let usDictionary: object =  {
             combo: {
                 placeholder: 'Select the study'
             }
+        },
+        contacts: {
+            position: 'Position',
+            text: 'Text',
+            type: 'Type'
         }
     },
 

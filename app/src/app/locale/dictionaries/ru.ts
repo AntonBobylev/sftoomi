@@ -195,6 +195,11 @@ let ruDictionary: object =  {
             combo: {
                 placeholder: 'Выберите исследование'
             }
+        },
+        contacts: {
+            position: 'Позиция',
+            text: 'Текст',
+            type: 'Тип'
         }
     },
 
