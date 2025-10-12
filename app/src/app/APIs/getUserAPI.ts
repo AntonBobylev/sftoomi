@@ -1,3 +1,5 @@
+import { AppContactsTableRecord } from '../components/fields/app-contacts/app-contacts.component';
+
 type getUserAPI = {
     data: {
         id: number,
@@ -6,7 +8,11 @@ type getUserAPI = {
         first_name: string | null,
         disabled: boolean,
         reset_password: boolean,
-        force_to_change_password: boolean
+        force_to_change_password: boolean,
+        contacts?: {
+            contact_id: number,
+            contacts: AppContactsTableRecord[]
+        }
     }
 };
 
