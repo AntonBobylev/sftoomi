@@ -7,7 +7,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import { DialogType } from '../../../class/Dialog';
 
-import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
+import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component';
 import AppComboComponent, { AppComboRecord } from '../../../components/core/app-combo/app-combo.component';
 import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';

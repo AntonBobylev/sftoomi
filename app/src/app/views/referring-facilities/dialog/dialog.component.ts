@@ -5,7 +5,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 import Sftoomi from '../../../class/Sftoomi';
 
-import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
+import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 import { AppItemSelectorDataListRow } from '../../../components/core/app-item-selector/data-list/data-list.component';

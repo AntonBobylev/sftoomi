@@ -4,7 +4,7 @@ import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 
-import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
+import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';

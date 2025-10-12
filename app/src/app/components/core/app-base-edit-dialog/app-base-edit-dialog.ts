@@ -2,10 +2,10 @@ import { AfterViewInit, Directive, inject, OnDestroy, signal, WritableSignal } f
 import { FormGroup } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 
-import Sftoomi from '../../class/Sftoomi';
-import Fetcher from '../../class/Fetcher';
+import Sftoomi from '../../../class/Sftoomi';
+import Fetcher from '../../../class/Fetcher';
 
-import { DialogType } from '../../class/Dialog';
+import { DialogType } from '../../../class/Dialog';
 
 @Directive()
 export default abstract class AppBaseEditDialog implements AfterViewInit, OnDestroy

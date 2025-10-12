@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import Sftoomi from '../../../class/Sftoomi';
 
-import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog';
+import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
 import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';
 
