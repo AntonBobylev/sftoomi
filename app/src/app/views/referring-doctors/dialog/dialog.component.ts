@@ -28,7 +28,7 @@ export type ReferringDoctorEditDialogData = {
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective, AppTextfieldComponent, AppItemSelectorComponent
     ],
-    styleUrl: './dialog.component.scss'
+    styleUrl: './dialog.component.less'
 })
 
 export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialog

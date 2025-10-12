@@ -26,7 +26,10 @@ export type UserEditDialogData = {
         AppTextfieldComponent, AppCheckboxComponent,
         NzCollapseComponent, NzCollapsePanelComponent
     ],
-    styleUrl: './dialog.component.less'
+    styleUrls: [
+        './dialog.component.less',
+        '../../../components/core/app-base-edit-dialog/app-base-edit-dialog.less'
+    ]
 })
 
 export default class UserEditDialogComponent extends AppBaseEditDialog

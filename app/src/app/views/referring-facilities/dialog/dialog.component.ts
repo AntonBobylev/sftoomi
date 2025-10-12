@@ -29,7 +29,10 @@ export type ReferringFacilityEditDialogData = {
         NzButtonComponent, NzModalFooterDirective,
         AppTextfieldComponent, AppItemSelectorComponent
     ],
-    styleUrl: './dialog.component.scss'
+    styleUrls: [
+        './dialog.component.less',
+        '../../../components/core/app-base-edit-dialog/app-base-edit-dialog.less'
+    ]
 })
 
 export default class ReferringFacilityEditDialogComponent extends AppBaseEditDialog

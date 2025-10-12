@@ -27,7 +27,7 @@ export type PatientEditDialogData = {
         PatientDemographicsTemplateComponent,
         NzButtonComponent, NzModalFooterDirective
     ],
-    styleUrl: './dialog.component.scss'
+    styleUrl: './dialog.component.less'
 })
 
 export default class PatientEditDialogComponent extends AppBaseEditDialog
