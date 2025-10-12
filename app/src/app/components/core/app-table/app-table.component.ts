@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, effect, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -23,6 +23,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
+    protected readonly beautifiedData: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
@@ -57,6 +58,13 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     protected pageSize: number = 50;
     protected currentPageIndex: number = 1;
 
+    constructor()
+    {
+        effect((): void => {
+            this.syncDataAndBeautifiedData();
+        });
+    }
+
     ngAfterViewInit(): void
     {
         if (!this.lazyLoad) {
@@ -81,11 +89,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     public setData(data: any[]): void
     {
-        let conversionRequired: boolean = Sftoomi.isEmpty(this.data());
-        if (conversionRequired) {
-            this.convertReceivedDataToTableData(data);
-        }
-
         this.data.set(data);
         this.refreshCheckedStatus();
     }
@@ -233,7 +236,29 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             if (this.selectionRequired) {
                 row.selected = false;
             }
+        });
 
+        this.syncDataAndBeautifiedData();
+
+        return data;
+    }
+
+    private removeLocal(): void
+    {
+        let selectedRows: any[] = this.getSelection();
+
+        let currentRows: any[] = this.getData();
+        selectedRows.forEach((selectedRow: any): void => {
+            currentRows = currentRows.filter((row: any): boolean => row !== selectedRow);
+        });
+
+        this.setData(currentRows);
+    }
+
+    private syncDataAndBeautifiedData(): void
+    {
+        let newData: any[] = this.data();
+        newData.forEach((row: any): void => {
             Object.keys(row).forEach((key: string): void => {
                 let currentColumn: AppTableColumn | undefined;
                 this.columns.every(function (column: AppTableColumn): boolean {
@@ -250,20 +275,8 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
                     row[key] = currentColumn.valueRenderer(row[key]);
                 }
             });
-        })
-
-        return data;
-    }
-
-    private removeLocal(): void
-    {
-        let selectedRows: any[] = this.getSelection();
-
-        let currentRows: any[] = this.getData();
-        selectedRows.forEach((selectedRow: any): void => {
-            currentRows = currentRows.filter((row: any): boolean => row !== selectedRow);
         });
 
-        this.setData(currentRows);
+        this.beautifiedData.set(newData);
     }
 }

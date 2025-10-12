@@ -6,7 +6,7 @@
     </div>
 }
 
-<nz-table [nzData]="data()"
+<nz-table [nzData]="beautifiedData()"
           [nzLoading]="isLoading()"
           [nzBordered]="isBordered"
           [nzTotal]="total()"
@@ -47,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            @for (row of data(); track row + $index) {
+            @for (row of beautifiedData(); track row + $index) {
                 <tr>
                     @if (selectionRequired) {
                         <td [nzChecked]="row.selected"
@@ -96,7 +96,7 @@
                 {{ Sftoomi.Translator.translate('select_all') }}
             </div>
         }
-        @for (row of data(); track row + $index) {
+        @for (row of beautifiedData(); track row + $index) {
             <tr>
                 <td [class.selected-mobile-cell]="row.selected"
                     class="mobile-cell"
