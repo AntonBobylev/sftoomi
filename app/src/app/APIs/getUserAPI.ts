@@ -1,4 +1,4 @@
-import { AppContactsTableRecord } from '../components/fields/app-contacts/app-contacts.component';
+import { AppContactsTableRecord } from '../components/fields/app-contacts/table/table.component';
 
 type getUserAPI = {
     data: {
