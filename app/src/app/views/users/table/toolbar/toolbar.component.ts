@@ -34,7 +34,6 @@ export default class UsersTableToolbarComponent extends AppBaseToolbar
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
-            nzWidth: 400,
             nzData: { id: id }
         });
 
