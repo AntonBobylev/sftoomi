@@ -24,8 +24,6 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.examinations.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.examinations.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removeExamination';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<ExaminationEditDialogComponent, ExaminationEditDialogData>({

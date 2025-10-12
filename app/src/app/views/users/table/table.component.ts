@@ -81,6 +81,7 @@ export default class UsersTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getUsers';
+    protected override readonly removeUrl: string = '/removeUser';
 
     protected override readonly toolbar: any | undefined = UsersTableToolbarComponent;
 }

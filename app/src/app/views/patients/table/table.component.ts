@@ -67,6 +67,7 @@ export default class PatientsTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getPatients';
+    protected override readonly removeUrl: string = '/removePatient';
 
     protected override readonly toolbar: any | undefined = PatientsTableToolbarComponent;
 }

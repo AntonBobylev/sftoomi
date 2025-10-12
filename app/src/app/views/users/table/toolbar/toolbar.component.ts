@@ -24,8 +24,6 @@ export default class UsersTableToolbarComponent extends AppBaseToolbar
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.users.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.users.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removeUser';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<UserEditDialogComponent, UserEditDialogData>({

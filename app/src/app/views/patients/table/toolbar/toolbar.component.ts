@@ -24,8 +24,6 @@ export default class PatientsTableToolbarComponent extends AppBaseToolbar
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.patients.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.patients.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removePatient';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<PatientEditDialogComponent, PatientEditDialogData>({

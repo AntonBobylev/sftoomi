@@ -1,10 +1,11 @@
-import { AfterViewInit, Component, Input, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
 import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
+import { DialogType } from '../../../class/Dialog';
 
 import AppBaseFilters from '../app-base-filters';
 
@@ -17,7 +18,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
     styleUrl: './app-table.component.less'
 })
 
-export default class AppTableComponent implements AfterViewInit
+export default class AppTableComponent implements AfterViewInit, OnDestroy
 {
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
@@ -31,6 +32,9 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly loadUrl: string | undefined;
     protected readonly loadTimeout: number = Timeout.timeout;
 
+    protected readonly removeUrl: string | undefined;
+    protected readonly removeTimeout: number = Timeout.timeout;
+
     protected readonly toolbarHeight: string = '40px';
     protected readonly toolbar: any | undefined;
 
@@ -39,12 +43,16 @@ export default class AppTableComponent implements AfterViewInit
     protected readonly isBordered: boolean = true;
     protected readonly selectionRequired: boolean = true;
 
+    protected readonly Sftoomi = Sftoomi;
+
     protected readonly lazyLoad: boolean = false;
 
     protected selectionInHeaderChecked: boolean = false;
     protected selectionInHeaderIntermediate: boolean = false;
 
     protected readonly usePagination: boolean = true;
+
+    protected readonly queryController: AbortController = new AbortController();
 
     protected pageSize: number = 50;
     protected currentPageIndex: number = 1;
@@ -54,6 +62,11 @@ export default class AppTableComponent implements AfterViewInit
         if (!this.lazyLoad) {
             this.refresh();
         }
+    }
+
+    ngOnDestroy(): void
+    {
+        this.queryController.abort();
     }
 
     public setIsLoading(isLoading: boolean): void
@@ -108,6 +121,45 @@ export default class AppTableComponent implements AfterViewInit
                 this.total.set(result.total ?? 0);
 
                 this.refreshCheckedStatus();
+            },
+            finally: (): void => {
+                this.isLoading.set(false);
+            }
+        });
+    }
+
+    public removeSelected(): void
+    {
+        let selectedRecords: any[] = this.getSelection();
+        if (selectedRecords.length < 1) {
+            Sftoomi.popupMsgService?.nothingSelected();
+
+            return;
+        }
+
+        if (!this.removeUrl) {
+            this.removeLocal();
+
+            return;
+        }
+
+        let data: FormData = new FormData();
+        data.append('ids', selectedRecords.map(function (record: any): number {
+            return record.id;
+        }).join(','));
+
+        this.isLoading.set(true);
+        new Fetcher().request({
+            url: this.removeUrl,
+            timeout: this.removeTimeout,
+            signal: this.queryController.signal,
+            data: data,
+            success: (_response: any, _request: any, _data: any): void => {
+                this.refresh();
+                this.refreshCheckedStatus();
+            },
+            failure: function (_code: any, message: any, _request: any): void {
+                Sftoomi.Dialog.show(message, DialogType.ERROR);
             },
             finally: (): void => {
                 this.isLoading.set(false);
@@ -203,5 +255,15 @@ export default class AppTableComponent implements AfterViewInit
         return data;
     }
 
-    protected readonly Sftoomi = Sftoomi;
+    private removeLocal(): void
+    {
+        let selectedRows: any[] = this.getSelection();
+
+        let currentRows: any[] = this.getData();
+        selectedRows.forEach((selectedRow: any): void => {
+            currentRows = currentRows.filter((row: any): boolean => row !== selectedRow);
+        });
+
+        this.setData(currentRows);
+    }
 }

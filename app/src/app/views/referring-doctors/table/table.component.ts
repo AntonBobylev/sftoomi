@@ -78,6 +78,7 @@ export default class ReferringDoctorsTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getDoctors';
+    protected override readonly removeUrl: string = '/removeDoctor';
 
     protected override readonly toolbar: any | undefined = ReferringDoctorsTableToolbarComponent;
 }

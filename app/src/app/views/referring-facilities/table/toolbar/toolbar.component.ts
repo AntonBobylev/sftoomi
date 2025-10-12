@@ -24,8 +24,6 @@ export default class ReferringFacilitiesTableToolbarComponent extends AppBaseToo
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.referring_facilities.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.referring_facilities.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removeFacility';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<ReferringFacilityEditDialogComponent, ReferringFacilityEditDialogData>({

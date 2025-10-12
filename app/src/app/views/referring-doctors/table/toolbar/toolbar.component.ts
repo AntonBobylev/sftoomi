@@ -23,8 +23,6 @@ export default class ReferringDoctorsTableToolbarComponent extends AppBaseToolba
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.referring_doctors.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.referring_doctors.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removeDoctor';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<ReferringDoctorEditDialogComponent, ReferringDoctorEditDialogData>({

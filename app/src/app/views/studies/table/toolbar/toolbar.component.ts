@@ -24,8 +24,6 @@ export default class StudiesTableToolbarComponent extends AppBaseToolbar
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.studies.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.studies.dialog.edit_title');
 
-    protected override readonly removeUrl: string = '/removeStudy';
-
     protected openEditDialog(title: string, id?: number): void
     {
         const modal = Sftoomi.Dialog.getInstance().create<StudiesEditDialogComponent, StudiesEditDialogData>({

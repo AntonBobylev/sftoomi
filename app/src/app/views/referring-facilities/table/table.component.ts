@@ -72,6 +72,7 @@ export default class ReferringFacilitiesTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getFacilities';
+    protected override readonly removeUrl: string = '/removeFacility';
 
     protected override readonly toolbar: any | undefined = ReferringFacilitiesTableToolbarComponent;
 }

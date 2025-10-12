@@ -75,6 +75,7 @@ export default class StudiesTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getStudies';
+    protected override readonly removeUrl: string = '/removeStudy';
 
     protected override readonly toolbar: any | undefined = StudiesTableToolbarComponent;
 }

@@ -58,6 +58,7 @@ export default class ExaminationsTableComponent extends AppTableComponent
     }];
 
     protected override readonly loadUrl: string = '/getExaminations';
+    protected override readonly removeUrl: string = '/removeExamination';
 
     protected override readonly lazyLoad: boolean = true;
 
