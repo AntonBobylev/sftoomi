@@ -7,6 +7,8 @@ import Fetcher from '../../../class/Fetcher';
 
 import { DialogType } from '../../../class/Dialog';
 
+import ResponsiveLayoutService from '../../../services/responsive-layout.service';
+
 @Directive()
 export default abstract class AppBaseEditDialog implements AfterViewInit, OnDestroy
 {
@@ -29,6 +31,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected readonly queryController: AbortController = new AbortController();
 
+    protected readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
+
     constructor(private readonly dialog: NzModalRef)
     {
     }
@@ -41,6 +45,11 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     ngAfterViewInit(): void
     {
         this.load();
+    }
+
+    protected getDialogInstance(): NzModalRef
+    {
+        return this.dialog;
     }
 
     protected load(): void
