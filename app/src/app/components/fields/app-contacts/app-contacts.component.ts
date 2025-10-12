@@ -1,13 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 
-import AppContactsTableComponent from './table/table.component';
-
-export type AppContactsTableRecord = {
-    item_id:  number,
-    type:     string,
-    position: number,
-    text:     string
-};
+import AppContactsTableComponent, { AppContactsTableRecord } from './table/table.component';
 
 @Component({
     selector: 'app-contacts',

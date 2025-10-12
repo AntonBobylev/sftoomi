@@ -197,6 +197,9 @@ let ruDictionary: object =  {
             }
         },
         contacts: {
+            address: 'Адрес',
+            email: 'Email',
+            phone: 'Телефон',
             position: 'Позиция',
             text: 'Текст',
             type: 'Тип'

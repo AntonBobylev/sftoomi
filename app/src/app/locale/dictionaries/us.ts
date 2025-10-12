@@ -197,6 +197,9 @@ let usDictionary: object =  {
             }
         },
         contacts: {
+            address: 'Address',
+            email: 'Email',
+            phone: 'Phone',
             position: 'Position',
             text: 'Text',
             type: 'Type'
