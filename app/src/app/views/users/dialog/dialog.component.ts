@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, Signal, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -8,6 +8,7 @@ import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
+import AppContactsComponent from '../../../components/fields/app-contacts/app-contacts.component';
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 
@@ -24,7 +25,8 @@ export type UserEditDialogData = {
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
         AppTextfieldComponent, AppCheckboxComponent,
-        NzCollapseComponent, NzCollapsePanelComponent
+        NzCollapseComponent, NzCollapsePanelComponent,
+        AppContactsComponent
     ],
     styleUrls: [
         './dialog.component.less',
@@ -50,6 +52,22 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
         disabled:                 new FormControl<boolean>(false)
     });
 
+    @ViewChild('contactsCtrl')
+    private readonly contactsCtrl!: AppContactsComponent;
+
+    protected readonly dialogResizer: Signal<any> = computed((): void => {
+        let width: number | string = 600;
+        if (this.responsiveLayoutService.isSmallWidth()) {
+            width = '100%';
+        }
+
+        setTimeout((): void => {
+            this.getDialogInstance().updateConfig({
+                nzWidth: width
+            });
+        });
+    });
+
     protected afterLoad(data: getUserAPI): void
     {
         if (this.data.id) {
@@ -59,6 +77,10 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
             this.form.get('first_name')?.setValue(data.data.first_name);
             this.form.get('last_name')?.setValue(data.data.last_name);
             this.form.get('disabled')?.setValue(data.data.disabled);
+
+            if (data.data.contacts) {
+                this.contactsCtrl.setData(data.data.contacts.contacts);
+            }
         }
     }
 

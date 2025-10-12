@@ -1,3 +1,5 @@
+{{ dialogResizer() }}
+
 <nz-collapse [formGroup]="form">
     <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.common_panel_title')"
                        [nzActive]="true"
@@ -39,7 +41,9 @@
     <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.contacts_panel_title')"
                        [nzActive]="true"
     >
-        // TODO: implement
+        <app-contacts #contactsCtrl
+                      [class.contacts-field-mobile]="responsiveLayoutService.isSmallWidth()"
+        />
     </nz-collapse-panel>
 </nz-collapse>
 
