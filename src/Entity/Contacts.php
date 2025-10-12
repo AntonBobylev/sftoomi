@@ -16,6 +16,9 @@ class Contacts
     private ?int $id = null;
 
     #[ORM\Column(nullable: false)]
+    private ?int $contactId;
+
+    #[ORM\Column(nullable: false)]
     private ?int $item_id;
 
     #[ORM\Column(length: 7, nullable: false)]
@@ -35,6 +38,18 @@ class Contacts
     public function getItemId(): ?int
     {
         return $this->item_id;
+    }
+
+    public function getContactId(): ?int
+    {
+        return $this->contactId;
+    }
+
+    public function setContactId(int $contactId): static
+    {
+        $this->contactId = $contactId;
+
+        return $this;
     }
 
     public function setItemId(int $item_id): static
