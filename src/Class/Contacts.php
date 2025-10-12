@@ -10,10 +10,10 @@ final class Contacts
     {
     }
 
-    public function get(?int $contactId): array
+    public function get(?int $contactId): ?array
     {
         if (empty($contactId)) {
-            return [];
+            return null;
         }
 
         $sql = "select item_id, type, text, position
@@ -23,7 +23,7 @@ final class Contacts
 
         return [
             "contact_id" => $contactId,
-            "contacts" => $data,
+            "contacts"   => $data,
         ];
     }
 }
