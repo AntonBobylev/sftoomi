@@ -16,7 +16,7 @@
           [nzPageIndex]="currentPageIndex"
           (nzPageIndexChange)="onPageIndexChange($event)"
           (nzPageSizeChange)="onPageSizeChange($event)"
-          nzShowPagination
+          [nzShowPagination]="usePagination"
           nzShowSizeChanger
           [style.height]="getTableHeight()"
 >
