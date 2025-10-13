@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, signal, ViewChild, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -6,6 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 import { DialogType } from '../../../class/Dialog';
+import AppTableBaseView from './views/base-view'
 
 import AppBaseFilters from '../app-base-filters';
 
@@ -14,7 +15,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 @Component({
     selector: 'app-table',
     templateUrl: './app-table.component.html',
-    imports: [AppTableImports],
+    imports: [ AppTableImports ],
     styleUrl: './app-table.component.less'
 })
 
@@ -23,6 +24,9 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
     @Output() public afterRemoveSelected: EventEmitter<undefined> = new EventEmitter<undefined>();
+
+    @ViewChild('viewCtrl')
+    protected readonly viewCtrl!: AppTableBaseView;
 
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
@@ -48,9 +52,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     protected readonly Sftoomi = Sftoomi;
 
     protected readonly lazyLoad: boolean = false;
-
-    protected selectionInHeaderChecked: boolean = false;
-    protected selectionInHeaderIntermediate: boolean = false;
 
     protected readonly usePagination: boolean = true;
 
@@ -84,7 +85,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     public setData(data: any[]): void
     {
         this.data.set(data);
-        this.refreshCheckedStatus();
+        this.viewCtrl.refresh();
     }
 
     public getData(): any[]
@@ -117,7 +118,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
                 this.data.set(this.convertReceivedDataToTableData(result.data));
                 this.total.set(result.total ?? 0);
 
-                this.refreshCheckedStatus();
+                this.viewCtrl.refresh();
             },
             finally: (): void => {
                 this.isLoading.set(false);
@@ -153,7 +154,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             data: data,
             success: (_response: any, _request: any, _data: any): void => {
                 this.refresh();
-                this.refreshCheckedStatus();
                 this.afterRemoveSelected.emit();
             },
             failure: function (_code: any, message: any, _request: any): void {
@@ -193,45 +193,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         }
 
         return height;
-    }
-
-    protected onAllChecked(selected: boolean): void
-    {
-        this.data().map((row) => {
-            row.selected = selected;
-
-            return row;
-        });
-
-        this.refreshCheckedStatus();
-    }
-
-    protected refreshCheckedStatus(): void
-    {
-        if (Sftoomi.isEmpty(this.data())) {
-            this.selectionInHeaderChecked = false;
-            this.selectionInHeaderIntermediate = false;
-
-            return;
-        }
-
-        this.selectionInHeaderChecked = this.data().every((row) => row.selected);
-        this.selectionInHeaderIntermediate = this.data().some((row) => row.selected) && !this.selectionInHeaderChecked;
-    }
-
-    protected onRowCheck(checked: boolean, row: any): void
-    {
-        row.selected = checked;
-        this.refreshCheckedStatus();
-    }
-
-    protected getCellData(row: any, column: AppTableColumn): string
-    {
-        if (column.valueRenderer) {
-            return column.valueRenderer(row[column.name]);
-        }
-
-        return row[column.name];
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]

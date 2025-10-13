@@ -1,0 +1,44 @@
+th {
+    cursor: default;
+}
+
+thead tr:nth-child(1) th{
+    background: white;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+::ng-deep {
+    nz-spin {
+        height: 100%;
+    }
+
+    .ant-spin-container {
+        height: 100%;
+    }
+
+    .ant-table {
+        height: calc(100% - 40px);
+    }
+
+    nz-table-inner-scroll {
+        height: 100%;
+    }
+
+    .ant-table-body {
+        height: 100%;
+
+        table {
+            table-layout: auto !important;
+
+            th {
+                border: 1px solid #f0f0f0;
+            }
+
+            td {
+                border: 1px solid #f0f0f0;
+            }
+        }
+    }
+}

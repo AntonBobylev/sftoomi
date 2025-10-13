@@ -21,123 +21,16 @@
           [style.height]="getTableHeight()"
 >
     @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-        <ng-container *ngTemplateOutlet="mobileTableTpl" />
+        <app-table-card-view  #viewCtrl
+                              [data]="data"
+                              [columns]="columns"
+                              [selectionRequired]="selectionRequired"
+        />
     } @else {
-        <thead>
-            <tr>
-                @if (selectionRequired) {
-                    <th [nzChecked]="selectionInHeaderChecked"
-                        [nzIndeterminate]="selectionInHeaderIntermediate"
-                        [nz-tooltip]="Sftoomi.Translator.translate('select_all')"
-                        (nzCheckedChange)="onAllChecked($event)"
-                        style="width: 40px"
-                    ></th>
-                }
-                @for (column of columns; track column.name) {
-                    <th style="width: {{ column.width }}">
-                        <span class="cell"
-                              [ngStyle]="column.header.extraStyles"
-                        >
-                            <span [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer!() : null">
-                                {{ column.header.caption }}
-                            </span>
-                        </span>
-                    </th>
-                }
-            </tr>
-        </thead>
-        <tbody>
-            @for (row of data(); track row + $index) {
-                <tr>
-                    @if (selectionRequired) {
-                        <td [nzChecked]="row.selected"
-                            nzShowCheckbox
-                            (nzCheckedChange)="onRowCheck($event, row)"
-                        >
-                        </td>
-                    }
-
-                    @for (column of columns; track column.name) {
-                        <td>
-                            <div class="cell"
-                                 [style.max-width]="column.width"
-                                 [ngStyle]="column.dataCell?.extraStyles ?? null"
-                                 [nz-tooltip]="column.dataCell?.tooltipRenderer ? column.dataCell?.tooltipRenderer(row) : null"
-                            >
-                                @if (column.customColumnComponent) {
-                                    <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                      inputs: { table: this, rowData: row }"
-                                    />
-                                } @else if (column.rawHtml) {
-                                    <span [innerHTML]="getCellData(row, column) | safe"
-                                          style="max-height: 100px; overflow: auto; width: 100%;"
-                                    ></span>
-                                } @else {
-                                    <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-                                        {{ getCellData(row, column) }}
-                                    </span>
-                                }
-                            </div>
-                        </td>
-                    }
-                </tr>
-            }
-        </tbody>
+        <app-table-row-view #viewCtrl
+                            [data]="data"
+                            [columns]="columns"
+                            [selectionRequired]="selectionRequired"
+        />
     }
 </nz-table>
-
-<ng-template #mobileTableTpl>
-    <tbody class="mobile-table">
-        @if (selectionRequired) {
-            <div nz-checkbox
-                 [nzChecked]="selectionInHeaderChecked"
-                 [nzIndeterminate]="selectionInHeaderIntermediate"
-                 (nzCheckedChange)="onAllChecked($event)"
-                 class="select-all-checkbox"
-            >
-                {{ Sftoomi.Translator.translate('select_all') }}
-            </div>
-        }
-        @for (row of data(); track row + $index) {
-            <tr>
-                <td [class.selected-mobile-cell]="row.selected"
-                    class="mobile-cell"
-                >
-                    @if (selectionRequired) {
-                        <div nz-checkbox
-                             class="mobile-cell-checkbox"
-                             [nzChecked]="row.selected"
-                             (nzCheckedChange)="onRowCheck($event, row)"
-                        ></div>
-                    }
-
-                    <div class="mobile-cell-block">
-                        <table>
-                            @for (column of columns; track column.name) {
-                                <tr style="display: flex">
-                                    <td style="flex: 1; font-weight: bold">{{ column.header.caption }}:</td>
-
-                                    <td style="flex: 2">
-                                        @if (column.customColumnComponent) {
-                                            <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                              inputs: { table: this, rowData: row }"
-                                            />
-                                        } @else if (column.rawHtml) {
-                                            <span [innerHTML]="getCellData(row, column) | safe"
-                                                style="max-height: 100px; overflow: auto; width: 100%;"
-                                            ></span>
-                                        } @else {
-                                            <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-                                                {{ getCellData(row, column) }}
-                                            </span>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                        </table>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</ng-template>

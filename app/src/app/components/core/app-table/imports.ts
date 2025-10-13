@@ -1,20 +1,17 @@
-import { NgStyle, NgTemplateOutlet } from '@angular/common';
 import { NgComponentOutlet } from '@angular/common';
-import { NzTableComponent, NzTdAddOnComponent, NzThMeasureDirective, NzThSelectionComponent } from 'ng-zorro-antd/table';
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
-import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
+import { NzTableComponent} from 'ng-zorro-antd/table';
 
-import { SafePipe } from '../../../pipes/safe.pipe';
+import AppTableRowViewImports from './views/row/imports'
+import AppTableCardViewImports from './views/card/imports'
+
+import AppTableRowViewComponent from './views/row/row.component'
+import AppTableCardViewComponent from './views/card/card.component'
 
 export default [
-    NgStyle,
-    NzTableComponent,
-    NzThMeasureDirective,
-    NzThSelectionComponent,
-    NzTdAddOnComponent,
-    NzTooltipDirective,
-    SafePipe,
     NgComponentOutlet,
-    NgTemplateOutlet,
-    NzCheckboxComponent
+    NzTableComponent,
+    AppTableCardViewComponent,
+    AppTableRowViewComponent,
+    AppTableRowViewImports,
+    AppTableCardViewImports
 ]

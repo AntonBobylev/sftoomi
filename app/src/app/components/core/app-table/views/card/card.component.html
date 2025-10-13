@@ -1,0 +1,54 @@
+<tbody class="table">
+    @if (selectionRequired) {
+        <div nz-checkbox
+             [nzChecked]="selectionInHeaderChecked"
+             [nzIndeterminate]="selectionInHeaderIntermediate"
+             (nzCheckedChange)="onAllChecked($event)"
+             class="select-all-checkbox"
+        >
+            {{ Sftoomi.Translator.translate('select_all') }}
+        </div>
+    }
+
+    @for (row of data(); track row + $index) {
+        <tr>
+            <td [class.selected-cell]="row.selected"
+                class="cell"
+            >
+                @if (selectionRequired) {
+                    <div nz-checkbox
+                         class="cell-checkbox"
+                         [nzChecked]="row.selected"
+                         (nzCheckedChange)="onRowCheck($event, row)"
+                    ></div>
+                }
+
+                <div class="cell-block">
+                    <table>
+                        @for (column of columns; track column.name) {
+                            <tr style="display: flex">
+                                <td style="flex: 1; font-weight: bold">{{ column.header.caption }}:</td>
+
+                                <td style="flex: 2">
+                                    @if (column.customColumnComponent) {
+                                        <ng-container *ngComponentOutlet="column.customColumnComponent;
+                                                                          inputs: { table: this, rowData: row }"
+                                        />
+                                    } @else if (column.rawHtml) {
+                                        <span [innerHTML]="getCellData(row, column) | safe"
+                                              style="max-height: 100px; overflow: auto; width: 100%;"
+                                        ></span>
+                                    } @else {
+                                        <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
+                                            {{ getCellData(row, column) }}
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </td>
+        </tr>
+    }
+</tbody>
