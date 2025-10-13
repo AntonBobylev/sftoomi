@@ -6,7 +6,7 @@
     </div>
 }
 
-<nz-table [nzData]="beautifiedData()"
+<nz-table [nzData]="data()"
           [nzLoading]="isLoading()"
           [nzBordered]="isBordered"
           [nzTotal]="total()"
@@ -47,7 +47,7 @@
             </tr>
         </thead>
         <tbody>
-            @for (row of beautifiedData(); track row + $index) {
+            @for (row of data(); track row + $index) {
                 <tr>
                     @if (selectionRequired) {
                         <td [nzChecked]="row.selected"
@@ -66,15 +66,15 @@
                             >
                                 @if (column.customColumnComponent) {
                                     <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                     inputs: { table: this, rowData: row }"
+                                                                      inputs: { table: this, rowData: row }"
                                     />
                                 } @else if (column.rawHtml) {
-                                    <span [innerHTML]="row[column.name] | safe"
+                                    <span [innerHTML]="getCellData(row, column) | safe"
                                           style="max-height: 100px; overflow: auto; width: 100%;"
                                     ></span>
                                 } @else {
                                     <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-                                        {{ row[column.name] }}
+                                        {{ getCellData(row, column) }}
                                     </span>
                                 }
                             </div>
@@ -98,7 +98,7 @@
                 {{ Sftoomi.Translator.translate('select_all') }}
             </div>
         }
-        @for (row of beautifiedData(); track row + $index) {
+        @for (row of data(); track row + $index) {
             <tr>
                 <td [class.selected-mobile-cell]="row.selected"
                     class="mobile-cell"
@@ -120,15 +120,15 @@
                                     <td style="flex: 2">
                                         @if (column.customColumnComponent) {
                                             <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                     inputs: { table: this, rowData: row }"
+                                                                              inputs: { table: this, rowData: row }"
                                             />
                                         } @else if (column.rawHtml) {
-                                            <span [innerHTML]="row[column.name] | safe"
+                                            <span [innerHTML]="getCellData(row, column) | safe"
                                                 style="max-height: 100px; overflow: auto; width: 100%;"
                                             ></span>
                                         } @else {
                                             <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">
-                                                {{ row[column.name] }}
+                                                {{ getCellData(row, column) }}
                                             </span>
                                         }
                                     </td>

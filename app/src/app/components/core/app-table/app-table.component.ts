@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, effect, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -23,7 +23,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
-    protected readonly beautifiedData: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
@@ -57,13 +56,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     protected pageSize: number = 50;
     protected currentPageIndex: number = 1;
-
-    constructor()
-    {
-        effect((): void => {
-            this.syncDataAndBeautifiedData();
-        });
-    }
 
     ngAfterViewInit(): void
     {
@@ -230,15 +222,22 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         this.refreshCheckedStatus();
     }
 
+    protected getCellData(row: any, column: AppTableColumn): string
+    {
+        if (column.valueRenderer) {
+            return column.valueRenderer(row[column.name]);
+        }
+
+        return row[column.name];
+    }
+
     private convertReceivedDataToTableData(data: any[]): any[]
     {
-        data.forEach((row: any): void => {
-            if (this.selectionRequired) {
+        if (this.selectionRequired) {
+            data.forEach((row: any): void => {
                 row.selected = false;
-            }
-        });
-
-        this.syncDataAndBeautifiedData();
+            });
+        }
 
         return data;
     }
@@ -253,30 +252,5 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         });
 
         this.setData(currentRows);
-    }
-
-    private syncDataAndBeautifiedData(): void
-    {
-        let newData: any[] = this.data();
-        newData.forEach((row: any): void => {
-            Object.keys(row).forEach((key: string): void => {
-                let currentColumn: AppTableColumn | undefined;
-                this.columns.every(function (column: AppTableColumn): boolean {
-                    if (column.name === key) {
-                        currentColumn = column;
-
-                        return false;
-                    }
-
-                    return true;
-                })
-
-                if (currentColumn && currentColumn.valueRenderer) {
-                    row[key] = currentColumn.valueRenderer(row[key]);
-                }
-            });
-        });
-
-        this.beautifiedData.set(newData);
     }
 }
