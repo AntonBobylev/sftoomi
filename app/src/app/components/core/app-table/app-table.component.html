@@ -51,8 +51,10 @@
                 <tr>
                     @if (selectionRequired) {
                         <td [nzChecked]="row.selected"
+                            nzShowCheckbox
                             (nzCheckedChange)="onRowCheck($event, row)"
-                        ></td>
+                        >
+                        </td>
                     }
 
                     @for (column of columns; track column.name) {
