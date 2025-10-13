@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, signal, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -21,6 +21,8 @@ import AppTableColumn from '../../../type/AppTableColumn';
 export default class AppTableComponent implements AfterViewInit, OnDestroy
 {
     @Input() public filtersCtrl: AppBaseFilters | undefined;
+
+    @Output() public afterRemoveSelected: EventEmitter<undefined> = new EventEmitter<undefined>();
 
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
@@ -152,6 +154,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             success: (_response: any, _request: any, _data: any): void => {
                 this.refresh();
                 this.refreshCheckedStatus();
+                this.afterRemoveSelected.emit();
             },
             failure: function (_code: any, message: any, _request: any): void {
                 Sftoomi.Dialog.show(message, DialogType.ERROR);
@@ -252,5 +255,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         });
 
         this.setData(currentRows);
+
+        this.afterRemoveSelected.emit();
     }
 }
