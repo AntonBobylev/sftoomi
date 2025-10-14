@@ -1,8 +1,18 @@
 <div class="wrapper"
      [formGroup]="form"
 >
+    {{ dialogResizer() }}
 
-    // TODO: implement
+    <app-combo #typeCtrl
+               name="type"
+               [form]="form"
+               [label]="Sftoomi.Translator.translate('fields.contacts.type')"
+    />
+
+    <app-textfield name="text"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('fields.contacts.text')"
+    />
 
     <div *nzModalFooter>
         <button nz-button
