@@ -53,17 +53,12 @@ export default abstract class AppBaseToolbar
         this.openEditDialog(
             Sftoomi.format(this.editDialogEditTitle, [id]),
             id,
-            this.getAdditionalDataOnEditDialogOpen(selectedRecords[0])
+            selectedRecords[0]
         );
     }
 
     protected onRemoveClick(): void
     {
         this.table.removeSelected();
-    }
-
-    protected getAdditionalDataOnEditDialogOpen(_data: any): any
-    {
-        return undefined;
     }
 }
