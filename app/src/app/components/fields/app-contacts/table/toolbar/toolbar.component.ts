@@ -7,6 +7,9 @@ import Sftoomi from '../../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
+import ContactsEditDialogComponent, { ContactsEditDialogData } from '../dialog/dialog.component'
+import { AppContactsTableRecord } from '../table.component'
+
 @Component({
     selector: 'users-table-toolbar',
     templateUrl: './toolbar.component.html',
@@ -19,24 +22,29 @@ import AppBaseToolbar from '../../../../core/app-base-toolbar';
 
 export default class AppContactsTableToolbarComponent extends AppBaseToolbar
 {
-    protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.users.dialog.add_title');
-    protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.users.dialog.edit_title');
+    protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('fields.contacts.dialog.add_title');
+    protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('fields.contacts.dialog.edit_title');
 
-    protected openEditDialog(title: string, id?: number): void
+    protected openEditDialog(title: string, id?: number, additionalData?: ContactsEditDialogData): void
     {
-        /*const modal = Sftoomi.Dialog.getInstance().create<UserEditDialogComponent, UserEditDialogData>({
+        const modal = Sftoomi.Dialog.getInstance().create<ContactsEditDialogComponent, ContactsEditDialogData>({
             nzTitle: title,
-            nzContent: UserEditDialogComponent,
+            nzContent: ContactsEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
             nzMaskClosable: false,
             nzCentered: true,
-            nzData: { id: id }
+            nzData: additionalData
         });
 
         modal.afterClose.subscribe((isSaved: boolean = false): void => {
             if (isSaved) {
                 this.table.refresh();
             }
-        });*/
+        });
+    }
+
+    protected override getAdditionalDataOnEditDialogOpen(data: AppContactsTableRecord): any
+    {
+        return data;
     }
 }
