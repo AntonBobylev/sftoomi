@@ -202,7 +202,11 @@ let ruDictionary: object =  {
             phone: 'Телефон',
             position: 'Позиция',
             text: 'Текст',
-            type: 'Тип'
+            type: 'Тип',
+            dialog: {
+                add_title: 'Добавление контакта',
+                edit_title: 'Редактирование контакта'
+            }
         }
     },
 

@@ -202,7 +202,11 @@ let usDictionary: object =  {
             phone: 'Phone',
             position: 'Position',
             text: 'Text',
-            type: 'Type'
+            type: 'Type',
+            dialog: {
+                add_title: 'Добавление контакта',
+                edit_title: 'Редактирование контакта'
+            }
         }
     },
 
@@ -213,7 +217,7 @@ let usDictionary: object =  {
         min_length: 'Minimum allowed length — {0}',
         min_value: 'Minimum allowed value is {0}',
         only_letters_allowed: 'Only letters allowed',
-        phone_number_is_invalid: 'Phone number is invalid',
+        phone_number_is_invalid: 'Phone number is invalid'
     },
 
     popup: {
