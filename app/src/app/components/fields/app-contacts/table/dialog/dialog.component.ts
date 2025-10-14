@@ -47,7 +47,7 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
         caption: Sftoomi.Translator.translate('fields.contacts.email'),
         value: 'email'
     }, {
-        caption: Sftoomi.Translator.translate('fields.contacts.email'),
+        caption: Sftoomi.Translator.translate('fields.contacts.address'),
         value: 'address'
     }, {
         caption: Sftoomi.Translator.translate('fields.contacts.phone'),
