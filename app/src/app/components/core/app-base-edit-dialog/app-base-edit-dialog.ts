@@ -115,19 +115,18 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             return;
         }
 
-        let formValues: object = this.form.value,
+        let formValues: any = this.form.value,
             data: FormData = Sftoomi.formValuesToFormData(formValues);
 
-        if (this.data.id) {
+        if (this.data?.id) {
             data.append(this.idField, this.data.id.toString());
+            formValues[this.idField] = this.data.id;
         }
 
         data = this.getAdditionalDataOnSave(data);
 
         if (!this.saveUrl) {
-            this.localSave();
-            this.afterSave(data);
-            this.dialog.close(true);
+            this.afterSave(data, formValues);
 
             return;
         }
@@ -140,7 +139,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
             success: (_response: any, _request: any, data: any): void => {
                 this.isLoading.set(false);
 
-                this.afterSave(data);
+                this.afterSave(data, formValues);
 
                 this.dialog.close(true);
             },
@@ -156,7 +155,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         })
     }
 
-    protected afterSave(_data: any): void
+    protected afterSave(_data: any, _rawData?: any): void
     {
     };
 
@@ -177,10 +176,5 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     {
         // implement in child
         return true;
-    }
-
-    protected localSave(): void
-    {
-        // implement in child
     }
 }
