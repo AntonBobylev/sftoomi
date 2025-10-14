@@ -176,6 +176,20 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         });
     }
 
+    public clearSelection(): void
+    {
+        if (!this.selectionRequired) {
+            return;
+        }
+
+        let records: any[] = this.data();
+        for (let i: number = 0; i < this.data().length; i++) {
+            records[i].selected = false;
+        }
+
+        this.setData(records);
+    }
+
     protected onPageIndexChange(newPageIndex: number): void
     {
         this.currentPageIndex = newPageIndex;
