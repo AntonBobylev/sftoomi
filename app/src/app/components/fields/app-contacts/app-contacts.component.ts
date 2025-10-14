@@ -59,5 +59,6 @@ export default class AppContactsComponent
         });
 
         this.tableCtrl.setData(newData);
+        this.tableCtrl.clearSelection();
     }
 }
