@@ -39,8 +39,8 @@ export default class StudiesEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
-    protected readonly loadUrl: string = '/getStudy';
-    protected readonly saveUrl: string = '/saveStudy';
+    protected override readonly loadUrl: string = '/getStudy';
+    protected override readonly saveUrl: string = '/saveStudy';
 
     protected readonly form: FormGroup = new FormGroup({
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),

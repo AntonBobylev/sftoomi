@@ -36,8 +36,8 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
-    protected readonly loadUrl: string = '/getPatient';
-    protected readonly saveUrl: string = '/savePatient';
+    protected override readonly loadUrl: string = '/getPatient';
+    protected override readonly saveUrl: string = '/savePatient';
 
     protected readonly form: FormGroup = new FormGroup({
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),

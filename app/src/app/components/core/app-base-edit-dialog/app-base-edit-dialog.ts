@@ -22,8 +22,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected readonly fetchExtraRequestOnLoad: boolean = false;
 
-    protected abstract readonly loadUrl: string;
-    protected abstract readonly saveUrl: string;
+    protected readonly loadUrl: string | undefined;
+    protected readonly saveUrl: string | undefined;
 
     protected abstract afterLoad(data: any): void;
 
@@ -54,7 +54,9 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected load(): void
     {
-        if (!this.fetchExtraRequestOnLoad) {
+        if (!this.fetchExtraRequestOnLoad || !this.loadUrl) {
+            this.afterLoad(this.data);
+
             return;
         }
 
@@ -107,6 +109,14 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
         data = this.getAdditionalDataOnSave(data);
 
+        if (!this.saveUrl) {
+            this.localSave();
+            this.afterSave(data);
+            this.dialog.close(true);
+
+            return;
+        }
+
         this.isLoading.set(true);
         new Fetcher().request({
             url: this.saveUrl,
@@ -152,5 +162,10 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     {
         // implement in child
         return true;
+    }
+
+    protected localSave(): void
+    {
+        // implement in child
     }
 }

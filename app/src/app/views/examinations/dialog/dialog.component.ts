@@ -54,8 +54,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
     protected readonly getPatientUrl: string = '/getPatient';
-    protected readonly loadUrl: string = '/getExamination';
-    protected readonly saveUrl: string = '/saveExamination';
+    protected override readonly loadUrl: string = '/getExamination';
+    protected override readonly saveUrl: string = '/saveExamination';
 
     protected override readonly idField: string = 'examination_id';
 

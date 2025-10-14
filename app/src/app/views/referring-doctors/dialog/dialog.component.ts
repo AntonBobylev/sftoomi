@@ -40,8 +40,8 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
-    protected readonly loadUrl: string = '/getDoctor';
-    protected readonly saveUrl: string = '/saveDoctor';
+    protected override readonly loadUrl: string = '/getDoctor';
+    protected override readonly saveUrl: string = '/saveDoctor';
 
     protected readonly form: FormGroup = new FormGroup({
         last_name:   new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),

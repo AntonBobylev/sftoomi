@@ -40,8 +40,8 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
 
-    protected readonly loadUrl: string = '/getUser';
-    protected readonly saveUrl: string = '/saveUser';
+    protected override readonly loadUrl: string = '/getUser';
+    protected override readonly saveUrl: string = '/saveUser';
 
     protected readonly form: FormGroup = new FormGroup({
         login:                    new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
