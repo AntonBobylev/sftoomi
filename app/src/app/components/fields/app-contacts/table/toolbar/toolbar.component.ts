@@ -25,8 +25,17 @@ export default class AppContactsTableToolbarComponent extends AppBaseToolbar
     protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('fields.contacts.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('fields.contacts.dialog.edit_title');
 
-    protected openEditDialog(title: string, id?: number, additionalData?: ContactsEditDialogData): void
+    protected openEditDialog(title: string, _id?: number, additionalData?: AppContactsTableRecord): void
     {
+        let currentRecordIndex: number | undefined;
+        if (additionalData) {
+            let data: AppContactsTableRecord[] = this.table.getData();
+            currentRecordIndex = data.findIndex((record: AppContactsTableRecord): boolean => record === additionalData);
+            if (currentRecordIndex < 0) {
+                currentRecordIndex = undefined;
+            }
+        }
+
         const modal = Sftoomi.Dialog.getInstance().create<ContactsEditDialogComponent, ContactsEditDialogData>({
             nzTitle: title,
             nzContent: ContactsEditDialogComponent,
@@ -36,15 +45,34 @@ export default class AppContactsTableToolbarComponent extends AppBaseToolbar
             nzData: additionalData
         });
 
-        modal.afterClose.subscribe((isSaved: boolean = false): void => {
-            if (isSaved) {
-                this.table.refresh();
+        modal.afterClose.subscribe((contact?: ContactsEditDialogData): void => {
+            if (!contact) {
+                return;
             }
-        });
-    }
 
-    protected override getAdditionalDataOnEditDialogOpen(data: AppContactsTableRecord): any
-    {
-        return data;
+            let records: AppContactsTableRecord[] = this.table.getData(),
+                recordIndex: number = currentRecordIndex ?? -1;
+
+            if (recordIndex >= 0) {
+                records[recordIndex] = {
+                    ...records[recordIndex],
+                    ...contact
+                };
+            } else {
+                const lastPosition: number = records
+                    .filter((record: AppContactsTableRecord): boolean => record.type === contact.type)
+                    .reduce((max: number, record: AppContactsTableRecord): number => Math.max(max, record.position), 0);
+
+                const newRecord: AppContactsTableRecord = {
+                    ...contact,
+                    position: lastPosition + 1
+                };
+
+                records.push(newRecord);
+            }
+
+            this.table.setData(records);
+            this.table.refresh();
+        });
     }
 }

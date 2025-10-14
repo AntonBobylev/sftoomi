@@ -34,11 +34,13 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
     @ViewChild('typeCtrl')
     protected readonly typeCtrl!: AppComboComponent;
 
-    protected override readonly data: ContactsEditDialogData = inject(NZ_MODAL_DATA);
+    protected override readonly data: ContactsEditDialogData | undefined = inject(NZ_MODAL_DATA);
 
     protected readonly form: FormGroup = new FormGroup({
-        type: new FormControl<AppContactType | null>(null, [Validators.required]),
-        text: new FormControl<string | null>(null, [Validators.required])
+        type:     new FormControl<AppContactType | null>(null, [Validators.required]),
+        text:     new FormControl<string | null>(null, [Validators.required]),
+        item_id:  new FormControl<number | undefined>(undefined),
+        position: new FormControl<number | undefined>(undefined)
     });
 
     protected override readonly width: string | number | undefined = 300;
@@ -64,10 +66,12 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
 
         this.form.get('type')?.setValue(data.type);
         this.form.get('text')?.setValue(data.text);
+        this.form.get('position')?.setValue(data.position);
+        this.form.get('item_id')?.setValue(data.item_id);
     }
 
-    protected override getAdditionalDataOnSave(data: FormData): FormData
+    protected override afterSave(_data: FormData, rawData: ContactsEditDialogData): void
     {
-        return data;
-    }
+        this.getDialogInstance().close(rawData); // we don't need the FormData here, we only need the raw data
+    };
 }

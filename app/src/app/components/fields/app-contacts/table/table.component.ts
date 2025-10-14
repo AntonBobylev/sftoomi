@@ -10,7 +10,7 @@ import AppContactsTableToolbarComponent from './toolbar/toolbar.component';
 import AppTableColumn from '../../../../type/AppTableColumn';
 
 export type AppContactsTableRecord = {
-    item_id:  number,
+    item_id?:  number,
     type:     AppContactType,
     position: number,
     text:     string
