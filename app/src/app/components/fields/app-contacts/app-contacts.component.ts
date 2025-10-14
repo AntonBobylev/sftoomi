@@ -29,6 +29,11 @@ export default class AppContactsComponent
         this.sortTableData();
     }
 
+    protected afterTableRefresh(): void
+    {
+        this.sortTableData();
+    }
+
     private sortTableData(): void
     {
         let data: AppContactsTableRecord[] = this.tableCtrl.getData();

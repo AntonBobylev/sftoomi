@@ -24,6 +24,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
     @Output() public afterRemoveSelected: EventEmitter<undefined> = new EventEmitter<undefined>();
+    @Output() public afterRefresh: EventEmitter<undefined> = new EventEmitter<undefined>();
 
     @ViewChild('viewCtrl')
     protected readonly viewCtrl!: AppTableBaseView;
@@ -96,6 +97,8 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     public refresh(filters?: FormData): void
     {
         if (Sftoomi.isEmpty(this.loadUrl)) {
+            this.afterRefresh.emit();
+
             return;
         }
 
@@ -119,6 +122,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
                 this.total.set(result.total ?? 0);
 
                 this.viewCtrl.refresh();
+                this.afterRefresh.emit();
             },
             finally: (): void => {
                 this.isLoading.set(false);
