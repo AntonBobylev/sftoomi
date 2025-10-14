@@ -14,7 +14,7 @@ export default abstract class AppBaseToolbar
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
-    protected abstract openEditDialog(title: string, id?: number): void;
+    protected abstract openEditDialog(title: string, id?: number, additionalData?: any): void;
 
     constructor(protected readonly viewContainerRef: ViewContainerRef)
     {
@@ -52,12 +52,18 @@ export default abstract class AppBaseToolbar
         let id: number = selectedRecords[0].id;
         this.openEditDialog(
             Sftoomi.format(this.editDialogEditTitle, [id]),
-            id
+            id,
+            this.getAdditionalDataOnEditDialogOpen(selectedRecords[0])
         );
     }
 
     protected onRemoveClick(): void
     {
         this.table.removeSelected();
+    }
+
+    protected getAdditionalDataOnEditDialogOpen(_data: any): any
+    {
+        return undefined;
     }
 }

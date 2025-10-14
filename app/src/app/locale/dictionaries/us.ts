@@ -204,8 +204,8 @@ let usDictionary: object =  {
             text: 'Text',
             type: 'Type',
             dialog: {
-                add_title: 'Добавление контакта',
-                edit_title: 'Редактирование контакта'
+                add_title: 'Add contact',
+                edit_title: 'Edit contact'
             }
         }
     },
