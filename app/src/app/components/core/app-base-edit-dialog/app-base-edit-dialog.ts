@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, inject, OnDestroy, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, computed, Directive, inject, OnDestroy, Signal, signal, WritableSignal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
 
@@ -16,6 +16,8 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected readonly idField: string = 'id';
 
+    protected readonly width: number | string | undefined;
+
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     protected readonly Sftoomi = Sftoomi;
@@ -32,6 +34,19 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected readonly queryController: AbortController = new AbortController();
 
     protected readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
+
+    protected readonly dialogResizer: Signal<any> = computed((): void => {
+        let width = this.width;
+        if (this.responsiveLayoutService.isSmallWidth()) {
+            width = '100%';
+        }
+
+        setTimeout((): void => {
+            this.getDialogInstance().updateConfig({
+                nzWidth: width
+            });
+        });
+    });
 
     constructor(private readonly dialog: NzModalRef)
     {

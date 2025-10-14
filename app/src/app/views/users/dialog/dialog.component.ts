@@ -1,4 +1,4 @@
-import { Component, computed, inject, Signal, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -52,21 +52,10 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
         disabled:                 new FormControl<boolean>(false)
     });
 
+    protected override readonly width: string | number | undefined = 600;
+
     @ViewChild('contactsCtrl')
     private readonly contactsCtrl!: AppContactsComponent;
-
-    protected readonly dialogResizer: Signal<any> = computed((): void => {
-        let width: number | string = 600;
-        if (this.responsiveLayoutService.isSmallWidth()) {
-            width = '100%';
-        }
-
-        setTimeout((): void => {
-            this.getDialogInstance().updateConfig({
-                nzWidth: width
-            });
-        });
-    });
 
     protected afterLoad(data: getUserAPI): void
     {
