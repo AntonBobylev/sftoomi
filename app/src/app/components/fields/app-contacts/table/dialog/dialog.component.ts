@@ -3,11 +3,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal'
 
+import Sftoomi from '../../../../../class/Sftoomi'
+
 import AppBaseEditDialog from '../../../../core/app-base-edit-dialog/app-base-edit-dialog';
+
 import { AppContactType } from '../table.component'
 import AppComboComponent, { AppComboRecord } from '../../../../core/app-combo/app-combo.component'
 import AppTextfieldComponent from '../../../../core/app-textfield/app-textfield.component'
-import Sftoomi from '../../../../../class/Sftoomi'
 
 export type ContactsEditDialogData = {
     item_id?: number,
