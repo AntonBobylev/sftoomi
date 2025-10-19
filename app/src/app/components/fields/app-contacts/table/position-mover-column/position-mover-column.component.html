@@ -1,0 +1,19 @@
+<div class="wrapper">
+    <ng-container *ngTemplateOutlet="movingButtonTpl; context: { direction: 'up' }" />
+    <ng-container *ngTemplateOutlet="movingButtonTpl; context: { direction: 'down' }" />
+</div>
+
+<ng-template #movingButtonTpl
+             let-direction="direction"
+>
+
+    <button nz-button
+            nzType="default"
+            nzShape="round"
+            nzSize="small"
+            [disabled]="isMovingButtonDisabled(direction)"
+            (click)="move(direction)"
+    >
+        <nz-icon [nzType]="direction"></nz-icon>
+    </button>
+</ng-template>

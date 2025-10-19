@@ -6,6 +6,7 @@ import Sftoomi from '../../../../class/Sftoomi';
 
 import AppTableComponent from '../../../core/app-table/app-table.component';
 import AppContactsTableToolbarComponent from './toolbar/toolbar.component';
+import AppContactsTablePositionMoverColumnComponent from './position-mover-column/position-mover-column.component'
 
 import AppTableColumn from '../../../../type/AppTableColumn';
 
@@ -27,6 +28,13 @@ export type AppContactType = 'email' | 'phone' | 'address';
 export default class AppContactsTableComponent extends AppTableComponent
 {
     protected override readonly columns: AppTableColumn[] = [{
+        name: 'positions_mover',
+        width: '200px',
+        header: {
+            caption: 'Actions'
+        },
+        customColumnComponent: AppContactsTablePositionMoverColumnComponent
+    }, {
         name: 'position',
         width: '60px',
         header: {
