@@ -49,5 +49,7 @@
         <span>{{ Sftoomi.Translator.translate('validators.only_letters_allowed') }}</span>
     } @else if (parentFormGroup.get(fieldName)!.hasError('phone')) {
         <span>{{ Sftoomi.Translator.translate('validators.phone_number_is_invalid') }}</span>
+    } @else if (parentFormGroup.get(fieldName)!.hasError('email')) {
+        <span>{{ Sftoomi.Translator.translate('validators.email') }}</span>
     }
 }

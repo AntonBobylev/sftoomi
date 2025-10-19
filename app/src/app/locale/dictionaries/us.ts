@@ -220,6 +220,7 @@ let usDictionary: object =  {
     },
 
     validators: {
+        email: 'Wrong email format',
         field_required: 'This field is required',
         max_length: 'Maximum allowed length — {0}',
         max_value: 'Maximum allowed value is {0}',

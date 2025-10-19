@@ -220,6 +220,7 @@ let ruDictionary: object =  {
     },
 
     validators: {
+        email: 'Неправильный формат электронной почты',
         field_required: 'Это обязательное поле!',
         max_length: 'Максимальная длина — {0}',
         max_value: 'Максимальное значение: {0}',
