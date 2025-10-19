@@ -41,7 +41,7 @@
                     >
                         @if (column.customColumnComponent) {
                             <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                      inputs: { table: this, rowData: row }"
+                                                                      inputs: { table: table, rowData: row }"
                             />
                         } @else if (column.rawHtml) {
                             <span [innerHTML]="getCellData(row, column) | safe"

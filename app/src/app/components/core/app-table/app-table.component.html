@@ -22,12 +22,14 @@
 >
     @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
         <app-table-card-view  #viewCtrl
+                              [table]="this"
                               [data]="data"
                               [columns]="columns"
                               [selectionRequired]="selectionRequired"
         />
     } @else {
         <app-table-row-view #viewCtrl
+                            [table]="this"
                             [data]="data"
                             [columns]="columns"
                             [selectionRequired]="selectionRequired"

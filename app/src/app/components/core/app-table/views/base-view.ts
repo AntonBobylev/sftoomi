@@ -2,11 +2,14 @@ import { Directive, Input, WritableSignal } from '@angular/core'
 
 import Sftoomi from '../../../../class/Sftoomi'
 
+import AppTableComponent from '../app-table.component'
+
 import AppTableColumn from '../../../../type/AppTableColumn'
 
 @Directive()
 export default abstract class AppTableBaseView
 {
+    @Input({required: true}) public table!: AppTableComponent;
     @Input({required: true}) public data!: WritableSignal<any[]>;
     @Input({required: true}) public columns!: AppTableColumn[];
 
