@@ -24,6 +24,11 @@ export default class AppContactsComponent
         this.sortTableData();
     }
 
+    public getValue(): AppContactsTableRecord[]
+    {
+        return this.tableCtrl.getData();
+    }
+
     protected afterRemoveRecordsInTable(): void
     {
         this.sortTableData();

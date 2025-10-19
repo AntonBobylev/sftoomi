@@ -57,6 +57,8 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
     @ViewChild('contactsCtrl')
     private readonly contactsCtrl!: AppContactsComponent;
 
+    private contactId: number | undefined;
+
     protected afterLoad(data: getUserAPI): void
     {
         if (this.data.id) {
@@ -69,12 +71,18 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
             if (data.data.contacts) {
                 this.contactsCtrl.setData(data.data.contacts.contacts);
+                this.contactId = data.data.contacts.contact_id;
             }
         }
     }
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
+        data.set('contacts', JSON.stringify({
+            contact_id: this.contactId ?? '',
+            contacts: this.contactsCtrl.getValue()
+        }));
+
         return data;
     }
 }
