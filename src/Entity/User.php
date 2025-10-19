@@ -35,9 +35,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: false)]
-    private bool $resetPassword = false;
-
-    #[ORM\Column(nullable: false)]
     private bool $forceToChangePassword = false;
 
     #[ORM\Column(nullable: false)]
