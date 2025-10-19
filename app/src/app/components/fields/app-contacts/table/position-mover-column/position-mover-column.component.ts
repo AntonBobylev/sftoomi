@@ -20,7 +20,7 @@ import AppContactsTableComponent, { AppContactsTableRecord } from '../table.comp
 
 export default class AppContactsTablePositionMoverColumnComponent
 {
-    @Input() public rowData: AppContactsTableRecord[] = [];
+    @Input() public rowData!: AppContactsTableRecord;
     @Input() public table!: AppContactsTableComponent;
 
     protected readonly Sftoomi = Sftoomi
@@ -32,8 +32,19 @@ export default class AppContactsTablePositionMoverColumnComponent
 
     protected isMovingButtonDisabled(direction: 'up' | 'down'): boolean
     {
-        // TODO: implement
+        if (direction === 'up') {
+            return this.rowData.position < 1;
+        }
 
-        return false;
+        let allRecords: AppContactsTableRecord[] = this.table.getData(),
+            maxPosition: number = 0;
+
+        allRecords.forEach((record: AppContactsTableRecord): void => {
+            if (record.type === this.rowData.type && record.position > maxPosition) {
+                maxPosition = record.position;
+            }
+        });
+
+        return this.rowData.position >= maxPosition;
     }
 }
