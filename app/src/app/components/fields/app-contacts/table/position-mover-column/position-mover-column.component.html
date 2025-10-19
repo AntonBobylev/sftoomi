@@ -1,16 +1,28 @@
 <div class="wrapper">
-    <ng-container *ngTemplateOutlet="movingButtonTpl; context: { direction: 'up' }" />
-    <ng-container *ngTemplateOutlet="movingButtonTpl; context: { direction: 'down' }" />
+    <ng-container *ngTemplateOutlet="movingButtonTpl;
+                                     context: {
+                                         direction: 'up',
+                                         tooltip: Sftoomi.Translator.translate('fields.contacts.table.columns.position_mover.move_up_tip')
+                                     }"
+    />
+    <ng-container *ngTemplateOutlet="movingButtonTpl;
+                                     context: {
+                                         direction: 'down',
+                                         tooltip: Sftoomi.Translator.translate('fields.contacts.table.columns.position_mover.move_down_tip')
+                                     }"
+    />
 </div>
 
 <ng-template #movingButtonTpl
              let-direction="direction"
+             let-tooltip="tooltip"
 >
 
     <button nz-button
             nzType="default"
             nzShape="round"
             nzSize="small"
+            [nz-tooltip]="tooltip"
             [disabled]="isMovingButtonDisabled(direction)"
             (click)="move(direction)"
     >

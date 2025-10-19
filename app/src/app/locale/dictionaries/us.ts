@@ -203,6 +203,15 @@ let usDictionary: object =  {
             position: 'Position',
             text: 'Text',
             type: 'Type',
+            table: {
+                columns: {
+                    position_mover: {
+                        caption: 'Actions',
+                        move_up_tip: 'Move up',
+                        move_down_tip: 'Move down'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Add contact',
                 edit_title: 'Edit contact'

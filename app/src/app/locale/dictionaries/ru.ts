@@ -203,6 +203,15 @@ let ruDictionary: object =  {
             position: 'Позиция',
             text: 'Текст',
             type: 'Тип',
+            table: {
+                columns: {
+                    position_mover: {
+                        caption: 'Действия',
+                        move_up_tip: 'Двинуть выше',
+                        move_down_tip: 'Двинуть ниже'
+                    }
+                }
+            },
             dialog: {
                 add_title: 'Добавление контакта',
                 edit_title: 'Редактирование контакта'

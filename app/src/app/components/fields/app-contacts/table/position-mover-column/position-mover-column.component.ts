@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common'
 import { NzIconDirective } from 'ng-zorro-antd/icon'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip'
 
 import Sftoomi from '../../../../../class/Sftoomi'
 
@@ -11,7 +12,10 @@ import AppContactsTableComponent, { AppContactsTableRecord } from '../table.comp
     selector: 'app-contacts-table-position-mover-column',
     templateUrl: './position-mover-column.component.html',
     styleUrl: './position-mover-column.component.less',
-    imports: [NzButtonComponent, NzIconDirective, NgTemplateOutlet]
+    imports: [
+        NzButtonComponent, NzIconDirective,
+        NgTemplateOutlet, NzTooltipDirective
+    ]
 })
 
 export default class AppContactsTablePositionMoverColumnComponent

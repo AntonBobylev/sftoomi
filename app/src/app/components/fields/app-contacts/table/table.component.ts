@@ -11,7 +11,7 @@ import AppContactsTablePositionMoverColumnComponent from './position-mover-colum
 import AppTableColumn from '../../../../type/AppTableColumn';
 
 export type AppContactsTableRecord = {
-    item_id?:  number,
+    item_id?: number,
     type:     AppContactType,
     position: number,
     text:     string
@@ -31,7 +31,7 @@ export default class AppContactsTableComponent extends AppTableComponent
         name: 'positions_mover',
         width: '200px',
         header: {
-            caption: 'Actions'
+            caption: Sftoomi.Translator.translate('fields.contacts.table.columns.position_mover.caption')
         },
         customColumnComponent: AppContactsTablePositionMoverColumnComponent
     }, {
