@@ -7,12 +7,20 @@
                name="type"
                [form]="form"
                [label]="Sftoomi.Translator.translate('fields.contacts.type')"
+               (selectionChange)="onTypeChanged($event)"
     />
 
-    <app-textfield name="text"
+    @if (form.get('type')?.value === 'phone') {
+        <app-phone name="text"
                    [form]="form"
                    [label]="Sftoomi.Translator.translate('fields.contacts.text')"
-    />
+        />
+    } @else {
+        <app-textfield name="text"
+                       [form]="form"
+                       [label]="Sftoomi.Translator.translate('fields.contacts.text')"
+        />
+    }
 
     <div *nzModalFooter>
         <button nz-button

@@ -10,6 +10,9 @@ import AppBaseEditDialog from '../../../../core/app-base-edit-dialog/app-base-ed
 import { AppContactType } from '../table.component'
 import AppComboComponent, { AppComboRecord } from '../../../../core/app-combo/app-combo.component'
 import AppTextfieldComponent from '../../../../core/app-textfield/app-textfield.component'
+import AppPhoneComponent from '../../../../core/app-phone/app-phone.component'
+
+import phoneValidator from '../../../../../validators/phone.validator'
 
 export type ContactsEditDialogData = {
     item_id?: number,
@@ -26,7 +29,8 @@ export type ContactsEditDialogData = {
         NzModalFooterDirective,
         NzButtonComponent,
         AppComboComponent,
-        AppTextfieldComponent
+        AppTextfieldComponent,
+        AppPhoneComponent
     ],
     styleUrl: './dialog.component.less'
 })
@@ -58,6 +62,12 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
         value: 'phone'
     }];
 
+    private validatorsByTypes: any = {
+        'email':   [Validators.required, Validators.email],
+        'address': [Validators.required], // TODO: address validator
+        'phone':   [Validators.required, phoneValidator()]
+    };
+
     protected afterLoad(data?: ContactsEditDialogData): void
     {
         this.typeCtrl.setData(this.availableTypes);
@@ -70,10 +80,31 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
         this.form.get('text')?.setValue(data.text);
         this.form.get('position')?.setValue(data.position);
         this.form.get('item_id')?.setValue(data.item_id);
+
+        this.updateTextFieldValidators(data.type);
     }
 
     protected override afterSave(_data: FormData, rawData: ContactsEditDialogData): void
     {
         this.getDialogInstance().close(rawData); // we don't need the FormData here, we only need the raw data
     };
+
+    protected onTypeChanged(value: AppComboRecord['value']): void
+    {
+        if (typeof value === 'number') {
+            // something strange happened
+            // it must be AppContactType
+            return;
+        }
+
+        this.updateTextFieldValidators(value);
+    }
+
+    protected updateTextFieldValidators(type: string): void
+    {
+        let textCtrl = this.form.get('text')!;
+
+        textCtrl.setValidators(this.validatorsByTypes[type]);
+        textCtrl.updateValueAndValidity();
+    }
 }
