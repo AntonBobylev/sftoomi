@@ -26,4 +26,93 @@ final class Contacts
             "contacts"   => $data,
         ];
     }
+
+    public function set(array $value): int | null
+    {
+        $contactId = $value["contact_id"];
+        $contacts = $value["contacts"];
+
+        if (!isset($contactId) && empty($contacts)) {
+            return null;
+        } else if (!isset($contactId)) {
+            $contactId = $this->getNewContactId();
+        } else {
+            $sql = "select item_id
+                    from contacts
+                    where contact_id = ?";
+            $contactItems = $this->connection->executeQuery($sql, [$contactId])->fetchFirstColumn();
+
+            $currentContactItemIds = array_map(function ($contact) {
+                return $contact["item_id"];
+            }, $contacts);
+
+            $contactItemsIdsToRemove = array_diff($contactItems, array_filter($currentContactItemIds, function($item) {
+                return $item !== null;
+            }));
+
+            foreach ($contactItemsIdsToRemove as $contactItemId) {
+                $this->connection->delete(
+                    "contacts",
+                    ["contact_id" => $contactId, "item_id" => $contactItemId]
+                );
+            }
+        }
+
+        foreach ($contacts as $contact) {
+            $values = [
+                "contact_id" => $contactId,
+                "item_id"    => $contact["item_id"],
+                "type"       => $contact["type"],
+                "text"       => $contact["text"],
+                "position"   => $contact["position"]
+            ];
+
+            if (isset($values["item_id"])) {
+                $this->connection->update(
+                    "contacts",
+                    $values,
+                    ["contact_id" => $contactId, "item_id" => $values["item_id"]]
+                );
+
+                continue;
+            }
+
+            $values["item_id"] = $this->getNewContactItemId($contactId);
+
+            $this->connection->insert(
+                "contacts",
+                $values
+            );
+        }
+
+        return $contactId;
+    }
+
+    private function getNewContactId(): int
+    {
+        $sql = "select max(contact_id) from contacts";
+        $contactId = $this->connection->fetchOne($sql);
+
+        if ($contactId === false) { // no contacts at all
+            $contactId = 1;
+        }
+
+        return $contactId;
+    }
+
+    private function getNewContactItemId(int $contactId): int
+    {
+        $sql = "select max(item_id)
+                from contacts
+                where contact_id = ?";
+        $contactItemId = $this->connection->executeQuery($sql, [$contactId])->fetchOne();
+
+        if ($contactItemId === false) {
+            $contactItemId = 1;
+        } else {
+            $contactItemId++;
+        }
+
+        return $contactItemId;
+    }
 }
