@@ -324,6 +324,11 @@ export default class Sftoomi
         }
     }
 
+    /**
+     * Useful when you need convert the number to its ordinal value
+     *
+     * @param value
+     */
     public static numberToOrdinal(value: any): string
     {
         let num: number;
@@ -349,5 +354,15 @@ export default class Sftoomi
             case 'us':
                 return prefix + (lastTwoDigits >= 11 && lastTwoDigits <= 13 ? 'th' : lastDigit === 1 ? 'st' : lastDigit === 2 ? 'nd' : lastDigit === 3 ? 'rd' : 'th');
         }
+    }
+
+    /**
+     * Useful when you do not need to copy entity. When you need fully new entity
+     *
+     * @param entity
+     */
+    public static duplicateEntity(entity: any): any
+    {
+        return JSON.parse(JSON.stringify(entity));
     }
 }
