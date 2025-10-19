@@ -129,4 +129,27 @@ class Fetcher
     {
         return $value === null || $value === "null";
     }
+
+    /**
+     * Checks the value is json object and decode it
+     *
+     * @param mixed      $value
+     * @param mixed|null $default
+     *
+     * @return array|null
+     */
+    public static function json(mixed $value, mixed $default = null): array | null
+    {
+        $value = Fetcher::trim($value);
+        if (self::isNull($value)) {
+            return $default;
+        }
+
+        $value = json_decode($value, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return $default;
+        }
+
+        return $value;
+    }
 }
