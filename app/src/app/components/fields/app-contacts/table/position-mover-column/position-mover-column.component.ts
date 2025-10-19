@@ -27,7 +27,49 @@ export default class AppContactsTablePositionMoverColumnComponent
 
     protected move(direction: 'up' | 'down'): void
     {
-        // TODO: implement
+        let allRecords: AppContactsTableRecord[] = Sftoomi.duplicateEntity(this.table.getData()),
+            maxPosition: number = this.getContactTypeMaxPosition();
+
+        if (maxPosition < 1) {
+            // something strange happened
+            return;
+        }
+
+        let currentRecordIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => {
+            return record.position == this.rowData.position;
+        });
+
+        if (currentRecordIndex < 0) {
+            // something strange happened
+            // the record wasn't found in table data
+            return;
+        }
+
+        let nextPosition: number;
+        if (direction === 'up') {
+            nextPosition = allRecords[currentRecordIndex].position - 1;
+            if (nextPosition < 0) {
+                nextPosition = 0;
+            }
+        } else {
+            nextPosition = allRecords[currentRecordIndex].position + 1;
+        }
+
+        let recordWithNewPositionIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => {
+            return record.position == nextPosition;
+        });
+
+        if (currentRecordIndex < 0) {
+            // something strange happened
+            // we cannot be here now
+            return;
+        }
+
+        allRecords[recordWithNewPositionIndex].position = allRecords[currentRecordIndex].position;
+        allRecords[currentRecordIndex].position = nextPosition;
+
+        this.table.setData(allRecords);
+        this.table.refresh();
     }
 
     protected isMovingButtonDisabled(direction: 'up' | 'down'): boolean
@@ -36,6 +78,11 @@ export default class AppContactsTablePositionMoverColumnComponent
             return this.rowData.position < 1;
         }
 
+        return this.rowData.position >= this.getContactTypeMaxPosition();
+    }
+
+    private getContactTypeMaxPosition(): number
+    {
         let allRecords: AppContactsTableRecord[] = this.table.getData(),
             maxPosition: number = 0;
 
@@ -45,6 +92,6 @@ export default class AppContactsTablePositionMoverColumnComponent
             }
         });
 
-        return this.rowData.position >= maxPosition;
+        return maxPosition;
     }
 }
