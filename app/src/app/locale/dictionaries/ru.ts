@@ -197,6 +197,7 @@ let ruDictionary: object =  {
             }
         },
         contacts: {
+            add_email_tip: 'Добавьте адрес электронной почты, чтобы пользователь смог получить пароль',
             address: 'Адрес',
             email: 'Email',
             phone: 'Телефон',

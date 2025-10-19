@@ -197,6 +197,7 @@ let usDictionary: object =  {
             }
         },
         contacts: {
+            add_email_tip: 'Add an email address so user will be able to get a password',
             address: 'Address',
             email: 'Email',
             phone: 'Phone',

@@ -4,11 +4,14 @@ import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 
+import Sftoomi from '../../../class/Sftoomi'
+
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
 import AppContactsComponent from '../../../components/fields/app-contacts/app-contacts.component';
+import { AppContactsTableRecord } from '../../../components/fields/app-contacts/table/table.component'
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 
@@ -84,5 +87,29 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
         }));
 
         return data;
+    }
+
+    protected override isPreValid(): boolean
+    {
+        if (Sftoomi.isEmpty(this.getEmailAddress())) {
+            Sftoomi.popupMsgService?.error(Sftoomi.Translator.translate('fields.contacts.add_email_tip'));
+
+            return false;
+        }
+
+        return true;
+    }
+
+    private getEmailAddress(): string | null
+    {
+        let userEmails: AppContactsTableRecord['text'][] = this.contactsCtrl.getValue()
+            .filter((record: AppContactsTableRecord): boolean => record.type === 'email')
+            .map((record: AppContactsTableRecord): AppContactsTableRecord['text'] => record.text);
+
+        if (!Sftoomi.isEmpty(userEmails)) {
+            return userEmails[0];
+        }
+
+        return null;
     }
 }
