@@ -14,62 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 
 final class AuthController extends AbstractController
 {
-    #[Route("/register", name: "register", methods: ["POST"])]
-    public function register(
-        Request $request,
-        UserPasswordHasherInterface $passwordHasher,
-        EntityManagerInterface $entityManager
-    ): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        if (!isset($data["login"]) || !isset($data["password"])) {
-            return new JsonResponse([
-                "success" => false,
-                "error"   => "Login and password are required"
-            ]);
-        }
-
-        $existingUser = $entityManager->getRepository(User::class)->findOneBy(["login" => $data["login"]]);
-        if ($existingUser) {
-            return new JsonResponse([
-                "success" => false,
-                "error"   => "User with this login already exists"
-            ]);
-        }
-
-        $user = new User();
-        $user->setLogin($data["login"]);
-
-        $hashedPassword = $passwordHasher->hashPassword($user, $data["password"]);
-        $user->setPassword($hashedPassword);
-
-        $user->setRoles(["ROLE_USER"]);
-
-        if (isset($data["firstName"])) {
-            $user->setFirstName($data["firstName"]);
-        }
-
-        if (isset($data["lastName"])) {
-            $user->setLastName($data["lastName"]);
-        }
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        return new JsonResponse([
-            "success" => true,
-            "message" => "User created successfully",
-            "user" => [
-                "id"        => $user->getId(),
-                "login"     => $user->getLogin(),
-                "firstName" => $user->getFirstName(),
-                "lastName"  => $user->getLastName(),
-                "createdAt" => $user->getCreatedAt()->format("Y-m-d H:i:s")
-            ]
-        ]);
-    }
-
     #[Route("/login", name: "login", methods: ["POST"])]
     public function login(
         Request $request,
