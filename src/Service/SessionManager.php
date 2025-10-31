@@ -21,11 +21,12 @@ final readonly class SessionManager
         $lifetime = time() + 3600;
 
         $sessionData = [
-            "user_id"   => $user->getId(),
-            "login"     => $user->getLogin(),
-            "firstName" => $user->getFirstName(),
-            "lastName"  => $user->getLastName(),
-            "roles"     => $user->getRoles()
+            "id"         => $user->getId(),
+            "login"      => $user->getLogin(),
+            "first_name" => $user->getFirstName(),
+            "last_name"  => $user->getLastName(),
+            "roles"      => $user->getRoles(),
+            "force_to_change_password" => $user->isForceToChangePassword()
         ];
 
         $this->connection->executeStatement(
