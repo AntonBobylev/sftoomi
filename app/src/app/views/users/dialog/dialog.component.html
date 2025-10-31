@@ -1,6 +1,8 @@
 {{ dialogResizer() }}
 
 <nz-collapse [formGroup]="form">
+    <app-loading-spinner [isLoading]="isLoading()" />
+
     <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.common_panel_title')"
                        [nzActive]="true"
     >
@@ -51,7 +53,7 @@
     <button nz-button
             nzType="primary"
             nzShape="round"
-            [disabled]="form.invalid"
+            [disabled]="form.invalid || isLoading()"
             (click)="save()"
     >
         {{ Sftoomi.Translator.translate('save') }}

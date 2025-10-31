@@ -12,6 +12,7 @@ import AppTextfieldComponent from '../../../components/core/app-textfield/app-te
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
 import AppContactsComponent from '../../../components/fields/app-contacts/app-contacts.component';
 import { AppContactsTableRecord } from '../../../components/fields/app-contacts/table/table.component'
+import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 
@@ -29,7 +30,7 @@ export type UserEditDialogData = {
         NzButtonComponent, NzModalFooterDirective,
         AppTextfieldComponent, AppCheckboxComponent,
         NzCollapseComponent, NzCollapsePanelComponent,
-        AppContactsComponent
+        AppContactsComponent, AppLoadingSpinnerComponent
     ],
     styleUrls: [
         './dialog.component.less',
@@ -76,6 +77,8 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
                 this.contactId = data.data.contacts.contact_id;
             }
         }
+
+        this.isLoading.set(true);
     }
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
