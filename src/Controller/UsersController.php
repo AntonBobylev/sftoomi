@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Class\Contacts;
 use App\Class\Fetcher;
+use App\Class\Mailer;
+use App\Class\TemplateManager;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
 use Doctrine\DBAL\Exception;
 use Random\RandomException;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,7 +68,13 @@ final class UsersController extends AppCrudController
      * @throws Exception|RandomException
      */
     #[Route("/saveUser", name: "save_user")]
-    public function saveUser(Request $request, Contacts $contacts, UserPasswordHasherInterface $passwordHasher): Response
+    public function saveUser(
+        Request $request,
+        Contacts $contacts,
+        UserPasswordHasherInterface $passwordHasher,
+        Mailer $mailer,
+        Filesystem $filesystem
+    ): Response
     {
         try {
             $this->connection->beginTransaction();
@@ -100,13 +109,24 @@ final class UsersController extends AppCrudController
 
             if ($resetPassword || $isNewUser) {
                 $newPassword = new PasswordGenerator()->generate();
-                $hashedPassword = $passwordHasher->hashPassword(new User(), $newPassword);
 
-                // TODO: mail new password to user
+                $templateManager = new TemplateManager($filesystem);
+                $templateContent = $templateManager->getTemplate("email/user-new-password.html");
+                $mailContent = $templateManager->apply($templateContent, [
+                    "password" => $newPassword
+                ]);
+
+                $mailer->applyTemplate($mailContent);
+
+                $mailer->addAddresses(["anton.bobylev@emsow.com"]);
+                $mailer->send();
 
                 $this->connection->update(
                     "users",
-                    ["password" => $newPassword],
+                    [
+                        "password"                 => $passwordHasher->hashPassword(new User(), $newPassword),
+                        "force_to_change_password" => 1
+                    ],
                     ["id" => $result["id"]]
                 );
             }
