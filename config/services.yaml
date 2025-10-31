@@ -24,3 +24,15 @@ services:
         class: App\Class\Contacts
         arguments:
             - '@doctrine.dbal.default_connection'
+
+    monolog.formatter.simple:
+        class: Monolog\Formatter\LineFormatter
+        arguments:
+            $format: "[%%datetime%%] %%channel%%.%%level_name%%: %%message%%\n"
+            $dateFormat: "Y-m-d H:i:s"
+            $allowInlineLineBreaks: false
+            $ignoreEmptyContextAndExtra: true
+
+    App\Class\Mailer:
+        arguments:
+            $logger: '@monolog.logger.mailer'
