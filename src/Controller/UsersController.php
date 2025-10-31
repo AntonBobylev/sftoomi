@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Class\Contacts;
 use App\Class\Fetcher;
+use App\Class\Utils\PasswordGenerator;
+use App\Entity\User;
 use Doctrine\DBAL\Exception;
+use Random\RandomException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class UsersController extends AppCrudController
@@ -58,31 +62,54 @@ final class UsersController extends AppCrudController
     }
 
     /**
-     * @throws Exception
+     * @throws Exception|RandomException
      */
     #[Route("/saveUser", name: "save_user")]
-    public function saveUser(Request $request, Contacts $contacts): Response
+    public function saveUser(Request $request, Contacts $contacts, UserPasswordHasherInterface $passwordHasher): Response
     {
         try {
             $this->connection->beginTransaction();
             $contactId = $contacts->set(Fetcher::json($request->request->get("contacts")));
 
+            $resetPassword = Fetcher::int($request->request->get("reset_password"), false);
+
             $values = [
                 "id"          => Fetcher::int($request->request->get("id")),
                 "login"       => Fetcher::trim($request->request->get("login")),
-                "reset_password"           => Fetcher::int($request->request->get("reset_password". false)),
-                "force_to_change_password" => Fetcher::int($request->request->get("force_to_change_password", false)),
-                "disabled"                 => Fetcher::int($request->request->get("disabled", false)),
+                "force_to_change_password" => $resetPassword ? true : Fetcher::int($request->request->get("force_to_change_password"), false),
+                "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
                 "last_name"   => Fetcher::trim($request->request->get("last_name"), ""),
                 "first_name"  => Fetcher::trim($request->request->get("first_name"), ""),
-                "contact_id"  => $contactId
+                "contact_id"  => $contactId,
+                "roles"       => "[\"ROLE_USER\"]" // TODO: add the permissions system
             ];
+
+            $isNewUser = empty($values["id"]);
+            if ($isNewUser) {
+                $password             = new PasswordGenerator()->generate();
+                $hashedPassword       = $passwordHasher->hashPassword(new User(), $password);
+                $values["password"]   = $hashedPassword;
+                $values["created_at"] = $this->connection->fetchOne("select now()");
+            }
 
             $result = $this->save(
                 $request,
                 $values,
                 ["login"]
             );
+
+            if ($resetPassword || $isNewUser) {
+                $newPassword = new PasswordGenerator()->generate();
+                $hashedPassword = $passwordHasher->hashPassword(new User(), $newPassword);
+
+                // TODO: mail new password to user
+
+                $this->connection->update(
+                    "users",
+                    ["password" => $newPassword],
+                    ["id" => $result["id"]]
+                );
+            }
         } catch (Exception $ex) {
             $this->connection->rollBack();
 

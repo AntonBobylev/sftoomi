@@ -32,9 +32,9 @@ final class Contacts
         $contactId = $value["contact_id"];
         $contacts = $value["contacts"];
 
-        if (!isset($contactId) && empty($contacts)) {
+        if (empty($contactId) && empty($contacts)) {
             return null;
-        } else if (!isset($contactId)) {
+        } else if (empty($contactId)) {
             $contactId = $this->getNewContactId();
         } else {
             $sql = "select item_id
@@ -77,7 +77,7 @@ final class Contacts
                 continue;
             }
 
-            $values["item_id"] = $this->getNewContactItemId($contactId);
+            $values["item_id"] = $this->getNewContactItemId();
 
             $this->connection->insert(
                 "contacts",
@@ -97,15 +97,14 @@ final class Contacts
             $contactId = 1;
         }
 
-        return $contactId;
+        return ++$contactId;
     }
 
-    private function getNewContactItemId(int $contactId): int
+    private function getNewContactItemId(): int
     {
         $sql = "select max(item_id)
-                from contacts
-                where contact_id = ?";
-        $contactItemId = $this->connection->executeQuery($sql, [$contactId])->fetchOne();
+                from contacts";
+        $contactItemId = $this->connection->executeQuery($sql)->fetchOne();
 
         if ($contactItemId === false) {
             $contactItemId = 1;
