@@ -64,6 +64,17 @@ export default abstract class AppBaseDialog implements OnDestroy
 
     protected save(): void
     {
+        if (!this.isPreValid()) {
+            return;
+        }
+
+        this.validate();
+        if (this.form.invalid) {
+            Sftoomi.popupMsgService?.formInvalid();
+
+            return;
+        }
+
         this.close();
     }
 

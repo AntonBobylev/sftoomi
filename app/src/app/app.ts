@@ -19,6 +19,7 @@ import LanguageSwitcherComponent from './components/misc/language-switcher/langu
 import ResponsiveLayoutService from './services/responsive-layout.service';
 import PopupMsgService from './services/popup-msg.service'
 import AppLoadingSpinnerComponent from './components/misc/app-loading-spinner/app-loading-spinner.component';
+import AppChangeUserPasswordDialog from './components/misc/change-user-password-dialog/dialog.component'
 
 @Component({
     selector: 'app-root',
@@ -108,7 +109,8 @@ export class App
 
     private showChangePasswordDialog(): void
     {
-        console.log('gotta change a password');
-        // TODO: implement
+        Sftoomi.Dialog.getInstance().create<AppChangeUserPasswordDialog>({
+            nzContent: AppChangeUserPasswordDialog
+        });
     }
 }

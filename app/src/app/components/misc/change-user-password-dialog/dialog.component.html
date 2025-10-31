@@ -1,0 +1,34 @@
+{{ dialogResizer() }}
+
+<div class="wrapper">
+    <app-loading-spinner [isLoading]="isLoading()" />
+
+    <app-textfield name="old_password"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('dialogs.change_password.old_password')"
+                   [securedInput]="true"
+    />
+
+    <app-textfield name="new_password"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('dialogs.change_password.new_password')"
+                   [securedInput]="true"
+    />
+
+    <app-textfield name="new_password_confirmation"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('dialogs.change_password.new_password_confirmation')"
+                   [securedInput]="true"
+    />
+</div>
+
+<div *nzModalFooter>
+    <button nz-button
+            nzType="primary"
+            nzShape="round"
+            [disabled]="form.invalid || isLoading()"
+            (click)="save()"
+    >
+        {{ Sftoomi.Translator.translate('save') }}
+    </button>
+</div>

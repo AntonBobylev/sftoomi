@@ -8,6 +8,7 @@ use App\Class\Mailer;
 use App\Class\TemplateManager;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
+use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
 use Random\RandomException;
 use Symfony\Component\Filesystem\Filesystem;
@@ -141,6 +142,53 @@ final class UsersController extends AppCrudController
         return new JsonResponse([
             "id" => $result["id"]
         ]);
+    }
 
+    #[Route("/changePassword", name: "change_password")]
+    public function changePassword(
+        Request $request,
+        UserRepository $repository,
+        UserPasswordHasherInterface $passwordHasher
+    ): Response
+    {
+        $values = $request->request->all();
+        if ($values["new_password"] !== $values["new_password_confirmation"]) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "New password and confirmation must be equal"
+            ]);
+        }
+
+        $this->assertAllRequiredFieldsSet([
+            "user_id", "old_password", "new_password", "new_password_confirmation"
+        ], $values);
+
+        $user = $repository->find($values["user_id"]);
+        if (empty($user)) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "User not found"
+            ]);
+        }
+
+        if (!password_verify($values["old_password"], $user->getPassword())) {
+            return new JsonResponse([
+                "success" => false,
+                "message" => "Old password is incorrect"
+            ]);
+        }
+
+        $this->connection->update(
+            "users",
+            [
+                "password"                 => $passwordHasher->hashPassword(new User(), $values["new_password"]),
+                "force_to_change_password" => 0
+            ],
+            ["id" => $values["user_id"]]
+        );
+
+        return new JsonResponse([
+            "success" => true
+        ]);
     }
 }

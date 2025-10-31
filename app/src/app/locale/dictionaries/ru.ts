@@ -220,6 +220,16 @@ let ruDictionary: object =  {
         }
     },
 
+    dialogs: {
+        change_password: {
+            change_password_tip: 'Пожалуйста, смените пароль',
+            new_password: 'Новый пароль',
+            new_password_confirmation: 'Подтверждение пароля',
+            old_password: 'Старый пароль',
+            title: 'Изменение пароля'
+        }
+    },
+
     validators: {
         email: 'Неправильный формат электронной почты',
         field_required: 'Это обязательное поле!',

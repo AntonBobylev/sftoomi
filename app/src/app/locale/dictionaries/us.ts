@@ -220,6 +220,16 @@ let usDictionary: object =  {
         }
     },
 
+    dialogs: {
+        change_password: {
+            change_password_tip: 'Please change your password',
+            new_password: 'New password',
+            new_password_confirmation: 'New password confirmation',
+            old_password: 'Old password',
+            title: 'Change password'
+        }
+    },
+
     validators: {
         email: 'Wrong email format',
         field_required: 'This field is required',
