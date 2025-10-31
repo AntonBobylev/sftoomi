@@ -1,26 +1,16 @@
-import { AfterViewInit, computed, Directive, inject, OnDestroy, Signal, signal, WritableSignal } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal';
+import { AfterViewInit, Directive } from '@angular/core';
 
 import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 
 import { DialogType } from '../../../class/Dialog';
 
-import ResponsiveLayoutService from '../../../services/responsive-layout.service';
+import AppBaseDialog from '../app-base-dialog'
 
 @Directive()
-export default abstract class AppBaseEditDialog implements AfterViewInit, OnDestroy
+export default abstract class AppBaseEditDialog extends AppBaseDialog implements AfterViewInit
 {
-    protected abstract readonly form: FormGroup;
-
     protected readonly idField: string = 'id';
-
-    protected readonly width: number | string | undefined;
-
-    protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
-
-    protected readonly Sftoomi = Sftoomi;
 
     protected readonly fetchExtraRequestOnLoad: boolean = false;
 
@@ -29,42 +19,9 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
     protected abstract afterLoad(data: any): void;
 
-    protected readonly data: any = inject(NZ_MODAL_DATA);
-
-    protected readonly queryController: AbortController = new AbortController();
-
-    protected readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
-
-    protected readonly dialogResizer: Signal<any> = computed((): void => {
-        let width = this.width;
-        if (this.responsiveLayoutService.isSmallWidth()) {
-            width = '100%';
-        }
-
-        setTimeout((): void => {
-            this.getDialogInstance().updateConfig({
-                nzWidth: width
-            });
-        });
-    });
-
-    constructor(private readonly dialog: NzModalRef)
-    {
-    }
-
-    ngOnDestroy(): void
-    {
-        this.queryController.abort();
-    }
-
     ngAfterViewInit(): void
     {
         this.load();
-    }
-
-    protected getDialogInstance(): NzModalRef
-    {
-        return this.dialog;
     }
 
     protected load(): void
@@ -102,7 +59,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
         })
     }
 
-    protected save(): void
+    protected override save(): void
     {
         if (!this.isPreValid()) {
             return;
@@ -141,7 +98,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
 
                 this.afterSave(data, formValues);
 
-                this.dialog.close(true);
+                this.close(true);
             },
             failure: (_code: any, message: any, _request: any): void => {
                 this.isLoading.set(false);
@@ -150,7 +107,7 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
                     return;
                 }
 
-                Sftoomi.Dialog.show(message, DialogType.ERROR, (): void => this.dialog.close(false))
+                Sftoomi.Dialog.show(message, DialogType.ERROR, (): void => this.getDialogInstance().close(false))
             }
         })
     }
@@ -162,19 +119,5 @@ export default abstract class AppBaseEditDialog implements AfterViewInit, OnDest
     protected getAdditionalDataOnSave(data: FormData): FormData
     {
         return data;
-    }
-
-    protected validate(): void
-    {
-        for (const [_key, control] of Object.entries(this.form.controls)) {
-            control.markAsDirty();
-            control.markAsTouched();
-        }
-    }
-
-    protected isPreValid(): boolean
-    {
-        // implement in child
-        return true;
     }
 }
