@@ -59,6 +59,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly idField: string = 'examination_id';
 
+    protected override readonly width: number | string | undefined = 800;
+
     protected readonly form: FormGroup = new FormGroup({
         examination_date:    new FormControl<Date           | null>(null, [Validators.required]),
         patient_id:          new FormControl<AppComboRecord | null>(null),

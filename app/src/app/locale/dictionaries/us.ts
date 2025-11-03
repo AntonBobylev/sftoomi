@@ -228,6 +228,10 @@ let usDictionary: object =  {
             new_password_confirmation: 'New password confirmation',
             old_password: 'Old password',
             title: 'Change password'
+        },
+        reset_password: {
+            password_reset_message: 'The mail was sent to the email address you provided, if the current login-mail combination exists',
+            title: 'Reset password'
         }
     },
 

@@ -228,6 +228,10 @@ let ruDictionary: object =  {
             new_password_confirmation: 'Подтверждение пароля',
             old_password: 'Старый пароль',
             title: 'Изменение пароля'
+        },
+        reset_password: {
+            password_reset_message: 'Email письмо было послано на почтовый ящик, который вы указали, если текущая связка логин-почта существует',
+            title: 'Reset password'
         }
     },
 

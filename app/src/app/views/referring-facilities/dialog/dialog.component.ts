@@ -47,6 +47,8 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
     protected override readonly loadUrl: string = '/getFacility';
     protected override readonly saveUrl: string = '/saveFacility';
 
+    protected override readonly width: number | string | undefined = parseInt(Sftoomi.Translator.translate('views.referring_facilities.dialog.width'));
+
     protected readonly form: FormGroup = new FormGroup({
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()])

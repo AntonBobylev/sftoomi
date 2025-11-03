@@ -42,6 +42,8 @@ export default class StudiesEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getStudy';
     protected override readonly saveUrl: string = '/saveStudy';
 
+    protected override readonly width: number | string | undefined = parseInt(Sftoomi.Translator.translate('views.studies.dialog.width'));
+
     protected readonly form: FormGroup = new FormGroup({
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),
         full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required]),

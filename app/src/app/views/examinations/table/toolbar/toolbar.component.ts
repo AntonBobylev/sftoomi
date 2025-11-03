@@ -30,9 +30,6 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
             nzTitle: title,
             nzContent: ExaminationEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
-            nzWidth: 800,
             nzData: {
                 id: id,
                 examination_date: this.table.filtersCtrl?.getValues().examination_date

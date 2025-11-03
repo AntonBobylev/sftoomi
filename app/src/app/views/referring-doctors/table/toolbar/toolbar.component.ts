@@ -29,9 +29,6 @@ export default class ReferringDoctorsTableToolbarComponent extends AppBaseToolba
             nzTitle: title,
             nzContent: ReferringDoctorEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
-            nzWidth: parseInt(Sftoomi.Translator.translate('views.referring_doctors.dialog.width')),
             nzData: { id: id }
         });
 

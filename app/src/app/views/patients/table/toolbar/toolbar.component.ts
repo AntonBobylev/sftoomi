@@ -30,9 +30,6 @@ export default class PatientsTableToolbarComponent extends AppBaseToolbar
             nzTitle: title,
             nzContent: PatientEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
-            nzWidth: 400,
             nzData: { id: id }
         });
 

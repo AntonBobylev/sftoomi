@@ -1,0 +1,18 @@
+{{ dialogResizer() }}
+
+<div class="wrapper"
+     [formGroup]="form"
+>
+    // TODO: implement
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

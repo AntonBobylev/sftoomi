@@ -25,7 +25,7 @@ import changePasswordAPI from '../../../APIs/changePasswordAPI'
     styleUrl: './dialog.component.less'
 })
 
-export default class AppChangeUserPasswordDialog extends AppBaseDialog implements OnInit, AfterViewInit
+export default class AppChangeUserPasswordDialog extends AppBaseDialog implements AfterViewInit
 {
     protected override readonly form: FormGroup = new FormGroup({
         old_password:              new FormControl<string | null>(null, [Validators.required]),
@@ -33,21 +33,12 @@ export default class AppChangeUserPasswordDialog extends AppBaseDialog implement
         new_password_confirmation: new FormControl<string | null>(null, [Validators.required])
     });
 
+    protected override readonly title: string = this.Sftoomi.Translator.translate('dialogs.change_password.title');
+    protected override readonly isClosable: boolean = false;
+
     protected override readonly width: string | number | undefined = 300;
 
     private readonly changePasswordUrl: string = '/changePassword';
-
-    ngOnInit(): void
-    {
-        setTimeout((): void => {
-            this.getDialogInstance().updateConfig({
-                nzTitle: Sftoomi.Translator.translate('dialogs.change_password.title'),
-                nzMaskClosable: false,
-                nzClosable: false,
-                nzCentered: true
-            });
-        });
-    }
 
     ngAfterViewInit(): void
     {

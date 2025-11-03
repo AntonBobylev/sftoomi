@@ -30,8 +30,6 @@ export default class UsersTableToolbarComponent extends AppBaseToolbar
             nzTitle: title,
             nzContent: UserEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
             nzData: { id: id }
         });
 

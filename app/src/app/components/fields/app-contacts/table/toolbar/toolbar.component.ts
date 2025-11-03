@@ -40,8 +40,6 @@ export default class AppContactsTableToolbarComponent extends AppBaseToolbar
             nzTitle: title,
             nzContent: ContactsEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
             nzData: additionalData
         });
 

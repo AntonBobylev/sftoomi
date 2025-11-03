@@ -9,6 +9,7 @@ import { RoutesPaths } from '../../app.routes'
 import AppTextfieldComponent from '../../components/core/app-textfield/app-textfield.component'
 import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinner/app-loading-spinner.component';
 import LanguageSwitcherComponent from '../../components/misc/language-switcher/language-switcher.component';
+import ResetPasswordDialogComponent from './reset-password-dialog/dialog.component'
 
 @Component({
     selector: 'app-login',
@@ -63,7 +64,15 @@ export default class LoginComponent
         event.stopPropagation();
         event.preventDefault();
 
-        // TODO: implement
+        const modal = Sftoomi.Dialog.getInstance().create({
+            nzContent: ResetPasswordDialogComponent
+        });
+
+        modal.afterClose.subscribe((passwordReset: boolean = false): void => {
+            if (passwordReset) {
+                Sftoomi.popupMsgService?.info('dialogs.reset_password.password_reset_message');
+            }
+        });
     }
 
     private goOut(): void

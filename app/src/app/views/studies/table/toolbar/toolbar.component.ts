@@ -30,9 +30,6 @@ export default class StudiesTableToolbarComponent extends AppBaseToolbar
             nzTitle: title,
             nzContent: StudiesEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
-            nzWidth: parseInt(Sftoomi.Translator.translate('views.studies.dialog.width')),
             nzData: { id: id }
         });
 

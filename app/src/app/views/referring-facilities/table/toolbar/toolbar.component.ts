@@ -30,9 +30,6 @@ export default class ReferringFacilitiesTableToolbarComponent extends AppBaseToo
             nzTitle: title,
             nzContent: ReferringFacilityEditDialogComponent,
             nzViewContainerRef: this.viewContainerRef,
-            nzMaskClosable: false,
-            nzCentered: true,
-            nzWidth: parseInt(Sftoomi.Translator.translate('views.referring_facilities.dialog.width')),
             nzData: { id: id }
         });
 
