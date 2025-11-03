@@ -8,6 +8,11 @@ export enum DialogType {
     ERROR
 }
 
+export type DialogConfig = {
+    width?: number | string,
+    maxWidth?: number | string
+};
+
 export default class Dialog
 {
     private dialog!: NzModalService;
@@ -26,7 +31,7 @@ export default class Dialog
         return this.dialog;
     }
 
-    public show(message: string, type: DialogType = DialogType.INFO, callback?: Function): void
+    public show(message: string, type: DialogType = DialogType.INFO, callback?: Function, config?: DialogConfig): void
     {
         if (!this.initialized) {
             console.error('Dialog is not initialized yet');
@@ -47,12 +52,15 @@ export default class Dialog
                 break;
         }
 
+        const width: string | undefined = this.getStyleDimensionValue(config?.width),
+              maxWidth: string | undefined = this.getStyleDimensionValue(config?.maxWidth);
+
         const dialog: NzModalRef = this.dialog.create({
             nzTitle: header,
             nzContent: message,
             nzDraggable: true,
-            nzWidth: 'auto',
-            nzStyle: { 'max-width': '300px' },
+            nzWidth: Sftoomi.isEmpty(width) ? 'auto' : width,
+            nzStyle: { 'max-width': Sftoomi.isEmpty(maxWidth) ? '100%' : maxWidth },
             nzClosable: false,
             nzMaskClosable: false,
             nzCentered: true,
@@ -67,5 +75,16 @@ export default class Dialog
                 callback();
             }
         });
+    }
+
+    private getStyleDimensionValue(value: undefined | string | number): string | undefined
+    {
+        if (Sftoomi.isEmpty(value)) {
+            return undefined;
+        }
+
+        return typeof value === 'number'
+            ? value + 'px'
+            : value + '%';
     }
 }
