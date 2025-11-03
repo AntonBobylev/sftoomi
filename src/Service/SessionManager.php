@@ -25,8 +25,7 @@ final readonly class SessionManager
             "login"      => $user->getLogin(),
             "first_name" => $user->getFirstName(),
             "last_name"  => $user->getLastName(),
-            "roles"      => $user->getRoles(),
-            "force_to_change_password" => $user->isForceToChangePassword()
+            "roles"      => $user->getRoles()
         ];
 
         $this->connection->executeStatement(

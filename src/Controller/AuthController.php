@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-final class AuthController extends AbstractController
+final class AuthController extends SftoomiController
 {
     #[Route("/login", name: "login", methods: ["POST"])]
     public function login(
@@ -70,9 +70,16 @@ final class AuthController extends AbstractController
             ]);
         }
 
+        $sql = "select id, disabled, login, roles,
+                    force_to_change_password, first_name,
+                    last_name, contact_id
+                from users
+                where id = ?";
+        $data = $this->connection->executeQuery($sql, [$sessionData["id"]])->fetchAssociative();
+
         return new JsonResponse([
             "success" => true,
-            "user"    => $sessionData
+            "user"    => $data
         ]);
     }
 

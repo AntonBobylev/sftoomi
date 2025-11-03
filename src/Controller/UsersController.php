@@ -66,7 +66,7 @@ final class UsersController extends AppCrudController
     }
 
     /**
-     * @throws Exception|RandomException
+     * @throws Exception|RandomException|\PHPMailer\PHPMailer\Exception
      */
     #[Route("/saveUser", name: "save_user")]
     public function saveUser(
@@ -86,7 +86,7 @@ final class UsersController extends AppCrudController
             $values = [
                 "id"          => Fetcher::int($request->request->get("id")),
                 "login"       => Fetcher::trim($request->request->get("login")),
-                "force_to_change_password" => $resetPassword ? true : Fetcher::int($request->request->get("force_to_change_password"), false),
+                "force_to_change_password" => $resetPassword ? 1 : Fetcher::int($request->request->get("force_to_change_password"), false),
                 "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
                 "last_name"   => Fetcher::trim($request->request->get("last_name"), ""),
                 "first_name"  => Fetcher::trim($request->request->get("first_name"), ""),
