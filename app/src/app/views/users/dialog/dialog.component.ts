@@ -77,8 +77,6 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
                 this.contactId = data.data.contacts.contact_id;
             }
         }
-
-        this.isLoading.set(true);
     }
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
