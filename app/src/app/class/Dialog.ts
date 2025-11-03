@@ -51,6 +51,8 @@ export default class Dialog
             nzTitle: header,
             nzContent: message,
             nzDraggable: true,
+            nzWidth: 'auto',
+            nzStyle: { 'max-width': '300px' },
             nzClosable: false,
             nzMaskClosable: false,
             nzCentered: true,
