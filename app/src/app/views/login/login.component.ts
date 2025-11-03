@@ -70,7 +70,7 @@ export default class LoginComponent
 
         modal.afterClose.subscribe((passwordReset: boolean = false): void => {
             if (passwordReset) {
-                Sftoomi.popupMsgService?.info('dialogs.reset_password.password_reset_message');
+                Sftoomi.popupMsgService?.info(Sftoomi.Translator.translate('dialogs.reset_password.password_reset_message'));
             }
         });
     }

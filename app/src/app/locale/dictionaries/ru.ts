@@ -230,8 +230,10 @@ let ruDictionary: object =  {
             title: 'Изменение пароля'
         },
         reset_password: {
+            email: 'E-mail',
+            login: 'Логин',
             password_reset_message: 'Email письмо было послано на почтовый ящик, который вы указали, если текущая связка логин-почта существует',
-            title: 'Reset password'
+            title: 'Восстановление пароля'
         }
     },
 

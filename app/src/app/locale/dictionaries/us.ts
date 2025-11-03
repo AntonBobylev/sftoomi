@@ -230,6 +230,8 @@ let usDictionary: object =  {
             title: 'Change password'
         },
         reset_password: {
+            email: 'E-mail',
+            login: 'Login',
             password_reset_message: 'The mail was sent to the email address you provided, if the current login-mail combination exists',
             title: 'Reset password'
         }
