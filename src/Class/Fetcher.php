@@ -19,7 +19,23 @@ class Fetcher
      */
     public static function int(mixed $value, mixed $default = null): int | null
     {
-        if (self::isNull($value) || !is_numeric($value)) {
+        if (self::isNull($value)) {
+            return $default;
+        }
+
+        if (is_bool($value)) {
+            return $value ? 1 : 0;
+        }
+
+        if ($value === "true") {
+            return 1;
+        }
+
+        if ($value === "false") {
+            return 0;
+        }
+
+        if (!is_numeric($value)) {
             return $default;
         }
 
