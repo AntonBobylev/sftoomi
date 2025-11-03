@@ -6,11 +6,11 @@ import { NzButtonComponent } from 'ng-zorro-antd/button'
 import Sftoomi from '../../../class/Sftoomi'
 import { DialogType } from '../../../class/Dialog'
 import Fetcher from '../../../class/Fetcher'
+import AppBaseDialog from '../../core/app-base-dialog'
 
 import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
 import AppLoadingSpinnerComponent from '../app-loading-spinner/app-loading-spinner.component'
 
-import AppBaseDialog from '../../core/app-base-dialog'
 import changePasswordAPI from '../../../APIs/changePasswordAPI'
 
 @Component({
