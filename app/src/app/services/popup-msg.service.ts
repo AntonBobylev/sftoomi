@@ -19,7 +19,8 @@ export default class PopupMsgService
             msg,
             {
                 nzDuration: timeoutMs ?? this.defaultTimeout,
-                nzAnimate: true
+                nzAnimate: true,
+                nzPauseOnHover: true
             }
         ).onClose.subscribe((): void => {
             if (callback) {
