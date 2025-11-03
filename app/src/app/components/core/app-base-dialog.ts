@@ -45,7 +45,6 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
     ngOnInit(): void
     {
         setTimeout((): void => {
-            debugger;
             if (!Sftoomi.isEmpty(this.title)) {
                 this.getDialogInstance().updateConfig({
                     nzTitle: this.title,
@@ -100,8 +99,8 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
         this.close();
     }
 
-    protected close(_result?: any): void
+    protected close(result?: any): void
     {
-        this.dialog.close();
+        this.dialog.close(result);
     }
 }
