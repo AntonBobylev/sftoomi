@@ -50,7 +50,8 @@ let usDictionary: object =  {
         login: {
             login: 'Login',
             logon: 'Logon',
-            password: 'Password'
+            password: 'Password',
+            reset_password: 'Reset password'
         },
         examinations: {
             table: {

@@ -58,6 +58,14 @@ export default class LoginComponent
         );
     }
 
+    protected onResetPasswordClick(event: PointerEvent): void
+    {
+        event.stopPropagation();
+        event.preventDefault();
+
+        // TODO: implement
+    }
+
     private goOut(): void
     {
         if (window.history.state.last_route) {

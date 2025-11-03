@@ -50,7 +50,8 @@ let ruDictionary: object =  {
         login: {
             login: 'Логин',
             logon: 'Войти',
-            password: 'Пароль'
+            password: 'Пароль',
+            reset_password: 'Восстановить пароль'
         },
         examinations: {
             table: {

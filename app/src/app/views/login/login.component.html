@@ -1,6 +1,6 @@
 <div class="wrapper">
     <language-switcher />
-    
+
     <app-loading-spinner [isLoading]="isLoading()" />
     <div class="form-wrapper">
         <div class="form"
@@ -19,10 +19,19 @@
                            [securedInput]="true"
             />
 
+            <div style="display: flex; width: 100%; justify-content: flex-end;">
+                <a nz-button
+                   nzType="link"
+                   (click)="onResetPasswordClick($event)"
+                >
+                    {{ Sftoomi.Translator.translate('views.login.reset_password') }}
+                </a>
+            </div>
+
             <button nz-button
                     nzType="primary"
                     [disabled]="form.invalid"
-                    style="margin-top: 30px"
+                    style="margin-top: 10px"
                     (click)="onLogonClick()"
             >
                 {{ Sftoomi.Translator.translate('views.login.logon') }}
