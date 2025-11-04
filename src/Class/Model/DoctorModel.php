@@ -2,25 +2,11 @@
 
 namespace App\Class\Model;
 
-use Doctrine\DBAL\Exception;
-
 class DoctorModel extends AbstractModel
 {
     protected function getBaseTable(): string
     {
         return "doctor";
-    }
-
-    /**
-     * @throws Exception
-     */
-    public function get(int $id): array
-    {
-        $sql = "select {$this->getEntityInlineColumns()}
-                from {$this->getBaseTable()}
-                where id = ?";
-
-        return $this->connection->fetchRow($sql, [$id]);
     }
 
     public function getAll(?int $start = null, ?int $limit = null): array

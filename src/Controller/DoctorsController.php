@@ -34,21 +34,24 @@ final class DoctorsController extends SftoomiController
     #[Route("/getDoctor", name: "get_doctor")]
     public function getDoctor(Request $request): Response
     {
-        $sql = "select id, full_name, short_name
-                from facility";
-        $facilities = $this->connection->fetchAllAssociative($sql);
-
         $data = [];
-        $doctorId = $request->request->get("id");
+        $doctorId = Fetcher::int($request->request->get("id"));
+
         if (!empty($doctorId)) {
-            $data = $this->getOne($request, ["id", "last_name", "first_name", "middle_name"]);
+            $doctorModel = new DoctorModel($this->connection);
+            $data = $doctorModel->get($doctorId);
 
             $sql = "select fd.facility_id as id, f.short_name, f.full_name
                     from facilities_doctors fd
                         left join facility f on f.id = fd.facility_id 
-                    where fd.doctor_id = $doctorId";
-            $data["doctor_facilities"] = $this->connection->fetchAllAssociative($sql);
+                    where fd.doctor_id = ?";
+            $data["doctor_facilities"] = $this->connection->fetchAll($sql, [$doctorId]);
         }
+
+        // TODO: replace to model
+        $sql = "select id, full_name, short_name
+                from facility";
+        $facilities = $this->connection->fetchAll($sql);
 
         return new JsonResponse([
             "data"  => $data,
