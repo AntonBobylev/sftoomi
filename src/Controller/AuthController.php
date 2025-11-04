@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
-use App\Entity\User;
+use App\Class\Model\UserModel;
 use App\Service\SessionManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,16 +14,23 @@ final class AuthController extends SftoomiController
     #[Route("/login", name: "login", methods: ["POST"])]
     public function login(
         Request $request,
-        SessionManager $sessionManager,
-        EntityManagerInterface $entityManager
+        SessionManager $sessionManager
     ): JsonResponse
     {
         $login = Fetcher::trim($request->request->get("login"));
         $password = Fetcher::trim($request->request->get("password"));
 
-        $user = $entityManager->getRepository(User::class)->findOneBy(["login" => $login]);
+        $user = new UserModel($this->connection)->get(
+            null,
+            $this->connection->subst("login = ?", [$login])
+        );
 
-        if (!$user || !password_verify($password, $user->getPassword())) {
+        $sql = "select password
+                from users
+                where id = ?";
+        $userPassword = $this->connection->selString($sql, [$user["id"]]);
+
+        if (!$user || !password_verify($password, $userPassword)) {
             return new JsonResponse([
                 "success" => false,
                 "error"   => "Invalid credentials"
@@ -36,14 +42,7 @@ final class AuthController extends SftoomiController
         return new JsonResponse([
             "success"    => true,
             "session_id" => $sessionId,
-            "user"       => [
-                "id"                       => $user->getId(),
-                "login"                    => $user->getLogin(),
-                "first_name"               => $user->getFirstName(),
-                "last_name"                => $user->getLastName(),
-                "roles"                    => $user->getRoles(),
-                "force_to_change_password" => $user->isForceToChangePassword()
-            ]
+            "user"       => $user
         ]);
     }
 
@@ -68,16 +67,9 @@ final class AuthController extends SftoomiController
             ]);
         }
 
-        $sql = "select id, disabled, login, roles,
-                       force_to_change_password, first_name,
-                       last_name, contact_id
-                from users
-                where id = ?";
-        $data = $this->connection->fetchRow($sql, [$sessionData["id"]]);
-
         return new JsonResponse([
             "success" => true,
-            "user"    => $data
+            "user"    => new UserModel($this->connection)->get($sessionData["id"])
         ]);
     }
 
