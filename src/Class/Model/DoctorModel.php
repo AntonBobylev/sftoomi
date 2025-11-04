@@ -15,7 +15,6 @@ class DoctorModel extends AbstractModel
 
         $doctors = $result["data"];
         foreach ($doctors as &$doctor) {
-            // TODO: facility model fetching
             $sql = "select f.id, f.short_name, f.full_name
                     from facilities_doctors fd
                         left join facility f on f.id = fd.facility_id

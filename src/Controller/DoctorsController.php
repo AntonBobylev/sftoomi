@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Model\DoctorModel;
+use App\Class\Model\FacilityModel;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -49,10 +50,8 @@ final class DoctorsController extends SftoomiController
             $data["doctor_facilities"] = $this->connection->fetchAll($sql, [$doctorId]);
         }
 
-        // TODO: replace to model
-        $sql = "select id, full_name, short_name
-                from facility";
-        $facilities = $this->connection->fetchAll($sql);
+        $facilityModel = new FacilityModel($this->connection);
+        $facilities = $facilityModel->getAll();
 
         return new JsonResponse([
             "data"  => $data,
