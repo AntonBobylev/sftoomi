@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Class\Fetcher;
 use App\Class\Format;
 use App\Class\Model\PatientModel;
-use App\Repository\PatientRepository;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -78,16 +77,21 @@ final class PatientsController extends SftoomiController
             $values["middle_name"] = mb_strtoupper($values["middle_name"]);
         }
 
-        $result = $this->save(
-            $request,
+        $this->connection->insupd(
+            "patient",
             $values,
-            ["last_name", "first_name"]
+            "id = ?",
+            [$values["id"]]
         );
 
-        return new JsonResponse([
-            "id" => $result["id"]
-        ]);
+        $patientId = $values["id"];
+        if (empty($patientId)) {
+            $patientId = $this->connection->getLastInsertId();
+        }
 
+        return new JsonResponse([
+            "id" => $patientId
+        ]);
     }
 
     #[Route("/removePatient", name: "remove_patient")]
