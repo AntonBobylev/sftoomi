@@ -3,7 +3,18 @@
 <div class="wrapper"
      [formGroup]="form"
 >
-    // TODO: implement
+    <app-loading-spinner [isLoading]="isLoading()" />
+
+    <app-textfield name="login"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('dialogs.reset_password.login')"
+                   onlyLetters
+    />
+
+    <app-textfield name="email"
+                   [form]="form"
+                   [label]="Sftoomi.Translator.translate('dialogs.reset_password.email')"
+    />
 
     <div *nzModalFooter>
         <button nz-button
@@ -12,7 +23,7 @@
                 [disabled]="form.invalid"
                 (click)="save()"
         >
-            {{ Sftoomi.Translator.translate('save') }}
+            {{ Sftoomi.Translator.translate('dialogs.reset_password.reset_button_caption') }}
         </button>
     </div>
 </div>

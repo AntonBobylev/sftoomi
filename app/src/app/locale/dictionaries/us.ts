@@ -233,6 +233,7 @@ let usDictionary: object =  {
             email: 'E-mail',
             login: 'Login',
             password_reset_message: 'The mail was sent to the email address you provided, if the current login-mail combination exists',
+            reset_button_caption: 'Reset',
             title: 'Reset password'
         }
     },
