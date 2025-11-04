@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
+use App\Class\Model\DoctorModel;
 use App\Class\Model\FacilityModel;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -36,26 +37,23 @@ final class FacilitiesController extends SftoomiController
     #[Route("/getFacility", name: "get_facility")]
     public function getFacility(Request $request): Response
     {
-        $sql = "select id, last_name, first_name, middle_name
-                from doctor";
-        $doctors = $this->connection->fetchAllAssociative($sql);
-
         $data = [];
-        $facilityId = $request->request->get("id");
+        $facilityId = Fetcher::int($request->request->get("id"));
         if (!empty($facilityId)) {
-            $data = $this->getOne($request, ["id", "short_name", "full_name"]);
+            $facilityModel = new FacilityModel($this->connection);
+            $data = $facilityModel->get($facilityId);
 
             $sql = "select fd.doctor_id as id, d.last_name, d.first_name, d.middle_name
                     from facilities_doctors fd
                         left join doctor d on d.id = fd.doctor_id 
-                    where fd.facility_id = $facilityId";
-            $data["facility_doctors"] = $this->connection->fetchAllAssociative($sql);
+                    where fd.facility_id = ?";
+            $data["facility_doctors"] = $this->connection->fetchAll($sql, [$facilityId]);
         }
 
         return new JsonResponse([
             "data"  => $data,
             "lists" => [
-                "doctors" => $doctors
+                "doctors" => new DoctorModel($this->connection)->getAll()["data"]
             ]
         ]);
     }

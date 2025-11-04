@@ -50,13 +50,10 @@ final class DoctorsController extends SftoomiController
             $data["doctor_facilities"] = $this->connection->fetchAll($sql, [$doctorId]);
         }
 
-        $facilityModel = new FacilityModel($this->connection);
-        $facilities = $facilityModel->getAll();
-
         return new JsonResponse([
             "data"  => $data,
             "lists" => [
-                "facilities" => $facilities
+                "facilities" => new FacilityModel($this->connection)->getAll()["data"]
             ]
         ]);
     }
