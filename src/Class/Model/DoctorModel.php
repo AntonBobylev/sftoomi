@@ -1,0 +1,56 @@
+<?php
+
+namespace App\Class\Model;
+
+use Doctrine\DBAL\Exception;
+
+class DoctorModel extends AbstractModel
+{
+    protected function getBaseTable(): string
+    {
+        return "doctor";
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function get(int $id): array
+    {
+        $sql = "select {$this->getEntityInlineColumns()}
+                from {$this->getBaseTable()}
+                where id = ?";
+
+        return $this->connection->fetchRow($sql, [$id]);
+    }
+
+    public function getAll(?int $start = null, ?int $limit = null): array
+    {
+        $result = parent::getAll($start, $limit);
+
+        $doctors = $result["data"];
+        foreach ($doctors as &$doctor) {
+            // TODO: facility model fetching
+            $sql = "select f.id, f.short_name, f.full_name
+                    from facilities_doctors fd
+                        left join facility f on f.id = fd.facility_id
+                    where fd.doctor_id = ?";
+            $doctor["doctor_facilities"] = $this->connection->fetchAll($sql, [$doctor["id"]]);
+        }
+        unset($doctor);
+
+        return [
+            "data"  => $doctors,
+            "total" => $result["total"]
+        ];
+    }
+
+    protected function getEntityColumns(): array
+    {
+        return [
+            "id",
+            "last_name",
+            "first_name",
+            "middle_name"
+        ];
+    }
+}
