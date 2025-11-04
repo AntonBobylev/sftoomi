@@ -201,6 +201,16 @@ readonly class Connection
     /**
      * @throws Exception
      */
+    public function delete(string $table, string $where = "true", array $params = []): bool | int | string
+    {
+        $where = $this->subst($where, $params);
+
+        return $this->connection->executeStatement("delete from `$table` where $where");
+    }
+
+    /**
+     * @throws Exception
+     */
     public function getLastInsertId(): bool | int | string
     {
         return $this->connection->lastInsertId();
