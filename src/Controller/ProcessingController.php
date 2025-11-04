@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Model\DoctorModel;
 use App\Class\Model\ExaminationModel;
@@ -195,8 +196,11 @@ final class ProcessingController extends SftoomiController
     #[Route("/removeExamination", name: "remove_examination")]
     public function removeExamination(Request $request): JsonResponse
     {
-        $this->remove($request);
+        $ids = Fetcher::intArray($request->request->get("ids"));
 
-        return new JsonResponse();
+        new EntityManipulator($this->connection)
+            ->remove("examination", $ids);
+
+        return new JsonResponse([]);
     }
 }
