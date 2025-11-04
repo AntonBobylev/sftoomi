@@ -31,7 +31,6 @@ class ExceptionTransactionSubscriber implements EventSubscriberInterface
     {
         $this->connection->beginTransaction();
         $this->transactionStarted = true;
-        \App::logDump("here");
     }
 
     /**
