@@ -84,6 +84,8 @@ class Fetcher
             return $default;
         }
 
+        $value = array_values(array_filter($value));
+
         return array_map(function ($item) {
             if (!is_numeric($item)) {
                 throw new RuntimeException("Not numeric value detected in intArray method");
