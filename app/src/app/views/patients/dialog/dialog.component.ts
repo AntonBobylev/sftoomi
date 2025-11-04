@@ -8,6 +8,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
+import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 import PatientDemographicsTemplateComponent from '../../../components/templates/patient-demographics-template/patient-demographics-template.component';
 
 import getPatientAPI from '../../../APIs/getPatientAPI';
@@ -25,7 +26,8 @@ export type PatientEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         PatientDemographicsTemplateComponent,
-        NzButtonComponent, NzModalFooterDirective
+        NzButtonComponent, NzModalFooterDirective,
+        AppLoadingSpinnerComponent
     ],
     styleUrl: './dialog.component.less'
 })
