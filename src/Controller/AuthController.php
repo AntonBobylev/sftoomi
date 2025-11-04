@@ -6,10 +6,8 @@ use App\Class\Fetcher;
 use App\Entity\User;
 use App\Service\SessionManager;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 final class AuthController extends SftoomiController
@@ -75,7 +73,7 @@ final class AuthController extends SftoomiController
                     last_name, contact_id
                 from users
                 where id = ?";
-        $data = $this->connection->executeQuery($sql, [$sessionData["id"]])->fetchAssociative();
+        $data = $this->connection->fetchRow($sql, [$sessionData["id"]]);
 
         return new JsonResponse([
             "success" => true,
