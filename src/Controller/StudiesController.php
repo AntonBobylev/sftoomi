@@ -35,20 +35,23 @@ final class StudiesController extends SftoomiController
     #[Route("/getStudy", name: "get_study")]
     public function getStudy(Request $request): Response
     {
-        $studyId = $request->request->get("id");
+        $studyId = Fetcher::int($request->request->get("id"));
 
         $study = [];
         if (!empty($studyId)) {
-            $sql = "select id, full_name, short_name
-                    from study
-                    where id = $studyId";
-            $study = $this->connection->fetchAssociative($sql);
+            $studyModel = new StudyModel($this->connection);
+            $study = $studyModel->get($studyId);
 
-            $sql = "select cpts.id as value, concat('(', cpts.code, '): ', cpts.short_name) as caption
-                    from studies_cpts scpts
-                        left join cpts on cpts.id = scpts.cpt_id
-                    where scpts.study_id = $studyId";
-            $study["study_cpts"] = $this->connection->fetchAllAssociative($sql);
+            $study["study_cpts"] = array_map(function ($row) {
+                return [
+                    "value" => $row["id"],
+                    "caption" => sprintf(
+                        "(%s): %s",
+                        $row["code"],
+                        $row["short_name"]
+                    )
+                ];
+            }, $study["study_cpts"]);
         }
 
         return new JsonResponse([

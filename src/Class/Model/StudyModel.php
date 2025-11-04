@@ -9,22 +9,20 @@ class StudyModel extends AbstractModel
         return "study";
     }
 
+    public function get(int $id, ?string $filters = null): array
+    {
+        $data = parent::get($id, $filters);
+        $data["study_cpts"] = $this->getStudyCpts($data["id"]);
+
+        return $data;
+    }
+
     public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
     {
         $result = parent::getAll($start, $limit, $filters);
 
         foreach ($result["data"] as &$row) {
-            $sql = "select cpt_id
-                    from studies_cpts
-                    where study_id = ?";
-            $studyCptsIds = $this->connection->fetchCol($sql, [$row["id"]]);
-
-            $cptModel = new CptModel($this->connection);
-            $row["study_cpts"] = $cptModel->getAll(
-                null,
-                null,
-                $this->connection->subst("id in ?", [$studyCptsIds])
-            )["data"];
+            $row["study_cpts"] = $this->getStudyCpts($row["id"]);
         }
         unset($row);
 
@@ -38,5 +36,22 @@ class StudyModel extends AbstractModel
             "short_name",
             "full_name"
         ];
+    }
+
+    private function getStudyCpts(int $studyId): array
+    {
+        $sql = "select cpt_id
+                from studies_cpts
+                where study_id = ?";
+        $studyCptsIds = $this->connection->fetchCol($sql, [$studyId]);
+        if (empty($studyCptsIds)) {
+            return [];
+        }
+
+        return new CptModel($this->connection)->getAll(
+            null,
+            null,
+            $this->connection->subst("id in ?", [$studyCptsIds])
+        )["data"];
     }
 }
