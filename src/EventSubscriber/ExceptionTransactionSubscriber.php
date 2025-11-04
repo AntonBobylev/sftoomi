@@ -1,7 +1,8 @@
 <?php
+
 namespace App\EventSubscriber;
 
-use Doctrine\DBAL\Connection as DBALConnection;
+use App\Class\Core\DB\Connection;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
@@ -11,7 +12,7 @@ class ExceptionTransactionSubscriber implements EventSubscriberInterface
 {
     private bool $transactionStarted = false;
 
-    public function __construct(private readonly DBALConnection $connection)
+    public function __construct(private readonly Connection $connection)
     {
     }
 
