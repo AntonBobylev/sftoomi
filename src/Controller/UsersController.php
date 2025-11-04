@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Class\Constants;
 use App\Class\Contacts;
+use App\Class\Core\DB\Connection as DBConnection;
 use App\Class\Fetcher;
 use App\Class\Mailer;
 use App\Class\Model\UserModel;
@@ -24,6 +25,17 @@ final class UsersController extends AppCrudController
 {
     protected string $baseTable = "users";
 
+    public function __construct(
+        DBConnection $connection,
+        private readonly Contacts $contacts,
+        private readonly UserPasswordHasherInterface $passwordHasher,
+        private readonly Mailer $mailer,
+        private readonly Filesystem $filesystem
+    )
+    {
+        parent::__construct($connection);
+    }
+
     #[Route("/getUsers", name: "get_users")]
     public function getUsers(Request $request): Response
     {
@@ -43,7 +55,7 @@ final class UsersController extends AppCrudController
      * @throws Exception
      */
     #[Route("/getUser", name: "get_user")]
-    public function getUserApi(Request $request, Contacts $contacts): Response
+    public function getUserApi(Request $request): Response
     {
         $data = [];
         if ($request->request->has("id")) {
@@ -51,7 +63,7 @@ final class UsersController extends AppCrudController
             $data = $userModel->get(Fetcher::int($request->request->get("id")));
 
             if (!empty($data)) {
-                $data["contacts"] = $contacts->get($data["contact_id"]);
+                $data["contacts"] = $this->contacts->get($data["contact_id"]);
             }
 
             unset($data["contact_id"]);
@@ -66,15 +78,9 @@ final class UsersController extends AppCrudController
      * @throws Exception|RandomException|\PHPMailer\PHPMailer\Exception
      */
     #[Route("/saveUser", name: "save_user")]
-    public function saveUser(
-        Request $request,
-        Contacts $contacts,
-        UserPasswordHasherInterface $passwordHasher,
-        Mailer $mailer,
-        Filesystem $filesystem
-    ): Response
+    public function saveUser(Request $request): Response
     {
-        $contactId = $contacts->set(Fetcher::json($request->request->get("contacts")));
+        $contactId = $this->contacts->set(Fetcher::json($request->request->get("contacts")));
 
         $resetPassword = Fetcher::int($request->request->get("reset_password"), false);
 
@@ -94,7 +100,7 @@ final class UsersController extends AppCrudController
         $isNewUser = empty($values["id"]);
         if ($isNewUser) {
             $password             = new PasswordGenerator()->generate();
-            $hashedPassword       = $passwordHasher->hashPassword(new User(), $password);
+            $hashedPassword       = $this->passwordHasher->hashPassword(new User(), $password);
             $values["password"]   = $hashedPassword;
             $values["created_at"] = $this->connection->now();
         }
@@ -107,7 +113,7 @@ final class UsersController extends AppCrudController
         );
 
         if ($resetPassword || $isNewUser) {
-            $this->resetUserPassword($values["id"], $this->getUserEmails($contactId)[0],$filesystem, $mailer, $passwordHasher);
+            $this->resetUserPassword($values["id"], $this->getUserPrimaryEmail($values["id"]));
         }
 
         return new JsonResponse([
@@ -165,13 +171,7 @@ final class UsersController extends AppCrudController
     }
 
     #[Route("/resetPassword", name: "reset_password")]
-    public function resetPassword(
-        Request $request,
-        UserRepository $repository,
-        UserPasswordHasherInterface $passwordHasher,
-        Mailer $mailer,
-        Filesystem $filesystem
-    ): Response
+    public function resetPassword(Request $request): Response
     {
         $values = $request->request->all();
 
@@ -179,36 +179,30 @@ final class UsersController extends AppCrudController
             "login", "email"
         ], $values);
 
-        $user = $repository->findOneBy(["login" => $values["login"]]);
+        $sql = "select id
+                from users
+                where login = ?";
+        $userId = $this->connection->selInt($sql, [$values["login"]]);
 
         $response = new JsonResponse([
             "message" => "The mail was sent to the email address you provided, if the current login-mail combination exists"
         ]);
 
-        if (empty($user)) {
+        if (empty($userId)) {
+            // User not exists
+
             return $response;
         }
 
-        $contactId = $user->getContactId();
-
-        if (empty($contactId)) {
-            return $response;
-        }
-
-        $userEmails = $this->getUserEmails($contactId);
+        $userEmails = $this->getUserEmailsList($userId);
 
         if (!in_array($values["email"], $userEmails)) {
+            // User doesn't have any emails or provided email is not in the user contacts list
+
             return $response;
         }
 
-        try {
-            $this->resetUserPassword($user->getId(), $values["email"], $filesystem, $mailer, $passwordHasher);
-
-        } catch (Exception $ex) {
-            $this->connection->rollBack();
-        }
-
-        $this->connection->commit();
+        $this->resetUserPassword($userId, $values["email"]);
 
         return new JsonResponse([
             "success" => true
@@ -216,37 +210,34 @@ final class UsersController extends AppCrudController
     }
 
     /**
-     * TODO: move to the separate class
-     *
      * @param int $userId
      * @param string $mail
-     * @param Filesystem $filesystem
-     * @param Mailer $mailer
-     * @param UserPasswordHasherInterface $passwordHasher
+     *
      * @return void
+     *
      * @throws Exception
      * @throws RandomException
      * @throws \PHPMailer\PHPMailer\Exception
      */
-    private function resetUserPassword(int $userId, string $mail, Filesystem $filesystem, Mailer $mailer, UserPasswordHasherInterface $passwordHasher): void
+    private function resetUserPassword(int $userId, string $mail): void
     {
         $newPassword = new PasswordGenerator()->generate();
 
-        $templateManager = new TemplateManager($filesystem);
+        $templateManager = new TemplateManager($this->filesystem);
         $templateContent = $templateManager->getTemplate("email/user-new-password.html");
         $mailContent = $templateManager->apply($templateContent, [
             "password" => $newPassword
         ]);
 
-        $mailer->applyTemplate($mailContent);
+        $this->mailer->applyTemplate($mailContent);
 
-        $mailer->addAddresses([$mail]);
-        $mailer->send();
+        $this->mailer->addAddresses([$mail]);
+        $this->mailer->send();
 
         $this->connection->update(
             "users",
             [
-                "password"                 => $passwordHasher->hashPassword(new User(), $newPassword),
+                "password"                 => $this->passwordHasher->hashPassword(new User(), $newPassword),
                 "force_to_change_password" => 1
             ],
             "id = :id",
@@ -254,18 +245,28 @@ final class UsersController extends AppCrudController
         );
     }
 
-    private function getUserEmails(int $contactId): array
+    private function getUserEmailsList(int $userId): array
     {
-        $sql = "select text
-                from contacts
-                where contact_id = ? and type = ?
-                order by position";
-        $userEmails = $this->connection->fetchCol($sql, [$contactId, Constants::CONTACT_TYPE_EMAIL]);
-
-        if (empty($userEmails)) {
+        $sql = "select contact_id
+                from users
+                where id = ?";
+        $contactId = $this->connection->selInt($sql, [$userId]);
+        if (empty($contactId)) {
             return [];
         }
 
-        return $userEmails;
+        $emails = $this->contacts->get($contactId, [Constants::CONTACT_TYPE_EMAIL]);
+        if (empty($emails["contacts"])) {
+            return [];
+        }
+
+        return array_map(function (array $contact) {
+            return $contact["text"];
+        }, $emails["contacts"]);
+    }
+
+    private function getUserPrimaryEmail(int $userId): string | null
+    {
+        return $this->getUserEmailsList($userId)[0];
     }
 }
