@@ -137,6 +137,14 @@ readonly class Connection
     /**
      * @throws Exception
      */
+    public function execute(string $sql): string
+    {
+        return $this->connection->executeStatement($sql);
+    }
+
+    /**
+     * @throws Exception
+     */
     public function insupd(string $table, array $values, string $where = "true", array $params = []): bool | int | string
     {
         $sql = "select *
