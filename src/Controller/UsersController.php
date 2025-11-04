@@ -6,6 +6,7 @@ use App\Class\Constants;
 use App\Class\Contacts;
 use App\Class\Fetcher;
 use App\Class\Mailer;
+use App\Class\Model\UserModel;
 use App\Class\TemplateManager;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
@@ -23,20 +24,18 @@ final class UsersController extends AppCrudController
 {
     protected string $baseTable = "users";
 
-    /**
-     * @throws Exception
-     */
     #[Route("/getUsers", name: "get_users")]
     public function getUsers(Request $request): Response
     {
-        $patients = $this->getList(
-            $request,
-            ["id", "login", "last_name", "first_name", "roles", "created_at"]
+        $userModel = new UserModel($this->connection);
+        $users = $userModel->getAll(
+            $request->request->get("start"),
+            $request->request->get("limit")
         );
 
         return new JsonResponse([
-            "data"  => $patients["data"],
-            "total" => $patients["total"]
+            "data"  => $users["data"],
+            "total" => $users["total"]
         ]);
     }
 
@@ -48,11 +47,8 @@ final class UsersController extends AppCrudController
     {
         $data = [];
         if ($request->request->has("id")) {
-            $data = $this->getOne($request, [
-                "id", "login", "last_name", "first_name",
-                "disabled", "force_to_change_password",
-                "contact_id"
-            ]);
+            $userModel = new UserModel($this->connection);
+            $data = $userModel->get(Fetcher::int($request->request->get("id")));
 
             if (!empty($data)) {
                 $data["contacts"] = $contacts->get($data["contact_id"]);
@@ -78,50 +74,44 @@ final class UsersController extends AppCrudController
         Filesystem $filesystem
     ): Response
     {
-        try {
-            $this->connection->beginTransaction();
-            $contactId = $contacts->set(Fetcher::json($request->request->get("contacts")));
+        $contactId = $contacts->set(Fetcher::json($request->request->get("contacts")));
 
-            $resetPassword = Fetcher::int($request->request->get("reset_password"), false);
+        $resetPassword = Fetcher::int($request->request->get("reset_password"), false);
 
-            $values = [
-                "id"          => Fetcher::int($request->request->get("id")),
-                "login"       => Fetcher::trim($request->request->get("login")),
-                "force_to_change_password" => $resetPassword ? 1 : Fetcher::int($request->request->get("force_to_change_password"), false),
-                "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
-                "last_name"   => Fetcher::trim($request->request->get("last_name"), ""),
-                "first_name"  => Fetcher::trim($request->request->get("first_name"), ""),
-                "contact_id"  => $contactId,
-                "roles"       => "[\"ROLE_USER\"]" // TODO: add the permissions system
-            ];
+        $values = [
+            "id"          => Fetcher::int($request->request->get("id")),
+            "login"       => Fetcher::trim($request->request->get("login")),
+            "force_to_change_password" => $resetPassword ? 1 : Fetcher::int($request->request->get("force_to_change_password"), false),
+            "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
+            "last_name"   => Fetcher::trim($request->request->get("last_name"), ""),
+            "first_name"  => Fetcher::trim($request->request->get("first_name"), ""),
+            "contact_id"  => $contactId,
+            "roles"       => "[\"ROLE_USER\"]" // TODO: add the permissions system
+        ];
 
-            $isNewUser = empty($values["id"]);
-            if ($isNewUser) {
-                $password             = new PasswordGenerator()->generate();
-                $hashedPassword       = $passwordHasher->hashPassword(new User(), $password);
-                $values["password"]   = $hashedPassword;
-                $values["created_at"] = $this->connection->fetchOne("select now()");
-            }
+        $this->assertAllRequiredFieldsSet(["login"], $values);
 
-            $result = $this->save(
-                $request,
-                $values,
-                ["login"]
-            );
-
-            if ($resetPassword || $isNewUser) {
-                $this->resetUserPassword($values["id"], $this->getUserEmails($contactId)[0],$filesystem, $mailer, $passwordHasher);
-            }
-        } catch (Exception $ex) {
-            $this->connection->rollBack();
-
-            throw $ex;
+        $isNewUser = empty($values["id"]);
+        if ($isNewUser) {
+            $password             = new PasswordGenerator()->generate();
+            $hashedPassword       = $passwordHasher->hashPassword(new User(), $password);
+            $values["password"]   = $hashedPassword;
+            $values["created_at"] = $this->connection->now();
         }
 
-        $this->connection->commit();
+        $this->connection->insupd(
+            "users",
+            $values,
+            "id = :id",
+            $values
+        );
+
+        if ($resetPassword || $isNewUser) {
+            $this->resetUserPassword($values["id"], $this->getUserEmails($contactId)[0],$filesystem, $mailer, $passwordHasher);
+        }
 
         return new JsonResponse([
-            "id" => $result["id"]
+            "id" => $isNewUser ? $this->connection->getLastInsertId() : $values["id"]
         ]);
     }
 
@@ -258,6 +248,7 @@ final class UsersController extends AppCrudController
                 "password"                 => $passwordHasher->hashPassword(new User(), $newPassword),
                 "force_to_change_password" => 1
             ],
+            "id = :id",
             ["id" => $userId]
         );
     }
@@ -268,7 +259,7 @@ final class UsersController extends AppCrudController
                 from contacts
                 where contact_id = ? and type = ?
                 order by position";
-        $userEmails = $this->connection->executeQuery($sql, [$contactId, Constants::CONTACT_TYPE_EMAIL])->fetchFirstColumn();
+        $userEmails = $this->connection->fetchCol($sql, [$contactId, Constants::CONTACT_TYPE_EMAIL]);
 
         if (empty($userEmails)) {
             return [];
