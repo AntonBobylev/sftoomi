@@ -7,14 +7,24 @@ use Doctrine\DBAL\Exception;
 
 abstract class AbstractModel
 {
-    public abstract function get(int $id): array;
-
     protected abstract function getBaseTable(): string;
 
     protected abstract function getEntityColumns(): array;
 
     public function __construct(protected readonly Connection $connection)
     {
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function get(int $id): array
+    {
+        $sql = "select {$this->getEntityInlineColumns()}
+                from {$this->getBaseTable()}
+                where id = ?";
+
+        return $this->connection->fetchRow($sql, [$id]);
     }
 
     /**
