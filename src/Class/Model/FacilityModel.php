@@ -9,7 +9,7 @@ class FacilityModel extends AbstractModel
         return "facility";
     }
 
-    public function getAll(?int $start = null, ?int $limit = null): array
+    public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
     {
         $result = parent::getAll($start, $limit);
 

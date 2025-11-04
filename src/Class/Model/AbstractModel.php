@@ -18,11 +18,15 @@ abstract class AbstractModel
     /**
      * @throws Exception
      */
-    public function get(int $id): array
+    public function get(int $id, ?string $filters = null): array
     {
+        if (empty($filters)) {
+            $filters = "true";
+        }
+
         $sql = "select {$this->getEntityInlineColumns()}
                 from {$this->getBaseTable()}
-                where id = ?";
+                where id = ? and $filters";
 
         return $this->connection->fetchRow($sql, [$id]);
     }
@@ -30,10 +34,15 @@ abstract class AbstractModel
     /**
      * @throws Exception
      */
-    public function getAll(?int $start = null, ?int $limit = null): array
+    public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
     {
+        if (empty($filters)) {
+            $filters = "true";
+        }
+
         $sql = "select {$this->getEntityInlineColumns()}
-                from {$this->getBaseTable()}";
+                from {$this->getBaseTable()}
+                where $filters";
 
         if (isset($start) & isset($limit)) {
             $sql .= " limit $start, $limit";
