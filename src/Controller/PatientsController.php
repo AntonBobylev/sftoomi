@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Class\Fetcher;
 use App\Class\Format;
+use App\Class\Model\PatientModel;
 use App\Repository\PatientRepository;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,24 +12,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class PatientsController extends AppCrudController
+final class PatientsController extends SftoomiController
 {
-    protected string $baseTable = "patient";
-
     /**
      * @throws Exception
      */
     #[Route("/getPatients", name: "get_patients")]
     public function getPatients(Request $request): Response
     {
-        $patients = $this->getList(
-            $request,
-            ["id", "last_name", "first_name", "middle_name", "dob", "phone"]
+        $patientModel = new PatientModel($this->connection);
+        $result = $patientModel->getAll(
+            $request->request->get("start"),
+            $request->request->get("limit")
         );
 
         return new JsonResponse([
-            "data"  => $patients["data"],
-            "total" => $patients["total"]
+            "data"  => $result["data"],
+            "total" => $result["total"]
         ]);
     }
 
