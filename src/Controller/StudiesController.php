@@ -76,31 +76,33 @@ final class StudiesController extends SftoomiController
             "full_name"   => Fetcher::trim($request->request->get("full_name"))
         ];
 
-        try {
-            $this->connection->beginTransaction();
-            $id = $this->save($request, $values)["id"];
+        $this->connection->insupd(
+            "study",
+            $values,
+            "id = ?",
+            [$values["id"]]
+        );
 
-            $this->connection->delete(
-                "studies_cpts",
-                ["study_id" => $id]
-            );
-
-            foreach ($cptCodesIds as $cptCodeId) {
-                $this->connection->insert(
-                    "studies_cpts",
-                    ["study_id" => $id, "cpt_id" => $cptCodeId]
-                );
-            }
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-
-            throw new RuntimeException("Failed to save study due to error: " . $e->getMessage());
+        $studyId = $values["id"];
+        if (empty($studyId)) {
+            $studyId = $this->connection->getLastInsertId();
         }
 
-        $this->connection->commit();
+        $this->connection->delete(
+            "studies_cpts",
+            "study_id = ?",
+            [$studyId]
+        );
+
+        foreach ($cptCodesIds as $cptCodeId) {
+            $this->connection->insert(
+                "studies_cpts",
+                ["study_id" => $studyId, "cpt_id" => $cptCodeId]
+            );
+        }
 
         return new JsonResponse([
-            "id" => $id
+            "id" => $studyId
         ]);
     }
 
@@ -131,7 +133,7 @@ final class StudiesController extends SftoomiController
             $sql .= " and id not in ($excludeIds)";
         }
 
-        $cpts = $this->connection->fetchAllAssociative($sql);
+        $cpts = $this->connection->fetchAll($sql);
 
         return new JsonResponse([
             "data"  => $cpts
