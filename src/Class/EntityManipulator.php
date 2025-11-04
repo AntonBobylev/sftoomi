@@ -3,7 +3,7 @@
 namespace App\Class;
 
 use App;
-use Doctrine\DBAL\Connection;
+use App\Class\Core\DB\Connection;
 
 class EntityManipulator
 {
@@ -43,7 +43,8 @@ class EntityManipulator
 
             $this->connection->delete(
                 $entityTable,
-                [$entityTableConfig["idField"] => $id]
+                "{$entityTableConfig["idField"]} = ?",
+                [$id]
             );
         }
     }
@@ -80,14 +81,10 @@ class EntityManipulator
 
         switch ($referenceConfig["onDelete"]) {
             case "restrict":
-                $sql = sprintf(
-                    "select count(*) > 0 from %s where %s = %s",
-                    $referenceTable,
-                    $referenceConfig["idField"],
-                    $removingEntityId
-                );
-
-                $recordsExists = $this->connection->fetchOne($sql);
+                $sql = "select count(*) > 0
+                        from $referenceTable
+                        where {$referenceConfig["idField"]} = ?";
+                $recordsExists = $this->connection->selInt($sql, [$removingEntityId]);
 
                 if ($recordsExists) {
                     throw new \RuntimeException(sprintf(
@@ -102,7 +99,8 @@ class EntityManipulator
             case "update":
                 $this->connection->delete(
                     $referenceTable,
-                    [$referenceConfig["idField"] => $removingEntityId]
+                    "{$referenceConfig["idField"]} = ?",
+                    [$removingEntityId]
                 );
 
                 break;
