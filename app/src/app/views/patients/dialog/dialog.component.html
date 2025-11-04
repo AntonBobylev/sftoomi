@@ -1,8 +1,10 @@
+{{ dialogResizer() }}
+
 <div class="wrapper"
      [formGroup]="form"
 >
     <app-loading-spinner [isLoading]="isLoading()" />
-    
+
     <patient-demographics-template [form]="form"
                                    lastNameCtrlName="last_name"
                                    firstNameCtrlName="first_name"
