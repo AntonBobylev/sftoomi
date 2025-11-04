@@ -124,19 +124,24 @@ final class StudiesController extends SftoomiController
     #[Route("/lookupCpt", name: "lookup_cpt")]
     public function lookupCpt(Request $request): Response
     {
-        $query = $request->request->get("query");
+        $query = Fetcher::trim($request->request->get("query"));
         if (empty($query)) {
             return new JsonResponse([]);
         }
 
-        $excludeIds = $request->request->get("exclude_ids");
-        $sql = "select id as value, concat('(', code, '): ', short_name) as caption
-                from cpts
-                where (short_name like '%$query%' or full_name like '%$query%' or code like '%$query%')";
+        $filters = [];
+
+        $excludeIds = Fetcher::intArray($request->request->get("exclude_ids"));
         if (!empty($excludeIds)) {
-            $sql .= " and id not in ($excludeIds)";
+            $filters[] = $this->connection->subst("id not in ?", [$excludeIds]);
         }
 
+        $filters = empty($filters) ? "true" : implode(" and ", $filters);
+
+        $sql = "select id as value, concat('(', code, '): ', short_name) as caption
+                from cpts
+                where (short_name like '%$query%' or full_name like '%$query%' or code like '%$query%')
+                    and $filters";
         $cpts = $this->connection->fetchAll($sql);
 
         return new JsonResponse([
