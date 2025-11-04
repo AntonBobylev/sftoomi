@@ -18,17 +18,25 @@ abstract class AbstractModel
     /**
      * @throws Exception
      */
-    public function get(int $id, ?string $filters = null): array
+    public function get(?int $id, ?string $filters = null): array
     {
+        if (empty($id) && empty($filters)) {
+            return [];
+        }
+
+        $idFilter = empty($id)
+            ? "true"
+            : $this->connection->subst("id = ?", [$id]);
+
         if (empty($filters)) {
             $filters = "true";
         }
 
         $sql = "select {$this->getEntityInlineColumns()}
                 from {$this->getBaseTable()}
-                where id = ? and $filters";
+                where $idFilter and $filters";
 
-        return $this->connection->fetchRow($sql, [$id]);
+        return $this->connection->fetchRow($sql);
     }
 
     /**

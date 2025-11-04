@@ -9,7 +9,7 @@ class StudyModel extends AbstractModel
         return "study";
     }
 
-    public function get(int $id, ?string $filters = null): array
+    public function get(?int $id, ?string $filters = null): array
     {
         $data = parent::get($id, $filters);
         $data["study_cpts"] = $this->getStudyCpts($data["id"]);

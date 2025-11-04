@@ -9,7 +9,7 @@ class ExaminationModel extends AbstractModel
         return "examination";
     }
 
-    public function get(int $id, ?string $filters = null): array
+    public function get(?int $id, ?string $filters = null): array
     {
         $data = parent::get($id, $filters);
 
