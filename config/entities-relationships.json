@@ -28,5 +28,14 @@
     },
     "patient": {
         "idField": "id"
+    },
+    "facility": {
+        "idField": "id",
+        "references": {
+            "facilities_doctors": {
+                "idField": "facility_id",
+                "onDelete": "update"
+            }
+        }
     }
 }

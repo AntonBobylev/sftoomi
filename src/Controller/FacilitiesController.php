@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Model\DoctorModel;
 use App\Class\Model\FacilityModel;
@@ -109,7 +110,10 @@ final class FacilitiesController extends SftoomiController
     #[Route("/removeFacility", name: "remove_facility")]
     public function removeFacility(Request $request): Response
     {
-        $this->remove($request);
+        $ids = Fetcher::intArray($request->request->get("ids"));
+
+        new EntityManipulator($this->connection)
+            ->remove("facility", $ids);
 
         return new JsonResponse([]);
     }
