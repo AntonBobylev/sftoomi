@@ -3,6 +3,7 @@
 /** @noinspection PhpIllegalPsrClassPathInspection */
 
 use App\Class\Constants;
+use App\Class\Core\DB\SqlSubstitutor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
@@ -36,5 +37,21 @@ class App
 
         $file = Constants::LOG_DIRECTORY . $filename;
         file_put_contents($file, $data, FILE_APPEND);
+    }
+
+    public static function logSql(string $sql, array $params = []): void
+    {
+        $data = new SqlSubstitutor()->subst($sql, $params);
+
+        $rows = explode("\n", $data);
+        $rows = array_map(function ($row) {
+            return trim($row);
+        }, $rows);
+
+        array_unshift($rows, "");
+        $data = implode("\n\t", $rows);
+        $data .= "\n";
+
+        self::logDump($data, "sql.log");
     }
 }
