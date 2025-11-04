@@ -25,5 +25,6 @@ class CorsListener
         $response->headers->set("Access-Control-Allow-Headers", "Content-Type, Authorization, x-session-id");
         $response->headers->set("Access-Control-Expose-Headers", "x-session-id");
         $response->headers->set("Access-Control-Allow-Credentials", "true");
+        $response->headers->set("Access-Control-Max-Age", "86400");
     }
 }
