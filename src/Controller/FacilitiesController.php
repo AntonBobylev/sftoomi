@@ -3,41 +3,30 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
-use App\Repository\FacilityRepository;
+use App\Class\Model\FacilityModel;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class FacilitiesController extends AppCrudController
+final class FacilitiesController extends SftoomiController
 {
-    protected string $baseTable = "facility";
-
     /**
      * @throws Exception
      */
     #[Route("/getFacilities", name: "get_facilities")]
     public function getFacilities(Request $request): Response
     {
-        $facilities = $this->getList(
-            $request,
-            ["id", "short_name", "full_name"]
+        $facilityModel = new FacilityModel($this->connection);
+        $result = $facilityModel->getAll(
+            $request->request->get("start"),
+            $request->request->get("limit")
         );
 
-        $data = $facilities["data"];
-        foreach ($data as &$row) {
-            $sql = "select d.id, d.last_name, d.first_name, d.middle_name
-                    from facilities_doctors fd
-                        left join doctor d on d.id = fd.doctor_id
-                    where fd.facility_id = {$row["id"]}";
-            $row["facility_doctors"] = $this->connection->fetchAllAssociative($sql);
-        }
-        unset($row);
-
         return new JsonResponse([
-            "data"  => $data,
-            "total" => $facilities["total"]
+            "data"  => $result["data"],
+            "total" => $result["total"]
         ]);
     }
 
