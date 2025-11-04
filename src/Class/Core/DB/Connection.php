@@ -19,6 +19,38 @@ readonly class Connection
     /**
      * @throws Exception
      */
+    public function beginTransaction(): void
+    {
+        $this->connection->beginTransaction();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function commit(): void
+    {
+        $this->connection->commit();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function rollback(): void
+    {
+        $this->connection->rollback();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function now(): string | null
+    {
+        return $this->selString("select now()");
+    }
+
+    /**
+     * @throws Exception
+     */
     public function fetchAll(string $sql, array $params = []): array
     {
         return $this->connection->fetchAllAssociative($this->subst($sql, $params));
