@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use Doctrine\DBAL\Connection;
+use App\Class\Core\DB\Connection;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Output\OutputInterface;

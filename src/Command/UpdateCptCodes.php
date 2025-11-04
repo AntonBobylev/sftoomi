@@ -30,11 +30,10 @@ class UpdateCptCodes extends SftoomiCommand
         $output->writeln("CPTs dictionary loaded");
 
         $sql = sprintf("show tables like '%s'", self::CPT_TABLE_NAME);
-        $tableExist = $this->connection->fetchOne($sql);
+        $tableExists = !empty($this->connection->fetchCol($sql));
 
-        if ($tableExist !== false) {
-            $sql = sprintf("drop table %s", self::CPT_TABLE_NAME);
-            $this->connection->executeQuery($sql);
+        if ($tableExists) {
+            $this->connection->execute("drop table %s" . self::CPT_TABLE_NAME);
         }
 
         $sql = sprintf(
@@ -49,7 +48,7 @@ class UpdateCptCodes extends SftoomiCommand
             self::CPT_TABLE_NAME
         );
 
-        $this->connection->executeQuery($sql);
+        $this->connection->execute($sql);
 
         $output->writeln("Starting CPT codes filling in database...");
         $progress = $this->createProgressBar($output, count($data));
@@ -61,12 +60,15 @@ class UpdateCptCodes extends SftoomiCommand
                 continue;
             }
 
-            $this->connection->insert(self::CPT_TABLE_NAME, [
-                "id"         => $cpt["id"],
-                "code"       => $cpt["code"],
-                "short_name" => $cpt["short_name"],
-                "full_name"  => $cpt["full_name"]
-            ]);
+            $this->connection->insert(
+                self::CPT_TABLE_NAME,
+                [
+                    "id"         => $cpt["id"],
+                    "code"       => $cpt["code"],
+                    "short_name" => $cpt["short_name"],
+                    "full_name"  => $cpt["full_name"]
+                ]
+            );
 
             $progress->advance();
         }
