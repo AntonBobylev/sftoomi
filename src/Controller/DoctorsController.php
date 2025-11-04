@@ -74,6 +74,8 @@ final class DoctorsController extends SftoomiController
             "middle_name" => Fetcher::trim($request->request->get("middle_name"))
         ];
 
+        $this->assertAllRequiredFieldsSet(["last_name", "first_name"], $values);
+
         if (!empty($values["last_name"])) {
             $values["last_name"] = mb_strtoupper($values["last_name"]);
         }
@@ -86,44 +88,42 @@ final class DoctorsController extends SftoomiController
             $values["middle_name"] = mb_strtoupper($values["middle_name"]);
         }
 
-        try {
-            $this->connection->beginTransaction();
+        $this->connection->insupd(
+            "doctor",
+            $values,
+            "id = ?",
+            [$values["id"]]
+        );
 
-            $result = $this->save(
-                $request,
-                $values,
-                [
-                    "last_name",
-                    "first_name"
-                ]
-            );
-
-            $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
-
-            if (empty($doctorFacilitiesIds)) {
-                throw new \RuntimeException("Doctor must be assigned at least to one facility");
-            }
-
-            $this->connection->delete("facilities_doctors", ["doctor_id" => $result["id"]]);
-            foreach ($doctorFacilitiesIds as $facilityId) {
-                $this->connection->insert(
-                    "facilities_doctors",
-                    [
-                        "doctor_id"   => $result["id"],
-                        "facility_id" => $facilityId
-                    ]
-                );
-            }
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-
-            throw new \RuntimeException("Failed to save doctor due to error: " . $e->getMessage());
+        $doctorId = $values["id"];
+        if (empty($doctorId)) {
+            $doctorId = $this->connection->getLastInsertId();
         }
 
-        $this->connection->commit();
+        $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
+
+        if (empty($doctorFacilitiesIds)) {
+            throw new \RuntimeException("Doctor must be assigned at least to one facility");
+        }
+
+        $this->connection->delete(
+            "facilities_doctors",
+            "doctor_id = ?",
+            [$doctorId]
+        );
+
+        foreach ($doctorFacilitiesIds as $facilityId) {
+            $this->connection->insert(
+                "facilities_doctors",
+                [
+                    "doctor_id"   => $doctorId,
+                    "facility_id" => $facilityId
+                ]
+            );
+        }
 
         return new JsonResponse([
-            "id" => $result["id"]
+            "id" => $doctorId
         ]);
     }
 
