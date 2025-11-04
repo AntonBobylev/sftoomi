@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-use Doctrine\DBAL\Connection;
+use App\Class\Core\DB\Connection;
 
 final class Contacts
 {
@@ -10,20 +10,29 @@ final class Contacts
     {
     }
 
-    public function get(?int $contactId): ?array
+    public function get(?int $contactId, ?array $types = []): ?array
     {
         if (empty($contactId)) {
             return null;
         }
 
+        $filters = [];
+        if (!empty($types)) {
+            $filters[] = $this->connection->subst("type in ?", [$types]);
+        }
+
+        $filters = empty($filters) ? "true" : implode(" and ", $filters);
+
         $sql = "select item_id, type, text, position
                 from contacts
-                where contact_id = ?";
-        $data = $this->connection->fetchAllAssociative($sql, [$contactId]);
+                where contact_id = ?
+                    and $filters
+                order by position";
+        $data = $this->connection->fetchAll($sql, [$contactId]);
 
         return [
             "contact_id" => $contactId,
-            "contacts"   => $data,
+            "contacts"   => $data
         ];
     }
 
