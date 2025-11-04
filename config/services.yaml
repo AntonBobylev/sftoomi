@@ -36,3 +36,8 @@ services:
     App\Class\Mailer:
         arguments:
             $logger: '@monolog.logger.mailer'
+
+    connection:
+        class: App\Class\Core\DB\Connection
+        arguments:
+            - '@doctrine.dbal.default_connection'
