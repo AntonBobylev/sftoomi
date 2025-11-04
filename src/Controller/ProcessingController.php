@@ -113,8 +113,6 @@ final class ProcessingController extends SftoomiController
             "doctor_id"   => Fetcher::int($request->request->get("doctor_id"))
         ];
 
-        $this->connection->beginTransaction();
-
         $patientId = Fetcher::int($request->request->get("patient_id"));
         if (!isset($patientId)) {
             $patient = [
@@ -129,64 +127,65 @@ final class ProcessingController extends SftoomiController
                 throw new \RuntimeException("You must specify patient last name and first name");
             }
 
-            try {
-                $this->connection->insert(
-                    "patient",
-                    $patient
-                );
-            } catch (\Exception $exception) {
-                $this->connection->rollBack();
-                throw new \RuntimeException(sprintf("There was a problem on patient saving process: %s", $exception->getMessage()));
-            }
+            $this->connection->insert(
+                "patient",
+                $patient
+            );
 
-            $patientId = $this->connection->lastInsertId();
+            $patientId = $this->connection->getLastInsertId();
         }
 
         $values["patient_id"] = $patientId;
-        $request->request->set("id", $values["id"]);
 
-        try {
-            $id = $this->save($request, $values)["id"];
+        $this->assertAllRequiredFieldsSet(["date", "facility_id", "patient_id"], $values);
 
-            $newStudyIds = Fetcher::intArray($request->request->get("study_ids"));
+        $this->connection->insupd(
+            "examination",
+            $values,
+            "id = :id",
+            $values
+        );
 
-            if (empty($newStudyIds)) {
-                throw new \RuntimeException("You must specify at least one study to save the examination");
-            }
-
-            $sql = "select exam_id, study_id
-                    from examinations_studies
-                    where examination_id = $id";
-            $currentExaminationStudies = $this->connection->fetchAllAssociative($sql);
-
-            $examIdsToRemove = [];
-            foreach ($currentExaminationStudies as $row) {
-                if (!in_array($row["study_id"], $newStudyIds)) {
-                    $examIdsToRemove[] = $row["exam_id"];
-                }
-            }
-
-            foreach ($examIdsToRemove as $examId) {
-                $this->connection->delete("examinations_studies", ["exam_id" => $examId]);
-            }
-
-            $newStudyIdsToAdd = array_diff($newStudyIds, array_column($currentExaminationStudies, "study_id"));
-            foreach ($newStudyIdsToAdd as $studyId) {
-                $this->connection->insert(
-                    "examinations_studies",
-                    [
-                        "examination_id" => $id,
-                        "study_id"       => $studyId
-                    ]
-                );
-            }
-        } catch (\Exception $e) {
-            $this->connection->rollback();
-
-            throw new \RuntimeException("Failed to save the examination due to error: " . $e->getMessage());
+        $id = $values["id"];
+        if (empty($id)) {
+            $id = $this->connection->getLastInsertId();
         }
 
-        $this->connection->commit();
+        $newStudyIds = Fetcher::intArray($request->request->get("study_ids"));
+        if (empty($newStudyIds)) {
+            throw new \RuntimeException("You must specify at least one study to save the examination");
+        }
+
+        $sql = "select exam_id, study_id
+                from examinations_studies
+                where examination_id = ?";
+        $currentExaminationStudies = $this->connection->fetchAll($sql, [$id]);
+
+        $examIdsToRemove = [];
+        foreach ($currentExaminationStudies as $row) {
+            if (!in_array($row["study_id"], $newStudyIds)) {
+                $examIdsToRemove[] = $row["exam_id"];
+            }
+        }
+
+        foreach ($examIdsToRemove as $examId) {
+            $this->connection->delete(
+                "examinations_studies",
+                "exam_id = ?",
+                [$examId]
+            );
+        }
+
+        $newStudyIdsToAdd = array_diff($newStudyIds, array_column($currentExaminationStudies, "study_id"));
+        foreach ($newStudyIdsToAdd as $studyId) {
+            $this->connection->insert(
+                "examinations_studies",
+                [
+                    "examination_id" => $id,
+                    "study_id"       => $studyId
+                ]
+            );
+        }
 
         return new JsonResponse([
              "id" => $id
