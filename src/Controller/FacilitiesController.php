@@ -70,38 +70,39 @@ final class FacilitiesController extends SftoomiController
             "full_name"  => Fetcher::trim($request->request->get("full_name"))
         ];
 
-        try {
-            $this->connection->beginTransaction();
+        $this->assertAllRequiredFieldsSet(["short_name", "full_name"], $values);
 
-            $data = $this->save(
-                $request,
-                $values,
-                [
-                    "short_name",
-                    "full_name"
-                ]
-            );
+        $this->connection->insupd(
+            "facility",
+            $values,
+            "id = ?",
+            [$values["id"]]
+        );
 
-            $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"), []);
-
-            $this->connection->delete("facilities_doctors", ["facility_id" => $data["id"]]);
-            foreach ($facilityDoctorIds as $doctorId) {
-                $this->connection->insert(
-                    "facilities_doctors",
-                    [
-                        "doctor_id"   => $doctorId,
-                        "facility_id" => $data["id"]
-                    ]
-                );
-            }
-        } catch (\Exception $e) {
-            throw new \RuntimeException("Failed to save facility due to error: " . $e->getMessage());
+        $facilityId = $values["id"];
+        if (empty($doctorId)) {
+            $facilityId = $this->connection->getLastInsertId();
         }
 
-        $this->connection->commit();
+        $facilityDoctorIds = Fetcher::intArray($request->request->get("facility_doctor_ids"), []);
+        $this->connection->delete(
+            "facilities_doctors",
+            "facility_id = ?",
+            [$facilityId]
+        );
+
+        foreach ($facilityDoctorIds as $doctorId) {
+            $this->connection->insert(
+                "facilities_doctors",
+                [
+                    "doctor_id"   => $doctorId,
+                    "facility_id" => $facilityId
+                ]
+            );
+        }
 
         return new JsonResponse([
-            "id" => $data["id"]
+            "id" => $facilityId
         ]);
     }
 
