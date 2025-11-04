@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Model\DoctorModel;
 use Doctrine\DBAL\Exception;
@@ -130,7 +131,10 @@ final class DoctorsController extends SftoomiController
     #[Route("/removeDoctor", name: "remove_doctor")]
     public function removeDoctor(Request $request): Response
     {
-        $this->remove($request);
+        $ids = Fetcher::intArray($request->request->get("ids"));
+
+        new EntityManipulator($this->connection)
+            ->remove("doctor", $ids);
 
         return new JsonResponse([]);
     }
