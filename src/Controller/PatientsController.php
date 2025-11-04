@@ -117,7 +117,7 @@ final class PatientsController extends SftoomiController
             return new JsonResponse([]);
         }
 
-        $excludeIds = $request->request->get("exclude_ids");
+        $excludeIds = Fetcher::intArray($request->request->get("exclude_ids"));
 
         return new JsonResponse([
             "data" => $this->tryLookupPatient($query, $excludeIds)
@@ -127,22 +127,25 @@ final class PatientsController extends SftoomiController
     /**
      * @throws Exception
      */
-    private function tryLookupPatient(string $query, ?string $excludeIds): array
+    private function tryLookupPatient(string $query, array $excludeIds): array
     {
+        $filters = [];
+        if (!empty($excludeIds)) {
+            $filters[] = $this->connection->subst("id not in ?", [$excludeIds]);
+        }
+
+        $filters = empty($filters) ? "true" : implode(" and ", $filters);
         $sql = "select id, last_name, first_name, middle_name, dob, phone
                 from patient
                 where (
-                    id = '$query' or
-                    last_name like '%$query%' or
-                    first_name like '%$query%' or
-                    middle_name like '%$query%'
-                )";
+                        id = :query or
+                        last_name like '%$query%' or
+                        first_name like '%$query%' or
+                        middle_name like '%$query%'
+                    )
+                    and $filters";
+        $patients = $this->connection->fetchAll($sql, ["query" => $query]);
 
-        if (!empty($excludeIds)) {
-            $sql .= " and id not in ($excludeIds)";
-        }
-
-        $patients = $this->connection->fetchAllAssociative($sql);
         foreach ($patients as &$patient) {
             $data = [
                 "value"   => $patient["id"],
