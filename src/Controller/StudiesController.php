@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
+use App\Class\Model\StudyModel;
 use Doctrine\DBAL\Exception;
 use InvalidArgumentException;
 use RuntimeException;
@@ -11,34 +12,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class StudiesController extends AppCrudController
+final class StudiesController extends SftoomiController
 {
-    protected string $baseTable = "study";
-
-    /**
-     * @throws Exception
-     */
     #[Route("/getStudies", name: "get_studies")]
     public function getStudies(Request $request): Response
     {
-        $studies = $this->getList(
-            $request,
-            ["id", "short_name", "full_name",]
+        $studyModel = new StudyModel($this->connection);
+        $result = $studyModel->getAll(
+            $request->request->get("start"),
+            $request->request->get("limit")
         );
 
-        $data = $studies["data"];
-        foreach ($data as &$row) {
-            $sql = "select cpts.id, cpts.code, cpts.short_name, cpts.full_name
-                    from studies_cpts sc
-                        left join cpts on cpts.id = sc.cpt_id
-                    where sc.study_id = {$row["id"]}";
-            $row["study_cpts"] = $this->connection->fetchAllAssociative($sql);
-        }
-        unset($row);
-
         return new JsonResponse([
-            "data"  => $data,
-            "total" => $studies["total"]
+            "data"  => $result["data"],
+            "total" => $result["total"]
         ]);
     }
 
