@@ -38,9 +38,12 @@ final class PatientsController extends SftoomiController
     #[Route("/getPatient", name: "get_patient")]
     public function getPatient(Request $request): Response
     {
+        $id = Fetcher::int($request->request->get("id"));
         $data = [];
-        if ($request->request->has("id")) {
-            $data = $this->getOne($request, ["id", "last_name", "first_name", "middle_name", "dob", "phone"]);
+
+        if (isset($id)) {
+            $patientModel = new PatientModel($this->connection);
+            $data = $patientModel->get($id);
         }
 
         return new JsonResponse([
