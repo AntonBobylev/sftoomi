@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\Constants;
 use App\Class\Contacts;
 use App\Class\Fetcher;
 use App\Class\Mailer;
@@ -109,27 +110,7 @@ final class UsersController extends AppCrudController
             );
 
             if ($resetPassword || $isNewUser) {
-                $newPassword = new PasswordGenerator()->generate();
-
-                $templateManager = new TemplateManager($filesystem);
-                $templateContent = $templateManager->getTemplate("email/user-new-password.html");
-                $mailContent = $templateManager->apply($templateContent, [
-                    "password" => $newPassword
-                ]);
-
-                $mailer->applyTemplate($mailContent);
-
-                $mailer->addAddresses(["anton.bobylev@emsow.com"]);
-                $mailer->send();
-
-                $this->connection->update(
-                    "users",
-                    [
-                        "password"                 => $passwordHasher->hashPassword(new User(), $newPassword),
-                        "force_to_change_password" => 1
-                    ],
-                    ["id" => $result["id"]]
-                );
+                $this->resetUserPassword($values["id"], $this->getUserEmails($contactId)[0],$filesystem, $mailer, $passwordHasher);
             }
         } catch (Exception $ex) {
             $this->connection->rollBack();
@@ -190,5 +171,109 @@ final class UsersController extends AppCrudController
         return new JsonResponse([
             "success" => true
         ]);
+    }
+
+    #[Route("/resetPassword", name: "reset_password")]
+    public function resetPassword(
+        Request $request,
+        UserRepository $repository,
+        UserPasswordHasherInterface $passwordHasher,
+        Mailer $mailer,
+        Filesystem $filesystem
+    ): Response
+    {
+        $values = $request->request->all();
+
+        $this->assertAllRequiredFieldsSet([
+            "login", "email"
+        ], $values);
+
+        $user = $repository->findOneBy(["login" => $values["login"]]);
+
+        $response = new JsonResponse([
+            "message" => "The mail was sent to the email address you provided, if the current login-mail combination exists"
+        ]);
+
+        if (empty($user)) {
+            return $response;
+        }
+
+        $contactId = $user->getContactId();
+
+        if (empty($contactId)) {
+            return $response;
+        }
+
+        $userEmails = $this->getUserEmails($contactId);
+
+        if (!in_array($values["email"], $userEmails)) {
+            return $response;
+        }
+
+        try {
+            $this->resetUserPassword($user->getId(), $values["email"], $filesystem, $mailer, $passwordHasher);
+
+        } catch (Exception $ex) {
+            $this->connection->rollBack();
+        }
+
+        $this->connection->commit();
+
+        return new JsonResponse([
+            "success" => true
+        ]);
+    }
+
+    /**
+     * TODO: move to the separate class
+     *
+     * @param int $userId
+     * @param string $mail
+     * @param Filesystem $filesystem
+     * @param Mailer $mailer
+     * @param UserPasswordHasherInterface $passwordHasher
+     * @return void
+     * @throws Exception
+     * @throws RandomException
+     * @throws \PHPMailer\PHPMailer\Exception
+     */
+    private function resetUserPassword(int $userId, string $mail, Filesystem $filesystem, Mailer $mailer, UserPasswordHasherInterface $passwordHasher): void
+    {
+        $newPassword = new PasswordGenerator()->generate();
+
+        $templateManager = new TemplateManager($filesystem);
+        $templateContent = $templateManager->getTemplate("email/user-new-password.html");
+        $mailContent = $templateManager->apply($templateContent, [
+            "password" => $newPassword
+        ]);
+
+        $mailer->applyTemplate($mailContent);
+
+        $mailer->addAddresses([$mail]);
+        $mailer->send();
+
+        $this->connection->update(
+            "users",
+            [
+                "password"                 => $passwordHasher->hashPassword(new User(), $newPassword),
+                "force_to_change_password" => 1
+            ],
+            ["id" => $userId]
+        );
+    }
+
+    private function getUserEmails(int $contactId): array
+    {
+        $sql = "select text
+                from contacts
+                where contact_id = ? and type = ?
+                order by position";
+        $userEmails = $this->connection->executeQuery($sql, [$contactId, Constants::CONTACT_TYPE_EMAIL])->fetchFirstColumn();
+
+        if (empty($userEmails)) {
+            return [];
+        }
+
+        return $userEmails;
     }
 }
