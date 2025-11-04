@@ -155,7 +155,8 @@ final class UsersController extends AppCrudController
                 "password"                 => $passwordHasher->hashPassword(new User(), $values["new_password"]),
                 "force_to_change_password" => 0
             ],
-            ["id" => $values["user_id"]]
+            "id = ?",
+            [$values["user_id"]]
         );
 
         return new JsonResponse([
