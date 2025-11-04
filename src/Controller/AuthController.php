@@ -69,8 +69,8 @@ final class AuthController extends SftoomiController
         }
 
         $sql = "select id, disabled, login, roles,
-                    force_to_change_password, first_name,
-                    last_name, contact_id
+                       force_to_change_password, first_name,
+                       last_name, contact_id
                 from users
                 where id = ?";
         $data = $this->connection->fetchRow($sql, [$sessionData["id"]]);

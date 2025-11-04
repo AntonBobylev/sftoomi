@@ -21,10 +21,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class UsersController extends AppCrudController
+final class UsersController extends SftoomiController
 {
-    protected string $baseTable = "users";
-
     public function __construct(
         DBConnection $connection,
         private readonly Contacts $contacts,
