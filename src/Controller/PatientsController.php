@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Format;
 use App\Class\Model\PatientModel;
@@ -97,7 +98,10 @@ final class PatientsController extends SftoomiController
     #[Route("/removePatient", name: "remove_patient")]
     public function removePatient(Request $request): Response
     {
-        $this->remove($request);
+        $ids = Fetcher::intArray($request->request->get("ids"));
+
+        new EntityManipulator($this->connection)
+            ->remove("patient", $ids);
 
         return new JsonResponse([]);
     }
