@@ -9,6 +9,20 @@ class ExaminationModel extends AbstractModel
         return "examination";
     }
 
+    public function get(int $id, ?string $filters = null): array
+    {
+        $data = parent::get($id, $filters);
+
+        $sql = "select study_id
+                from examinations_studies
+                where examination_id = ?";
+        $data["studies"] = $this->connection->fetchCol($sql, [$data["id"]]);
+
+        $data["patient"] = new PatientModel($this->connection)->get($data["patient_id"]);
+
+        return $data;
+    }
+
     public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
     {
         $result = parent::getAll($start, $limit, $filters);

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Class\Fetcher;
+use App\Class\Model\DoctorModel;
 use App\Class\Model\ExaminationModel;
+use App\Class\Model\FacilityModel;
+use App\Class\Model\StudyModel;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,52 +60,45 @@ final class ProcessingController extends SftoomiController
     public function getExamination(Request $request): Response
     {
         $data = [];
-
         $examinationId = Fetcher::int($request->request->get("examination_id"));
-        $request->request->set("id", $examinationId);
 
         if (isset($examinationId)) {
-            $data = $this->getOne(
-                $request,
-                ["id", "patient_id", "facility_id", "doctor_id", "date"]
-            );
-
-            $sql = "select study_id
-                    from examinations_studies
-                    where examination_id = $examinationId";
-            $data["studies"] = $this->connection->fetchFirstColumn($sql);
-
-            $sql = "select p.id, last_name, first_name, middle_name, dob, phone
-                    from examination ex
-                        left join patient p on p.id = ex.patient_id
-                    where ex.id = $examinationId";
-            $data["patient"] = $this->connection->fetchAssociative($sql);
+            $examinationModel = new ExaminationModel($this->connection);
+            $data = $examinationModel->get($examinationId);
         }
 
-        $sql = "select f.id, f.short_name, f.full_name,
-                    group_concat(fd.doctor_id separator ',') as doctors
-                from facility f
-                    left join facilities_doctors fd on fd.facility_id = f.id
-                group by f.id";
-        $facilities = $this->connection->fetchAllAssociative($sql);
+        $facilities = new FacilityModel($this->connection)->getAll()["data"];
+        foreach ($facilities as $index => &$facility) {
+            $facility["doctors"] = implode(
+                ",",
+                array_map(function ($doctor) {
+                    return $doctor["id"];
+                }, $facility["facility_doctors"])
+            );
 
-        $sql = "select d.id, d.last_name, d.first_name, d.middle_name,
-                    group_concat(fd.facility_id separator ',') as facilities
-                from doctor d
-                    left join facilities_doctors fd on fd.doctor_id = d.id
-                group by d.id";
-        $doctors = $this->connection->fetchAllAssociative($sql);
+            unset($facilities[$index]["facility_doctors"]);
+        }
+        unset($facility);
 
-        $sql = "select id, full_name, short_name
-                from study";
-        $studies = $this->connection->fetchAllAssociative($sql);
+        $doctors = new DoctorModel($this->connection)->getAll()["data"];
+        foreach ($doctors as $index => &$doctor) {
+            $doctor["facilities"] = implode(
+                ",",
+                array_map(function ($facility) {
+                    return $facility["id"];
+                }, $doctor["doctor_facilities"])
+            );
+
+            unset($doctors[$index]["doctor_facilities"]);
+        }
+        unset($doctor);
 
         return new JsonResponse([
             "data"  => $data,
             "lists" => [
                 "facilities" => $facilities,
                 "doctors"    => $doctors,
-                "studies"    => $studies
+                "studies"    => new StudyModel($this->connection)->getAll()["data"]
             ]
         ]);
     }
