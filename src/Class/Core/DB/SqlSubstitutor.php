@@ -3,6 +3,7 @@
 namespace App\Class\Core\DB;
 
 use InvalidArgumentException;
+use RuntimeException;
 
 class SqlSubstitutor
 {
@@ -28,6 +29,40 @@ class SqlSubstitutor
         }
     }
 
+    public function encodeValue($value): string
+    {
+        if (is_array($value)) {
+            return $this->formatArrayValue($value);
+        } elseif (is_string($value)) {
+            return $this->quoteString($value);
+        } elseif (is_int($value) || is_float($value)) {
+            return (string)$value;
+        } elseif (is_bool($value)) {
+            return $value ? "1" : "0";
+        } elseif (is_null($value)) {
+            return "NULL";
+        } else {
+            throw new InvalidArgumentException(sprintf(
+                "Unsupported parameter type: %s",
+                gettype($value)
+            ));
+        }
+    }
+
+    public function encodeName($string): string
+    {
+        return "`" . $string . "`";
+    }
+
+    public function encodeFields($fields): string
+    {
+        if (count($fields) === 0) {
+            throw new RuntimeException("Unable to encode empty fields list!");
+        }
+
+        return '`' . implode('`, `', $fields) . '`';
+    }
+
     private function hasNamedParameters(string $sql): bool
     {
         return preg_match('/:[a-zA-Z_][a-zA-Z0-9_]*/', $sql) === 1;
@@ -39,7 +74,7 @@ class SqlSubstitutor
             $placeholder = ":" . $key;
 
             if (str_contains($sql, $placeholder)) {
-                $replacement = $this->formatValue($value);
+                $replacement = $this->encodeValue($value);
                 $sql = str_replace($placeholder, $replacement, $sql);
             }
         }
@@ -65,7 +100,7 @@ class SqlSubstitutor
 
         foreach ($parts as $part) {
             if ($part === "?") {
-                $result .= $this->formatValue($params[$paramIndex]);
+                $result .= $this->encodeValue($params[$paramIndex]);
                 $paramIndex++;
             } else {
                 $result .= $part;
@@ -75,26 +110,6 @@ class SqlSubstitutor
         return $result;
     }
 
-    private function formatValue($value): string
-    {
-        if (is_array($value)) {
-            return $this->formatArrayValue($value);
-        } elseif (is_string($value)) {
-            return $this->quoteString($value);
-        } elseif (is_int($value) || is_float($value)) {
-            return (string)$value;
-        } elseif (is_bool($value)) {
-            return $value ? "1" : "0";
-        } elseif (is_null($value)) {
-            return "NULL";
-        } else {
-            throw new InvalidArgumentException(sprintf(
-                "Unsupported parameter type: %s",
-                gettype($value)
-            ));
-        }
-    }
-
     private function formatArrayValue(array $values): string
     {
         if (empty($values)) {
@@ -102,7 +117,7 @@ class SqlSubstitutor
         }
 
         $formattedValues = array_map(function($value) {
-            return $this->formatValue($value);
+            return $this->encodeValue($value);
         }, $values);
 
         return "(" . implode(", ", $formattedValues) . ")";
