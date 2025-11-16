@@ -49,7 +49,7 @@ final class Contacts
             $sql = "select item_id
                     from contacts
                     where contact_id = ?";
-            $contactItems = $this->connection->executeQuery($sql, [$contactId])->fetchFirstColumn();
+            $contactItems = $this->connection->fetchCol($sql, [$contactId]);
 
             $currentContactItemIds = array_map(function ($contact) {
                 return $contact["item_id"];
@@ -62,7 +62,8 @@ final class Contacts
             foreach ($contactItemsIdsToRemove as $contactItemId) {
                 $this->connection->delete(
                     "contacts",
-                    ["contact_id" => $contactId, "item_id" => $contactItemId]
+                    "contact_id = ? and item_id = ?",
+                    [$contactId, $contactItemId]
                 );
             }
         }
@@ -80,7 +81,8 @@ final class Contacts
                 $this->connection->update(
                     "contacts",
                     $values,
-                    ["contact_id" => $contactId, "item_id" => $values["item_id"]]
+                    "contact_id = ? and item_id = ?",
+                    [$contactId, $values["item_id"]]
                 );
 
                 continue;
@@ -100,7 +102,7 @@ final class Contacts
     private function getNewContactId(): int
     {
         $sql = "select max(contact_id) from contacts";
-        $contactId = $this->connection->fetchOne($sql);
+        $contactId = $this->connection->selInt($sql);
 
         if ($contactId === false) { // no contacts at all
             $contactId = 1;
@@ -113,7 +115,7 @@ final class Contacts
     {
         $sql = "select max(item_id)
                 from contacts";
-        $contactItemId = $this->connection->executeQuery($sql)->fetchOne();
+        $contactItemId = $this->connection->selInt($sql);
 
         if ($contactItemId === false) {
             $contactItemId = 1;
