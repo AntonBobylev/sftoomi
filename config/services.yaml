@@ -24,6 +24,11 @@ services:
         class: App\Class\Contacts
         arguments:
             - '@doctrine.dbal.default_connection'
+            -
+    entity.user:
+        class: App\Class\Entity\User
+        arguments:
+            - '@doctrine.dbal.default_connection'
 
     monolog.formatter.simple:
         class: Monolog\Formatter\LineFormatter
