@@ -4,6 +4,8 @@ import Sftoomi from './Sftoomi';
 import Fetcher from './Fetcher'
 import { DialogType } from './Dialog'
 
+import AppChangeUserPasswordDialog from '../components/misc/change-user-password-dialog/dialog.component'
+
 import checkAuthorizedAPI from '../APIs/checkAuthorizedAPI'
 import loginAPI from '../APIs/loginAPI'
 
@@ -142,6 +144,8 @@ export default class Auth
             this.user.id.toString(),
             1
         );
+
+        this.showChangePasswordDialogIfRequired();
     }
 
     private unAuthorize(cleanCookies: boolean = true): void
@@ -153,6 +157,15 @@ export default class Auth
         if (cleanCookies) {
             Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_SESSION);
             Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_USER);
+        }
+    }
+
+    private showChangePasswordDialogIfRequired(): void
+    {
+        if (Sftoomi.Auth.getUser()!.force_to_change_password) {
+            Sftoomi.Dialog.getInstance().create<AppChangeUserPasswordDialog>({
+                nzContent: AppChangeUserPasswordDialog
+            });
         }
     }
 }

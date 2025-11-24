@@ -79,10 +79,6 @@ export class App
 
             this.router.navigateByUrl(lastUrl).then((): void => {
                 this.isLoading.set(false);
-
-                if (this.Sftoomi.Auth.getUser()!.force_to_change_password) {
-                    this.showChangePasswordDialog();
-                }
             });
         });
     }
@@ -105,12 +101,5 @@ export class App
                 this.router.navigateByUrl(RoutesPaths.LOGIN).then();
             }
         );
-    }
-
-    private showChangePasswordDialog(): void
-    {
-        Sftoomi.Dialog.getInstance().create<AppChangeUserPasswordDialog>({
-            nzContent: AppChangeUserPasswordDialog
-        });
     }
 }
