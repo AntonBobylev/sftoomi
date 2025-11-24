@@ -25,12 +25,19 @@ final class AuthController extends SftoomiController
             $this->connection->subst("login = ?", [$login])
         );
 
+        if (empty($user)) {
+            return new JsonResponse([
+                "success" => false,
+                "error"   => "Invalid credentials"
+            ]);
+        }
+
         $sql = "select password
                 from users
                 where id = ?";
         $userPassword = $this->connection->selString($sql, [$user["id"]]);
 
-        if (!$user || !password_verify($password, $userPassword)) {
+        if (!password_verify($password, $userPassword)) {
             return new JsonResponse([
                 "success" => false,
                 "error"   => "Invalid credentials"

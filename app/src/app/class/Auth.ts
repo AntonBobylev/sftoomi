@@ -84,7 +84,7 @@ export default class Auth
             url: this.logonUrl,
             data: data,
             success: (_response: any, _request: any, result: loginAPI): void => {
-                if (!result.success) {
+                if (!result.success || result.error) {
                     Sftoomi.Dialog.show(result.error!, DialogType.ERROR);
 
                     return;
