@@ -71,13 +71,14 @@ final class Contacts
         foreach ($contacts as $contact) {
             $values = [
                 "contact_id" => $contactId,
-                "item_id"    => $contact["item_id"],
                 "type"       => $contact["type"],
                 "text"       => $contact["text"],
-                "position"   => $contact["position"]
+                "position"   => $contact["position"] ?? 0
             ];
 
-            if (isset($values["item_id"])) {
+            if (isset($contact["item_id"])) {
+                $values["item_id"] = $contact["item_id"];
+
                 $this->connection->update(
                     "contacts",
                     $values,
