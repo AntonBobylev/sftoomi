@@ -27,7 +27,13 @@
         }
     },
     "patient": {
-        "idField": "id"
+        "idField": "id",
+        "references": {
+            "examination": {
+                "idField": "patient_id",
+                "onDelete": "restrict"
+            }
+        }
     },
     "facility": {
         "idField": "id",
