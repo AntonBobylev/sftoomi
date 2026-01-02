@@ -18,6 +18,10 @@
             "studies_cpts": {
                 "idField": "study_id",
                 "onDelete": "update"
+            },
+            "examinations_studies": {
+                "idField": "study_id",
+                "onDelete": "restrict"
             }
         }
     },
