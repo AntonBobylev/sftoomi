@@ -1,10 +1,9 @@
 import { Component, signal, WritableSignal } from '@angular/core'
-import { Router } from '@angular/router'
 import { FormControl, FormGroup, Validators } from '@angular/forms'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 
-import Sftoomi from '../../class/Sftoomi'
 import { RoutesPaths } from '../../app.routes'
+import AppBaseModule from '../../components/core/app-base-module'
 
 import AppTextfieldComponent from '../../components/core/app-textfield/app-textfield.component'
 import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinner/app-loading-spinner.component';
@@ -23,10 +22,8 @@ import ResetPasswordDialogComponent from './reset-password-dialog/dialog.compone
     styleUrl: './login.component.less'
 })
 
-export default class LoginComponent
+export default class LoginComponent extends AppBaseModule
 {
-    protected readonly Sftoomi = Sftoomi
-
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
     protected form: FormGroup = new FormGroup({
@@ -34,9 +31,11 @@ export default class LoginComponent
         password: new FormControl<string | null>(null, [Validators.required])
     });
 
-    constructor(private readonly router: Router)
+    constructor()
     {
-        if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
+        super();
+
+        if (this.Sftoomi.Auth.getIsAuthorizedSignal()()) {
             this.goOut();
         }
     }
@@ -44,12 +43,12 @@ export default class LoginComponent
     protected onLogonClick(): void
     {
         if (this.form.invalid) {
-            Sftoomi.popupMsgService?.formInvalid();
+            this.Sftoomi.popupMsgService?.formInvalid();
 
             return;
         }
 
-        Sftoomi.Auth.login(
+        this.Sftoomi.Auth.login(
             this.form.get('login')?.value,
             this.form.get('password')?.value,
             this.isLoading,
@@ -64,13 +63,15 @@ export default class LoginComponent
         event.stopPropagation();
         event.preventDefault();
 
-        const modal = Sftoomi.Dialog.getInstance().create({
+        const modal = this.Sftoomi.Dialog.getInstance().create({
             nzContent: ResetPasswordDialogComponent
         });
 
         modal.afterClose.subscribe((passwordReset: boolean = false): void => {
             if (passwordReset) {
-                Sftoomi.popupMsgService?.info(Sftoomi.Translator.translate('dialogs.reset_password.password_reset_message'));
+                this.Sftoomi.popupMsgService?.info(
+                    this.Sftoomi.Translator.translate('dialogs.reset_password.password_reset_message')
+                );
             }
         });
     }

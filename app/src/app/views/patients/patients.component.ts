@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import AppBaseModule from '../../components/core/app-base-module'
+
 import PatientsTableComponent from './table/table.component';
 
 @Component({
@@ -11,6 +13,6 @@ import PatientsTableComponent from './table/table.component';
     styleUrl: './patients.component.scss'
 })
 
-export default class PatientsComponent
+export default class PatientsComponent extends AppBaseModule
 {
 }

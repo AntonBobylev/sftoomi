@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import AppBaseModule from '../../components/core/app-base-module'
+
 import ReferringFacilitiesTableComponent from './table/table.component';
 
 @Component({
@@ -10,6 +12,6 @@ import ReferringFacilitiesTableComponent from './table/table.component';
     templateUrl: './referring-facilities.component.html',
     styleUrl: './referring-facilities.component.scss'
 })
-export default class ReferringFacilitiesComponent
+export default class ReferringFacilitiesComponent extends AppBaseModule
 {
 }

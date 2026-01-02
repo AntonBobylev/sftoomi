@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 
-import StudiesTableComponent from './table/table.component';
+import AppBaseModule from '../../components/core/app-base-module'
 
+import StudiesTableComponent from './table/table.component';
 
 @Component({
     selector: 'app-studies-module',
@@ -11,6 +12,6 @@ import StudiesTableComponent from './table/table.component';
     ],
     styleUrl: './studies.component.scss'
 })
-export default class StudiesModuleComponent
+export default class StudiesModuleComponent extends AppBaseModule
 {
 }

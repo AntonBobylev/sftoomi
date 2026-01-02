@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import AppBaseModule from '../../components/core/app-base-module'
+
 import UsersTableComponent from './table/table.component';
 
 @Component({
@@ -11,6 +13,6 @@ import UsersTableComponent from './table/table.component';
     styleUrl: './users.component.less'
 })
 
-export default class UsersModuleComponent
+export default class UsersModuleComponent extends AppBaseModule
 {
 }

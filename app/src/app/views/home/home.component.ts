@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 
-import Sftoomi from '../../class/Sftoomi';
+import AppBaseModule from '../../components/core/app-base-module'
 
 @Component({
     selector: 'app-home',
@@ -10,7 +10,6 @@ import Sftoomi from '../../class/Sftoomi';
     styleUrl: './home.component.scss'
 })
 
-export default class HomeComponent
+export default class HomeComponent extends AppBaseModule
 {
-    protected readonly Sftoomi = Sftoomi;
 }
