@@ -53,6 +53,11 @@ export default abstract class AppBaseFilters implements AfterViewInit
         })
     }
 
+    public setValues(values: object): void
+    {
+        this.form.setValue(values);
+    }
+
     public clearForm(doSearch: boolean = true): void
     {
         this.clearFields();

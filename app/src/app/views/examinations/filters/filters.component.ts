@@ -14,6 +14,11 @@ import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spi
 
 import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
 
+export type ExaminationsFiltersPanelIn = {
+    examination_date: Date,
+    examination_id:   number | null
+};
+
 export type ExaminationsFiltersPanelOut = {
     examination_date: Date,
     examination_id:   number | null
@@ -55,6 +60,11 @@ export default class ExaminationsFiltersComponent extends AppBaseFilters
             examination_date: this.form.get('examination_date')?.value,
             examination_id:   this.form.get('examination_id')?.value ?? ''
         };
+    }
+
+    public override setValues(values: ExaminationsFiltersPanelIn): void
+    {
+        this.form.setValue(values);
     }
 
     protected clearFields(): void
