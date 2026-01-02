@@ -22,6 +22,10 @@
             "examinations_studies": {
                 "idField": "study_id",
                 "onDelete": "restrict"
+            },
+            "templates_studies": {
+                "idField": "study_id",
+                "onDelete": "update"
             }
         }
     },
