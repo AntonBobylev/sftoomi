@@ -16,7 +16,6 @@ registerLocaleData(ru);
 
 export const appConfig: ApplicationConfig = {
     providers: [
-        provideZoneChangeDetection(),
         provideBrowserGlobalErrorListeners(),
         provideZonelessChangeDetection(),
         provideRouter(routes),
