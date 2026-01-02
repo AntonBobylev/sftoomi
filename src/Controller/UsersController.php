@@ -207,6 +207,12 @@ final class UsersController extends SftoomiController
         ]);
     }
 
+    #[Route("/removeUser", name: "remove_user")]
+    public function removeUser(Request $request, Contacts $contacts): Response
+    {
+        throw new \RuntimeException("Not implemented yet");
+    }
+
     /**
      * @param int $userId
      * @param string $mail
