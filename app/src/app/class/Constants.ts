@@ -7,4 +7,6 @@ export default class Constants
             unsigned: 4294967295
         }
     }
+
+    public readonly dateIsoFormat: string = 'YYYY-MM-DD'
 }
