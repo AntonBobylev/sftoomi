@@ -6,7 +6,7 @@
                 "idField": "doctor_id",
                 "onDelete": "update"
             },
-            "examination": {
+            "examinations": {
                 "idField": "doctor_id",
                 "onDelete": "restrict"
             }
@@ -29,7 +29,7 @@
             }
         }
     },
-    "examination": {
+    "examinations": {
         "idField": "id",
         "references": {
             "examinations_studies": {
@@ -41,7 +41,7 @@
     "patient": {
         "idField": "id",
         "references": {
-            "examination": {
+            "examinations": {
                 "idField": "patient_id",
                 "onDelete": "restrict"
             }
@@ -54,7 +54,7 @@
                 "idField": "facility_id",
                 "onDelete": "update"
             },
-            "examination": {
+            "examinations": {
                 "idField": "facility_id",
                 "onDelete": "restrict"
             }

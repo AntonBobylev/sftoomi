@@ -6,7 +6,7 @@ class ExaminationModel extends AbstractModel
 {
     protected function getBaseTable(): string
     {
-        return "examination";
+        return "examinations";
     }
 
     public function get(?int $id, ?string $filters = null): array

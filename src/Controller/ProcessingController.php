@@ -49,7 +49,7 @@ final class ProcessingController extends SftoomiController
     public function getExaminationsFilters(): Response
     {
         $sql = "select distinct date
-                from examination";
+                from examinations";
         $data["dates_with_examinations"] = $this->connection->fetchCol($sql);
 
         return new JsonResponse([
@@ -141,7 +141,7 @@ final class ProcessingController extends SftoomiController
         $this->assertAllRequiredFieldsSet(["date", "facility_id", "patient_id"], $values);
 
         $this->connection->insupd(
-            "examination",
+            "examinations",
             $values,
             "id = :id",
             $values
@@ -199,7 +199,7 @@ final class ProcessingController extends SftoomiController
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)
-            ->remove("examination", $ids);
+            ->remove("examinations", $ids);
 
         return new JsonResponse([]);
     }
