@@ -97,9 +97,8 @@ class EntityManipulator
 
                 break;
             case "update":
-                $this->connection->delete(
+                $this->remove(
                     $referenceTable,
-                    "{$referenceConfig["idField"]} = ?",
                     [$removingEntityId]
                 );
 

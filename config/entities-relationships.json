@@ -41,6 +41,10 @@
             "facilities_doctors": {
                 "idField": "facility_id",
                 "onDelete": "update"
+            },
+            "examination": {
+                "idField": "facility_id",
+                "onDelete": "restrict"
             }
         }
     }
