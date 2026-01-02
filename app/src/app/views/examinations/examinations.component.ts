@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, inject, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
-import { ActivatedRoute, Params, Router } from '@angular/router'
+import { Params } from '@angular/router'
 import moment from 'moment'
 
-import Sftoomi from '../../class/Sftoomi'
+import AppBaseModuleWithFilters from '../../components/core/app-base-module-with-filters'
 
 import ExaminationsTableComponent from './table/table.component';
 import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, ExaminationsFiltersPanelOut } from './filters/filters.component';
@@ -18,7 +18,7 @@ import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, E
     styleUrl: './examinations.component.less'
 })
 
-export default class ExaminationsComponent implements AfterViewInit
+export default class ExaminationsComponent extends AppBaseModuleWithFilters implements AfterViewInit
 {
     @ViewChild('filtersCtrl')
     protected readonly filtersCtrl!: ExaminationsFiltersComponent;
@@ -28,19 +28,16 @@ export default class ExaminationsComponent implements AfterViewInit
 
     protected isFiltersCollapsed: boolean = false;
 
-    protected readonly Sftoomi = Sftoomi
-
-    private router: Router = inject(Router);
-    private activatedRoute: ActivatedRoute = inject(ActivatedRoute);
-
     constructor()
     {
+        super();
+
         let dos: moment.Moment | null = this.getCurrentDos();
 
         this.fixExaminationInUrl(
             dos
-                ? dos.format(Sftoomi.Constants.dateIsoFormat)
-                : moment().format(Sftoomi.Constants.dateIsoFormat)
+                ? dos.format(this.Sftoomi.Constants.dateIsoFormat)
+                : moment().format(this.Sftoomi.Constants.dateIsoFormat)
         );
     }
 
@@ -74,12 +71,10 @@ export default class ExaminationsComponent implements AfterViewInit
         }
     }
 
-    private search(values: ExaminationsFiltersPanelOut): void
+    protected override search(values: ExaminationsFiltersPanelOut): void
     {
-        this.fixExaminationInUrl(moment(values.examination_date).format(Sftoomi.Constants.dateIsoFormat));
-
-        this.tableCtrl.setIsLoading(true);
-        this.tableCtrl.refresh(Sftoomi.formValuesToFormData(values));
+        this.fixExaminationInUrl(moment(values.examination_date).format(this.Sftoomi.Constants.dateIsoFormat));
+        super.search(values);
     }
 
     private fixExaminationInUrl(dos: string): void
@@ -96,7 +91,7 @@ export default class ExaminationsComponent implements AfterViewInit
     private getCurrentDos(): moment.Moment | null
     {
         let params: Params = this.activatedRoute.snapshot.queryParams;
-        if (Sftoomi.isEmpty(params['dos'])) {
+        if (this.Sftoomi.isEmpty(params['dos'])) {
             return null;
         }
 
