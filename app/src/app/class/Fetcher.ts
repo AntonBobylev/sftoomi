@@ -94,12 +94,11 @@ export default class Fetcher
                     return;
                 }
 
-                let trace: string[] = error.response.data.trace.split('#'),
+                let trace: string[] = error.response.data.trace.split('\n'),
                     formattedTrace: string = '';
 
-                trace.shift();
                 trace.forEach(function (row: string): void {
-                    formattedTrace += `<div>#${row}</div>`
+                    formattedTrace += `<div>${row}</div>`
                 });
 
                 let message: string = `<div style="overflow-y: auto; max-height: 300px;">
