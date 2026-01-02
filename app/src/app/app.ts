@@ -6,7 +6,7 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzDropDownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
+import { NzDropdownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
@@ -19,16 +19,16 @@ import LanguageSwitcherComponent from './components/misc/language-switcher/langu
 import ResponsiveLayoutService from './services/responsive-layout.service';
 import PopupMsgService from './services/popup-msg.service'
 import AppLoadingSpinnerComponent from './components/misc/app-loading-spinner/app-loading-spinner.component';
-import AppChangeUserPasswordDialog from './components/misc/change-user-password-dialog/dialog.component'
 
 @Component({
     selector: 'app-root',
     imports: [
         RouterOutlet, NzLayoutModule, NzMenuModule,
         RouterLink, NzModalModule, LanguageSwitcherComponent,
-        NzDropDownDirective, NzDropdownMenuComponent,
+        NzDropdownMenuComponent,
         NzIconDirective, NgTemplateOutlet,
-        NzButtonComponent, NgClass, NzTooltipDirective, AppLoadingSpinnerComponent
+        NzButtonComponent, NgClass, NzTooltipDirective,
+        AppLoadingSpinnerComponent, NzDropdownDirective
     ],
     templateUrl: './app.html',
     styleUrl: './app.less'
