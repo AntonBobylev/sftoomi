@@ -18,7 +18,7 @@ class EntityManipulator
         $this->connection = $connection;
     }
 
-    public function remove(string $entityTable, array $ids): void
+    public function remove(string $entityTable, array $ids, string | null $idField = null): void
     {
         if (empty($this->config)) {
             $this->loadConfig();
@@ -41,9 +41,14 @@ class EntityManipulator
                 }
             }
 
+            $idFieldToRemove = $idField ?? $entityTableConfig["idField"];
+            if (!$idFieldToRemove) {
+                throw new \RuntimeException("Unknown idField");
+            }
+
             $this->connection->delete(
                 $entityTable,
-                "{$entityTableConfig["idField"]} = ?",
+                "{$idFieldToRemove} = ?",
                 [$id]
             );
         }
@@ -99,7 +104,8 @@ class EntityManipulator
             case "update":
                 $this->remove(
                     $referenceTable,
-                    [$removingEntityId]
+                    [$removingEntityId],
+                    $referenceConfig["idField"]
                 );
 
                 break;
