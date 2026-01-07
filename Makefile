@@ -10,6 +10,8 @@ stop:
 	@$(DOCKER_COMPOSE) stop
 rebuild:
 	@$(DOCKER_COMPOSE) up -d --build
+rebuild-php:
+	@$(DOCKER_COMPOSE) up -d --build php
 
 shell:
 	@$(DOCKER_COMPOSE) exec -it php bash
