@@ -24,6 +24,12 @@ db-create:
 front-init:
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app i
 
+front-clear:
+	@$(DOCKER_COMPOSE) exec -it php rm -rf ./app/node_modules ./app/.angular ./app/build
+
+front-reinit:
+	$(MAKE) front-clear && $(MAKE) front-init
+
 front-dev:
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run watch
 
