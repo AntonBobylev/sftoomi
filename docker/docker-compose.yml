@@ -26,6 +26,7 @@ services:
                 USER_NAME: "${USER_NAME}"
         ports:
             - ${PHP_PORT:-9000}:9000
+            - "4200:4200"
         volumes:
             - ../.:/var/www/project
             - ./php/ini:/usr/local/etc/php
