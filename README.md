@@ -15,9 +15,10 @@ SFTOOMI - system for the operations of medical institutions
   * Install packages there: `composer install`
   * Make the database: `php bin/console doctrine:database:create`
   * Apply all migrations: `php bin/console doctrine:migrations:migrate`
-  * Run the latest server command: `php bin/console app:init-domain`
-  * `cd app && npm i && exit`
-* `make front-dev`
+  * Init the domain: `php bin/console app:init-domain`
+  * Leave the container: `exit`
+* Install front dependencies: `make front-init`
+* Build the front: `make front-dev`
 * Go to link Angular CLI provided you.
 
 # Some known bugs after installation
