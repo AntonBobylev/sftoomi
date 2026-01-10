@@ -63,7 +63,14 @@ front-clear:
 front-reinit:
 	$(MAKE) front-clear && $(MAKE) front-init
 front-build:
+	@echo "Building Angular application..."
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run build
+	@echo "Cleaning up old public/app..."
+	@$(DOCKER_COMPOSE) exec -it php rm -rf ./public/app
+	@echo "Copying build to public/app..."
+	@$(DOCKER_COMPOSE) exec -it php mkdir -p ./public/app
+	@$(DOCKER_COMPOSE) exec -it php bash -c "cp -r ./app/build/browser/* ./public/app/"
+	@echo "Frontend build deployed to public/app!"
 front-dev:
 	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run watch
 
