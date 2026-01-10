@@ -63,16 +63,17 @@ front-clear:
 front-reinit:
 	$(MAKE) front-clear && $(MAKE) front-init
 front-build:
-	@echo "Building Angular application..."
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run build
 	@echo "Cleaning up old public/app..."
 	@$(DOCKER_COMPOSE) exec -it php rm -rf ./public/app
-	@echo "Copying build to public/app..."
-	@$(DOCKER_COMPOSE) exec -it php mkdir -p ./public/app
-	@$(DOCKER_COMPOSE) exec -it php bash -c "cp -r ./app/build/browser/* ./public/app/"
+	@echo "Building Angular application..."
+	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run build
 	@echo "Frontend build deployed to public/app!"
 front-dev:
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run watch
+	@echo "Starting Angular with hot reload..."
+	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run dev:hot-watch
+front-watch:
+	@echo "Starting Angular build in watch mode..."
+	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run dev:watch
 
 ## DOMAIN
 domain-init:

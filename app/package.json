@@ -5,7 +5,8 @@
         "ng": "ng",
         "start": "ng serve",
         "build": "ng build --configuration production",
-        "watch": "ng serve --configuration development --host 0.0.0.0",
+        "dev:watch": "ng build --configuration development --watch --poll 1000",
+        "dev:hot-watch": "ng serve --configuration development --host 0.0.0.0",
         "test": "ng test"
     },
     "prettier": {
