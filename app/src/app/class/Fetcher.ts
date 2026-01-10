@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-import { environment } from '../../environments/environment';
-
 import Timeout from './Timeout';
 import Sftoomi from './Sftoomi';
 import { DialogType } from './Dialog';
@@ -49,7 +47,7 @@ export default class Fetcher
             'X-Session-ID': Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION)
         };
 
-        request.url = Sftoomi.format('{0}/api{1}', [environment.baseUrl, request.url]);
+        request.url = '/api' + request.url;
 
         axios(request)
             .then((response): void => {
