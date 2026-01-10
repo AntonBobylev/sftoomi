@@ -49,7 +49,7 @@ export default class Fetcher
             'X-Session-ID': Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION)
         };
 
-        request.url = Sftoomi.format('{0}{1}', [environment.baseUrl, request.url]);
+        request.url = Sftoomi.format('{0}/api{1}', [environment.baseUrl, request.url]);
 
         axios(request)
             .then((response): void => {
