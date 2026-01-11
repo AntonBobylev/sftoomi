@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 import { Params } from '@angular/router'
-import moment from 'moment'
+import { DateTime } from 'luxon';
 
 import AppBaseModuleWithFilters from '../../components/core/app-base-module-with-filters'
 
@@ -32,22 +32,22 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
     {
         super();
 
-        let dos: moment.Moment | null = this.getCurrentDos();
+        let dos: DateTime | null = this.getCurrentDos();
 
         this.fixExaminationInUrl(
             dos
-                ? dos.format(this.Sftoomi.Constants.dateIsoFormat)
-                : moment().format(this.Sftoomi.Constants.dateIsoFormat)
+                ? dos.toFormat(this.Sftoomi.Constants.dateIsoFormat)
+                : DateTime.now().toFormat(this.Sftoomi.Constants.dateIsoFormat)
         );
     }
 
     ngAfterViewInit(): void
     {
-        let dos: moment.Moment | null = this.getCurrentDos();
+        let dos: DateTime | null = this.getCurrentDos();
         if (dos) {
             this.filtersCtrl.setValues({
                 ...this.filtersCtrl.getValues(),
-                examination_date: dos.toDate()
+                examination_date: dos.toJSDate()
             });
         }
 
@@ -73,7 +73,7 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
 
     protected override search(values: ExaminationsFiltersPanelOut): void
     {
-        this.fixExaminationInUrl(moment(values.examination_date).format(this.Sftoomi.Constants.dateIsoFormat));
+        this.fixExaminationInUrl(DateTime.fromJSDate(values.examination_date).toFormat(this.Sftoomi.Constants.dateIsoFormat));
         super.search(values);
     }
 
@@ -88,17 +88,17 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
         });
     }
 
-    private getCurrentDos(): moment.Moment | null
+    private getCurrentDos(): DateTime | null
     {
         let params: Params = this.activatedRoute.snapshot.queryParams;
         if (this.Sftoomi.isEmpty(params['dos'])) {
             return null;
         }
 
-        let momentDos: moment.Moment = moment(params['dos']);
+        let dos: DateTime = DateTime.fromISO(params['dos']);
 
-        return momentDos.isValid()
-            ? momentDos
+        return dos.isValid
+            ? dos
             : null;
     }
 }

@@ -8,5 +8,5 @@ export default class Constants
         }
     }
 
-    public readonly dateIsoFormat: string = 'YYYY-MM-DD'
+    public readonly dateIsoFormat: string = 'yyyy-MM-dd'
 }

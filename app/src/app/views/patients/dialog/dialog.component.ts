@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import moment from 'moment';
+import { DateTime } from 'luxon'
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -60,7 +60,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
             this.form.get('phone')?.setValue(data.data.phone);
 
             if (data.data.dob) {
-                this.form.get('dob')?.setValue(moment(data.data.dob).toDate());
+                this.form.get('dob')?.setValue(DateTime.fromISO(data.data.dob).toJSDate());
             }
         }
     }

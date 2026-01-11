@@ -1,14 +1,14 @@
 import { AbstractControl, FormGroup, Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
-import moment from 'moment';
+import { DateTime } from 'luxon'
 
 import Translator from './Translator';
 import Dialog from './Dialog';
 import Constants from './Constants'
 import Auth from './Auth'
 
-import getMomentLocalDateFormat from '../locale/getMomentLocalDateFormat';
+import getLocalDateFormat from '../locale/getLocalDateFormat';
 
 import CookiesService from '../services/cookies.service';
 import ResponsiveLayoutService from '../services/responsive-layout.service';
@@ -75,7 +75,15 @@ export default class Sftoomi
             return '';
         }
 
-        return moment(date).format(getMomentLocalDateFormat().date);
+        const luxonDate = date instanceof Date
+            ? DateTime.fromJSDate(date)
+            : DateTime.fromISO(date.toString());
+
+        if (!luxonDate.isValid) {
+            return '';
+        }
+
+        return luxonDate.toFormat(getLocalDateFormat().date);
     }
 
     /**
@@ -87,7 +95,15 @@ export default class Sftoomi
             return '';
         }
 
-        return moment(date).format(getMomentLocalDateFormat().date_time);
+        const luxonDate = date instanceof Date
+            ? DateTime.fromJSDate(date)
+            : DateTime.fromISO(date.toString());
+
+        if (!luxonDate.isValid) {
+            return '';
+        }
+
+        return luxonDate.toFormat(getLocalDateFormat().date_time);
     }
 
     /**
@@ -103,7 +119,14 @@ export default class Sftoomi
             return date
         }
 
-        return moment(date).toDate();
+
+        const luxonDate = DateTime.fromISO(date.toString());
+
+        if (!luxonDate.isValid) {
+            return null;
+        }
+
+        return luxonDate.toJSDate();
     }
 
     /**
