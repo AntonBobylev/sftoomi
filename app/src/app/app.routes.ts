@@ -10,11 +10,11 @@ import StudiesModuleComponent from './views/studies/studies.component';
 import ExaminationsComponent from './views/examinations/examinations.component';
 import LoginComponent from './views/login/login.component'
 import UsersModuleComponent from './views/users/users.component';
-
-const BASE_TITLE = 'SFTOOMI :: ';
+import GroupsComponent from './views/groups/groups.component'
 
 export enum RoutesPaths {
     EXAMINATIONS = 'examinations',
+    GROUPS = 'groups',
     HOME = '',
     LOGIN = 'login',
     PATIENTS = 'patients',
@@ -24,10 +24,17 @@ export enum RoutesPaths {
     USERS = 'users'
 }
 
+const BASE_TITLE = 'SFTOOMI :: ';
+const fallbackRoutePath: string = RoutesPaths.HOME;
+
 export const routes: Routes = [{
     path: RoutesPaths.EXAMINATIONS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.examinations'),
     component: ExaminationsComponent
+}, {
+    path: RoutesPaths.GROUPS,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.administration.groups'),
+    component: GroupsComponent
 }, {
     path: RoutesPaths.HOME,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.home'),
@@ -56,4 +63,7 @@ export const routes: Routes = [{
     path: RoutesPaths.USERS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.administration.users'),
     component: UsersModuleComponent
+}, {
+    path: '**', // ATTENTION: MUST BE THE LAST ONE
+    redirectTo: fallbackRoutePath
 }];

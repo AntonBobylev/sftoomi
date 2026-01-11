@@ -33,6 +33,7 @@ let ruDictionary: object =  {
         patients: 'Пациенты',
         administration: {
             caption: 'Администрирование',
+            groups: 'Группы',
             users: 'Пользователи'
         },
         setup: {

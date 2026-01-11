@@ -116,5 +116,11 @@
         >
             {{ Sftoomi.Translator.translate('navigation.administration.users') }}
         </li>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.GROUPS"
+        >
+            {{ Sftoomi.Translator.translate('navigation.administration.groups') }}
+        </li>
     </ul>
 </nz-dropdown-menu>

@@ -33,6 +33,7 @@ let usDictionary: object =  {
         patients: 'Patients',
         administration: {
             caption: 'Administration',
+            groups: 'Groups',
             users: 'Users'
         },
         setup: {
