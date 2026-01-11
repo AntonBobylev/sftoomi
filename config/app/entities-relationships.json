@@ -59,5 +59,23 @@
                 "onDelete": "restrict"
             }
         }
+    },
+    "permissions": {
+        "idField": "id",
+        "references": {
+            "groups_permissions": {
+                "idField": "permission_id",
+                "onDelete": "restrict"
+            }
+        }
+    },
+    "groups": {
+        "idField": "id",
+        "references": {
+            "groups_permissions": {
+                "idField": "group_id",
+                "onDelete": "update"
+            }
+        }
     }
 }
