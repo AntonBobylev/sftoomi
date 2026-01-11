@@ -51,18 +51,18 @@ app-init:
 ## PHP
 .PHONY: shell
 shell:
-	@$(DOCKER_COMPOSE) exec -it php bash
+	@$(DOCKER_COMPOSE) exec php bash
 .PHONY: composer-install
 composer-install:
-	@$(DOCKER_COMPOSE) exec -it php composer install
+	@$(DOCKER_COMPOSE) exec php composer install
 
 ## DATABASE
 .PHONY: db
 db:
-	@$(DOCKER_COMPOSE) exec -it mysql bash
+	@$(DOCKER_COMPOSE) exec mysql bash
 .PHONY: db-create
 db-create:
-	@$(DOCKER_COMPOSE) exec -it php php bin/console doctrine:database:create --if-not-exists || true
+	@$(DOCKER_COMPOSE) exec php php bin/console doctrine:database:create --if-not-exists || true
 .PHONY: db-migrate
 db-migrate:
 	@$(DOCKER_COMPOSE) exec -T php php bin/console doctrine:migrations:migrate --no-interaction
@@ -70,30 +70,30 @@ db-migrate:
 ## FRONT
 .PHONY: front-init
 front-init:
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app i
+	@$(DOCKER_COMPOSE) exec php npm --prefix app i
 .PHONY: front-clear
 front-clear:
-	@$(DOCKER_COMPOSE) exec -it php rm -rf ./app/node_modules ./app/.angular ./app/build
+	@$(DOCKER_COMPOSE) exec php rm -rf ./app/node_modules ./app/.angular ./app/build
 .PHONY: front-reinit
 front-reinit:
 	$(MAKE) front-clear && $(MAKE) front-init
 .PHONY: front-build
 front-build:
 	@echo "Cleaning up old public/app..."
-	@$(DOCKER_COMPOSE) exec -it php rm -rf ./public/app
+	@$(DOCKER_COMPOSE) exec php rm -rf ./public/app
 	@echo "Building Angular application..."
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run build
+	@$(DOCKER_COMPOSE) exec php npm --prefix app run build
 	@echo "Frontend build deployed to public/app!"
 .PHONY: front-dev
 front-dev:
 	@echo "Starting Angular with hot reload..."
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run dev:hot-watch
+	@$(DOCKER_COMPOSE) exec php npm --prefix app run dev:hot-watch
 .PHONY: front-watch
 front-watch:
 	@echo "Starting Angular build in watch mode..."
-	@$(DOCKER_COMPOSE) exec -it php npm --prefix app run dev:watch
+	@$(DOCKER_COMPOSE) exec php npm --prefix app run dev:watch
 
 ## DOMAIN
 .PHONY: domain-init
 domain-init:
-	@$(DOCKER_COMPOSE) exec -it php php bin/console app:init-domain
+	@$(DOCKER_COMPOSE) exec php php bin/console app:init-domain
