@@ -17,6 +17,9 @@ class Permission
     #[ORM\Column(length: 255, unique: true, nullable: false)]
     private string $name;
 
+    #[ORM\Column(length: 255, nullable: false)]
+    private string $description;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -30,6 +33,18 @@ class Permission
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }
