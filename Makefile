@@ -32,6 +32,10 @@ rebuild-php:
 app-init: up wait-db composer-install db-migrate front-reinit
 	@echo "Application initialization completed!"
 
+.PHONY: app-sync-permissions
+app-sync-permissions:
+	@$(COMPOSE_EXEC) php php bin/console app:sync-permissions
+
 ## PHP
 .PHONY: shell
 shell:
@@ -62,6 +66,7 @@ db-create:
 db-migrate: db-create
 	@echo "Running migrations..."
 	@$(COMPOSE_EXEC) php php bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+	$(MAKE) app-sync-permissions
 
 ## FRONT
 .PHONY: front-init
