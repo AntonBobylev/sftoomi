@@ -8,6 +8,21 @@
     height: 100%;
 }
 
+.logo-image {
+    background-image: url("../../../../public/graphics/sftoomi-logo-colored.png");
+    width: 500px;
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    clip-path: circle();
+}
+
+.logo-image-mobile {
+    width: 300px;
+    height: 300px;
+}
+
 .greeting-label {
     font-size: xx-large;
 }

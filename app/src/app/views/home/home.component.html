@@ -1,9 +1,8 @@
 <div class="wrapper">
-    <img style="clip-path: circle();"
-         [style.width]="Sftoomi.responsiveLayoutService?.isSmallWidth() ? '300px' : null"
-         src="graphics/sftoomi-logo-colored.png"
-         alt="logo"
+    <div class="logo-image"
+         [class.logo-image-mobile]="Sftoomi.responsiveLayoutService?.isSmallWidth()"
     >
+    </div>
 
     <p [ngClass]="{
            'greeting-label': !Sftoomi.responsiveLayoutService?.isSmallWidth(),
