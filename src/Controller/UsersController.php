@@ -6,18 +6,18 @@ use App\Class\Constants;
 use App\Class\Contacts;
 use App\Class\Core\DB\Connection as DBConnection;
 use App\Class\Fetcher;
-use App\Class\Mailer;
+use App\Class\Messenger\User\ResetPassword\Message as ResetUserPasswordMessage;
 use App\Class\Model\UserModel;
-use App\Class\TemplateManager;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use Doctrine\DBAL\Exception;
 use Random\RandomException;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\Exception\ExceptionInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -27,8 +27,7 @@ final class UsersController extends SftoomiController
         DBConnection $connection,
         private readonly Contacts $contacts,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly Mailer $mailer,
-        private readonly Filesystem $filesystem
+        private readonly MessageBusInterface $messageBus
     )
     {
         parent::__construct($connection);
@@ -73,7 +72,7 @@ final class UsersController extends SftoomiController
     }
 
     /**
-     * @throws Exception|RandomException|\PHPMailer\PHPMailer\Exception
+     * @throws Exception|RandomException|ExceptionInterface
      */
     #[Route("/saveUser", name: "save_user")]
     public function saveUser(Request $request): Response
@@ -219,34 +218,16 @@ final class UsersController extends SftoomiController
      *
      * @return void
      *
-     * @throws Exception
      * @throws RandomException
-     * @throws \PHPMailer\PHPMailer\Exception
+     * @throws ExceptionInterface
      */
     private function resetUserPassword(int $userId, string $mail): void
     {
-        $newPassword = new PasswordGenerator()->generate();
-
-        $templateManager = new TemplateManager($this->filesystem);
-        $templateContent = $templateManager->getTemplate("email/user-new-password.html");
-        $mailContent = $templateManager->apply($templateContent, [
-            "password" => $newPassword
-        ]);
-
-        $this->mailer->applyTemplate($mailContent);
-
-        $this->mailer->addAddresses([$mail]);
-        $this->mailer->send();
-
-        $this->connection->update(
-            "users",
-            [
-                "password"                 => $this->passwordHasher->hashPassword(new User(), $newPassword),
-                "force_to_change_password" => 1
-            ],
-            "id = :id",
-            ["id" => $userId]
-        );
+        $this->messageBus->dispatch(new ResetUserPasswordMessage(
+            recipient: $mail,
+            password:  new PasswordGenerator()->generate(),
+            userId:    $userId
+        ));
     }
 
     private function getUserEmailsList(int $userId): array
