@@ -40,8 +40,7 @@ services:
             $allowInlineLineBreaks: false
             $ignoreEmptyContextAndExtra: true
 
-    mailer:
-        class: App\Class\Mailer
+    App\Class\Mailer:
         arguments:
             $logger: '@monolog.logger.mailer'
 
