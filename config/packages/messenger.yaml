@@ -1,0 +1,20 @@
+framework:
+    messenger:
+        default_bus: messenger.bus.default
+
+        transports:
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    table_name: 'messenger_messages'
+                    queue_name: 'default'
+                    auto_setup: true
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+
+            sync: 'sync://'
+
+        routing:
+            'App\Class\Messenger\User\ResetPassword\Message': async

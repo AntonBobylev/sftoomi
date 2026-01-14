@@ -2,6 +2,7 @@ monolog:
     channels:
         - deprecation # Deprecations are logged in the dedicated "deprecation" channel when it exists
         - mailer
+        - messenger
 
 when@dev:
     monolog:
@@ -10,7 +11,12 @@ when@dev:
                 type: stream
                 path: "%kernel.logs_dir%/%kernel.environment%.log"
                 level: debug
-                channels: ["!event"]
+                channels: ["!event", "!messenger"]
+            messenger:
+                type: stream
+                path: "%kernel.logs_dir%/messenger.log"
+                level: debug
+                channels: [ "messenger" ]
             console:
                 type: console
                 process_psr_3_messages: false
@@ -49,6 +55,12 @@ when@prod:
                 type: stream
                 path: php://stderr
                 level: debug
+                formatter: monolog.formatter.json
+            messenger:
+                type: stream
+                path: php://stderr
+                level: info
+                channels: [ "messenger" ]
                 formatter: monolog.formatter.json
             console:
                 type: console
