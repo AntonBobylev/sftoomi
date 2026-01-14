@@ -12,7 +12,7 @@ services:
             - php
             - mysql
         networks:
-            - sftoomi_server-sftoomi_php-sftoomi_mysql
+            - sftoomi
 
     php:
         container_name: sftoomi_php
@@ -29,9 +29,9 @@ services:
             - "4200:4200"
         volumes:
             - ../.:/var/www/project
-            - ./php/ini:/usr/local/etc/php
+            - ./php/ini/php.ini:/usr/local/etc/php/php.ini
         networks:
-            - sftoomi_server-sftoomi_php-sftoomi_mysql
+            - sftoomi
 
     mysql:
         image: mysql:8
@@ -47,7 +47,16 @@ services:
             MYSQL_USER: ${MYSQL_USER}
             MYSQL_PASSWORD: ${MYSQL_PASSWORD}
         networks:
-            - sftoomi_server-sftoomi_php-sftoomi_mysql
+            - sftoomi
+
+    redis:
+        image: redis:7-alpine
+        container_name: sftoomi_redis
+        restart: always
+        ports:
+            - "${REDIS_PORT}:6379"
+        networks:
+            - sftoomi
 
 networks:
-    sftoomi_server-sftoomi_php-sftoomi_mysql:
+    sftoomi:
