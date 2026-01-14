@@ -2,6 +2,14 @@ framework:
     messenger:
         default_bus: messenger.bus.default
 
+        buses:
+            messenger.bus.default:
+                default_middleware:
+                    enabled: true
+                    allow_no_handlers: false
+                middleware:
+                    - 'App\Class\Messenger\DeduplicationMiddleware'
+
         transports:
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
