@@ -25,12 +25,12 @@ services:
     contacts:
         class: App\Class\Contacts
         arguments:
-            - '@doctrine.dbal.default_connection'
-            -
+            - '@connection'
+
     entity.user:
         class: App\Class\Entity\User
         arguments:
-            - '@doctrine.dbal.default_connection'
+            - '@connection'
 
     monolog.formatter.simple:
         class: Monolog\Formatter\LineFormatter
@@ -40,7 +40,8 @@ services:
             $allowInlineLineBreaks: false
             $ignoreEmptyContextAndExtra: true
 
-    App\Class\Mailer:
+    mailer:
+        class: App\Class\Mailer
         arguments:
             $logger: '@monolog.logger.mailer'
 
@@ -48,3 +49,8 @@ services:
         class: App\Class\Core\DB\Connection
         arguments:
             - '@doctrine.dbal.default_connection'
+
+    template_manager:
+        class: App\Class\TemplateManager
+        arguments:
+            - '@filesystem'
