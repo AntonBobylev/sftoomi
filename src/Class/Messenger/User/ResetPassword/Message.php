@@ -2,6 +2,9 @@
 
 namespace App\Class\Messenger\User\ResetPassword;
 
+use App\Class\Messenger\UniqueMessage;
+
+#[UniqueMessage]
 readonly class Message
 {
     public function __construct(
