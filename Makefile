@@ -46,6 +46,20 @@ composer-install:
 	@echo "Installing composer dependencies..."
 	@$(COMPOSE_EXEC) php composer install --no-interaction --optimize-autoloader
 
+.PHONY: messenger-start
+messenger-start:
+	@echo "Running messenger..."
+	@$(COMPOSE_EXEC) php php bin/console messenger:consume -vv
+
+## REDIS
+.PHONY: redis-monitor
+redis-monitor:
+	@$(COMPOSE_EXEC) redis redis-cli monitor | grep -v "workers.restart_requested_timestamp"
+.PHONY: redis-clear-cache
+redis-clear-cache:
+	@echo "Clearing redis cache..."
+	@$(COMPOSE_EXEC) redis redis-cli FLUSHALL
+
 ## DATABASE
 .PHONY: db-shell
 db-shell:
