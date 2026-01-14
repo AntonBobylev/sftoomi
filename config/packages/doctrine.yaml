@@ -15,7 +15,8 @@ doctrine:
                 examinations_studies|\
                 studies_cpts|\
                 templates_studies|\
-                sessions\
+                sessions|\
+                groups_permissions\
             )$)~"
     orm:
         auto_generate_proxy_classes: true
