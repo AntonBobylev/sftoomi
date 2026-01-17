@@ -62,16 +62,21 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
+        let selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
+        let permissionsIds: string[] = selectedPermissions.map(function (permission: AppItemSelectorDataListRow): string {
+            return permission.value;
+        });
+
+        data.append('groups_permissions_ids', permissionsIds.join(','));
+
         return data;
     }
 
-    protected override isPreValid(): boolean
+    protected isSaveButtonDisabled(): boolean
     {
-        if (this.Sftoomi.isEmpty(this.permissionsCtrl()?.getRightListData())) {
-            return false;
-        }
+        let selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
 
-        return true;
+        return this.form.invalid || this.Sftoomi.isEmpty(selectedPermissions);
     }
 
     private convertPermissionsToItemSelectorRow(permissions: Permission[]): AppItemSelectorDataListRow[]

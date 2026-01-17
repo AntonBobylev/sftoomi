@@ -19,7 +19,7 @@
         <button nz-button
                 nzType="primary"
                 nzShape="round"
-                [disabled]="form.invalid"
+                [disabled]="isSaveButtonDisabled()"
                 (click)="save()"
         >
             {{ Sftoomi.Translator.translate('save') }}
