@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-use App;
+use App\Utils;
 use App\Class\Core\DB\Connection;
 
 class EntityManipulator
@@ -14,7 +14,7 @@ class EntityManipulator
 
     public function __construct($connection)
     {
-        $this->configFilePath = App::getVars()->get("entities_relationships_file_path");
+        $this->configFilePath = Utils::getVars()->get("entities_relationships_file_path");
         $this->connection = $connection;
     }
 

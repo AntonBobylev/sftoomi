@@ -1,13 +1,13 @@
 <?php
 
-/** @noinspection PhpIllegalPsrClassPathInspection */
+namespace App;
 
 use App\Class\Constants;
 use App\Class\Core\DB\SqlSubstitutor;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
-class App
+class Utils
 {
     public static function getVars(): ParameterBagInterface
     {

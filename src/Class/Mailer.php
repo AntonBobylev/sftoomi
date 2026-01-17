@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-use App;
+use App\Utils;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Psr\Log\LoggerInterface;
@@ -18,7 +18,7 @@ readonly class Mailer
 
     public function __construct(LoggerInterface $logger)
     {
-        $this->systemVariables = App::getVars();
+        $this->systemVariables = Utils::getVars();
         $this->logger = $logger;
 
         $this->mailer = new PHPMailer();

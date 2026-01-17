@@ -2,7 +2,7 @@
 
 namespace App\Class;
 
-use App;
+use App\Utils;
 use Symfony\Component\Filesystem\Filesystem;
 
 readonly class TemplateManager
@@ -35,7 +35,7 @@ readonly class TemplateManager
 
     private function getTemplateContent(string $templateName): string
     {
-        $filePath = sprintf("%s/%s", App::getVars()->get("templates_dir"), $templateName);
+        $filePath = sprintf("%s/%s", Utils::getVars()->get("templates_dir"), $templateName);
         if (!$this->filesystem->exists($filePath)) {
             throw new \RuntimeException("File doesn't exist by the path: \"$filePath\"");
         }
@@ -58,7 +58,7 @@ readonly class TemplateManager
      */
     private function getMockData(): array
     {
-        $mockFileLocation = sprintf("%s/mock-data.json", App::getVars()->get("templates_dir"));
+        $mockFileLocation = sprintf("%s/mock-data.json", Utils::getVars()->get("templates_dir"));
         if (!$this->filesystem->exists($mockFileLocation)) {
             throw new \RuntimeException("File with mock data doesn't exist by the path: \"$mockFileLocation\"");
         }
