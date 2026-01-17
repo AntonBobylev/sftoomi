@@ -152,6 +152,23 @@ let ruDictionary: object =  {
                 cpts: 'CPT'
             }
         },
+        groups: {
+            table: {
+                columns: {
+                    name: {
+                        caption: 'Имя'
+                    },
+                    permissions: {
+                        caption: 'Права'
+                    }
+                }
+            },
+            dialog: {
+                add_title: 'Добавить группу',
+                edit_title: 'Редактирование группы #{0}',
+                width: 400
+            }
+        },
         users: {
             table: {
                 columns: {

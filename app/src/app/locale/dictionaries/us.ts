@@ -152,6 +152,23 @@ let usDictionary: object =  {
                 cpts: 'CPTs'
             }
         },
+        groups: {
+            table: {
+                columns: {
+                    name: {
+                        caption: 'Name'
+                    },
+                    permissions: {
+                        caption: 'Permissions'
+                    }
+                }
+            },
+            dialog: {
+                add_title: 'Add group',
+                edit_title: 'Edit group #{0}',
+                width: 400
+            }
+        },
         users: {
             table: {
                 columns: {
