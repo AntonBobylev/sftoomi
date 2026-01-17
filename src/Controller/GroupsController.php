@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Class\Fetcher;
 use App\Class\Model\GroupModel;
+use App\Class\Model\PermissionModel;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,11 +26,7 @@ final class GroupsController extends SftoomiController
         );
 
         foreach ($result["data"] as &$row) {
-            $sql = "select p.name, p.description, p.id
-                    from groups_permissions gp
-                        left join permissions p on p.id = gp.permission_id
-                    where gp.group_id = ?";
-            $row["permissions"] = $this->connection->fetchAll($sql, [$row["id"]]);
+            $row["permissions"] = $this->getGroupPermissions($row["id"]);
         }
         unset($row);
 
@@ -36,5 +34,38 @@ final class GroupsController extends SftoomiController
             "data"  => $result["data"],
             "total" => $result["total"]
         ]);
+    }
+
+    #[Route("/getGroup", name: "get_group")]
+    public function getGroup(Request $request): Response
+    {
+        $id = Fetcher::int($request->request->get("id"));
+        $data = [];
+
+        if (isset($id)) {
+            $groupModel = new GroupModel($this->connection);
+            $data = $groupModel->get($id);
+
+            if (!empty($data)) {
+                $data["permissions"] = $this->getGroupPermissions($id);
+            }
+        }
+
+        return new JsonResponse([
+            "data"  => $data,
+            "lists" => [
+                "permissions" => new PermissionModel($this->connection)->getAll()["data"]
+            ]
+        ]);
+    }
+
+    private function getGroupPermissions(int $groupId): array
+    {
+        $sql = "select p.name, p.description, p.id
+                from groups_permissions gp
+                    left join permissions p on p.id = gp.permission_id
+                where gp.group_id = ?";
+
+        return $this->connection->fetchAll($sql, [$groupId]);
     }
 }
