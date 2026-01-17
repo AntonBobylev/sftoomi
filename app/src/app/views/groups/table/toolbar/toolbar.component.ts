@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
+import GroupEditDialogComponent, { GroupEditDialogData } from '../../dialog/dialog.component'
 
 @Component({
     selector: 'groups-table-toolbar',
@@ -24,6 +25,17 @@ export default class GroupsTableToolbarComponent extends AppBaseToolbar
 
     protected openEditDialog(title: string, id?: number): void
     {
-        // TODO: implement
+        const modal = Sftoomi.Dialog.getInstance().create<GroupEditDialogComponent, GroupEditDialogData>({
+            nzTitle: title,
+            nzContent: GroupEditDialogComponent,
+            nzViewContainerRef: this.viewContainerRef,
+            nzData: { id: id }
+        });
+
+        modal.afterClose.subscribe((isSaved: boolean = false): void => {
+            if (isSaved) {
+                this.table.refresh();
+            }
+        });
     }
 }

@@ -1,0 +1,28 @@
+{{ dialogResizer() }}
+
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <div>
+        <app-textfield label="Group name"
+                       name="group_name"
+                       [form]="form"
+        />
+
+        <app-item-selector #permissionsCtrl
+                           label="Permissions"
+                           [required]="true"
+        />
+    </div>
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>
