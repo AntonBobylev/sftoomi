@@ -59,6 +59,50 @@ final class GroupsController extends SftoomiController
         ]);
     }
 
+    #[Route("/saveGroup", name: "save_group")]
+    public function saveGroup(Request $request): Response
+    {
+        $values = [
+            "id"   => Fetcher::int($request->request->get("id")),
+            "name" => Fetcher::trim($request->request->get("group_name"))
+        ];
+
+        $this->assertAllRequiredFieldsSet(["id", "name"], $values);
+
+        $this->connection->insupd(
+            "groups",
+            $values,
+            "id = ?",
+            [$values["id"]]
+        );
+
+        $groupId = $values["id"];
+        if (empty($groupId)) {
+            $groupId = $this->connection->getLastInsertId();
+        }
+
+        $groupPermissionsIds = Fetcher::intArray($request->request->get("groups_permissions_ids"), []);
+        $this->connection->delete(
+            "groups_permissions",
+            "group_id = ?",
+            [$groupId]
+        );
+
+        foreach ($groupPermissionsIds as $permissionsId) {
+            $this->connection->insert(
+                "groups_permissions",
+                [
+                    "group_id"      => $groupId,
+                    "permission_id" => $permissionsId
+                ]
+            );
+        }
+
+        return new JsonResponse([
+            "id" => $groupId
+        ]);
+    }
+
     private function getGroupPermissions(int $groupId): array
     {
         $sql = "select p.name, p.description, p.id
