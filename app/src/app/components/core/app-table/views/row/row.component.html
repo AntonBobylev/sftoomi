@@ -12,6 +12,7 @@
             <th [style.width]="column.width">
                 <span class="cell"
                       [ngStyle]="column.header.extraStyles"
+                      [style.width]="column.width"
                 >
                     <span [nz-tooltip]="column.header.tooltipRenderer ? column.header.tooltipRenderer!() : null">
                         {{ column.header.caption }}
