@@ -14,4 +14,5 @@ import StudiesTableComponent from './table/table.component';
 })
 export default class StudiesModuleComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'STUDIES_MODULE';
 }

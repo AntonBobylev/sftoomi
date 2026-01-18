@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms'
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal'
 
 import Sftoomi from '../../class/Sftoomi'
+import { DialogType } from '../../class/Dialog'
 
 import ResponsiveLayoutService from '../../services/responsive-layout.service'
 
@@ -18,6 +19,8 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
     protected readonly isClosable: boolean = true;
     protected readonly isCentered: boolean = true;
     protected readonly width: number | string | undefined;
+
+    protected readonly permission?: string;
 
     protected readonly dialogResizer: Signal<any> = computed((): void => {
         let width = this.width;
@@ -45,6 +48,19 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
     ngOnInit(): void
     {
         setTimeout((): void => {
+            if (this.permission
+                && !this.Sftoomi.Auth.permissions.isAllowed(this.permission)
+            ) {
+                this.Sftoomi.Dialog.show(
+                    'You don\'t have permissions to do this', // TODO: translate
+                    DialogType.ERROR
+                );
+
+                this.close();
+
+                return;
+            }
+
             if (!Sftoomi.isEmpty(this.title)) {
                 this.getDialogInstance().updateConfig({
                     nzTitle: this.title,

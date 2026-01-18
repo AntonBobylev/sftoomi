@@ -15,4 +15,5 @@ import UsersTableComponent from './table/table.component';
 
 export default class UsersModuleComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'USERS_MODULE';
 }

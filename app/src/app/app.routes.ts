@@ -70,13 +70,13 @@ export const routes: Routes = [{
 
 export const RoutesPermissions: Map<string, string | undefined> = new Map([[
     RoutesPaths.EXAMINATIONS,
-    undefined
+    'EXAMINATIONS_MODULE'
 ], [
     RoutesPaths.GROUPS,
-    undefined
+    'GROUPS_MODULE'
 ], [
     RoutesPaths.HOME,
-    undefined
+    'GROUPS_MODULE'
 ], [
     RoutesPaths.LOGIN,
     undefined
@@ -85,14 +85,14 @@ export const RoutesPermissions: Map<string, string | undefined> = new Map([[
     'PATIENTS_MODULE'
 ], [
     RoutesPaths.REFERRING_DOCTORS,
-    undefined
+    'REFERRING_DOCTORS_MODULE'
 ], [
     RoutesPaths.REFERRING_FACILITIES,
-    undefined
+    'REFERRING_FACILITIES_MODULE'
 ], [
     RoutesPaths.STUDIES,
-    undefined
+    'STUDIES_MODULE'
 ], [
     RoutesPaths.USERS,
-    undefined
+    'USERS_MODULE'
 ]]);

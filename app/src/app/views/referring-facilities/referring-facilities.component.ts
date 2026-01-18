@@ -14,4 +14,5 @@ import ReferringFacilitiesTableComponent from './table/table.component';
 })
 export default class ReferringFacilitiesComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'REFERRING_FACILITIES_MODULE';
 }

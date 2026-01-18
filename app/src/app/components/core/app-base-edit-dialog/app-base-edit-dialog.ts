@@ -17,10 +17,28 @@ export default abstract class AppBaseEditDialog extends AppBaseDialog implements
     protected readonly loadUrl: string | undefined;
     protected readonly saveUrl: string | undefined;
 
+    protected readonly addPermission: string | undefined;
+    protected readonly editPermission: string | undefined;
+
     protected abstract afterLoad(data: any): void;
 
     ngAfterViewInit(): void
     {
+        let isEditMode: boolean = this.data && this.data.id;
+        if (isEditMode && !this.Sftoomi.Auth.permissions.isAllowed(this.editPermission)
+            || (!isEditMode && !this.Sftoomi.Auth.permissions.isAllowed(this.addPermission))) {
+            this.Sftoomi.Dialog.show(
+                'You don\'t have permissions to do this', // TODO: translate
+                DialogType.ERROR
+            );
+
+            setTimeout((): void => {
+                this.close();
+            });
+
+            return;
+        }
+
         this.load();
     }
 

@@ -15,4 +15,5 @@ import GroupsTableComponent from './table/table.component'
 
 export default class GroupsComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'GROUPS_MODULE';
 }

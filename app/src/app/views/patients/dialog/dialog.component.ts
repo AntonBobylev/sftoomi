@@ -41,6 +41,9 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getPatient';
     protected override readonly saveUrl: string = '/savePatient';
 
+    protected override readonly addPermission: string | undefined = 'PATIENTS_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'PATIENTS_MODULE::EDIT';
+
     protected override readonly width: number | string | undefined = 400;
 
     protected readonly form: FormGroup = new FormGroup({

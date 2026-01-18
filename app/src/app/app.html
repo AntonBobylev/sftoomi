@@ -56,6 +56,7 @@
             nz-dropdown
             [nzDropdownMenu]="administrationMenu"
             [class.ant-menu-item-selected]="false"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowedAny(getAdministrationMenuPermissions())"
         >
             {{ Sftoomi.Translator.translate('navigation.administration.caption') }}
             <nz-icon nzType="down" />
@@ -72,6 +73,7 @@
             nzMatchRouter
             [nzSelected]="isRouteSelected(RoutesPaths.EXAMINATIONS)"
             [routerLink]="RoutesPaths.EXAMINATIONS"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.EXAMINATIONS))"
         >
             {{ Sftoomi.Translator.translate('navigation.examinations') }}
         </li>
@@ -79,6 +81,7 @@
             nz-dropdown
             [nzDropdownMenu]="setupMenu"
             [class.ant-menu-item-selected]="false"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowedAny(getSetupMenuPermissions())"
         >
             {{ Sftoomi.Translator.translate('navigation.setup.caption') }}
             <nz-icon nzType="down" />
@@ -91,18 +94,21 @@
         <li nz-menu-item
             nzMatchRouter
             [routerLink]="RoutesPaths.REFERRING_FACILITIES"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REFERRING_FACILITIES))"
         >
             {{ Sftoomi.Translator.translate('navigation.setup.referring_facilities') }}
         </li>
         <li nz-menu-item
             nzMatchRouter
             [routerLink]="RoutesPaths.REFERRING_DOCTORS"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REFERRING_DOCTORS))"
         >
             {{ Sftoomi.Translator.translate('navigation.setup.referring_doctors') }}
         </li>
         <li nz-menu-item
             nzMatchRouter
             [routerLink]="RoutesPaths.STUDIES"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.STUDIES))"
         >
             {{ Sftoomi.Translator.translate('navigation.setup.studies') }}
         </li>
@@ -114,12 +120,14 @@
         <li nz-menu-item
             nzMatchRouter
             [routerLink]="RoutesPaths.USERS"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.USERS))"
         >
             {{ Sftoomi.Translator.translate('navigation.administration.users') }}
         </li>
         <li nz-menu-item
             nzMatchRouter
             [routerLink]="RoutesPaths.GROUPS"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.GROUPS))"
         >
             {{ Sftoomi.Translator.translate('navigation.administration.groups') }}
         </li>

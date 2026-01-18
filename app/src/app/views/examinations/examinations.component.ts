@@ -28,6 +28,8 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
 
     protected isFiltersCollapsed: boolean = false;
 
+    protected override permission: string | null = 'EXAMINATIONS_MODULE';
+
     constructor()
     {
         super();

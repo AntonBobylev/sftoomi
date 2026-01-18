@@ -14,4 +14,5 @@ import ReferringDoctorsTableComponent from './table/table.component';
 })
 export default class ReferringDoctorsComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'REFERRING_DOCTORS_MODULE';
 }

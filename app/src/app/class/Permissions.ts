@@ -1,3 +1,5 @@
+import Sftoomi from './Sftoomi'
+
 export default class Permissions
 {
     private readonly storageKey: string = 'permissions';
@@ -16,9 +18,9 @@ export default class Permissions
             : [];
     }
 
-    public isAllowed(permissionName?: string): boolean
+    public isAllowed(permissionName: string | null | undefined): boolean
     {
-        if (!permissionName) {
+        if (Sftoomi.isEmpty(permissionName)) {
             return true;
         }
 
@@ -27,6 +29,20 @@ export default class Permissions
             return true;
         }
 
-        return this.get().includes(permissionName);
+        return this.get().includes(permissionName!);
+    }
+
+    public isAllowedAny(permissionNames: (string | null | undefined)[] | null | undefined): boolean
+    {
+        if (Sftoomi.isEmpty(permissionNames)) {
+            return true;
+        }
+
+        let permissions: string[] = this.get();
+        if (permissions.includes('*')) {
+            return true;
+        }
+
+        return this.get().some((p: string): boolean => permissionNames!.includes(p));
     }
 }

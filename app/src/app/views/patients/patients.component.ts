@@ -15,4 +15,5 @@ import PatientsTableComponent from './table/table.component';
 
 export default class PatientsComponent extends AppBaseModule
 {
+    protected override permission: string | null = 'PATIENTS_MODULE';
 }

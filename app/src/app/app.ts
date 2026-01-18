@@ -104,4 +104,21 @@ export class App
             }
         );
     }
+
+    protected getSetupMenuPermissions(): (string | undefined)[]
+    {
+        return [
+            RoutesPermissions.get(RoutesPaths.REFERRING_FACILITIES),
+            RoutesPermissions.get(RoutesPaths.REFERRING_DOCTORS),
+            RoutesPermissions.get(RoutesPaths.STUDIES)
+        ];
+    }
+
+    protected getAdministrationMenuPermissions(): (string | undefined)[]
+    {
+        return [
+            RoutesPermissions.get(RoutesPaths.USERS),
+            RoutesPermissions.get(RoutesPaths.GROUPS)
+        ];
+    }
 }
