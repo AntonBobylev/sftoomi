@@ -4,7 +4,6 @@ type getUsersAPI = {
         login: string,
         first_name: string,
         middle_name: string,
-        roles: string,
         created_at: string
     }[],
     total: number

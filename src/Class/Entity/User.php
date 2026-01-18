@@ -21,8 +21,7 @@ readonly final class User
      *
      * @return int Created user ID
      *
-     * @throws Exception
-     * @throws RandomException
+     * @throws \Doctrine\DBAL\Exception
      */
     public function add(string $login, string $password, array $extra = []): int
     {
@@ -34,9 +33,8 @@ readonly final class User
                 "last_name"  => $extra["last_name"],
                 "password"   => $password,
                 "disabled"   => 0,
-                "roles"      => "[\"ROLE_USER\"]", // TODO: add the permissions system
                 "created_at" => $this->connection->now(),
-                "force_to_change_password" => 1,
+                "force_to_change_password" => 1
             ]
         );
 

@@ -20,9 +20,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $login = null;
 
     #[ORM\Column]
-    private array $roles = [];
-
-    #[ORM\Column]
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -70,19 +67,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return (string) $this->login;
     }
 
-    public function getRoles(): array
+    public function getRoles(): array // We use the permissions system
     {
-        $roles = $this->roles;
-        $roles[] = "ROLE_USER";
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): static
-    {
-        $this->roles = $roles;
-
-        return $this;
+        return [];
     }
 
     public function getPassword(): ?string

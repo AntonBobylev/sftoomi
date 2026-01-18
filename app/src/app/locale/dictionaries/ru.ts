@@ -175,9 +175,6 @@ let ruDictionary: object =  {
                     login: {
                         caption: 'Логин'
                     },
-                    roles: {
-                        caption: 'Роли'
-                    },
                     created_at: {
                         caption: 'Когда создан'
                     }

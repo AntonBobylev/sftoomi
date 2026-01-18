@@ -16,6 +16,7 @@ doctrine:
                 studies_cpts|\
                 templates_studies|\
                 sessions|\
+                users_groups|\
                 groups_permissions\
             )$)~"
     orm:

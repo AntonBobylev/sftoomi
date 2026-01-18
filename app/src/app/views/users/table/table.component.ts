@@ -53,26 +53,6 @@ export default class UsersTableComponent extends AppTableComponent
             caption: Sftoomi.Translator.translate('first_name')
         }
     }, {
-        name: 'roles',
-        width: '200px',
-        header: {
-            caption: Sftoomi.Translator.translate('views.users.table.columns.roles.caption')
-        },
-        rawHtml: true,
-        valueRenderer: (value: getUsersAPI['data'][0]['roles']): string => {
-            let roles = JSON.parse(value);
-            if (Sftoomi.isEmpty(roles)) {
-                return Sftoomi.Translator.translate('not_set_tip');
-            }
-
-            let prettyFormattedRoles: string = '';
-            roles.forEach((role: string): void => {
-                prettyFormattedRoles += '<li>' + role + '</li>';
-            });
-
-            return '<ul style="margin: 0">' + prettyFormattedRoles + '</ul>';
-        }
-    }, {
         name: 'created_at',
         header: {
             caption: Sftoomi.Translator.translate('views.users.table.columns.created_at.caption')

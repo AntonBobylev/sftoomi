@@ -88,8 +88,7 @@ final class UsersController extends SftoomiController
             "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
             "last_name"   => Fetcher::trim($request->request->get("last_name"), ""),
             "first_name"  => Fetcher::trim($request->request->get("first_name"), ""),
-            "contact_id"  => $contactId,
-            "roles"       => "[\"ROLE_USER\"]" // TODO: add the permissions system
+            "contact_id"  => $contactId
         ];
 
         $this->assertAllRequiredFieldsSet(["login"], $values);

@@ -175,9 +175,6 @@ let usDictionary: object =  {
                     login: {
                         caption: 'Login'
                     },
-                    roles: {
-                        caption: 'Roles'
-                    },
                     created_at: {
                         caption: 'Created at'
                     }

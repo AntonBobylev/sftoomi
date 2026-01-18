@@ -15,7 +15,6 @@ class UserModel extends AbstractModel
             "id",
             "disabled",
             "login",
-            "roles",
             "force_to_change_password",
             "first_name",
             "last_name",
