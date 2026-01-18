@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, Signal, viewChild } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
@@ -8,6 +8,7 @@ import { NzFormLabelComponent } from 'ng-zorro-antd/form';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppItemSelectorDataListComponent, { AppItemSelectorDataListRow } from './data-list/data-list.component';
+
 @Component({
     selector: 'app-item-selector',
     templateUrl: './app-item-selector.component.html',
@@ -23,48 +24,53 @@ export default class AppItemSelectorComponent
     @Input() public label: string | undefined;
     @Input() public required: boolean = false;
 
-    @ViewChild('left')
-    protected readonly leftList!: AppItemSelectorDataListComponent;
-
-    @ViewChild('right')
-    protected readonly rightList!: AppItemSelectorDataListComponent;
+    private readonly leftList:  Signal<AppItemSelectorDataListComponent | undefined> = viewChild('left');
+    private readonly rightList: Signal<AppItemSelectorDataListComponent | undefined> = viewChild('right');
 
     protected readonly Sftoomi = Sftoomi;
 
     public setData(leftData: AppItemSelectorDataListRow[], rightData: AppItemSelectorDataListRow[]): void
     {
-        this.leftList.setData(leftData);
-        this.rightList.setData(rightData);
+        this.leftList()?.setData(leftData);
+        this.rightList()?.setData(rightData);
     }
 
     public getLeftListData(): AppItemSelectorDataListRow[]
     {
-        return this.leftList.getAllRows();
+        if (!this.leftList()) {
+            return [];
+        }
+
+        return this.leftList()!.getAllRows();
     }
 
     public getRightListData(): AppItemSelectorDataListRow[]
     {
-        return this.rightList.getAllRows();
+        if (!this.rightList()) {
+            return [];
+        }
+
+        return this.rightList()!.getAllRows();
     }
 
     protected onMoveRightClick(): void
     {
-        this.moveRows(this.leftList, this.rightList);
+        this.moveRows(this.leftList()!, this.rightList()!);
     }
 
     protected onMoveLeftClick(): void
     {
-        this.moveRows(this.rightList, this.leftList);
+        this.moveRows(this.rightList()!, this.leftList()!);
     }
 
     protected onMoveAllLeftClick(): void
     {
-        this.moveRows(this.rightList, this.leftList, true);
+        this.moveRows(this.rightList()!, this.leftList()!, true);
     }
 
     protected onMoveAllRightClick(): void
     {
-        this.moveRows(this.leftList, this.rightList, true);
+        this.moveRows(this.leftList()!, this.rightList()!, true);
     }
 
     private moveRows(from: AppItemSelectorDataListComponent, to: AppItemSelectorDataListComponent, moveAll: boolean = false): void
