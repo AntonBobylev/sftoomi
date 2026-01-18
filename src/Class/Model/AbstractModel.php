@@ -42,19 +42,37 @@ abstract class AbstractModel
     /**
      * @throws Exception
      */
-    public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
+    public function getAll(
+        ?int $start = null,
+        ?int $limit = null,
+        ?string $filters = null,
+        ?string $orderByField = "id",
+        ?string $orderByDirection = "asc"
+    ): array
     {
         if (empty($filters)) {
             $filters = "true";
         }
 
+        $orderSql = "";
+        if (isset($orderByField)) {
+            $orderSql = "order by `$orderByField`";
+
+            if (isset($orderByDirection)) {
+                $orderSql .= " " . $orderByDirection;
+            }
+        }
+
+        $limitSql = "";
+        if (isset($start) && isset($limit)) {
+            $limitSql = $this->connection->subst("limit ?, ?", [$start, $limit]);
+        }
+
         $sql = "select {$this->getEntityInlineColumns()}
                 from {$this->getBaseTable()}
-                where $filters";
-
-        if (isset($start) & isset($limit)) {
-            $sql .= " limit $start, $limit";
-        }
+                where $filters
+                $orderSql
+                $limitSql";
 
         return [
             "data"  => $this->connection->fetchAll($sql),

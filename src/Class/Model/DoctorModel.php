@@ -9,7 +9,13 @@ class DoctorModel extends AbstractModel
         return "doctor";
     }
 
-    public function getAll(?int $start = null, ?int $limit = null, ?string $filters = null): array
+    public function getAll(
+        ?int $start = null,
+        ?int $limit = null,
+        ?string $filters = null,
+        ?string $orderByField = "id",
+        ?string $orderByDirection = "asc"
+    ): array
     {
         $result = parent::getAll($start, $limit);
 
