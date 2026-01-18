@@ -3,6 +3,7 @@ import { signal, WritableSignal } from '@angular/core'
 import Sftoomi from './Sftoomi';
 import Fetcher from './Fetcher'
 import { DialogType } from './Dialog'
+import Permissions from './Permissions'
 
 import AppChangeUserPasswordDialog from '../components/misc/change-user-password-dialog/dialog.component'
 
@@ -15,6 +16,8 @@ import User from '../type/User'
 
 export default class Auth
 {
+    public readonly permissions: Permissions = new Permissions();
+
     private readonly authorized: WritableSignal<boolean> = signal<boolean>(false);
 
     private sessionId: string | null = null;
@@ -37,7 +40,7 @@ export default class Auth
     public tryRestoreSession(callback: Function): void
     {
         let sessionId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION),
-            userId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_USER);
+            userId:    string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_USER);
 
         if (!Sftoomi.isEmpty(sessionId) && !Sftoomi.isEmpty(userId)) {
             new Fetcher().request({
@@ -126,7 +129,7 @@ export default class Auth
         });
     }
 
-    private authorize(sessionId: string, user: User): void
+    private authorize(sessionId: string, user: User & { permissions: string[] }): void
     {
         this.authorized.set(true);
         this.sessionId = sessionId;
@@ -145,6 +148,8 @@ export default class Auth
             1
         );
 
+        this.permissions.set(user.permissions);
+
         this.showChangePasswordDialogIfRequired();
     }
 
@@ -153,6 +158,7 @@ export default class Auth
         this.authorized.set(false);
         this.sessionId = null;
         this.user = null;
+        this.permissions.set([]);
 
         if (cleanCookies) {
             Sftoomi.Cookies.deleteCookie(SftoomiCookie.SFTOOMI_SESSION);

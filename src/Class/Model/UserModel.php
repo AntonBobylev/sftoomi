@@ -4,6 +4,26 @@ namespace App\Class\Model;
 
 class UserModel extends AbstractModel
 {
+    public function get(?int $id, ?string $filters = null): array
+    {
+        $user = parent::get($id, $filters);
+
+        if (isset($id)) {
+            $sql = "select group_id
+                    from users_groups
+                    where user_id = ?";
+            $groupIds = $this->connection->fetchCol($sql, [$id]);
+
+            $sql = "select p.name
+                    from groups_permissions gp
+                        left join permissions p on p.id = gp.permission_id
+                    where gp.group_id in ?";
+            $user["permissions"] = $this->connection->fetchCol($sql, [$groupIds]);
+        }
+
+        return $user;
+    }
+
     protected function getBaseTable(): string
     {
         return "users";
