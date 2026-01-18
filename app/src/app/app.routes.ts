@@ -67,3 +67,32 @@ export const routes: Routes = [{
     path: '**', // ATTENTION: MUST BE THE LAST ONE
     redirectTo: fallbackRoutePath
 }];
+
+export const RoutesPermissions: Map<string, string | undefined> = new Map([[
+    RoutesPaths.EXAMINATIONS,
+    undefined
+], [
+    RoutesPaths.GROUPS,
+    undefined
+], [
+    RoutesPaths.HOME,
+    undefined
+], [
+    RoutesPaths.LOGIN,
+    undefined
+], [
+    RoutesPaths.PATIENTS,
+    'PATIENTS_MODULE'
+], [
+    RoutesPaths.REFERRING_DOCTORS,
+    undefined
+], [
+    RoutesPaths.REFERRING_FACILITIES,
+    undefined
+], [
+    RoutesPaths.STUDIES,
+    undefined
+], [
+    RoutesPaths.USERS,
+    undefined
+]]);

@@ -64,6 +64,7 @@
             nzMatchRouter
             [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
             [routerLink]="RoutesPaths.PATIENTS"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.PATIENTS))"
         >
             {{ Sftoomi.Translator.translate('navigation.patients') }}
         </li>

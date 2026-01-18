@@ -12,7 +12,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from './class/Sftoomi';
 
-import { RoutesPaths } from './app.routes';
+import { RoutesPaths, RoutesPermissions } from './app.routes';
 
 import LanguageSwitcherComponent from './components/misc/language-switcher/language-switcher.component';
 
@@ -41,11 +41,13 @@ export class App
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
+    protected readonly RoutesPermissions: typeof RoutesPermissions = RoutesPermissions
+
     constructor(
-        private readonly nzDialog: NzModalService,
-        private readonly nzI18nService: NzI18nService,
-        private readonly responsiveLayoutService: ResponsiveLayoutService,
-        private readonly popupMsgService: PopupMsgService,
+        readonly nzDialog: NzModalService,
+        readonly nzI18nService: NzI18nService,
+        readonly responsiveLayoutService: ResponsiveLayoutService,
+        readonly popupMsgService: PopupMsgService,
         private readonly router: Router
     )
     {
