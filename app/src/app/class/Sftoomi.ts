@@ -71,15 +71,8 @@ export default class Sftoomi
      */
     public static dateShort(date?: string | null | Date): string
     {
-        if (!date) {
-            return '';
-        }
-
-        const luxonDate = date instanceof Date
-            ? DateTime.fromJSDate(date)
-            : DateTime.fromISO(date.toString());
-
-        if (!luxonDate.isValid) {
+        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
+        if (!luxonDate || !luxonDate.isValid) {
             return '';
         }
 
@@ -91,15 +84,8 @@ export default class Sftoomi
      */
     public static dateTime(date?: string | null | Date): string
     {
-        if (!date) {
-            return '';
-        }
-
-        const luxonDate = date instanceof Date
-            ? DateTime.fromJSDate(date)
-            : DateTime.fromISO(date.toString());
-
-        if (!luxonDate.isValid) {
+        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
+        if (!luxonDate || !luxonDate.isValid) {
             return '';
         }
 
@@ -111,18 +97,8 @@ export default class Sftoomi
      */
     public static stringToDate(date?: string | null | Date): Date | null
     {
-        if (!date) {
-            return null;
-        }
-
-        if (date instanceof Date) {
-            return date
-        }
-
-
-        const luxonDate = DateTime.fromISO(date.toString());
-
-        if (!luxonDate.isValid) {
+        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
+        if (!luxonDate || !luxonDate.isValid) {
             return null;
         }
 
@@ -387,5 +363,24 @@ export default class Sftoomi
     public static duplicateEntity(entity: any): any
     {
         return JSON.parse(JSON.stringify(entity));
+    }
+
+    private static parseDateToLuxon(date?: string | null | Date): DateTime | null
+    {
+        if (!date) {
+            return null;
+        }
+
+        let luxonDate;
+        if (date instanceof Date) {
+            luxonDate = DateTime.fromJSDate(date);
+        } else {
+            luxonDate = DateTime.fromISO(date.toString())
+            if (!luxonDate.isValid) {
+                luxonDate = DateTime.fromSQL(date);
+            }
+        }
+
+        return luxonDate;
     }
 }
