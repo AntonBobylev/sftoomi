@@ -7,6 +7,7 @@ use App\Class\Contacts;
 use App\Class\Core\DB\Connection as DBConnection;
 use App\Class\Fetcher;
 use App\Class\Messenger\User\ResetPassword\Message as ResetUserPasswordMessage;
+use App\Class\Model\GroupModel;
 use App\Class\Model\UserModel;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
@@ -42,6 +43,11 @@ final class UsersController extends SftoomiController
             $request->request->get("limit")
         );
 
+        foreach ($users["data"] as &$user) {
+            $user["user_groups"] = $this->getUserGroups($user["id"]);
+        }
+        unset($user);
+
         return new JsonResponse([
             "data"  => $users["data"],
             "total" => $users["total"]
@@ -57,17 +63,23 @@ final class UsersController extends SftoomiController
         $data = [];
         if ($request->request->has("id")) {
             $userModel = new UserModel($this->connection);
-            $data = $userModel->get(Fetcher::int($request->request->get("id")));
+
+            $userId = Fetcher::int($request->request->get("id"));
+            $data = $userModel->get($userId);
 
             if (!empty($data)) {
                 $data["contacts"] = $this->contacts->get($data["contact_id"]);
+                $data["user_groups"] = $this->getUserGroups($userId);
             }
 
             unset($data["contact_id"]);
         }
 
         return new JsonResponse([
-            "data" => $data
+            "data"  => $data,
+            "lists" => [
+                "groups" => new GroupModel($this->connection)->getAll()["data"]
+            ]
         ]);
     }
 
@@ -108,12 +120,35 @@ final class UsersController extends SftoomiController
             $values
         );
 
+        $userId = $isNewUser ? $this->connection->getLastInsertId() : $values["id"];
+
+        $userGroups = Fetcher::intArray($request->request->get("user_groups"), []);
+        if (empty($userGroups)) {
+            throw new \RuntimeException("At least one user group must be selected for the user");
+        }
+
+        $this->connection->delete(
+            "users_groups",
+            "user_id = ?",
+            [$userId]
+        );
+
+        foreach ($userGroups as $groupId) {
+            $this->connection->insert(
+                "users_groups",
+                [
+                    "user_id"  => $userId,
+                    "group_id" => $groupId
+                ]
+            );
+        }
+
         if ($resetPassword || $isNewUser) {
-            $this->resetUserPassword($values["id"], $this->getUserPrimaryEmail($values["id"]));
+            $this->resetUserPassword($userId, $this->getUserPrimaryEmail($userId));
         }
 
         return new JsonResponse([
-            "id" => $isNewUser ? $this->connection->getLastInsertId() : $values["id"]
+            "id" => $userId
         ]);
     }
 
@@ -252,5 +287,15 @@ final class UsersController extends SftoomiController
     private function getUserPrimaryEmail(int $userId): string | null
     {
         return $this->getUserEmailsList($userId)[0];
+    }
+
+    private function getUserGroups(int $userId): array
+    {
+        $sql = "select g.id, g.name
+                from users_groups ug
+                    left join `groups` g on g.id = ug.group_id
+                where ug.user_id = ?";
+
+        return $this->connection->fetchAll($sql, [$userId]);
     }
 }

@@ -47,6 +47,19 @@
                       [class.contacts-field-mobile]="responsiveLayoutService.isSmallWidth()"
         />
     </nz-collapse-panel>
+
+    <nz-collapse-panel [nzHeader]="Sftoomi.Translator.translate('views.users.dialog.links_panel_title')"
+                       [nzActive]="true"
+    >
+        <app-combo #groupsCtrl
+                   [label]="Sftoomi.Translator.translate('views.users.dialog.groups')"
+                   name="user_groups"
+                   [form]="form"
+                   [useClear]="true"
+                   [useSearch]="true"
+                   [multiple]="true"
+        />
+    </nz-collapse-panel>
 </nz-collapse>
 
 <div *nzModalFooter>
