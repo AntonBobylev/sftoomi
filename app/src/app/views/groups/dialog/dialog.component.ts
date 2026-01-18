@@ -46,17 +46,23 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getGroupAPI): void
     {
-        this.form.get('group_name')?.setValue(data.data.name);
+        let availablePermissionsList: Permission[] = data.lists.permissions,
+            selectedPermissionsList:  Permission[] = [];
 
-        let availablePermissionsList: Permission[] = data.lists.permissions;
-        data.data.permissions.forEach((groupPermission: Permission): void => {
-            availablePermissionsList = availablePermissionsList.filter((permission: Permission): boolean => {
-                return permission.id !== groupPermission.id;
+        if (!this.Sftoomi.isEmpty(data.data)) {
+            this.form.get('group_name')?.setValue(data.data.name);
+
+            selectedPermissionsList = data.data.permissions
+            selectedPermissionsList.forEach((groupPermission: Permission): void => {
+                availablePermissionsList = availablePermissionsList.filter((permission: Permission): boolean => {
+                    return permission.id !== groupPermission.id;
+                });
             });
-        })
+        }
+
         this.permissionsCtrl()?.setData(
             this.convertPermissionsToItemSelectorRow(availablePermissionsList),
-            this.convertPermissionsToItemSelectorRow(data.data.permissions)
+            this.convertPermissionsToItemSelectorRow(selectedPermissionsList)
         );
     }
 
@@ -74,6 +80,10 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
 
     protected isSaveButtonDisabled(): boolean
     {
+        if (!this.permissionsCtrl()) {
+            return false;
+        }
+
         let selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
 
         return this.form.invalid || this.Sftoomi.isEmpty(selectedPermissions);

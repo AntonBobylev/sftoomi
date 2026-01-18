@@ -67,7 +67,7 @@ final class GroupsController extends SftoomiController
             "name" => Fetcher::trim($request->request->get("group_name"))
         ];
 
-        $this->assertAllRequiredFieldsSet(["id", "name"], $values);
+        $this->assertAllRequiredFieldsSet(["name"], $values);
 
         $this->connection->insupd(
             "groups",
