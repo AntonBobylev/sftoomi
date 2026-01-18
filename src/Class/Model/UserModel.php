@@ -8,11 +8,11 @@ class UserModel extends AbstractModel
     {
         $user = parent::get($id, $filters);
 
-        if (isset($id)) {
+        if (isset($user["id"])) {
             $sql = "select group_id
                     from users_groups
                     where user_id = ?";
-            $groupIds = $this->connection->fetchCol($sql, [$id]);
+            $groupIds = $this->connection->fetchCol($sql, [$user["id"]]);
 
             $sql = "select p.name
                     from groups_permissions gp
