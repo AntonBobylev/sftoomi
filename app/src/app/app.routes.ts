@@ -13,15 +13,15 @@ import UsersModuleComponent from './views/users/users.component';
 import GroupsComponent from './views/groups/groups.component'
 
 export enum RoutesPaths {
-    EXAMINATIONS = 'examinations',
-    GROUPS = 'groups',
-    HOME = '',
-    LOGIN = 'login',
-    PATIENTS = 'patients',
-    REFERRING_DOCTORS = 'referring-doctors',
+    EXAMINATIONS         = 'examinations',
+    GROUPS               = 'groups',
+    HOME                 = '',
+    LOGIN                = 'login',
+    PATIENTS             = 'patients',
+    REFERRING_DOCTORS    = 'referring-doctors',
     REFERRING_FACILITIES = 'referring-facilities',
-    STUDIES = 'studies',
-    USERS = 'users'
+    STUDIES              = 'studies',
+    USERS                = 'users'
 }
 
 const BASE_TITLE = 'SFTOOMI :: ';
