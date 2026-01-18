@@ -44,7 +44,9 @@ final class UsersController extends SftoomiController
         );
 
         foreach ($users["data"] as &$user) {
-            $user["user_groups"] = $this->getUserGroups($user["id"]);
+            $user["links"] = [
+                "user_groups" => $this->getUserGroups($user["id"])
+            ];
         }
         unset($user);
 

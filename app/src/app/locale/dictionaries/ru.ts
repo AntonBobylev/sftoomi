@@ -177,6 +177,11 @@ let ruDictionary: object =  {
                     },
                     created_at: {
                         caption: 'Когда создан'
+                    },
+                    links: {
+                        caption: 'Связи',
+                        groups: 'Группы',
+                        and_more: 'И еще {0}...'
                     }
                 }
             },

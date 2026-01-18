@@ -177,6 +177,11 @@ let usDictionary: object =  {
                     },
                     created_at: {
                         caption: 'Created at'
+                    },
+                    links: {
+                        caption: 'Links',
+                        groups: 'Groups',
+                        and_more: 'and {0} more...'
                     }
                 }
             },

@@ -7,7 +7,9 @@ type getUsersAPI = {
         first_name:  string,
         middle_name: string,
         created_at:  string,
-        user_groups: Group[]
+        links: {
+            user_groups: Group[]
+        }
     }[],
     total: number
 };
