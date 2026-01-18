@@ -1,3 +1,6 @@
+imports:
+    - { resource: 'doctrine_filters.yaml' }
+
 doctrine:
     dbal:
         url: '%env(resolve:DATABASE_URL)%'
@@ -8,17 +11,6 @@ doctrine:
 
         profiling_collect_backtrace: '%kernel.debug%'
         use_savepoints: true
-        schema_filter:
-            "~^(?!(\
-                cpts|\
-                facilities_doctors|\
-                examinations_studies|\
-                studies_cpts|\
-                templates_studies|\
-                sessions|\
-                users_groups|\
-                groups_permissions\
-            )$)~"
     orm:
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true

@@ -1,0 +1,13 @@
+doctrine:
+    dbal:
+        schema_filter:
+            "~^(?!(\
+                cpts|\
+                facilities_doctors|\
+                examinations_studies|\
+                studies_cpts|\
+                templates_studies|\
+                sessions|\
+                users_groups|\
+                groups_permissions\
+            )$)~"
