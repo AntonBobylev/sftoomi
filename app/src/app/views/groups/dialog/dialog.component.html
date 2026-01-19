@@ -3,17 +3,15 @@
 <div class="wrapper"
      [formGroup]="form"
 >
-    <div>
-        <app-textfield label="Group name"
-                       name="group_name"
-                       [form]="form"
-        />
+    <app-textfield label="Group name"
+                   name="group_name"
+                   [form]="form"
+    />
 
-        <app-item-selector #permissionsCtrl
-                           label="Permissions"
-                           [required]="true"
-        />
-    </div>
+    <app-item-selector #permissionsCtrl
+                       label="Permissions"
+                       [required]="true"
+    />
 
     <div *nzModalFooter>
         <button nz-button

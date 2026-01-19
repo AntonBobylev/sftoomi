@@ -24,7 +24,10 @@ export type GroupEditDialogData = {
         NzButtonComponent, NzModalFooterDirective,
         AppTextfieldComponent, AppItemSelectorComponent
     ],
-    styleUrl: './dialog.component.less'
+    styleUrls: [
+        './dialog.component.less',
+        '../../../components/core/app-base-edit-dialog/app-base-edit-dialog.less'
+    ]
 })
 
 export default class GroupEditDialogComponent extends AppBaseEditDialog
