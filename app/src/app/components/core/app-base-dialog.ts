@@ -23,7 +23,11 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
     protected readonly permission?: string;
 
     protected readonly dialogResizer: Signal<any> = computed((): void => {
-        let width = this.width;
+        let width: number | string | undefined = this.width;
+        if (typeof width === 'number') {
+            width = width + 'px';
+        }
+
         if (this.responsiveLayoutService.isSmallWidth()) {
             width = '100%';
         }

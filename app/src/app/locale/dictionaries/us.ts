@@ -117,7 +117,7 @@ let usDictionary: object =  {
                 add_title: 'Add referring facility',
                 doctors: 'Doctors',
                 edit_title: 'Edit referring facility #{0}',
-                width: 400
+                width: '400px'
             }
         },
         referring_doctors: {
@@ -133,7 +133,7 @@ let usDictionary: object =  {
                 add_title: 'Add referring doctor',
                 edit_title: 'Edit referring doctor #{0}',
                 facilities: 'Facilities',
-                width: 400
+                width: '400px'
             }
         },
         studies: {
@@ -148,7 +148,7 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add study',
                 edit_title: 'Edit study #{0}',
-                width: 400,
+                width: '400px',
                 cpts: 'CPTs'
             }
         },
@@ -166,7 +166,7 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add group',
                 edit_title: 'Edit group #{0}',
-                width: 400
+                width: '600px'
             }
         },
         users: {

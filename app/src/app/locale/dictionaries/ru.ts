@@ -117,7 +117,7 @@ let ruDictionary: object =  {
                 add_title: 'Добавление направляющего учреждения',
                 doctors: 'Врачи',
                 edit_title: 'Редактирование направляющего учреждения #{0}',
-                width: 500
+                width: '500px'
             }
         },
         referring_doctors: {
@@ -133,7 +133,7 @@ let ruDictionary: object =  {
                 add_title: 'Добавление направляющего врача',
                 edit_title: 'Редактирование направляющего врача #{0}',
                 facilities: 'Учреждения',
-                width: 500
+                width: '500px'
             }
         },
         studies: {
@@ -148,7 +148,7 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавление обследования',
                 edit_title: 'Редактирование обследования #{0}',
-                width: 500,
+                width: '500px',
                 cpts: 'CPT'
             }
         },
@@ -166,7 +166,7 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавить группу',
                 edit_title: 'Редактирование группы #{0}',
-                width: 400
+                width: '600px'
             }
         },
         users: {
