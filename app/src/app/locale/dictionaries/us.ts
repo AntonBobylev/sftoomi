@@ -166,7 +166,7 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add group',
                 edit_title: 'Edit group #{0}',
-                width: '600px'
+                width: '700px'
             }
         },
         users: {
@@ -206,10 +206,14 @@ let usDictionary: object =  {
     fields: {
         item_selector: {
             available: 'Available',
+            move_all_down: 'Move all down',
             move_all_left: 'Move all left',
             move_all_right: 'Move all right',
+            move_all_up: 'Move all up',
+            move_down: 'Move down',
             move_left: 'Move left',
             move_right: 'Move right',
+            move_up: 'Move up',
             selected: 'Selected'
         },
         studies_selector: {

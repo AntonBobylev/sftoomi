@@ -166,7 +166,7 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавить группу',
                 edit_title: 'Редактирование группы #{0}',
-                width: '600px'
+                width: '700px'
             }
         },
         users: {
@@ -206,10 +206,14 @@ let ruDictionary: object =  {
     fields: {
         item_selector: {
             available: 'Доступно',
-            move_all_left: 'Переместить все влево',
-            move_all_right: 'Переместить все вправо',
+            move_all_down: 'Переместить всё вниз',
+            move_all_left: 'Переместить всё влево',
+            move_all_right: 'Переместить всё вправо',
+            move_all_up: 'Переместить всё вверх',
+            move_down: 'Переместить вниз',
             move_left: 'Переместить влево',
             move_right: 'Переместить вправо',
+            move_up: 'Переместить вверх',
             selected: 'Выбрано'
         },
         studies_selector: {

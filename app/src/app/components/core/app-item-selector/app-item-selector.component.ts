@@ -73,6 +73,53 @@ export default class AppItemSelectorComponent
         this.moveRows(this.leftList()!, this.rightList()!, true);
     }
 
+    protected getButtonConfig(buttonIndex: 1 | 2 | 3 | 4): { tooltip: string, callback: Function, icon: string }
+    {
+        const isMobile: boolean = this.Sftoomi.responsiveLayoutService?.isSmallWidth() ?? false;
+        switch (buttonIndex) {
+            case 1:
+                return {
+                    tooltip: this.Sftoomi.Translator.translate(
+                        isMobile
+                            ? 'fields.item_selector.move_all_up'
+                            : 'fields.item_selector.move_all_right'
+                    ),
+                    callback: isMobile ? this.onMoveAllLeftClick : this.onMoveAllRightClick,
+                    icon:     isMobile ? 'caret-up' : 'double-right'
+                };
+            case 2:
+                return {
+                    tooltip: this.Sftoomi.Translator.translate(
+                        isMobile
+                            ? 'fields.item_selector.move_up'
+                            : 'fields.item_selector.move_right'
+                    ),
+                    callback: isMobile ? this.onMoveLeftClick : this.onMoveRightClick,
+                    icon:     isMobile ? 'up' : 'right'
+                };
+            case 3:
+                return {
+                    tooltip: this.Sftoomi.Translator.translate(
+                        isMobile
+                            ? 'fields.item_selector.move_down'
+                            : 'fields.item_selector.move_left'
+                    ),
+                    callback: isMobile ? this.onMoveRightClick : this.onMoveLeftClick,
+                    icon:     isMobile ? 'down' : 'left'
+                };
+            case 4:
+                return {
+                    tooltip: this.Sftoomi.Translator.translate(
+                        isMobile
+                            ? 'fields.item_selector.move_all_down'
+                            : 'fields.item_selector.move_all_left'
+                    ),
+                    callback: isMobile ? this.onMoveAllRightClick : this.onMoveAllLeftClick,
+                    icon:     isMobile ? 'caret-down' : 'double-left'
+                };
+        }
+    }
+
     private moveRows(from: AppItemSelectorDataListComponent, to: AppItemSelectorDataListComponent, moveAll: boolean = false): void
     {
         let fromItems: AppItemSelectorDataListRow[] = from.getAllRows(),

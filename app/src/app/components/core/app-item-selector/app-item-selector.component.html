@@ -4,7 +4,9 @@
             {{ label }}
         </nz-form-label>
     }
-    <div class="wrapper">
+    <div class="wrapper"
+         [class.wrapper-mobile]="Sftoomi.responsiveLayoutService?.isSmallWidth()"
+    >
         <app-item-selector-data-list #left
                                      [title]="Sftoomi.Translator.translate('fields.item_selector.available')"
         />
@@ -12,37 +14,37 @@
             <button nz-button
                     nzType="primary"
                     nzShape="round"
-                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_all_right')"
-                    (click)="onMoveAllRightClick()"
+                    [nz-tooltip]="getButtonConfig(1).tooltip"
+                    (click)="getButtonConfig(1).callback.call(this)"
             >
-                <nz-icon nzType="double-right" />
+                <nz-icon [nzType]="getButtonConfig(1).icon" />
             </button>
 
             <button nz-button
                     nzType="primary"
                     nzShape="round"
-                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_right')"
-                    (click)="onMoveRightClick()"
+                    [nz-tooltip]="getButtonConfig(2).tooltip"
+                    (click)="getButtonConfig(2).callback.call(this)"
             >
-                <nz-icon nzType="right" />
+                <nz-icon [nzType]="getButtonConfig(2).icon" />
             </button>
 
             <button nz-button
                     nzType="primary"
                     nzShape="round"
-                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_left')"
-                    (click)="onMoveLeftClick()"
+                    [nz-tooltip]="getButtonConfig(3).tooltip"
+                    (click)="getButtonConfig(3).callback.call(this)"
             >
-                <nz-icon nzType="left" />
+                <nz-icon [nzType]="getButtonConfig(3).icon" />
             </button>
 
             <button nz-button
                     nzType="primary"
                     nzShape="round"
-                    [nz-tooltip]="Sftoomi.Translator.translate('fields.item_selector.move_all_left')"
-                    (click)="onMoveAllLeftClick()"
+                    [nz-tooltip]="getButtonConfig(4).tooltip"
+                    (click)="getButtonConfig(4).callback.call(this)"
             >
-                <nz-icon nzType="double-left" />
+                <nz-icon [nzType]="getButtonConfig(4).icon" />
             </button>
         </div>
 

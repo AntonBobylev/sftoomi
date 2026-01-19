@@ -15,3 +15,13 @@
         gap: 5px;
     }
 }
+
+.wrapper-mobile {
+    flex-direction: column;
+    width: 100%;
+    align-items: unset;
+
+    app-item-selector-data-list {
+        width: 100%;
+    }
+}
