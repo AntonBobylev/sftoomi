@@ -43,6 +43,9 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
     protected override readonly loadUrl: string = '/getDoctor';
     protected override readonly saveUrl: string = '/saveDoctor';
 
+    protected override readonly addPermission: string | undefined = 'REFERRING_DOCTORS_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'REFERRING_DOCTORS_MODULE::EDIT';
+
     protected override readonly width: number | string | undefined = parseInt(Sftoomi.Translator.translate('views.referring_doctors.dialog.width'))
 
     protected readonly form: FormGroup = new FormGroup({

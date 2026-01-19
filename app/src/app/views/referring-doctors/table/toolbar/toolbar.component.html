@@ -4,6 +4,7 @@
             nzShape="circle"
             (click)="onAddClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('add')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('REFERRING_DOCTORS_MODULE::ADD')"
     >
         <nz-icon nzType="plus" />
     </button>
@@ -12,6 +13,7 @@
             nzShape="circle"
             (click)="onEditClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('edit')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('REFERRING_DOCTORS_MODULE::EDIT')"
     >
         <nz-icon nzType="edit" />
     </button>
@@ -20,6 +22,7 @@
             nzShape="circle"
             (click)="onRemoveClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('remove')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('REFERRING_DOCTORS_MODULE::REMOVE')"
     >
         <nz-icon nzType="delete" />
     </button>
@@ -28,6 +31,7 @@
             nzShape="circle"
             (click)="onRefreshClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('refresh')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('REFERRING_DOCTORS_MODULE')"
     >
         <nz-icon nzType="retweet" />
     </button>
