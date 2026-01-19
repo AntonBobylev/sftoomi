@@ -17,7 +17,7 @@ final readonly class SessionManager
 
         $values = [
             "session_id"   => $sessionId,
-            "session_data" => serialize([
+            "session_data" => json_encode([
                 "id"    => $user["id"],
                 "login" => $user["login"]
             ]),
@@ -54,7 +54,7 @@ final readonly class SessionManager
                 [$sessionId]
             );
 
-            return unserialize($session);
+            return json_decode($session, true);
         }
 
         return null;

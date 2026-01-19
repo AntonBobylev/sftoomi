@@ -44,6 +44,10 @@ services:
         arguments:
             $logger: '@monolog.logger.mailer'
 
+    App\Class\Security\Auth:
+        arguments:
+            - '@connection'
+
     connection:
         class: App\Class\Core\DB\Connection
         arguments:
