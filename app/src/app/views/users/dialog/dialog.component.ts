@@ -51,6 +51,9 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getUser';
     protected override readonly saveUrl: string = '/saveUser';
 
+    protected override readonly addPermission: string | undefined = 'USERS_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'USERS_MODULE::EDIT';
+
     protected readonly form: FormGroup = new FormGroup({
         // Common
         login:                    new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
