@@ -41,6 +41,9 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getGroup';
     protected override readonly saveUrl: string = '/saveGroup';
 
+    protected override readonly addPermission: string | undefined = 'GROUPS_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'GROUPS_MODULE::EDIT';
+
     protected override readonly width: number | string | undefined = this.Sftoomi.Translator.translate('views.groups.dialog.width');
 
     protected readonly form: FormGroup = new FormGroup({
