@@ -42,6 +42,9 @@ export default class StudiesEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getStudy';
     protected override readonly saveUrl: string = '/saveStudy';
 
+    protected override readonly addPermission: string | undefined = 'STUDIES_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'STUDIES_MODULE::EDIT';
+
     protected override readonly width: number | string | undefined = parseInt(Sftoomi.Translator.translate('views.studies.dialog.width'));
 
     protected readonly form: FormGroup = new FormGroup({
