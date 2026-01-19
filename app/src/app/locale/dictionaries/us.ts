@@ -5,7 +5,7 @@ let usDictionary: object =  {
     dob_short: 'DoB',
     edit: 'Edit',
     error: 'Error',
-    filters: 'Фильтры',
+    filters: 'Filters',
     first_name: 'First name',
     full_name: 'Full name',
     id: 'ID',
