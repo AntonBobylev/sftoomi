@@ -5,6 +5,7 @@
             [disabled]="table.isLoadingNow()"
             (click)="onAddClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('add')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::ADD')"
     >
         <nz-icon nzType="plus" />
     </button>
@@ -14,6 +15,7 @@
             [disabled]="table.isLoadingNow()"
             (click)="onEditClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('edit')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::EDIT')"
     >
         <nz-icon nzType="edit" />
     </button>
@@ -23,6 +25,7 @@
             [disabled]="table.isLoadingNow()"
             (click)="onRemoveClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('remove')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::REMOVE')"
     >
         <nz-icon nzType="delete" />
     </button>
@@ -32,6 +35,7 @@
             [disabled]="table.isLoadingNow()"
             (click)="onRefreshClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('refresh')"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE')"
     >
         <nz-icon nzType="retweet" />
     </button>

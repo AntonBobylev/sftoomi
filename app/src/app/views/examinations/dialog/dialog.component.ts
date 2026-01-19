@@ -57,6 +57,9 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
     protected override readonly loadUrl: string = '/getExamination';
     protected override readonly saveUrl: string = '/saveExamination';
 
+    protected override readonly addPermission: string | undefined = 'EXAMINATIONS_MODULE::ADD';
+    protected override readonly editPermission: string | undefined = 'EXAMINATIONS_MODULE::EDIT';
+
     protected override readonly idField: string = 'examination_id';
 
     protected override readonly width: number | string | undefined = 800;
