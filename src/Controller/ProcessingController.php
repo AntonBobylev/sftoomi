@@ -18,6 +18,8 @@ final class ProcessingController extends SftoomiController
     #[Route("/getExaminations", name: "get_examinations")]
     public function getExaminations(Request $request): Response
     {
+        $this->auth->requirePermission("EXAMINATIONS_MODULE");
+
         $filters = [];
 
         $examinationDate = Fetcher::date($request->request->get("examination_date"));
@@ -48,6 +50,8 @@ final class ProcessingController extends SftoomiController
     #[Route("/getExaminationsFilters", name: "get_examinations_filters")]
     public function getExaminationsFilters(): Response
     {
+        $this->auth->requirePermission("EXAMINATIONS_MODULE");
+
         $sql = "select distinct date
                 from examinations";
         $data["dates_with_examinations"] = $this->connection->fetchCol($sql);
@@ -60,6 +64,8 @@ final class ProcessingController extends SftoomiController
     #[Route("/getExamination", name: "get_examination")]
     public function getExamination(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["EXAMINATIONS_MODULE::ADD", "EXAMINATIONS_MODULE::EDIT"]);
+
         $data = [];
         $examinationId = Fetcher::int($request->request->get("examination_id"));
 
@@ -113,6 +119,12 @@ final class ProcessingController extends SftoomiController
             "facility_id" => Fetcher::int($request->request->get("facility_id")),
             "doctor_id"   => Fetcher::int($request->request->get("doctor_id"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "EXAMINATIONS_MODULE::ADD"
+                : "EXAMINATIONS_MODULE::EDIT"
+        );
 
         $patientId = Fetcher::int($request->request->get("patient_id"));
         if (!isset($patientId)) {
@@ -196,6 +208,8 @@ final class ProcessingController extends SftoomiController
     #[Route("/removeExamination", name: "remove_examination")]
     public function removeExamination(Request $request): JsonResponse
     {
+        $this->auth->requirePermission("EXAMINATIONS_MODULE::REMOVE");
+
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)

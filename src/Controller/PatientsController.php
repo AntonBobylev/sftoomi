@@ -6,6 +6,7 @@ use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Format;
 use App\Class\Model\PatientModel;
+use App\Class\Security\Auth;
 use Doctrine\DBAL\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,6 +21,8 @@ final class PatientsController extends SftoomiController
     #[Route("/getPatients", name: "get_patients")]
     public function getPatients(Request $request): Response
     {
+        $this->auth->requirePermission("PATIENTS_MODULE");
+
         $patientModel = new PatientModel($this->connection);
         $result = $patientModel->getAll(
             $request->request->get("start"),
@@ -38,6 +41,8 @@ final class PatientsController extends SftoomiController
     #[Route("/getPatient", name: "get_patient")]
     public function getPatient(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["PATIENTS_MODULE::ADD", "PATIENTS_MODULE::EDIT"]);
+
         $id = Fetcher::int($request->request->get("id"));
         $data = [];
 
@@ -65,6 +70,12 @@ final class PatientsController extends SftoomiController
             "phone"       => Fetcher::trim($request->request->get("phone")),
             "dob"         => Fetcher::date($request->request->get("dob"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "PATIENTS_MODULE::ADD"
+                : "PATIENTS_MODULE::EDIT"
+        );
 
         if (!empty($values["last_name"])) {
             $values["last_name"] = mb_strtoupper($values["last_name"]);
@@ -98,6 +109,8 @@ final class PatientsController extends SftoomiController
     #[Route("/removePatient", name: "remove_patient")]
     public function removePatient(Request $request): Response
     {
+        $this->auth->requirePermission("PATIENTS_MODULE::REMOVE");
+
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)
@@ -112,6 +125,8 @@ final class PatientsController extends SftoomiController
     #[Route("/lookupPatient", name: "lookup_patient")]
     public function lookupPatient(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["PATIENTS_MODULE::ADD", "PATIENTS_MODULE::EDIT"]);
+
         $query = $request->request->get("query");
         if (empty($query)) {
             return new JsonResponse([]);

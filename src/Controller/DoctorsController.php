@@ -17,6 +17,8 @@ final class DoctorsController extends SftoomiController
     #[Route("/getDoctors", name: "get_doctors")]
     public function getDoctors(Request $request): Response
     {
+        $this->auth->requirePermission("REFERRING_DOCTORS_MODULE");
+
         $doctorModel = new DoctorModel($this->connection);
 
         $result = $doctorModel->getAll(
@@ -36,6 +38,8 @@ final class DoctorsController extends SftoomiController
     #[Route("/getDoctor", name: "get_doctor")]
     public function getDoctor(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["REFERRING_DOCTORS_MODULE::ADD", "REFERRING_DOCTORS_MODULE::EDIT"]);
+
         $data = [];
         $doctorId = Fetcher::int($request->request->get("id"));
 
@@ -70,6 +74,12 @@ final class DoctorsController extends SftoomiController
             "first_name"  => Fetcher::trim($request->request->get("first_name")),
             "middle_name" => Fetcher::trim($request->request->get("middle_name"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "REFERRING_DOCTORS_MODULE::ADD"
+                : "REFERRING_DOCTORS_MODULE::EDIT"
+        );
 
         $this->assertAllRequiredFieldsSet(["last_name", "first_name"], $values);
 
@@ -127,6 +137,8 @@ final class DoctorsController extends SftoomiController
     #[Route("/removeDoctor", name: "remove_doctor")]
     public function removeDoctor(Request $request): Response
     {
+        $this->auth->requirePermission("REFERRING_DOCTORS_MODULE::REMOVE");
+
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)

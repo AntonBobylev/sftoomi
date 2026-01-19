@@ -20,11 +20,15 @@ class Auth
 
     public function requirePermission(string $permissionName): void
     {
-        if (empty($permissionName) || $permissionName === "*") {
+        if (empty($permissionName)) {
             return;
         }
 
         $userPermissions = $this->getUserPermissions();
+        if (in_array("*", $userPermissions)) {
+            return;
+        }
+
         if (empty($userPermissions) || !in_array($permissionName, $userPermissions)) {
             throw new \RuntimeException("This operation is not allowed");
         }
@@ -32,11 +36,15 @@ class Auth
 
     public function requireAnyPermission(array $permissionsNames): void
     {
-        if (empty($permissionsNames) || in_array("*", $permissionsNames)) {
+        if (empty($permissionsNames)) {
             return;
         }
 
         $userPermissions = $this->getUserPermissions();
+        if (in_array("*", $userPermissions)) {
+            return;
+        }
+
         $hasPermission = !empty(array_intersect($permissionsNames, $userPermissions));
         if (empty($hasPermission)) {
             throw new \RuntimeException("This operation is not allowed");

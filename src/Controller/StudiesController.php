@@ -18,6 +18,8 @@ final class StudiesController extends SftoomiController
     #[Route("/getStudies", name: "get_studies")]
     public function getStudies(Request $request): Response
     {
+        $this->auth->requirePermission("STUDIES_MODULE");
+
         $studyModel = new StudyModel($this->connection);
         $result = $studyModel->getAll(
             $request->request->get("start"),
@@ -36,6 +38,8 @@ final class StudiesController extends SftoomiController
     #[Route("/getStudy", name: "get_study")]
     public function getStudy(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["STUDIES_MODULE::ADD", "STUDIES_MODULE::EDIT"]);
+
         $studyId = Fetcher::int($request->request->get("id"));
 
         $study = [];
@@ -66,16 +70,17 @@ final class StudiesController extends SftoomiController
     #[Route("/saveStudy", name: "save_study")]
     public function saveStudy(Request $request): Response
     {
-        $cptCodesIds = Fetcher::intArray($request->request->get("study_cpts"));
-        if (empty($cptCodesIds)) {
-            throw new InvalidArgumentException("Study must have at least one cpt code");
-        }
-
         $values = [
             "id"          => Fetcher::int($request->request->get("id")),
             "short_name"  => Fetcher::trim($request->request->get("short_name")),
             "full_name"   => Fetcher::trim($request->request->get("full_name"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "STUDIES_MODULE::ADD"
+                : "STUDIES_MODULE::EDIT"
+        );
 
         $this->connection->insupd(
             "study",
@@ -95,6 +100,11 @@ final class StudiesController extends SftoomiController
             [$studyId]
         );
 
+        $cptCodesIds = Fetcher::intArray($request->request->get("study_cpts"));
+        if (empty($cptCodesIds)) {
+            throw new InvalidArgumentException("Study must have at least one cpt code");
+        }
+
         foreach ($cptCodesIds as $cptCodeId) {
             $this->connection->insert(
                 "studies_cpts",
@@ -110,6 +120,8 @@ final class StudiesController extends SftoomiController
     #[Route("/removeStudy", name: "remove_study")]
     public function removeStudy(Request $request): Response
     {
+        $this->auth->requirePermission("STUDIES_MODULE::REMOVE");
+
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)
@@ -124,6 +136,8 @@ final class StudiesController extends SftoomiController
     #[Route("/lookupCpt", name: "lookup_cpt")]
     public function lookupCpt(Request $request): Response
     {
+        $this->auth->requirePermission("STUDIES_MODULE");
+
         $query = Fetcher::trim($request->request->get("query"));
         if (empty($query)) {
             return new JsonResponse([]);

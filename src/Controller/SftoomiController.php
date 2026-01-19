@@ -3,16 +3,17 @@
 namespace App\Controller;
 
 use App\Class\Core\DB\Connection as DBConnection;
+use App\Class\Security\Auth;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 abstract class SftoomiController extends AbstractController
 {
-    protected DBConnection $connection;
-
-    public function __construct(DBConnection $connection)
+    public function __construct(
+        protected readonly DBConnection $connection,
+        protected readonly Auth $auth
+    )
     {
-        $this->connection = $connection;
     }
 
     protected function assertAllRequiredFieldsSet(array $requiredFields, array $values): void

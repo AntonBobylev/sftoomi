@@ -77,5 +77,14 @@
                 "onDelete": "update"
             }
         }
+    },
+    "users": {
+        "idField": "id",
+        "references": {
+            "users_groups": {
+                "idField": "user_id",
+                "onDelete": "update"
+            }
+        }
     }
 }

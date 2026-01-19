@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Model\GroupModel;
 use App\Class\Model\PermissionModel;
@@ -19,6 +20,8 @@ final class GroupsController extends SftoomiController
     #[Route("/getGroups", name: "get_groups")]
     public function getGroups(Request $request): Response
     {
+        $this->auth->requirePermission("GROUPS_MODULE");
+
         $groupModel = new GroupModel($this->connection);
         $result = $groupModel->getAll(
             $request->request->get("start"),
@@ -39,6 +42,8 @@ final class GroupsController extends SftoomiController
     #[Route("/getGroup", name: "get_group")]
     public function getGroup(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["GROUPS_MODULE::ADD", "GROUPS_MODULE::EDIT"]);
+
         $id = Fetcher::int($request->request->get("id"));
         $data = [];
 
@@ -66,6 +71,12 @@ final class GroupsController extends SftoomiController
             "id"   => Fetcher::int($request->request->get("id")),
             "name" => Fetcher::trim($request->request->get("group_name"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "GROUPS_MODULE::ADD"
+                : "GROUPS_MODULE::EDIT"
+        );
 
         $this->assertAllRequiredFieldsSet(["name"], $values);
 
@@ -101,6 +112,19 @@ final class GroupsController extends SftoomiController
         return new JsonResponse([
             "id" => $groupId
         ]);
+    }
+
+    #[Route("/removeGroup", name: "remove_group")]
+    public function removeGroup(Request $request): Response
+    {
+        $this->auth->requirePermission("GROUPS_MODULE::REMOVE");
+
+        $ids = Fetcher::intArray($request->request->get("ids"));
+
+        new EntityManipulator($this->connection)
+            ->remove("groups", $ids);
+
+        return new JsonResponse([]);
     }
 
     private function getGroupPermissions(int $groupId): array

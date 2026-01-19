@@ -5,10 +5,12 @@ namespace App\Controller;
 use App\Class\Constants;
 use App\Class\Contacts;
 use App\Class\Core\DB\Connection as DBConnection;
+use App\Class\EntityManipulator;
 use App\Class\Fetcher;
 use App\Class\Messenger\User\ResetPassword\Message as ResetUserPasswordMessage;
 use App\Class\Model\GroupModel;
 use App\Class\Model\UserModel;
+use App\Class\Security\Auth;
 use App\Class\Utils\PasswordGenerator;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -26,17 +28,20 @@ final class UsersController extends SftoomiController
 {
     public function __construct(
         DBConnection $connection,
+        Auth $auth,
         private readonly Contacts $contacts,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly MessageBusInterface $messageBus
     )
     {
-        parent::__construct($connection);
+        parent::__construct($connection, $auth);
     }
 
     #[Route("/getUsers", name: "get_users")]
     public function getUsers(Request $request): Response
     {
+        $this->auth->requirePermission("USERS_MODULE");
+
         $userModel = new UserModel($this->connection);
         $users = $userModel->getAll(
             $request->request->get("start"),
@@ -62,6 +67,8 @@ final class UsersController extends SftoomiController
     #[Route("/getUser", name: "get_user")]
     public function getUserApi(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["USERS_MODULE::ADD", "USERS_MODULE::EDIT"]);
+
         $data = [];
         if ($request->request->has("id")) {
             $userModel = new UserModel($this->connection);
@@ -91,12 +98,20 @@ final class UsersController extends SftoomiController
     #[Route("/saveUser", name: "save_user")]
     public function saveUser(Request $request): Response
     {
+        $id = Fetcher::int($request->request->get("id"));
+
+        $this->auth->requirePermission(
+            empty($id)
+                ? "USERS_MODULE::ADD"
+                : "USERS_MODULE::EDIT"
+        );
+
         $contactId = $this->contacts->set(Fetcher::json($request->request->get("contacts")));
 
         $resetPassword = Fetcher::int($request->request->get("reset_password"), false);
 
         $values = [
-            "id"          => Fetcher::int($request->request->get("id")),
+            "id"          => $id,
             "login"       => Fetcher::trim($request->request->get("login")),
             "force_to_change_password" => $resetPassword ? 1 : Fetcher::int($request->request->get("force_to_change_password"), false),
             "disabled"                 => Fetcher::int($request->request->get("disabled"), false),
@@ -245,7 +260,29 @@ final class UsersController extends SftoomiController
     #[Route("/removeUser", name: "remove_user")]
     public function removeUser(Request $request, Contacts $contacts): Response
     {
-        throw new \RuntimeException("Not implemented yet");
+        $this->auth->requirePermission("USERS_MODULE::REMOVE");
+
+        $ids = Fetcher::intArray($request->request->get("ids"));
+
+        if (!empty($ids)) {
+            $sql = "select contact_id
+                    from users
+                    where id in ?";
+            $contactIdsToRemove = $this->connection->fetchCol($sql, [$ids]);
+
+            new EntityManipulator($this->connection)
+                ->remove("users", $ids);
+
+            foreach ($contactIdsToRemove as $contactId) {
+                $this->connection->delete(
+                    "contacts",
+                    "contact_id = ?",
+                    [$contactId]
+                );
+            }
+        }
+
+        return new JsonResponse([]);
     }
 
     /**

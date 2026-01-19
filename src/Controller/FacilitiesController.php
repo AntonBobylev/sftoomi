@@ -20,6 +20,7 @@ final class FacilitiesController extends SftoomiController
     #[Route("/getFacilities", name: "get_facilities")]
     public function getFacilities(Request $request): Response
     {
+        $this->auth->requirePermission("REFERRING_FACILITIES_MODULE");
         $facilityModel = new FacilityModel($this->connection);
         $result = $facilityModel->getAll(
             $request->request->get("start"),
@@ -38,6 +39,8 @@ final class FacilitiesController extends SftoomiController
     #[Route("/getFacility", name: "get_facility")]
     public function getFacility(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["REFERRING_FACILITIES_MODULE::ADD", "REFERRING_FACILITIES_MODULE::EDIT"]);
+
         $data = [];
         $facilityId = Fetcher::int($request->request->get("id"));
         if (!empty($facilityId)) {
@@ -70,6 +73,12 @@ final class FacilitiesController extends SftoomiController
             "short_name" => Fetcher::trim($request->request->get("short_name")),
             "full_name"  => Fetcher::trim($request->request->get("full_name"))
         ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "REFERRING_FACILITIES_MODULE::ADD"
+                : "REFERRING_FACILITIES_MODULE::EDIT"
+        );
 
         $this->assertAllRequiredFieldsSet(["short_name", "full_name"], $values);
 
@@ -110,6 +119,8 @@ final class FacilitiesController extends SftoomiController
     #[Route("/removeFacility", name: "remove_facility")]
     public function removeFacility(Request $request): Response
     {
+        $this->auth->requirePermission("REFERRING_FACILITIES_MODULE::REMOVE");
+
         $ids = Fetcher::intArray($request->request->get("ids"));
 
         new EntityManipulator($this->connection)
