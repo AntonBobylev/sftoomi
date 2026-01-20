@@ -1,34 +1,25 @@
 import { Component, signal, WritableSignal } from '@angular/core';
-import { NgClass, NgTemplateOutlet } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
-import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzI18nService } from 'ng-zorro-antd/i18n';
-import { NzDropdownDirective, NzDropdownMenuComponent } from 'ng-zorro-antd/dropdown';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from './class/Sftoomi';
 
-import { RoutesPaths, RoutesPermissions } from './app.routes';
-
-import LanguageSwitcherComponent from './components/misc/language-switcher/language-switcher.component';
+import { RoutesPaths } from './app.routes';
 
 import ResponsiveLayoutService from './services/responsive-layout.service';
 import PopupMsgService from './services/popup-msg.service'
+
 import AppLoadingSpinnerComponent from './components/misc/app-loading-spinner/app-loading-spinner.component';
+import AppNavigationPanelComponent from './components/layout/app-navigation-panel/app-navigation-panel.component'
 
 @Component({
     selector: 'app-root',
     imports: [
         RouterOutlet, NzLayoutModule, NzMenuModule,
-        RouterLink, NzModalModule, LanguageSwitcherComponent,
-        NzDropdownMenuComponent,
-        NzIconDirective, NgTemplateOutlet,
-        NzButtonComponent, NgClass, NzTooltipDirective,
-        AppLoadingSpinnerComponent, NzDropdownDirective
+        NzModalModule, AppLoadingSpinnerComponent, AppNavigationPanelComponent
     ],
     templateUrl: './app.html',
     styleUrl: './app.less'
@@ -37,11 +28,8 @@ import AppLoadingSpinnerComponent from './components/misc/app-loading-spinner/ap
 export class App
 {
     protected readonly Sftoomi = Sftoomi;
-    protected readonly RoutesPaths = RoutesPaths;
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
-
-    protected readonly RoutesPermissions: typeof RoutesPermissions = RoutesPermissions
 
     constructor(
         readonly nzDialog: NzModalService,
@@ -83,42 +71,5 @@ export class App
                 this.isLoading.set(false);
             });
         });
-    }
-
-    protected isRouteSelected(route: RoutesPaths): boolean
-    {
-        let currentRoute: string = this.router.url;
-        if (currentRoute === '/') {
-            currentRoute = '';
-        }
-
-        return route === currentRoute;
-    }
-
-    protected onLogoutClick(): void
-    {
-        Sftoomi.Auth.logout(
-            this.isLoading,
-            (): void => {
-                this.router.navigateByUrl(RoutesPaths.LOGIN).then();
-            }
-        );
-    }
-
-    protected getSetupMenuPermissions(): (string | undefined)[]
-    {
-        return [
-            RoutesPermissions.get(RoutesPaths.REFERRING_FACILITIES),
-            RoutesPermissions.get(RoutesPaths.REFERRING_DOCTORS),
-            RoutesPermissions.get(RoutesPaths.STUDIES)
-        ];
-    }
-
-    protected getAdministrationMenuPermissions(): (string | undefined)[]
-    {
-        return [
-            RoutesPermissions.get(RoutesPaths.USERS),
-            RoutesPermissions.get(RoutesPaths.GROUPS)
-        ];
     }
 }

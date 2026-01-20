@@ -1,142 +1,15 @@
 <nz-layout class="app-layout">
     <app-loading-spinner [isLoading]="isLoading()" />
     @if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
-        <nz-header [ngClass]="{'mobile-view-header': Sftoomi.responsiveLayoutService?.isSmallWidth()}">
-            <div class="left">
-                <div class="logo">
-                    <a [routerLink]="RoutesPaths.HOME">
-                        <img src="graphics/sftoomi-logo.png" alt="logo">
-                        @if (!Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-                            <h1>SFTOOMI</h1>
-                        }
-                    </a>
-                </div>
-                @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-                    <button nz-dropdown
-                            [nzDropdownMenu]="mobileMenu"
-                            nz-button
-                            nzType="primary"
-                    >
-                        {{ Sftoomi.Translator.translate('navigation.mobile_view.button_caption') }}
-                        <nz-icon nzType="down" />
-                    </button>
-
-                    <nz-dropdown-menu #mobileMenu="nzDropdownMenu">
-                        <ng-container *ngTemplateOutlet="mainMenuTpl; context: {isHorizontal: false}" />
-                    </nz-dropdown-menu>
-                } @else {
-                    <ng-container *ngTemplateOutlet="mainMenuTpl; context: {isHorizontal: true}" />
-                }
-            </div>
-            <div class="right">
-                <language-switcher />
-                <button nz-button
-                        nzType="primary"
-                        (click)="onLogoutClick()"
-                        [nz-tooltip]="Sftoomi.Translator.translate('logout')"
-                >
-                    <nz-icon nzType="logout"></nz-icon>
-                </button>
-            </div>
-        </nz-header>
+        <app-navigation-panel [isLoading]="isLoading"/>
     }
 
     <nz-content>
         <div class="inner-content"
              [class.inner-content-padding]="Sftoomi.Auth.getIsAuthorizedSignal()()"
+             [class.inner-content-padding-mobile]="Sftoomi.Auth.getIsAuthorizedSignal()() && responsiveLayoutService.isSmallWidth()"
         >
             <router-outlet></router-outlet>
         </div>
     </nz-content>
 </nz-layout>
-
-<ng-template #mainMenuTpl let-isHorizontal='isHorizontal'>
-    <ul nz-menu class="top-nav" nzTheme="dark" [nzMode]="isHorizontal ? 'horizontal' : 'vertical'">
-        <li nz-menu-item
-            nz-dropdown
-            [nzDropdownMenu]="administrationMenu"
-            [class.ant-menu-item-selected]="false"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowedAny(getAdministrationMenuPermissions())"
-        >
-            {{ Sftoomi.Translator.translate('navigation.administration.caption') }}
-            <nz-icon nzType="down" />
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [nzSelected]="isRouteSelected(RoutesPaths.PATIENTS)"
-            [routerLink]="RoutesPaths.PATIENTS"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.PATIENTS))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.patients') }}
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [nzSelected]="isRouteSelected(RoutesPaths.EXAMINATIONS)"
-            [routerLink]="RoutesPaths.EXAMINATIONS"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.EXAMINATIONS))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.examinations') }}
-        </li>
-        <li nz-menu-item
-            nz-dropdown
-            [nzDropdownMenu]="setupMenu"
-            [class.ant-menu-item-selected]="false"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowedAny(getSetupMenuPermissions())"
-        >
-            {{ Sftoomi.Translator.translate('navigation.setup.caption') }}
-            <nz-icon nzType="down" />
-        </li>
-    </ul>
-</ng-template>
-
-<nz-dropdown-menu #setupMenu="nzDropdownMenu">
-    <ul nz-menu>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.REFERRING_FACILITIES"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REFERRING_FACILITIES))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.setup.referring_facilities') }}
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.REFERRING_DOCTORS"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REFERRING_DOCTORS))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.setup.referring_doctors') }}
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.STUDIES"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.STUDIES))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.setup.studies') }}
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.REPORT_TEMPLATES"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REPORT_TEMPLATES))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.setup.report_templates') }}
-        </li>
-    </ul>
-</nz-dropdown-menu>
-
-<nz-dropdown-menu #administrationMenu="nzDropdownMenu">
-    <ul nz-menu>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.USERS"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.USERS))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.administration.users') }}
-        </li>
-        <li nz-menu-item
-            nzMatchRouter
-            [routerLink]="RoutesPaths.GROUPS"
-            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.GROUPS))"
-        >
-            {{ Sftoomi.Translator.translate('navigation.administration.groups') }}
-        </li>
-    </ul>
-</nz-dropdown-menu>

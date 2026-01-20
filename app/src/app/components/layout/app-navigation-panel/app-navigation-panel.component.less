@@ -1,0 +1,52 @@
+@import '../../../../theme';
+
+nz-header {
+    padding: 0 10px;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+
+    .left {
+        display: flex;
+        align-items: center;
+    }
+
+    .right {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+}
+
+.mobile-view-header {
+    padding: 0 10px 0 10px;
+}
+
+.top-nav {
+    line-height: 64px;
+}
+
+.logo {
+    float: left;
+    height: 64px;
+    padding-right: 24px;
+    line-height: 64px;
+    background: @layout-header-background;
+}
+
+.logo img {
+    display: inline-block;
+    height: 32px;
+    width: 32px;
+    vertical-align: middle;
+}
+
+.logo h1 {
+    display: inline-block;
+    margin: 0 0 0 15px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 20px;
+    vertical-align: middle;
+}
