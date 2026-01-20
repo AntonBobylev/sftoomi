@@ -112,6 +112,13 @@
         >
             {{ Sftoomi.Translator.translate('navigation.setup.studies') }}
         </li>
+        <li nz-menu-item
+            nzMatchRouter
+            [routerLink]="RoutesPaths.REPORT_TEMPLATES"
+            [class.hidden]="!Sftoomi.Auth.permissions.isAllowed(RoutesPermissions.get(RoutesPaths.REPORT_TEMPLATES))"
+        >
+            {{ Sftoomi.Translator.translate('navigation.setup.report_templates') }}
+        </li>
     </ul>
 </nz-dropdown-menu>
 

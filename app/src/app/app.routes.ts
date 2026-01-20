@@ -11,6 +11,7 @@ import ExaminationsComponent from './views/examinations/examinations.component';
 import LoginComponent from './views/login/login.component'
 import UsersModuleComponent from './views/users/users.component';
 import GroupsComponent from './views/groups/groups.component'
+import ReportTemplatesModuleComponent from './views/report-templates/module.component'
 
 export enum RoutesPaths {
     EXAMINATIONS         = 'examinations',
@@ -20,6 +21,7 @@ export enum RoutesPaths {
     PATIENTS             = 'patients',
     REFERRING_DOCTORS    = 'referring-doctors',
     REFERRING_FACILITIES = 'referring-facilities',
+    REPORT_TEMPLATES     = 'report-templates',
     STUDIES              = 'studies',
     USERS                = 'users'
 }
@@ -56,6 +58,10 @@ export const routes: Routes = [{
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.referring_facilities'),
     component: ReferringFacilitiesComponent
 }, {
+    path: RoutesPaths.REPORT_TEMPLATES,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.report_templates'),
+    component: ReportTemplatesModuleComponent
+}, {
     path: RoutesPaths.STUDIES,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.setup.studies'),
     component: StudiesModuleComponent
@@ -89,6 +95,9 @@ export const RoutesPermissions: Map<string, string | undefined> = new Map([[
 ], [
     RoutesPaths.REFERRING_FACILITIES,
     'REFERRING_FACILITIES_MODULE'
+], [
+    RoutesPaths.REPORT_TEMPLATES,
+    'REPORT_TEMPLATES_MODULE'
 ], [
     RoutesPaths.STUDIES,
     'STUDIES_MODULE'

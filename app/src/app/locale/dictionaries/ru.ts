@@ -40,6 +40,7 @@ let ruDictionary: object =  {
             caption: 'Настройка',
             referring_doctors: 'Направляющие доктора',
             referring_facilities: 'Направляющие учреждения',
+            report_templates: 'Шаблоны отчётов',
             studies: 'Обследования'
         },
         mobile_view: {

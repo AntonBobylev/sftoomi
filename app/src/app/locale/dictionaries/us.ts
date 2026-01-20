@@ -40,6 +40,7 @@ let usDictionary: object =  {
             caption: 'Setup',
             referring_doctors: 'Referring doctors',
             referring_facilities: 'Referring facilities',
+            report_templates: 'Report templates',
             studies: 'Studies'
         },
         mobile_view: {
