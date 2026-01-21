@@ -144,6 +144,31 @@ class InitDefaultUsers extends SftoomiCommand
                 [$userId]
             );
 
+            if (!empty($userData["groups"])) {
+                $sql = "select id
+                        from `groups`
+                        where name in ?";
+                $groupIds = $this->connection->fetchCol($sql, [$userData["groups"]]);
+
+                if (!empty($groupIds)) {
+                    $this->connection->delete(
+                        "users_groups",
+                        "user_id = ?",
+                        [$userId]
+                    );
+
+                    foreach ($groupIds as $groupId) {
+                        $this->connection->insert(
+                            "users_groups",
+                            [
+                                "user_id"  => $userId,
+                                "group_id" => $groupId
+                            ]
+                        );
+                    }
+                }
+            }
+
             $this->connection->commit();
         } catch (Throwable $e) {
             $this->connection->rollBack();

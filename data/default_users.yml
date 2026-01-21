@@ -4,3 +4,5 @@
     last_name: Bobylev
     disabled: 0
     email: ya-anton3632@yandex.ru
+    groups:
+        - "Super administrators"
