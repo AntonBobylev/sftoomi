@@ -4,6 +4,8 @@ namespace App\Command;
 
 use Doctrine\DBAL\Exception;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Exception\ExceptionInterface;
+use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -24,7 +26,7 @@ class InitDomain extends SftoomiCommand
     }
 
     /**
-     * @throws Exception
+     * @throws ExceptionInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -33,8 +35,17 @@ class InitDomain extends SftoomiCommand
         $output->writeln("Starting domain initialization...");
 
         if (!$skipCptsUpdate) {
-            new UpdateCptCodes($this->connection, $this->filesystem)->execute($input, $output);
+            $updateCptCodesCommand = $this->getApplication()->find("app:update-cpt-codes");
+            $updateCptCodesCommand->run(new ArrayInput([]), $output);
         }
+
+        $output->writeln("Initializing domain default groups...");
+        $initDefaultGroupsCommand = $this->getApplication()->find("domain:init-default-groups");
+        $initDefaultGroupsCommand->run(new ArrayInput([]), $output);
+
+        $output->writeln("Initializing domain default users...");
+        $initDefaultUsersCommand = $this->getApplication()->find("domain:init-default-users");
+        $initDefaultUsersCommand->run(new ArrayInput([]), $output);
 
         $output->writeln("Domain initialized");
 
