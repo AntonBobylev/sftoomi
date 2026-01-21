@@ -33,7 +33,7 @@ class InitDomain extends SftoomiCommand
         $output->writeln("Starting domain initialization...");
 
         if (!$skipCptsUpdate) {
-            new UpdateCptCodes($this->connection)->execute($input, $output);
+            new UpdateCptCodes($this->connection, $this->filesystem)->execute($input, $output);
         }
 
         $output->writeln("Domain initialized");
