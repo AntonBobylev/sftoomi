@@ -3,7 +3,7 @@
 <div class="wrapper"
      [formGroup]="form"
 >
-    <app-textfield label="Group name"
+    <app-textfield [label]="Sftoomi.Translator.translate('views.groups.dialog.name')"
                    name="group_name"
                    [form]="form"
     />

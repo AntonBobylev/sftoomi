@@ -167,7 +167,8 @@ let ruDictionary: object =  {
             dialog: {
                 add_title: 'Добавить группу',
                 edit_title: 'Редактирование группы #{0}',
-                width: '700px'
+                width: '700px',
+                name: 'Имя'
             }
         },
         users: {
@@ -200,6 +201,24 @@ let ruDictionary: object =  {
                 login: 'Логин',
                 reset_password: 'Сбросить пароль',
                 reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail',
+            }
+        },
+        report_templates: {
+            table: {
+                columns: {
+                    name: {
+                        caption: 'Имя'
+                    }
+                }
+            },
+            dialog: {
+                add_title: 'Добавление шаблона отчёта',
+                allowed_studies: 'Применим для исследований',
+                allowed_studies_placeholder: '(для любых исследований)',
+                allowed_studies_tooltip: 'Если пусто, то этот шаблон может быть применён для любых исследований. Если исследования выбраны, то этот шаблон будет доступен только для них.',
+                edit_title: 'Редактирование шаблона отчёта #{0}',
+                name: 'Имя',
+                width: '700px'
             }
         }
     },

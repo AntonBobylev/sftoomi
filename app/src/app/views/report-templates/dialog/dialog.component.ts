@@ -46,6 +46,8 @@ export default class ReportTemplateEditDialogComponent extends AppBaseEditDialog
         allowed_studies: new FormControl<AppComboRecord[]>([])
     });
 
+    protected override readonly width: number | string | undefined = this.Sftoomi.Translator.translate('views.report_templates.dialog.width');
+
     private readonly allowedStudiesCtrl: Signal<AppComboComponent> = viewChild.required('allowedStudiesCtrl');
 
     protected afterLoad(data: getTemplateAPI): void

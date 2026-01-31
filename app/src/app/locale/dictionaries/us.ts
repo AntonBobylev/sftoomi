@@ -167,7 +167,8 @@ let usDictionary: object =  {
             dialog: {
                 add_title: 'Add group',
                 edit_title: 'Edit group #{0}',
-                width: '700px'
+                width: '700px',
+                name: 'Name'
             }
         },
         users: {
@@ -200,6 +201,24 @@ let usDictionary: object =  {
                 login: 'Login',
                 reset_password: 'Reset password',
                 reset_password_tooltip: 'Generate the new password and send it via email',
+            }
+        },
+        report_templates: {
+            table: {
+                columns: {
+                    name: {
+                        caption: 'Name'
+                    }
+                }
+            },
+            dialog: {
+                add_title: 'Add report template',
+                allowed_studies: 'Allowed studies',
+                allowed_studies_placeholder: '(any)',
+                allowed_studies_tooltip: 'This template will be allowed for any study if this value is empty. Otherwise this template will be allowed only for the selected studies.',
+                edit_title: 'Edit report template #{0}',
+                name: 'Name',
+                width: '700px'
             }
         }
     },
