@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Class\Fetcher;
+use App\Class\Model\StudyModel;
+use App\Class\Model\TemplateModel;
 use App\Class\TemplateManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,17 +14,47 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TemplateController extends SftoomiController
 {
-    #[Route("/getTemplate", name: "get_template")]
-    public function getTemplate(Request $request, Filesystem $filesystem): Response
+    #[Route('/getTemplates', name: 'get_templates')]
+    public function getTemplates(Request $request): Response
     {
+        $this->auth->requirePermission("REPORT_TEMPLATES_MODULE");
+
+        $studyModel = new TemplateModel($this->connection);
+        $result = $studyModel->getAll(
+            $request->request->get("start"),
+            $request->request->get("limit")
+        );
+
         return new JsonResponse([
-            "data" => []
+            "data"  => $result["data"],
+            "total" => $result["total"]
         ]);
     }
 
-    #[Route("/loadTemplate", name: "load_template")]
-    public function loadTemplate(Request $request, Filesystem $filesystem): Response
+    #[Route("/getTemplate", name: "get_template")]
+    public function getTemplate(Request $request): Response
     {
+        $this->auth->requireAnyPermission(["REPORT_TEMPLATES_MODULE::ADD", "REPORT_TEMPLATES_MODULE::EDIT"]);
+
+        $data = [];
+        $templateId = Fetcher::int($request->request->get("id"));
+        if (!empty($templateId)) {
+            $data = new TemplateModel($this->connection)->get($templateId);
+        }
+
+        return new JsonResponse([
+            "data"  => $data,
+            "lists" => [
+                "studies" => new StudyModel($this->connection)->getAll()["data"]
+            ]
+        ]);
+    }
+
+    #[Route("/loadTemplateContent", name: "load_template_content")]
+    public function loadTemplateContent(Request $request, Filesystem $filesystem): Response
+    {
+        $this->auth->requirePermission("REPORT_TEMPLATES_MODULE");
+
         $templateName = $request->request->get("template_name");
         if (empty($templateName)) {
             throw new \InvalidArgumentException("Template name cannot be empty");
@@ -34,15 +67,6 @@ final class TemplateController extends SftoomiController
             "data" => [
                 "template_code" => $templateCode
             ]
-        ]);
-    }
-
-    #[Route('/getTemplates', name: 'get_templates')]
-    public function getTemplates(): Response
-    {
-        return new JsonResponse([
-            "data"  => [],
-            "total" => []
         ]);
     }
 
