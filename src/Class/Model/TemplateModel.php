@@ -39,7 +39,8 @@ class TemplateModel extends AbstractModel
     {
         return [
             "id",
-            "name"
+            "name",
+            "content"
         ];
     }
 

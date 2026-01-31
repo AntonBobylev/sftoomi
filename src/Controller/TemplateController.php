@@ -32,7 +32,7 @@ final class TemplateController extends SftoomiController
     }
 
     #[Route("/getTemplate", name: "get_template")]
-    public function getTemplate(Request $request): Response
+    public function getTemplate(Request $request, TemplateManager $templateManager): Response
     {
         $this->auth->requireAnyPermission(["REPORT_TEMPLATES_MODULE::ADD", "REPORT_TEMPLATES_MODULE::EDIT"]);
 
@@ -45,7 +45,8 @@ final class TemplateController extends SftoomiController
         return new JsonResponse([
             "data"  => $data,
             "lists" => [
-                "studies" => new StudyModel($this->connection)->getAll()["data"]
+                "studies"           => new StudyModel($this->connection)->getAll()["data"],
+                "generic_templates" => $templateManager->getGenericTemplates()
             ]
         ]);
     }

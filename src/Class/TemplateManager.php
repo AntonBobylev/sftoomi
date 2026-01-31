@@ -33,6 +33,23 @@ readonly class TemplateManager
         return $templateCode;
     }
 
+    public function getGenericTemplates(): array
+    {
+        $genericTemplatesPath = $this->getGenericTemplatesPath();
+        $genericTemplatesFilenames = $this->getGenericTemplatesFilenames();
+
+        $files = [];
+        foreach ($genericTemplatesFilenames as $file) {
+            $files[] = [
+                "filename" => $file["filename"],
+                "name"     => $file["name"],
+                "content"  => $this->filesystem->readFile($genericTemplatesPath . "/" . $file["filename"])
+            ];
+        }
+
+        return $files;
+    }
+
     private function getTemplateContent(string $templateName): string
     {
         $filePath = sprintf("%s/%s", Utils::getVars()->get("templates_dir"), $templateName);
@@ -71,5 +88,18 @@ readonly class TemplateManager
         }
 
         return $mockData;
+    }
+
+    private function getGenericTemplatesPath(): string
+    {
+        return Utils::getVars()->get("templates_dir") . "/generic";
+    }
+
+    private function getGenericTemplatesFilenames(): array
+    {
+        return [[
+            "name"     => "Freetext",
+            "filename" => "freetext.html"
+        ]];
     }
 }
