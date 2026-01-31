@@ -1,5 +1,6 @@
 import { Directive, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { NzPlacementType } from 'ng-zorro-antd/dropdown'
 
 import Sftoomi from '../../class/Sftoomi';
 
@@ -11,6 +12,7 @@ export default abstract class AppBaseField
     @Input({required: true}) public label!: string;
 
     @Input() public tooltip: string | undefined;
+    public readonly tooltipPlacement: NzPlacementType = 'bottomCenter';
 
     protected readonly Sftoomi = Sftoomi;
 

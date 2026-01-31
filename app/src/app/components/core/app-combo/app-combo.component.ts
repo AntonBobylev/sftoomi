@@ -3,8 +3,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip'
 
-import Sftoomi from '../../../class/Sftoomi';
 import { DialogType } from '../../../class/Dialog';
 import Fetcher from '../../../class/Fetcher';
 
@@ -14,7 +14,7 @@ import FormErrorTemplateComponent from '../../templates/form-error-template/form
 
 export type AppComboRecord = {
     caption: string,
-    value: string | number
+    value:   string | number
 };
 
 @Component({
@@ -23,7 +23,7 @@ export type AppComboRecord = {
     imports: [
         ReactiveFormsModule, NzSelectComponent, NzOptionComponent,
         NzColDirective, NzFormLabelComponent, FormErrorTemplateComponent,
-        NzFormControlComponent, NzFormItemComponent
+        NzFormControlComponent, NzFormItemComponent, NzTooltipDirective
     ],
     styleUrl: './app-combo.component.scss'
 })
@@ -54,7 +54,7 @@ export default class AppComboComponent extends AppBaseField
 
     protected search(query: string): void
     {
-        if (Sftoomi.isEmpty(this.remoteUrl)) {
+        if (this.Sftoomi.isEmpty(this.remoteUrl)) {
             this.filterOptions(query);
 
             return;
@@ -62,7 +62,7 @@ export default class AppComboComponent extends AppBaseField
 
         this.queryController.abort();
 
-        if (Sftoomi.isEmpty(query) || query.length < this.minSearchLength) {
+        if (this.Sftoomi.isEmpty(query) || query.length < this.minSearchLength) {
             return;
         }
 
@@ -84,7 +84,7 @@ export default class AppComboComponent extends AppBaseField
                 this.setData(result.data);
             },
             failure: (_code: any, message: any, _request: any): void => {
-                Sftoomi.Dialog.show(message, DialogType.ERROR);
+                this.Sftoomi.Dialog.show(message, DialogType.ERROR);
             },
             finally: (): void => {
                 this.isLoading.set(false);
@@ -96,7 +96,7 @@ export default class AppComboComponent extends AppBaseField
     {
         this.selectionChange.emit(this.form.get(this.name)?.value);
 
-        if (Sftoomi.isEmpty(this.remoteUrl)) {
+        if (this.Sftoomi.isEmpty(this.remoteUrl)) {
             return;
         }
 
