@@ -127,7 +127,7 @@ readonly class Connection
     /**
      * @throws Exception
      */
-    public function getFoundRows(): string
+    public function getFoundRows(): int
     {
         $sql = "select found_rows()";
 
