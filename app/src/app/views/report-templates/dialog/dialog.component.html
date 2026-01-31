@@ -1,0 +1,33 @@
+{{ dialogResizer() }}
+
+<div class="wrapper"
+     [formGroup]="form"
+>
+    <app-loading-spinner [isLoading]="isLoading()" />
+
+    <app-textfield [label]="Sftoomi.Translator.translate('views.report_templates.dialog.name')"
+                   name="template_name"
+                   [form]="form"
+    />
+
+    <app-combo #allowedStudiesCtrl
+               [label]="Sftoomi.Translator.translate('views.report_templates.dialog.allowed_studies')"
+               name="allowed_studies"
+               [form]="form"
+               [useSearch]="true"
+               [multiple]="true"
+               [useClear]="true"
+               [placeholder]="Sftoomi.Translator.translate('views.report_templates.dialog.allowed_studies_placeholder')"
+    />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save()"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

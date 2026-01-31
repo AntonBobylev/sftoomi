@@ -2,9 +2,13 @@ import { Component } from '@angular/core';
 
 import AppBaseModule from '../../components/core/app-base-module'
 
+import ReportTemplatesTableComponent from "./table/table.component";
+
 @Component({
     selector: 'app-report-templates',
-    imports: [],
+    imports: [
+        ReportTemplatesTableComponent
+    ],
     templateUrl: './module.component.html',
     styleUrl: './module.component.scss'
 })
