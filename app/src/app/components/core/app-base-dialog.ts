@@ -1,4 +1,4 @@
-import { computed, Directive, inject, OnDestroy, OnInit, Signal, signal, WritableSignal } from '@angular/core'
+import { computed, Directive, inject, OnDestroy, OnInit, Signal, signal, WritableSignal, ViewContainerRef } from '@angular/core'
 import { FormGroup } from '@angular/forms'
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal'
 
@@ -47,6 +47,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
 
     protected readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
 
+    protected readonly viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
     private readonly dialog: NzModalRef = inject(NzModalRef);
 
     ngOnInit(): void
@@ -103,7 +104,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
         return true;
     }
 
-    protected save(): void
+    protected save(result?: any): void
     {
         if (!this.isPreValid()) {
             return;
@@ -116,7 +117,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
             return;
         }
 
-        this.close();
+        this.close(result);
     }
 
     protected close(result?: any): void
