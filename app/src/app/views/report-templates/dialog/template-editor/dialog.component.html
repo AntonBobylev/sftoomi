@@ -1,0 +1,51 @@
+{{ dialogResizer() }}
+
+<div class="wrapper">
+    <app-loading-spinner [isLoading]="isLoading()" />
+
+    <app-combo #basedOnCtrl
+               [label]="Sftoomi.Translator.translate('dialogs.template_editor.based_on')"
+               name="based_on"
+               [form]="form"
+               [useSearch]="true"
+               [useClear]="true"
+               (selectionChange)="onBasedOnChanged($event)"
+    />
+
+    <div class="editor-container"
+         [class.is-resizing]="isResizing"
+    >
+        <nu-monaco-editor [style.width.%]="editorWidth"
+                          [(ngModel)]="content"
+                          [options]="Sftoomi.Constants.codeEditorDefaultOptions"
+                          height="100%"
+        />
+
+        <div class="resizer"
+             (mousedown)="startResizing($event)">
+        </div>
+
+        <iframe [srcdoc]="content | safe"
+                class="preview">
+        </iframe>
+    </div>
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid || isLoading()"
+                (click)="onPreview()"
+        >
+            {{ Sftoomi.Translator.translate('dialogs.template_editor.preview') }}
+        </button>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save(true)"
+        >
+            {{ Sftoomi.Translator.translate('save') }}
+        </button>
+    </div>
+</div>

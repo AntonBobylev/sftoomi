@@ -216,6 +216,7 @@ let usDictionary: object =  {
                 allowed_studies: 'Allowed studies',
                 allowed_studies_placeholder: '(any)',
                 allowed_studies_tooltip: 'This template will be allowed for any study if this value is empty. Otherwise this template will be allowed only for the selected studies.',
+                edit: 'Edit',
                 edit_title: 'Edit report template #{0}',
                 name: 'Name',
                 width: '700px'
@@ -281,6 +282,12 @@ let usDictionary: object =  {
             password_reset_message: 'The mail was sent to the email address you provided, if the current login-mail combination exists',
             reset_button_caption: 'Reset',
             title: 'Reset password'
+        },
+        template_editor: {
+            based_on: 'Based on',
+            preview: 'Preview',
+            title: 'Template editor',
+            width: '100%'
         }
     },
 

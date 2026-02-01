@@ -1,0 +1,150 @@
+import { AfterViewInit, ChangeDetectorRef, Component, inject, Signal, viewChild } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
+import { NzButtonComponent } from 'ng-zorro-antd/button'
+import { NuMonacoEditorComponent } from '@ng-util/monaco-editor'
+
+import AppBaseDialog from '../../../../components/core/app-base-dialog'
+
+import { SafePipe } from '../../../../pipes/safe.pipe'
+
+import AppLoadingSpinnerComponent from '../../../../components/misc/app-loading-spinner/app-loading-spinner.component'
+import AppComboComponent, { AppComboRecord } from '../../../../components/core/app-combo/app-combo.component'
+
+import GenericTemplate from '../../../../type/GenericTemplate'
+
+export type ReportTemplateEditorData = {
+    content?: string,
+    lists: {
+        generic_templates: GenericTemplate[]
+    }
+};
+
+export type ReportTemplateEditorOut = {
+    is_saved: boolean,
+    content:  string
+};
+
+@Component({
+    selector: 'report-template-editor-dialog',
+    templateUrl: './dialog.component.html',
+    imports: [
+        FormsModule, ReactiveFormsModule,
+        NzButtonComponent, NzModalFooterDirective,
+        AppLoadingSpinnerComponent, AppComboComponent, SafePipe, NuMonacoEditorComponent
+    ],
+    styleUrls: [
+        './dialog.component.less',
+        '../../../../components/core/app-base-edit-dialog/app-base-edit-dialog.less'
+    ]
+})
+
+export default class ReportTemplateEditorComponent extends AppBaseDialog implements AfterViewInit
+{
+    protected override readonly data: ReportTemplateEditorData = inject(NZ_MODAL_DATA);
+
+    protected readonly form: FormGroup = new FormGroup({
+        based_on: new FormControl<AppComboRecord | null>(null)
+    });
+
+    protected content: string = '';
+
+    protected override readonly width: number | string | undefined = this.Sftoomi.Translator.translate('dialogs.template_editor.width');
+    protected override readonly title: string = this.Sftoomi.Translator.translate('dialogs.template_editor.title');
+
+    protected editorWidth: number = 50; // in percents
+    protected isResizing: boolean = false;
+
+    private readonly basedOnCtrl: Signal<AppComboComponent> = viewChild.required('basedOnCtrl');
+
+    private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
+
+    ngAfterViewInit(): void
+    {
+        this.isLoading.set(true);
+
+        this.basedOnCtrl().setData(this.data.lists.generic_templates.map((template: GenericTemplate): AppComboRecord => ({
+            caption: template.name,
+            value:   template.filename
+        })));
+
+        this.content = this.data.content ?? '';
+
+        setTimeout((): void => {
+            this.cdr.detectChanges();
+            window.dispatchEvent(new Event('resize'));
+
+            this.isLoading.set(false);
+        }, 50);
+    }
+
+    protected override close(saved: boolean = false): void
+    {
+        super.close({
+            is_saved: saved,
+            content:  this.content
+        } as ReportTemplateEditorOut);
+    }
+
+    protected onBasedOnChanged(value: AppComboRecord['value']): void
+    {
+        if (typeof value === 'number') {
+            // something strange happened
+            // it must be string
+            return;
+        }
+
+        let selectedTemplate: GenericTemplate | undefined;
+        this.data.lists.generic_templates.forEach((template: GenericTemplate): void => {
+            if (template.filename === value) {
+                selectedTemplate = template;
+
+                return;
+            }
+        });
+
+        if (!selectedTemplate) {
+            return;
+        }
+
+        // TODO: add confirmation here
+        this.content = selectedTemplate.content;
+    }
+
+    protected startResizing(event: MouseEvent): void
+    {
+        event.preventDefault();
+        this.isResizing = true;
+
+        const startX: number = event.clientX,
+              startWidth: number = this.editorWidth;
+
+        const container: HTMLElement | null = (event.currentTarget as HTMLElement).parentElement;
+        const containerWidth: number = container?.offsetWidth || 1;
+
+        const onMouseMove = (moveEvent: MouseEvent): void => {
+            const deltaX: number = moveEvent.clientX - startX,
+                  deltaPercent: number = (deltaX / containerWidth) * 100;
+
+            this.editorWidth = Math.min(Math.max(10, startWidth + deltaPercent), 90);
+
+            this.cdr.detectChanges();
+            window.dispatchEvent(new Event('resize'));
+        };
+
+        const onMouseUp = (): void => {
+            this.isResizing = false;
+            document.removeEventListener('mousemove', onMouseMove);
+            document.removeEventListener('mouseup', onMouseUp);
+            this.cdr.detectChanges();
+        };
+
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    }
+
+    protected onPreview(): void
+    {
+        // TODO: implement
+    }
+}

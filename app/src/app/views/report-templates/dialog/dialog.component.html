@@ -18,13 +18,23 @@
                [multiple]="true"
                [useClear]="true"
                [placeholder]="Sftoomi.Translator.translate('views.report_templates.dialog.allowed_studies_placeholder')"
+               [tooltip]="Sftoomi.Translator.translate('views.report_templates.dialog.allowed_studies_tooltip')"
     />
+
+    <button nz-button
+            nzType="primary"
+            nzShape="round"
+            [disabled]="isLoading()"
+            (click)="onEditContent()"
+    >
+        {{ Sftoomi.Translator.translate('views.report_templates.dialog.edit') }}
+    </button>
 
     <div *nzModalFooter>
         <button nz-button
                 nzType="primary"
                 nzShape="round"
-                [disabled]="form.invalid"
+                [disabled]="form.invalid || isLoading()"
                 (click)="save()"
         >
             {{ Sftoomi.Translator.translate('save') }}

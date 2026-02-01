@@ -1,0 +1,32 @@
+@import "../../../../../theme";
+
+.editor-container {
+    display: flex;
+    height: 600px;
+    width: 100%;
+    gap: 5px;
+
+    nu-monaco-editor {
+        height: 100%;
+        flex: 0 0 auto;
+        transition: none !important;
+    }
+
+    .resizer {
+        width: 5px;
+        cursor: col-resize;
+        background: @fill-color;
+        border-radius: 50px;
+        &:hover { background: @primary-color; }
+    }
+
+    .preview {
+        flex: 1;
+        height: 100%;
+        border: none;
+    }
+
+    &.is-resizing .preview {
+        pointer-events: none;
+    }
+}
