@@ -43,7 +43,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
 
     protected readonly Sftoomi = Sftoomi;
 
-    protected readonly queryController: AbortController = new AbortController();
+    protected queryController: AbortController = new AbortController();
 
     protected readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
 
