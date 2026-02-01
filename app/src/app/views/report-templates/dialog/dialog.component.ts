@@ -68,6 +68,7 @@ export default class ReportTemplateEditDialogComponent extends AppBaseEditDialog
         this.genericTemplatesList = data.lists.generic_templates;
 
         this.form.get('template_name')?.setValue(data.data.name);
+        this.form.get('template_content')?.setValue(data.data.content);
         this.form.get('allowed_studies')?.setValue(data.data.allowed_studies);
     }
 

@@ -54,10 +54,12 @@ class TemplateModel extends AbstractModel
             return [];
         }
 
-        return new StudyModel($this->connection)->getAll(
+        $studies = new StudyModel($this->connection)->getAll(
             null,
             null,
             $this->connection->subst("id in ?", [$templateAllowedStudies])
         )["data"];
+
+        return array_column($studies, "id");
     }
 }
