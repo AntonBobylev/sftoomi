@@ -19,4 +19,6 @@ export default class Constants
             verticalScrollbarSize: 5
         }
     }
+
+    public readonly encodedPdfBase64Prefix: string = 'data:application/pdf;base64,';
 }
