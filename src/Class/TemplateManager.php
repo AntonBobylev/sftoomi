@@ -19,15 +19,15 @@ readonly class TemplateManager
             $data = $this->getMockData();
         }
 
-        if (!empty($data)) {
-            $template = $this->apply($template, $data);
-        }
-
-        return $template;
+        return $this->apply($template, $data, $useMockData);
     }
 
-    public function apply(string $templateCode, array $data): string
+    public function apply(string $templateCode, array $data, bool $useMockData = false): string
     {
+        if ($useMockData) {
+            $data = $this->getMockData();
+        }
+
         $this->renderTemplate($templateCode, $data);
 
         return $templateCode;

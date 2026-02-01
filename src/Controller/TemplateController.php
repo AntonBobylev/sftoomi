@@ -6,7 +6,8 @@ use App\Class\Fetcher;
 use App\Class\Model\StudyModel;
 use App\Class\Model\TemplateModel;
 use App\Class\TemplateManager;
-use Symfony\Component\Filesystem\Filesystem;
+use App\Filesystem;
+use App\Utils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -51,24 +52,49 @@ final class TemplateController extends SftoomiController
         ]);
     }
 
-    #[Route("/loadTemplateContent", name: "load_template_content")]
-    public function loadTemplateContent(Request $request, Filesystem $filesystem): Response
+    #[Route("/previewTemplate", name: "preview_template")]
+    public function previewTemplate(Request $request, Filesystem $filesystem): Response
     {
         $this->auth->requirePermission("REPORT_TEMPLATES_MODULE");
 
-        $templateName = $request->request->get("template_name");
-        if (empty($templateName)) {
-            throw new \InvalidArgumentException("Template name cannot be empty");
+        $templateCode = $request->request->get("template_code");
+        $templateCode = new TemplateManager($filesystem)->apply($templateCode, [], true);
+
+        $tmpHtmlFile = $filesystem->getTempFilename("", ".html");
+        $tmpPdfFile = $filesystem->getTempFilename("", ".pdf");
+
+        $filesystem->dumpFile($tmpHtmlFile, $templateCode);
+
+        $command = sprintf(
+            "%s --encoding utf-8 %s %s",
+            Utils::getVars()->get("wkhtmltopdf_path"),
+            $tmpHtmlFile,
+            $tmpPdfFile
+        );
+
+        $output = [];
+        $resultCode = 0;
+
+        exec(
+            $command,
+            $output,
+            $resultCode
+        );
+
+        if ($resultCode === 0) {
+            $response = new JsonResponse([
+                "encoded_pdf" => base64_encode($filesystem->readFile($tmpPdfFile))
+            ]);
+        } else {
+            $response = new JsonResponse([
+                "error"  => $resultCode,
+                "output" => $output
+            ]);
         }
 
-        $templateManager = new TemplateManager($filesystem);
-        $templateCode = $templateManager->getTemplate($templateName, [], true);
+        $filesystem->remove([$tmpHtmlFile, $tmpPdfFile]);
 
-        return new JsonResponse([
-            "data" => [
-                "template_code" => $templateCode
-            ]
-        ]);
+        return $response;
     }
 
     #[Route("/saveTemplate", name: "save_template")]
