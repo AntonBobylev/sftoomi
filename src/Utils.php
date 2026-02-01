@@ -14,6 +14,7 @@ class Utils
         return new ParameterBag([
             "templates_dir"                    => __DIR__ . "/../templates",
             "entities_relationships_file_path" => __DIR__ . "/../config/app/entities-relationships.json",
+            "wkhtmltopdf_path"                 => $_ENV["WKHTMLTOPDF_PATH"],
             "mailer_mail_host"                 => $_ENV["MAIL_HOST"],
             "mailer_mail_username"             => $_ENV["MAIL_USERNAME"],
             "mailer_mail_password"             => $_ENV["MAIL_PASSWORD"],

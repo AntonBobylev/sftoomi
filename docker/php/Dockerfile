@@ -22,6 +22,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     autoconf \
     pkg-config \
     libssl-dev \
+    fontconfig \
+    libjpeg62-turbo \
+    libxrender1 \
+    libxext6 \
+    xfonts-base \
+    xfonts-75dpi \
+    fonts-dejavu \
+    fonts-freefont-ttf \
+    wget \
+    && wget https://security.debian.org/debian-security/pool/updates/main/o/openssl/libssl1.1_1.1.1w-0+deb11u4_amd64.deb \
+    && apt-get install -y ./libssl1.1_1.1.1w-0+deb11u4_amd64.deb \
+    && rm libssl1.1_1.1.1w-0+deb11u4_amd64.deb \
+    && wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb \
+    && apt-get install -y ./wkhtmltox_0.12.6-1.buster_amd64.deb \
+    && rm wkhtmltox_0.12.6-1.buster_amd64.deb \
     && docker-php-ext-install intl opcache pdo pdo_mysql zip \
     && pecl install apcu redis xdebug \
     && docker-php-ext-enable apcu redis xdebug \
