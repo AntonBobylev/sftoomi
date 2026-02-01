@@ -5,9 +5,9 @@ namespace App\Controller;
 use App\Class\Fetcher;
 use App\Class\Model\StudyModel;
 use App\Class\Model\TemplateModel;
+use App\Class\PDF\HtmlToPdfConverter;
 use App\Class\TemplateManager;
 use App\Filesystem;
-use App\Utils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -65,30 +65,16 @@ final class TemplateController extends SftoomiController
 
         $filesystem->dumpFile($tmpHtmlFile, $templateCode);
 
-        $command = sprintf(
-            "%s --encoding utf-8 %s %s",
-            Utils::getVars()->get("wkhtmltopdf_path"),
-            $tmpHtmlFile,
-            $tmpPdfFile
-        );
+        $convertResult = new HtmlToPdfConverter()->convert($tmpHtmlFile, $tmpPdfFile);
 
-        $output = [];
-        $resultCode = 0;
-
-        exec(
-            $command,
-            $output,
-            $resultCode
-        );
-
-        if ($resultCode === 0) {
+        if ($convertResult["result_code"] === 0) {
             $response = new JsonResponse([
                 "encoded_pdf" => base64_encode($filesystem->readFile($tmpPdfFile))
             ]);
         } else {
             $response = new JsonResponse([
-                "error"  => $resultCode,
-                "output" => $output
+                "error"  => $convertResult["result_code"],
+                "output" => $convertResult["output"]
             ]);
         }
 
