@@ -57,3 +57,7 @@ services:
         class: App\Class\TemplateManager
         arguments:
             - '@filesystem'
+
+    App\Filesystem:
+        arguments:
+            $projectDir: '%kernel.project_dir%'
