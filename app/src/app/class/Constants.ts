@@ -9,4 +9,14 @@ export default class Constants
     }
 
     public readonly dateIsoFormat: string = 'yyyy-MM-dd'
+
+    public readonly codeEditorDefaultOptions: monaco.editor.IStandaloneEditorConstructionOptions = {
+        language: 'html',
+        minimap: {
+            enabled: false
+        },
+        scrollbar: {
+            verticalScrollbarSize: 5
+        }
+    }
 }
