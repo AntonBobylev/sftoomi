@@ -1,0 +1,16 @@
+{{ dialogResizer() }}
+
+<div class="wrapper">
+    <app-pdf-viewer [src]="data.src" />
+
+    <div *nzModalFooter>
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                [disabled]="form.invalid"
+                (click)="save(true)"
+        >
+            {{ Sftoomi.Translator.translate('ok') }}
+        </button>
+    </div>
+</div>

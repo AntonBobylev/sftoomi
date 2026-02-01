@@ -1,15 +1,20 @@
 import { AfterViewInit, ChangeDetectorRef, Component, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NuMonacoEditorComponent } from '@ng-util/monaco-editor'
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button'
-import { NuMonacoEditorComponent } from '@ng-util/monaco-editor'
 
+import Fetcher from '../../../../class/Fetcher'
+import { DialogType } from '../../../../class/Dialog'
 import AppBaseDialog from '../../../../components/core/app-base-dialog'
 
 import { SafePipe } from '../../../../pipes/safe.pipe'
 
 import AppLoadingSpinnerComponent from '../../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 import AppComboComponent, { AppComboRecord } from '../../../../components/core/app-combo/app-combo.component'
+import AppPdfViewerDialogComponent, { AppPdfViewerDialogIn } from '../../../../components/misc/app-pdf-viewer/dialog/dialog.component'
+
+import previewTemplateAPI from '../../../../APIs/previewTemplateAPI'
 
 import GenericTemplate from '../../../../type/GenericTemplate'
 
@@ -56,6 +61,8 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
     protected isResizing: boolean = false;
 
     private readonly basedOnCtrl: Signal<AppComboComponent> = viewChild.required('basedOnCtrl');
+
+    private readonly previewUrl: string = '/previewTemplate';
 
     private readonly cdr: ChangeDetectorRef = inject(ChangeDetectorRef);
 
@@ -145,6 +152,43 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
 
     protected onPreview(): void
     {
-        // TODO: implement
+        let data: FormData = new FormData();
+
+        data.append('template_code', this.content);
+
+        this.queryController.abort();
+        this.queryController = new AbortController();
+
+        this.isLoading.set(true);
+        new Fetcher().request({
+            url: this.previewUrl,
+            signal: this.queryController.signal,
+            data: data,
+            success: (_response: any, _request: any, data: previewTemplateAPI): void => {
+                if (!data.encoded_pdf) {
+                    this.Sftoomi.Dialog.show(data.error + '<br/>' + data.output, DialogType.ERROR)
+
+                    return;
+                }
+
+                this.Sftoomi.Dialog.getInstance().create<AppPdfViewerDialogComponent, AppPdfViewerDialogIn>({
+                    nzContent: AppPdfViewerDialogComponent,
+                    nzViewContainerRef: this.viewContainerRef,
+                    nzData: {
+                        src: this.Sftoomi.Constants.encodedPdfBase64Prefix + data.encoded_pdf
+                    }
+                });
+            },
+            failure: (_code: any, message: any, _request: any): void => {
+                if (message === 'canceled') {
+                    return;
+                }
+
+                this.Sftoomi.Dialog.show(message, DialogType.ERROR)
+            },
+            finally: (): void => {
+                this.isLoading.set(false);
+            }
+        })
     }
 }
