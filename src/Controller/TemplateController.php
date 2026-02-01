@@ -14,7 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class TemplateController extends SftoomiController
 {
-    #[Route('/getTemplates', name: 'get_templates')]
+    #[Route("/getTemplates", name: "get_templates")]
     public function getTemplates(Request $request): Response
     {
         $this->auth->requirePermission("REPORT_TEMPLATES_MODULE");
@@ -71,16 +71,58 @@ final class TemplateController extends SftoomiController
         ]);
     }
 
-    #[Route('/saveTemplate', name: 'save_template')]
-    public function saveTemplate(): Response
+    #[Route("/saveTemplate", name: "save_template")]
+    public function saveTemplate(Request $request): Response
     {
+        $values = [
+            "id"      => Fetcher::int($request->request->get("id")),
+            "name"    => Fetcher::trim($request->request->get("template_name")),
+            "content" => Fetcher::trim($request->request->get("template_content"))
+        ];
+
+        $this->auth->requirePermission(
+            empty($values["id"])
+                ? "REPORT_TEMPLATES_MODULE::ADD"
+                : "REPORT_TEMPLATES_MODULE::EDIT"
+        );
+
+        $this->assertAllRequiredFieldsSet(["name"], $values);
+
+        $this->connection->insupd(
+            "template",
+            $values,
+            "id = ?",
+            [$values["id"]]
+        );
+
+        $templateId = $values["id"];
+        if (empty($templateId)) {
+            $templateId = $this->connection->getLastInsertId();
+        }
+
+        $templateAllowedStudies = Fetcher::intArray($request->request->get("allowed_studies"), []);
+        $this->connection->delete(
+            "templates_studies",
+            "template_id = ?",
+            [$templateId]
+        );
+
+        foreach ($templateAllowedStudies as $studyId) {
+            $this->connection->insert(
+                "templates_studies",
+                [
+                    "template_id" => $templateId,
+                    "study_id"    => $studyId
+                ]
+            );
+        }
+
         return new JsonResponse([
-            "data"  => [],
-            "total" => []
+            "id" => $templateId
         ]);
     }
 
-    #[Route('/removeTemplate', name: 'remove_template')]
+    #[Route("/removeTemplate", name: "remove_template")]
     public function removeTemplate(): Response
     {
         return new JsonResponse([
