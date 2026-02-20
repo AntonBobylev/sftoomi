@@ -21,6 +21,17 @@
             .row {
                 white-space: nowrap;
             }
+
+            .main {
+                padding-top: 30px;
+
+                textarea {
+                    min-height: 150px;
+                    max-height: 300px;
+                    width: 100%;
+                    resize: none;
+                }
+            }
         </style>
 
         <title></title>
@@ -33,6 +44,11 @@
                 <div class="row">Exam: ${exam_id}</div>
                 <div class="row">Doctor: ${doctor_name}</div>
                 <div class="row">Study: ${study_short_name}</div>
+            </div>
+            <div class="main">
+                <label>
+                    <textarea></textarea>
+                </label>
             </div>
         </div>
     </body>
