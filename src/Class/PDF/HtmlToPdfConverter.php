@@ -16,10 +16,10 @@ readonly class HtmlToPdfConverter
     public function convert(string $htmlFilepath, string $pdfFilepath): array
     {
         $command = sprintf(
-            "%s --encoding utf-8 --enable-smart-shrinking %s %s",
-            $this->utilityPath,
-            $htmlFilepath,
-            $pdfFilepath
+            "%s --encoding utf-8 --disable-smart-shrinking %s %s",
+            escapeshellcmd($this->utilityPath),
+            escapeshellcmd($htmlFilepath),
+            escapeshellcmd($pdfFilepath)
         );
 
         $output = [];

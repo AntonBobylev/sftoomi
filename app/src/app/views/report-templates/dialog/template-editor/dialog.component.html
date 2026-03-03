@@ -25,7 +25,8 @@
              (mousedown)="startResizing($event)">
         </div>
 
-        <iframe [srcdoc]="content | safe"
+        <iframe #previewFrameCtrl
+                [srcdoc]="content | safe"
                 class="preview">
         </iframe>
     </div>

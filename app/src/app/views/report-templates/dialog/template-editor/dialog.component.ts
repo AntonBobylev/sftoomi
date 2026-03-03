@@ -1,4 +1,4 @@
-import { AfterViewInit, ChangeDetectorRef, Component, inject, Signal, viewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NuMonacoEditorComponent } from '@ng-util/monaco-editor'
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
@@ -61,6 +61,7 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
     protected isResizing: boolean = false;
 
     private readonly basedOnCtrl: Signal<AppComboComponent> = viewChild.required('basedOnCtrl');
+    private readonly previewFrameCtrl: Signal<ElementRef<HTMLIFrameElement>> = viewChild.required('previewFrameCtrl');
 
     private readonly previewUrl: string = '/previewTemplate';
 
@@ -153,8 +154,7 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
     protected onPreview(): void
     {
         let data: FormData = new FormData();
-
-        data.append('template_code', this.content);
+        data.append('template_code', this.getPreviewIframeHtmlWithValues());
 
         this.queryController.abort();
         this.queryController = new AbortController();
@@ -190,5 +190,88 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
                 this.isLoading.set(false);
             }
         })
+    }
+
+    private getPreviewIframeHtmlWithValues(): string
+    {
+        const iframe: HTMLIFrameElement = this.previewFrameCtrl().nativeElement;
+
+        const sourceDoc: Document | null | undefined =
+            iframe.contentDocument ?? iframe.contentWindow?.document;
+
+        if (!sourceDoc) {
+            return '';
+        }
+
+        const clonedHtmlEl: HTMLElement = sourceDoc.documentElement.cloneNode(true) as HTMLElement,
+              applyPrintFieldStyles = (div: HTMLDivElement): void => {
+                  div.style.whiteSpace = 'pre-wrap';
+                  div.style.wordBreak = 'break-word';
+                  div.style.padding = '8px';
+                  div.style.fontFamily = 'Arial, sans-serif';
+                  div.style.fontSize = '14px';
+                  div.style.lineHeight = '1.4';
+                  div.style.width = '100%';
+                  div.style.boxSizing = 'border-box';
+              },
+              replaceWithDiv = (el: Element, text: string): void => {
+                  const div: HTMLDivElement = sourceDoc.createElement('div');
+                  div.textContent = text ?? '';
+                  applyPrintFieldStyles(div);
+
+                  el.replaceWith(div);
+              };
+
+        const srcTextAreas: HTMLTextAreaElement[] = Array.from(sourceDoc.querySelectorAll('textarea')),
+              dstTextAreas: HTMLTextAreaElement[] = Array.from(clonedHtmlEl.querySelectorAll('textarea'));
+
+        srcTextAreas.forEach((srcEl: HTMLTextAreaElement, i: number): void => {
+            const dstEl = dstTextAreas[i] as HTMLTextAreaElement | undefined;
+            if (!dstEl) {
+                return;
+            }
+
+            replaceWithDiv(dstEl, srcEl.value ?? '');
+        });
+
+        const srcInputs: HTMLInputElement[] = Array.from(sourceDoc.querySelectorAll('input')),
+              dstInputs: HTMLInputElement[] = Array.from(clonedHtmlEl.querySelectorAll('input'));
+
+        srcInputs.forEach((srcEl: HTMLInputElement, i: number): void => {
+            const dstEl = dstInputs[i] as HTMLInputElement | undefined;
+            if (!dstEl) {
+                return;
+            }
+
+            const type: string = (srcEl.getAttribute('type') ?? 'text').toLowerCase();
+
+            if (type === 'checkbox') {
+                replaceWithDiv(dstEl, srcEl.checked ? '☑' : '☐');
+                return;
+            }
+
+            if (type === 'radio') {
+                replaceWithDiv(dstEl, srcEl.checked ? '◉' : '○');
+
+                return;
+            }
+
+            replaceWithDiv(dstEl, srcEl.value ?? '');
+        });
+
+        const srcSelects: HTMLSelectElement[] = Array.from(sourceDoc.querySelectorAll('select')),
+              dstSelects: HTMLSelectElement[] = Array.from(clonedHtmlEl.querySelectorAll('select'));
+
+        srcSelects.forEach((srcEl: HTMLSelectElement, i: number): void => {
+            const dstEl = dstSelects[i] as HTMLSelectElement | undefined;
+            if (!dstEl) {
+                return;
+            }
+
+            const selectedText: string = srcEl.selectedOptions?.[0]?.text ?? '';
+            replaceWithDiv(dstEl, selectedText);
+        });
+
+        return '<!DOCTYPE html>\n' + clonedHtmlEl.outerHTML;
     }
 }
