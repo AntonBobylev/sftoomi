@@ -21,4 +21,6 @@ export default class Constants
     }
 
     public readonly encodedPdfBase64Prefix: string = 'data:application/pdf;base64,';
+
+    public readonly checkAuthTimeoutInMs: number = 30 * 1000; // 30 seconds
 }

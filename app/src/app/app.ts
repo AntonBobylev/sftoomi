@@ -48,6 +48,12 @@ export class App
             popupMsgService
         );
 
+        this.restoreUserSession();
+        setInterval((): void => { this.restoreUserSession(); }, this.Sftoomi.Constants.checkAuthTimeoutInMs);
+    }
+
+    private restoreUserSession(): void
+    {
         Sftoomi.Auth.tryRestoreSession((): void => {
             let lastUrl: string = this.router.url;
 
