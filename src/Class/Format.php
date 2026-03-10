@@ -26,6 +26,10 @@ class Format
             $middle = $arg3;
         }
 
+        $last   = $last   ?? "";
+        $first  = $first  ?? "";
+        $middle = $middle ?? "";
+
         $last = trim($last);
         $first = mb_substr(trim($first), 0, 1);
         if ($first != "") {
