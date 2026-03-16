@@ -1,4 +1,11 @@
-SFTOOMI - system for the operations of medical institutions
+<div align="center">
+
+# SFTOOMI
+### System For The Operations Of Medical Institutions
+
+![logo](app/public/graphics/sftoomi-logo.png)
+
+</div>
 
 ---
 
