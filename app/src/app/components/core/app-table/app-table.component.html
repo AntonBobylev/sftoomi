@@ -6,35 +6,44 @@
     </div>
 }
 
-<nz-table [nzData]="data()"
-          [nzLoading]="isLoading()"
-          [nzBordered]="isBordered"
-          [nzTotal]="total()"
-          [nzNoResult]="noDataCaption"
-          [nzScroll]="{ y: 'calc(100vh - 160px)' }"
-          [nzPageSize]="pageSize"
-          [nzPageIndex]="currentPageIndex"
-          (nzPageIndexChange)="onPageIndexChange($event)"
-          (nzPageSizeChange)="onPageSizeChange($event)"
-          [nzShowPagination]="usePagination"
-          nzShowSizeChanger
-          [style.height]="getTableHeight()"
->
-    @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
-        <app-table-card-view #viewCtrl
-                             class="table-view"
-                             [table]="this"
-                             [data]="data"
-                             [columns]="columns"
-                             [selectionRequired]="selectionRequired"
-        />
+<div class="content">
+    @if (isLoading()) {
+        <div class="spinner-message-wrapper">
+            <app-loading-spinner [isLoading]="isLoading()" />
+        </div>
+    } @else if (Sftoomi.isEmpty(data())) {
+        <span class="no-data-caption">{{ noDataCaption }}</span>
     } @else {
-        <app-table-row-view #viewCtrl
-                            class="table-view"
-                            [table]="this"
-                            [data]="data"
-                            [columns]="columns"
-                            [selectionRequired]="selectionRequired"
-        />
+        <nz-table [nzData]="data()"
+                  [nzLoading]="isLoading()"
+                  [nzBordered]="isBordered"
+                  [nzTotal]="total()"
+                  [nzNoResult]="noDataCaption"
+                  [nzScroll]="{ y: 'calc(100vh - 160px)' }"
+                  [nzPageSize]="pageSize"
+                  [nzPageIndex]="currentPageIndex"
+                  (nzPageIndexChange)="onPageIndexChange($event)"
+                  (nzPageSizeChange)="onPageSizeChange($event)"
+                  [nzShowPagination]="usePagination"
+                  nzShowSizeChanger
+        >
+            @if (Sftoomi.responsiveLayoutService?.isSmallWidth()) {
+                <app-table-card-view #viewCtrl
+                                     class="table-view"
+                                     [table]="this"
+                                     [data]="data"
+                                     [columns]="columns"
+                                     [selectionRequired]="selectionRequired"
+                />
+            } @else {
+                <app-table-row-view #viewCtrl
+                                    class="table-view"
+                                    [table]="this"
+                                    [data]="data"
+                                    [columns]="columns"
+                                    [selectionRequired]="selectionRequired"
+                />
+            }
+        </nz-table>
     }
-</nz-table>
+</div>

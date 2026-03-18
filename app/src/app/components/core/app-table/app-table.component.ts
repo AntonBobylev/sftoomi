@@ -202,16 +202,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         this.refresh();
     }
 
-    protected getTableHeight(): string
-    {
-        let height: string = '100%';
-        if (this.toolbar) {
-            height = Sftoomi.format('calc(100% - {0})', [this.toolbarHeight]);
-        }
-
-        return height;
-    }
-
     private convertReceivedDataToTableData(data: any[]): any[]
     {
         if (this.selectionRequired) {
