@@ -1,4 +1,4 @@
-import { Directive } from '@angular/core'
+import { Directive, Signal } from '@angular/core'
 
 import Sftoomi from '../../class/Sftoomi'
 
@@ -10,8 +10,8 @@ import AppTableComponent from './app-table/app-table.component'
 @Directive()
 export default abstract class AppBaseModuleWithFilters extends AppBaseModule
 {
-    protected abstract readonly filtersCtrl: AppBaseFilters;
-    protected abstract readonly tableCtrl: AppTableComponent;
+    protected abstract readonly filtersCtrl: Signal<AppBaseFilters>;
+    protected abstract readonly tableCtrl: Signal<AppTableComponent>;
 
     protected abstract filtersLoaded(values: object): void;
     protected abstract onSearch(values: object): void;
@@ -19,7 +19,7 @@ export default abstract class AppBaseModuleWithFilters extends AppBaseModule
 
     protected search(values: object): void
     {
-        this.tableCtrl.setIsLoading(true);
-        this.tableCtrl.refresh(Sftoomi.formValuesToFormData(values));
+        this.tableCtrl().setIsLoading(true);
+        this.tableCtrl().refresh(Sftoomi.formValuesToFormData(values));
     }
 }

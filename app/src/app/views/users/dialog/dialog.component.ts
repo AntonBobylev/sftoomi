@@ -1,4 +1,4 @@
-import { Component, inject, Signal, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -69,16 +69,14 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly width: string | number | undefined = 600;
 
-    @ViewChild('contactsCtrl')
-    private readonly contactsCtrl!: AppContactsComponent;
-
-    private readonly groupsCtrl: Signal<AppComboComponent | undefined> = viewChild('groupsCtrl');
+    private readonly contactsCtrl: Signal<AppContactsComponent>         = viewChild.required('contactsCtrl');
+    private readonly groupsCtrl:   Signal<AppComboComponent> = viewChild.required('groupsCtrl');
 
     private contactId: number | undefined;
 
     protected afterLoad(data: getUserAPI): void
     {
-        this.groupsCtrl()?.setData(data.lists.groups.map((group: Group): AppComboRecord => {
+        this.groupsCtrl().setData(data.lists.groups.map((group: Group): AppComboRecord => {
             return {
                 caption: group.name,
                 value:   group.id
@@ -96,7 +94,7 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
             );
 
             if (data.data.contacts) {
-                this.contactsCtrl.setData(data.data.contacts.contacts);
+                this.contactsCtrl().setData(data.data.contacts.contacts);
                 this.contactId = data.data.contacts.contact_id;
             }
         }
@@ -106,7 +104,7 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
     {
         data.set('contacts', JSON.stringify({
             contact_id: this.contactId ?? '',
-            contacts: this.contactsCtrl.getValue()
+            contacts: this.contactsCtrl().getValue()
         }));
 
         return data;
@@ -125,7 +123,7 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     private getEmailAddress(): string | null
     {
-        let userEmails: AppContactsTableRecord['text'][] = this.contactsCtrl.getValue()
+        let userEmails: AppContactsTableRecord['text'][] = this.contactsCtrl().getValue()
             .filter((record: AppContactsTableRecord): boolean => record.type === 'email')
             .map((record: AppContactsTableRecord): AppContactsTableRecord['text'] => record.text);
 

@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -37,9 +37,6 @@ export type ReferringFacilityEditDialogData = {
 
 export default class ReferringFacilityEditDialogComponent extends AppBaseEditDialog
 {
-    @ViewChild('doctorsItemSelectorCtrl')
-    protected readonly doctorsItemSelectorCtrl!: AppItemSelectorComponent;
-
     protected override readonly data: ReferringFacilityEditDialogData = inject(NZ_MODAL_DATA);
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
@@ -56,6 +53,8 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
         short_name: new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         full_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()])
     });
+
+    private readonly doctorsItemSelectorCtrl: Signal<AppItemSelectorComponent> = viewChild.required('doctorsItemSelectorCtrl');
 
     protected afterLoad(data: getFacilityAPI): void
     {
@@ -77,7 +76,7 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
             });
         })
 
-        this.doctorsItemSelectorCtrl.setData(
+        this.doctorsItemSelectorCtrl().setData(
             this.convertDoctorsToItemSelectorRow(doctorsList),
             this.convertDoctorsToItemSelectorRow(facilityDoctors)
         );
@@ -85,7 +84,7 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedDoctors: AppItemSelectorDataListRow[] = this.doctorsItemSelectorCtrl.getRightListData();
+        let selectedDoctors: AppItemSelectorDataListRow[] = this.doctorsItemSelectorCtrl().getRightListData();
         if (selectedDoctors.length > 0) {
             let doctorsIds: string[] = selectedDoctors.map(function (doctor: AppItemSelectorDataListRow): string {
                 return doctor.value;

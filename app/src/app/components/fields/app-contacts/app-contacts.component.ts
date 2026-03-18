@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, Signal, viewChild } from '@angular/core';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -15,18 +15,17 @@ import AppContactsTableComponent, { AppContactsTableRecord } from './table/table
 
 export default class AppContactsComponent
 {
-    @ViewChild('tableCtrl')
-    private readonly tableCtrl!: AppContactsTableComponent;
+    private readonly tableCtrl: Signal<AppContactsTableComponent> = viewChild.required('tableCtrl');
 
     public setData(records: AppContactsTableRecord[]): void
     {
-        this.tableCtrl.setData(records);
+        this.tableCtrl().setData(records);
         this.sortTableData();
     }
 
     public getValue(): AppContactsTableRecord[]
     {
-        return this.tableCtrl.getData();
+        return this.tableCtrl().getData();
     }
 
     protected afterRemoveRecordsInTable(): void
@@ -41,7 +40,7 @@ export default class AppContactsComponent
 
     private sortTableData(): void
     {
-        let data: AppContactsTableRecord[] = this.tableCtrl.getData();
+        let data: AppContactsTableRecord[] = this.tableCtrl().getData();
         if (Sftoomi.isEmpty(data)) {
             return;
         }
@@ -63,7 +62,7 @@ export default class AppContactsComponent
                 .forEach((contact: AppContactsTableRecord): void => { newData.push(contact); })
         });
 
-        this.tableCtrl.setData(newData);
-        this.tableCtrl.clearSelection();
+        this.tableCtrl().setData(newData);
+        this.tableCtrl().clearSelection();
     }
 }

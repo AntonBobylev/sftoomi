@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, signal, ViewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, Signal, signal, viewChild, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -25,9 +25,6 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     public readonly afterRemoveSelected: OutputEmitterRef<void> = output();
     public readonly afterRefresh:        OutputEmitterRef<void> = output();
-
-    @ViewChild('viewCtrl')
-    protected readonly viewCtrl!: AppTableBaseView;
 
     protected readonly data: WritableSignal<any[]> = signal<any[]>([]);
     protected readonly total: WritableSignal<number> = signal<number>(0);
@@ -61,6 +58,8 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     protected pageSize: number = 50;
     protected currentPageIndex: number = 1;
 
+    private readonly viewCtrl: Signal<AppTableBaseView> = viewChild.required(AppTableBaseView);
+
     ngAfterViewInit(): void
     {
         if (!this.lazyLoad) {
@@ -86,7 +85,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     public setData(data: any[]): void
     {
         this.data.set(data);
-        this.viewCtrl.refresh();
+        this.viewCtrl().refresh();
     }
 
     public getData(): any[]
@@ -121,7 +120,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
                 this.data.set(this.convertReceivedDataToTableData(result.data));
                 this.total.set(result.total ?? 0);
 
-                this.viewCtrl.refresh();
+                this.viewCtrl().refresh();
                 this.afterRefresh.emit();
             },
             finally: (): void => {

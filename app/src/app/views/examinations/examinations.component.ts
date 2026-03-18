@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Signal, viewChild } from '@angular/core';
 import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 import { Params } from '@angular/router'
 import { DateTime } from 'luxon';
@@ -20,11 +20,8 @@ import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, E
 
 export default class ExaminationsComponent extends AppBaseModuleWithFilters implements AfterViewInit
 {
-    @ViewChild('filtersCtrl')
-    protected readonly filtersCtrl!: ExaminationsFiltersComponent;
-
-    @ViewChild('tableCtrl')
-    protected readonly tableCtrl!: ExaminationsTableComponent;
+    protected readonly tableCtrl:   Signal<ExaminationsTableComponent> = viewChild.required('tableCtrl');
+    protected readonly filtersCtrl: Signal<ExaminationsFiltersComponent> = viewChild.required('filtersCtrl');
 
     protected isFiltersCollapsed: boolean = false;
 
@@ -47,13 +44,13 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
     {
         let dos: DateTime | null = this.getCurrentDos();
         if (dos) {
-            this.filtersCtrl.setValues({
-                ...this.filtersCtrl.getValues(),
+            this.filtersCtrl().setValues({
+                ...this.filtersCtrl().getValues(),
                 examination_date: dos.toJSDate()
             });
         }
 
-        this.tableCtrl.setIsLoading(true);
+        this.tableCtrl().setIsLoading(true);
     }
 
     protected filtersLoaded(values: ExaminationsFiltersPanelOut): void

@@ -1,4 +1,4 @@
-import { Component, output, OutputEmitterRef, ViewChild } from '@angular/core';
+import { Component, output, OutputEmitterRef, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { NzIconDirective } from 'ng-zorro-antd/icon'
@@ -40,8 +40,7 @@ export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut
 
 export default class ExaminationsFiltersComponent extends AppBaseFilters
 {
-    @ViewChild('examinationDatePickerCtrl')
-    protected readonly examinationDatePickerCtrl!: AppDatepickerComponent;
+    private readonly examinationDatePickerCtrl: Signal<AppDatepickerComponent> = viewChild.required('examinationDatePickerCtrl');
 
     public override readonly onSearch: OutputEmitterRef<ExaminationsFiltersPanelOut>            = output();
     public override readonly onClear:  OutputEmitterRef<ExaminationsFiltersPanelClearEventData> = output();
@@ -86,7 +85,7 @@ export default class ExaminationsFiltersComponent extends AppBaseFilters
     {
         super.afterLoad(data);
 
-        this.examinationDatePickerCtrl.datesForHighlighting = data.data.dates_with_examinations.map((date: string): Date => {
+        this.examinationDatePickerCtrl().datesForHighlighting = data.data.dates_with_examinations.map((date: string): Date => {
             return Sftoomi.stringToDate(date)!;
         });
     }

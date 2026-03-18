@@ -1,4 +1,4 @@
-import { Component, inject, signal, ViewChild, WritableSignal } from '@angular/core';
+import { Component, inject, Signal, signal, viewChild, ViewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -37,18 +37,6 @@ export type ExaminationEditDialogData = {
 
 export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 {
-    @ViewChild('patientIdCtrl')
-    protected readonly patientIdCtrl!: AppComboComponent;
-
-    @ViewChild('facilityCtrl')
-    protected readonly facilityCtrl!: AppComboComponent;
-
-    @ViewChild('doctorCtrl')
-    protected readonly doctorCtrl!: AppComboComponent;
-
-    @ViewChild('studiesSelectorCtrl')
-    protected readonly studiesSelectorCtrl!: AppStudiesSelectorComponent;
-
     protected override readonly data: ExaminationEditDialogData = inject(NZ_MODAL_DATA);
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
@@ -79,16 +67,21 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected readonly studiesStore: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
 
+    private readonly patientIdCtrl:       Signal<AppComboComponent>           = viewChild.required('patientIdCtrl');
+    private readonly facilityCtrl:        Signal<AppComboComponent>           = viewChild.required('facilityCtrl');
+    private readonly doctorCtrl:          Signal<AppComboComponent>           = viewChild.required('doctorCtrl');
+    private readonly studiesSelectorCtrl: Signal<AppStudiesSelectorComponent> = viewChild.required('studiesSelectorCtrl');
+
     protected afterLoad(data: getExaminationAPI): void
     {
-        this.facilityCtrl.setData(data.lists.facilities.map((facility): AppComboRecord => {
+        this.facilityCtrl().setData(data.lists.facilities.map((facility): AppComboRecord => {
             return {
                 caption: facility.short_name,
                 value:   facility.id
             }
         }));
 
-        this.doctorCtrl.setData(data.lists.doctors.map((doctor): AppComboRecord => {
+        this.doctorCtrl().setData(data.lists.doctors.map((doctor): AppComboRecord => {
             return {
                 caption: Sftoomi.humanShortName(doctor),
                 value:   doctor.id
@@ -112,13 +105,13 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         this.form.get('facility_id')?.setValue(data.data.facility_id);
         this.form.get('doctor_id')?.setValue(data.data.doctor_id);
 
-        this.patientIdCtrl.setData([{
+        this.patientIdCtrl().setData([{
             caption: Sftoomi.format('{0} (#{1})', [Sftoomi.humanShortName(data.data.patient), data.data.patient.id.toString()]),
             value:   data.data.patient.id
         }]);
 
         this.form.get('patient_id')?.setValue(data.data.patient_id);
-        this.studiesSelectorCtrl.setValue(data.data.studies);
+        this.studiesSelectorCtrl().setValue(data.data.studies);
     }
 
     protected onPatientSelected(patientId: AppComboRecord['value']): void
@@ -155,7 +148,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedStudies: FormControl[] = this.studiesSelectorCtrl.getAddedStudiesControls(),
+        let selectedStudies: FormControl[] = this.studiesSelectorCtrl().getAddedStudiesControls(),
             addedStudiesIds: number[] = [];
 
         selectedStudies.forEach(function (studyControl: FormControl): void {
@@ -176,7 +169,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override isPreValid(): boolean
     {
-        let addedStudiesCount: number = this.studiesSelectorCtrl.getAddedStudiesCount();
+        let addedStudiesCount: number = this.studiesSelectorCtrl().getAddedStudiesCount();
         if (addedStudiesCount < 1) {
             Sftoomi.popupMsgService?.warning(Sftoomi.Translator.translate('views.examinations.dialog.no_studies_added_tip'));
 

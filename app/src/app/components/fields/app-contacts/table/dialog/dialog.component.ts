@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal'
@@ -37,9 +37,6 @@ export type ContactsEditDialogData = {
 
 export default class ContactsEditDialogComponent extends AppBaseEditDialog
 {
-    @ViewChild('typeCtrl')
-    protected readonly typeCtrl!: AppComboComponent;
-
     protected override readonly data: ContactsEditDialogData | undefined = inject(NZ_MODAL_DATA);
 
     protected readonly form: FormGroup = new FormGroup({
@@ -68,9 +65,11 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
         'phone':   [Validators.required, phoneValidator()]
     };
 
+    private readonly typeCtrl: Signal<AppComboComponent> = viewChild.required('typeCtrl');
+
     protected afterLoad(data?: ContactsEditDialogData): void
     {
-        this.typeCtrl.setData(this.availableTypes);
+        this.typeCtrl().setData(this.availableTypes);
 
         if (!data) {
             return;

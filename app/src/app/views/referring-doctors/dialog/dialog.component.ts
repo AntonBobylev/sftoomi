@@ -1,4 +1,4 @@
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -33,9 +33,6 @@ export type ReferringDoctorEditDialogData = {
 
 export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialog
 {
-    @ViewChild('facilitiesItemSelectorCtrl')
-    protected readonly facilitiesItemSelectorCtrl!: AppItemSelectorComponent;
-
     protected override readonly data: ReferringDoctorEditDialogData = inject(NZ_MODAL_DATA);
 
     protected override readonly fetchExtraRequestOnLoad: boolean = true;
@@ -53,6 +50,8 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()])
     });
+
+    private readonly facilitiesItemSelectorCtrl: Signal<AppItemSelectorComponent> = viewChild.required('facilitiesItemSelectorCtrl');
 
     protected afterLoad(data: getDoctorAPI): void
     {
@@ -75,7 +74,7 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
             });
         })
 
-        this.facilitiesItemSelectorCtrl.setData(
+        this.facilitiesItemSelectorCtrl().setData(
             this.convertFacilitiesToItemSelectorRow(facilitiesList),
             this.convertFacilitiesToItemSelectorRow(doctorFacilities)
         );
@@ -83,14 +82,14 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
 
     protected isSaveButtonDisabled(): boolean
     {
-        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl?.getRightListData();
+        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
 
         return this.form.invalid || selectedFacilities.length < 1;
     }
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl.getRightListData();
+        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
         if (selectedFacilities.length > 0) {
             let facilitiesIds: string[] = selectedFacilities.map(function (facility: AppItemSelectorDataListRow): string {
                 return facility.value;
