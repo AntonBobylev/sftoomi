@@ -19,7 +19,7 @@ export type ExaminationsTableRowExam = {
 }
 
 export type ExaminationsTableRow = {
-    id:            number,
+    id: number,
     patient: {
         id:          number,
         last_name:   string,

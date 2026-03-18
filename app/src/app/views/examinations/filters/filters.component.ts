@@ -63,7 +63,8 @@ export default class ExaminationsFiltersComponent extends AppBaseFilters
 
     public override setValues(values: ExaminationsFiltersPanelIn): void
     {
-        this.form.setValue(values);
+        // Do not emit an event because setValue was set programmatically, and we don't want to trigger the search
+        this.form.setValue(values, { emitEvent: false });
     }
 
     protected clearFields(): void
