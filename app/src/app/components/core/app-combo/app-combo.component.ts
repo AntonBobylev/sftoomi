@@ -12,9 +12,9 @@ import AppBaseField from '../app-base-field';
 
 import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
 
-export type AppComboRecord = {
+export type AppComboRecord<T = string | number> = {
     caption: string,
-    value:   string | number
+    value:   T
 };
 
 @Component({
@@ -28,7 +28,7 @@ export type AppComboRecord = {
     styleUrl: './app-combo.component.scss'
 })
 
-export default class AppComboComponent extends AppBaseField
+export default class AppComboComponent<T = string | number> extends AppBaseField
 {
     @Input() public useSearch: boolean = false;
     @Input() public useClear: boolean = false;
@@ -38,15 +38,15 @@ export default class AppComboComponent extends AppBaseField
     @Input() public remoteUrl: string | undefined;
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
 
-    public readonly selectionChange: OutputEmitterRef<AppComboRecord['value']> = output();
+    public readonly selectionChange: OutputEmitterRef<T> = output();
 
-    protected data: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
-    protected listOfOptions: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
-    protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
+    protected data:          WritableSignal<AppComboRecord<T>[]> = signal<AppComboRecord<T>[]>([]);
+    protected listOfOptions: WritableSignal<AppComboRecord<T>[]> = signal<AppComboRecord<T>[]>([]);
+    protected isLoading:     WritableSignal<boolean>             = signal<boolean>(false);
 
     private queryController: AbortController = new AbortController();
 
-    public setData(records: AppComboRecord[]): void
+    public setData(records: AppComboRecord<T>[]): void
     {
         this.data.set(records);
         this.listOfOptions.set(this.data());
@@ -107,12 +107,10 @@ export default class AppComboComponent extends AppBaseField
     {
         this.listOfOptions.set([]);
 
-        let newListOfOptions: AppComboRecord[] = [];
-        this.data().forEach((record: AppComboRecord): void => {
-            if (record.caption.toString().toLowerCase().startsWith(query.toLowerCase())) {
-                newListOfOptions.push(record);
-            }
-        });
+        const lowerQuery: string = query.toLowerCase(),
+              newListOfOptions: AppComboRecord<T>[] = this.data().filter((record: AppComboRecord<T>): boolean =>
+                  record.caption.toString().toLowerCase().startsWith(lowerQuery)
+              );
 
         this.listOfOptions.set(newListOfOptions);
     }
