@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, InputSignal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NzFormDirective } from 'ng-zorro-antd/form';
 
@@ -27,6 +27,8 @@ export default class PatientDemographicsTemplateComponent
     @Input({required: true, alias: 'middleNameCtrlName'}) public middleName!: string;
     @Input({required: true, alias: 'dobNameCtrlName'})    public dobName!: string;
     @Input({required: true, alias: 'phoneNameCtrlName'})  public phoneName!: string;
+
+    public readonly isVertical: InputSignal<boolean> = input(true);
 
     protected readonly Sftoomi = Sftoomi;
 }

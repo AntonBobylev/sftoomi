@@ -1,5 +1,7 @@
 <div class="wrapper">
-    <form nz-form [formGroup]="form">
+    <form nz-form [formGroup]="form"
+          [class.horizontal-wrapper]="!isVertical()"
+    >
         <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
                        [name]="lastName"
                        [form]="form"
