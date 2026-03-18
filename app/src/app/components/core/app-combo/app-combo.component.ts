@@ -28,7 +28,7 @@ export type AppComboRecord<T = string | number> = {
     styleUrl: './app-combo.component.scss'
 })
 
-export default class AppComboComponent<T = string | number> extends AppBaseField
+export default class AppComboComponent<T = AppComboRecord['value']> extends AppBaseField
 {
     @Input() public useSearch: boolean = false;
     @Input() public useClear: boolean = false;
