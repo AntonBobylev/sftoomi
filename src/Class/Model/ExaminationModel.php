@@ -34,11 +34,14 @@ class ExaminationModel extends AbstractModel
         $result = parent::getAll($start, $limit, $filters);
 
         foreach ($result["data"] as &$row) {
-            $sql = "select es.exam_id, s.id, s.short_name, s.full_name
+            $sql = "select es.exam_id, s.id as study_id, s.short_name as study_short_name, s.full_name as study_full_name
                     from examinations_studies es
                         left join study s on s.id = es.study_id
                     where es.examination_id = ?";
             $row["studies"] = $this->connection->fetchAll($sql, [$row["id"]]);
+            foreach ($row["studies"] as &$study) {
+                $study["exam_drafts_exists"] = false; // TODO: implement
+            }
 
             $row["patient"] = new PatientModel($this->connection)->get($row["patient_id"]);
             $row["facility"] = new FacilityModel($this->connection)->get($row["facility_id"]);

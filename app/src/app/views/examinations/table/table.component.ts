@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
-import Sftoomi from '../../../class/Sftoomi';
-
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
 import ExaminationsTableToolbarComponent from './toolbar/toolbar.component';
 import ExaminationsTablePatientColumnComponent from './patient-column/patient-column.component';
@@ -11,6 +9,38 @@ import ExaminationsTableStudiesColumnComponent from './studies-column/studies-co
 import ExaminationsTableReferringColumnComponent from './referring-column/referring-column.component';
 
 import AppTableColumn from '../../../type/AppTableColumn';
+
+export type ExaminationsTableRowExam = {
+    exam_id:            number,
+    exam_drafts_exists: boolean
+    study_id:           number,
+    study_short_name:   string,
+    study_full_name:    string
+}
+
+export type ExaminationsTableRow = {
+    id:            number,
+    patient: {
+        id:          number,
+        last_name:   string,
+        first_name:  string,
+        middle_name: string | null,
+        dob:         string | null,
+        phone:       string | null
+    },
+    doctor: {
+        id:          number,
+        last_name:   string,
+        first_name:  string,
+        middle_name: string | null
+    },
+    facility: {
+        id:          number,
+        short_name:  string,
+        full_name:   string
+    },
+    studies: ExaminationsTableRowExam[]
+}
 
 @Component({
     selector: 'examinations-table',
@@ -25,7 +55,7 @@ export default class ExaminationsTableComponent extends AppTableComponent
         name: 'id',
         width: '60px',
         header: {
-            caption: Sftoomi.Translator.translate('id'),
+            caption: this.Sftoomi.Translator.translate('id'),
             extraStyles: {
                 justifyContent: 'center'
             }
@@ -39,20 +69,20 @@ export default class ExaminationsTableComponent extends AppTableComponent
         name: 'patient',
         width: '200px',
         header: {
-            caption: Sftoomi.Translator.translate('views.examinations.table.columns.patient')
+            caption: this.Sftoomi.Translator.translate('views.examinations.table.columns.patient')
         },
         customColumnComponent: ExaminationsTablePatientColumnComponent
     }, {
         name: 'referring',
         width: '200px',
         header: {
-            caption: Sftoomi.Translator.translate('views.examinations.table.columns.referring.caption')
+            caption: this.Sftoomi.Translator.translate('views.examinations.table.columns.referring.caption')
         },
         customColumnComponent: ExaminationsTableReferringColumnComponent
     }, {
         name: 'studies',
         header: {
-            caption: Sftoomi.Translator.translate('views.examinations.table.columns.studies')
+            caption: this.Sftoomi.Translator.translate('views.examinations.table.columns.studies.caption')
         },
         customColumnComponent: ExaminationsTableStudiesColumnComponent
     }];

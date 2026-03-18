@@ -1,5 +1,5 @@
 <div class="wrapper">
-    @for (exam of rowData.studies; track exam.exam_id) {
+    @for (exam of rowData().studies; track exam.exam_id) {
         <div class="exam-wrapper">
             <div class="overflowed-text">
                 <div class="overflowed-text">
@@ -7,16 +7,28 @@
                     <span>{{ exam.exam_id }}</span>
                 </div>
                 <div class="overflowed-text"
-                     [nz-tooltip]="exam.full_name"
+                     [nz-tooltip]="exam.study_full_name"
                 >
-                    <span>{{ exam.short_name }}</span>
+                    <span>{{ exam.study_short_name }}</span>
                 </div>
+                <button nz-button
+                        nzType="link"
+                        nzShape="circle"
+                        [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::EDIT_DRAFT')"
+                        [disabled]="table().isLoadingNow()"
+                        [nz-tooltip]="getExamAddEditButtonConfig(exam).tooltip"
+                        (click)="onAddEditDraftClick($event, exam)"
+                >
+                    {{ getExamAddEditButtonConfig(exam).title }}
+                </button>
             </div>
         </div>
 
         @if (!$last) {
             <nz-divider style="width: 1px; height: 40px"
-                        nzType="vertical" nzVariant="solid"></nz-divider>
+                        nzType="vertical"
+                        nzVariant="solid"
+            />
         }
     }
 </div>

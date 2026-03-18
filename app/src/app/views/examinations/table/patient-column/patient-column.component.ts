@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, Input, InputSignal } from '@angular/core';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
-import ExaminationsTableComponent from '../table.component';
+import ExaminationsTableComponent, { ExaminationsTableRow } from '../table.component';
 
 @Component({
     selector: 'examinations-table-patient-column',
@@ -14,8 +14,8 @@ import ExaminationsTableComponent from '../table.component';
 
 export default class ExaminationsTablePatientColumnComponent
 {
-    @Input() public rowData: any = [];
-    @Input() public table!: ExaminationsTableComponent;
+    public readonly rowData: InputSignal<ExaminationsTableRow>       = input.required();
+    public readonly table:   InputSignal<ExaminationsTableComponent> = input.required();
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }

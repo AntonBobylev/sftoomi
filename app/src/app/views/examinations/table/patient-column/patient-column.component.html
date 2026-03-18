@@ -1,21 +1,26 @@
 <table class="main-table">
     <tr>
         <td colspan="2" style="font-weight: bold">
-            {{ Sftoomi.humanShortName(rowData.patient) }}
+            {{ Sftoomi.humanShortName(rowData().patient) }}
         </td>
     </tr>
-    <tr>
-        <td style="flex: 1;">
+    @if (!Sftoomi.isEmpty(rowData().patient.dob)) {
+        <tr>
+            <td style="flex: 1;">
             <span [nz-tooltip]="Sftoomi.Translator.translate('dob_full')">
                 {{ Sftoomi.Translator.translate('dob_short') }}:
             </span>
-        </td>
-        <td style="flex: 2;">
-            <span>{{ rowData.patient.dob ? Sftoomi.dateShort(rowData.patient.dob) : Sftoomi.Translator.translate('not_set_tip') }}</span>
-        </td>
-    </tr>
-    <tr>
-        <td style="flex: 1">{{ Sftoomi.Translator.translate('phone') }}:</td>
-        <td style="flex: 2">{{ rowData.patient.phone }}</td>
-    </tr>
+            </td>
+            <td style="flex: 2;">
+                <span>{{ rowData().patient.dob ? Sftoomi.dateShort(rowData().patient.dob) : Sftoomi.Translator.translate('not_set_tip') }}</span>
+            </td>
+        </tr>
+    }
+
+    @if (!Sftoomi.isEmpty(rowData().patient.phone)) {
+        <tr>
+            <td style="flex: 1">{{ Sftoomi.Translator.translate('phone') }}:</td>
+            <td style="flex: 2">{{ rowData().patient.phone }}</td>
+        </tr>
+    }
 </table>

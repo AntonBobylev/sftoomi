@@ -64,7 +64,13 @@ let ruDictionary: object =  {
                         facility: 'Учреждение'
                     },
                     patient: 'Пациент',
-                    studies: 'Исследования'
+                    studies: {
+                        add_report_draft: 'Доб. черновик отчёта',
+                        add_report_draft_tooltip: 'Добавить черновик отчёта',
+                        caption: 'Исследования',
+                        edit_report_draft: 'Ред. черновик отчёта',
+                        edit_report_draft_tooltip: 'Редактировать черновик отчёта'
+                    }
                 }
             },
             filters: {

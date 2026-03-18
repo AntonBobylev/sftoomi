@@ -64,7 +64,13 @@ let usDictionary: object =  {
                         facility: 'Facility'
                     },
                     patient: 'Patient',
-                    studies: 'Studies'
+                    studies: {
+                        add_report_draft: 'Add report draft',
+                        add_report_draft_tooltip: 'Add report draft',
+                        caption: 'Studies',
+                        edit_report_draft: 'Edit report draft',
+                        edit_report_draft_tooltip: 'Edit report draft'
+                    }
                 }
             },
             filters: {
