@@ -1,4 +1,4 @@
-import { Directive, EventEmitter, Input, Output } from '@angular/core';
+import { Directive, Input, output, OutputEmitterRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzPlacementType } from 'ng-zorro-antd/dropdown'
 
@@ -14,7 +14,7 @@ export default abstract class AppBaseField
     @Input() public tooltip: string | undefined;
     public readonly tooltipPlacement: NzPlacementType = 'bottomCenter';
 
-    protected readonly Sftoomi = Sftoomi;
+    public readonly onChange: OutputEmitterRef<any> = output();
 
-    @Output() public onChange: EventEmitter<any> = new EventEmitter<any>();
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, signal, ViewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, signal, ViewChild, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -23,8 +23,8 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 {
     @Input() public filtersCtrl: AppBaseFilters | undefined;
 
-    @Output() public afterRemoveSelected: EventEmitter<undefined> = new EventEmitter<undefined>();
-    @Output() public afterRefresh: EventEmitter<undefined> = new EventEmitter<undefined>();
+    public readonly afterRemoveSelected: OutputEmitterRef<void> = output();
+    public readonly afterRefresh:        OutputEmitterRef<void> = output();
 
     @ViewChild('viewCtrl')
     protected readonly viewCtrl!: AppTableBaseView;

@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, EventEmitter, Output, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Directive, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import Sftoomi from '../../class/Sftoomi';
@@ -8,15 +8,15 @@ import { DialogType } from '../../class/Dialog';
 @Directive()
 export default abstract class AppBaseFilters implements AfterViewInit
 {
-    @Output() public abstract onSearch: EventEmitter<any>;
-    @Output() public abstract onClear : EventEmitter<any>;
-    @Output() public abstract onLoaded: EventEmitter<any>;
+    public readonly onSearch: OutputEmitterRef<any> = output();
+    public readonly onClear:  OutputEmitterRef<any> = output();
+    public readonly onLoaded: OutputEmitterRef<any> = output();
 
     protected abstract readonly form: FormGroup;
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     protected abstract readonly loadUrl: string;
 
