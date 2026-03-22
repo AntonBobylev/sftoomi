@@ -62,7 +62,7 @@ export default class Fetcher
                     // do not throw to catch Promise block
 
                     let message: string = '';
-                    if (typeof e === "string") {
+                    if (typeof e === 'string') {
                         message = e.toUpperCase();
                     } else if (e instanceof Error) {
                         let stack: string = e.stack ?? '',
