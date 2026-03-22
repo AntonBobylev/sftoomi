@@ -58,6 +58,11 @@ services:
         arguments:
             - '@filesystem'
 
+    study_draft_manager:
+        class: App\Class\StudyDraft\Manager
+        arguments:
+            - '@connection'
+
     App\Filesystem:
         arguments:
             $projectDir: '%kernel.project_dir%'
