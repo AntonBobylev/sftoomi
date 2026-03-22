@@ -11,6 +11,7 @@ let usDictionary: object =  {
     id: 'ID',
     information: 'Information',
     last_name: 'Last name',
+    loading: 'Loading...',
     logout: 'Logout',
     middle_name: 'Middle name',
     no_data_to_display: 'No data to display',
@@ -27,6 +28,7 @@ let usDictionary: object =  {
     warning: 'Warning',
 
     navigation: {
+        draft_viewer: 'Draft viewer',
         examinations: 'Examinations',
         home: 'Home',
         login: 'Login',
@@ -49,6 +51,17 @@ let usDictionary: object =  {
     },
 
     views: {
+        draft_viewer: {
+            go_back: 'Go back',
+            template_field_caption: 'Template',
+            error_messages: {
+                empty_template: 'Empty draft template. Please select the template first',
+                exam_id_is_incorrect: 'Incorrect exam ID was passed',
+                exam_id_required: 'Exam ID required but it wasn\'t set',
+                template_id_is_not_finite: 'Template ID is not finite. Template ID: {0}',
+                template_id_must_be_greater_than_zero: 'Template ID must be greater than 0. The passed template ID: {0}'
+            }
+        },
         login: {
             login: 'Login',
             logon: 'Logon',

@@ -1,0 +1,24 @@
+<div class="wrapper">
+    <app-loading-spinner [isLoading]="isLoading()" />
+
+    <app-draft-viewer-toolbar #toolbarCtrl
+                              [form]="form"
+                              (templateChanged)="onTemplateChanged($event)"
+                              (goBack)="goBack()"
+    />
+
+    <div class="content">
+        @if (isLoading()) {
+            {{ Sftoomi.Translator.translate('loading') }}
+        } @else {
+            @if (Sftoomi.isEmpty(draftTemplateCode())) {
+                {{ Sftoomi.Translator.translate('views.draft_viewer.error_messages.empty_template') }}
+            } @else {
+                <iframe [srcdoc]="draftTemplateCode() | safe"
+                        class="draft-template-frame"
+                >
+                </iframe>
+            }
+        }
+    </div>
+</div>

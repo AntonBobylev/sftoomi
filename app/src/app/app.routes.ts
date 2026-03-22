@@ -12,8 +12,10 @@ import LoginComponent from './views/login/login.component'
 import UsersModuleComponent from './views/users/users.component';
 import GroupsComponent from './views/groups/groups.component'
 import ReportTemplatesModuleComponent from './views/report-templates/module.component'
+import DraftViewerModuleComponent from './views/draft-viewer/module.component'
 
 export enum RoutesPaths {
+    DRAFT_VIEWER         = 'draft-viewer',
     EXAMINATIONS         = 'examinations',
     GROUPS               = 'groups',
     HOME                 = '',
@@ -30,6 +32,10 @@ const BASE_TITLE = 'SFTOOMI :: ';
 const fallbackRoutePath: string = RoutesPaths.HOME;
 
 export const routes: Routes = [{
+    path: RoutesPaths.DRAFT_VIEWER,
+    title: BASE_TITLE + Sftoomi.Translator.translate('navigation.draft_viewer'),
+    component: DraftViewerModuleComponent
+}, {
     path: RoutesPaths.EXAMINATIONS,
     title: BASE_TITLE + Sftoomi.Translator.translate('navigation.examinations'),
     component: ExaminationsComponent
@@ -75,6 +81,9 @@ export const routes: Routes = [{
 }];
 
 export const RoutesPermissions: Map<string, string | undefined> = new Map([[
+    RoutesPaths.DRAFT_VIEWER,
+    'EXAMINATIONS_MODULE::EDIT_DRAFT'
+], [
     RoutesPaths.EXAMINATIONS,
     'EXAMINATIONS_MODULE'
 ], [

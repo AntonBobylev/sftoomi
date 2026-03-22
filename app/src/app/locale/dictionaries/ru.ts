@@ -11,6 +11,7 @@ let ruDictionary: object =  {
     id: 'ID',
     information: 'Информация',
     last_name: 'Фамилия',
+    loading: 'Загрузка...',
     logout: 'Выйти',
     middle_name: 'Отчество',
     no_data_to_display: 'Нет данных для отображения',
@@ -27,6 +28,7 @@ let ruDictionary: object =  {
     warning: 'Внимание',
 
     navigation: {
+        draft_viewer: 'Черновик отчёта',
         examinations: 'Обследования',
         home: 'Домашняя',
         login: 'Вход',
@@ -49,6 +51,17 @@ let ruDictionary: object =  {
     },
 
     views: {
+        draft_viewer: {
+            go_back: 'Назад',
+            template_field_caption: 'Шаблон',
+            error_messages: {
+                empty_template: 'Пожалуйста, сначала выберите шаблон',
+                exam_id_is_incorrect: 'Передан некорректный ID исследования',
+                exam_id_required: 'ID исследования не был передан',
+                template_id_is_not_finite: 'ID шаблона не является конечным числом: {0}',
+                template_id_must_be_greater_than_zero: 'ID шаблона должно быть больше чем ноль. Текущее значение: {0}'
+            }
+        },
         login: {
             login: 'Логин',
             logon: 'Войти',

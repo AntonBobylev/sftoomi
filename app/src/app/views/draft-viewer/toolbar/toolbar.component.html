@@ -1,0 +1,24 @@
+<div class="wrapper">
+    <div class="left">
+        <button nz-button
+                nzType="primary"
+                nzShape="round"
+                (click)="goBack.emit()"
+        >
+            <nz-icon nzType="arrow-left" />
+            {{ Sftoomi.Translator.translate('views.draft_viewer.go_back') }}
+        </button>
+    </div>
+    <div class="right">
+        <div class="templates-combo-wrapper">
+            <app-combo #templateIdCtrl
+                       [form]="form()"
+                       [inlineLabel]="true"
+                       [useSearch]="true"
+                       name="template_id"
+                       [label]="Sftoomi.Translator.translate('views.draft_viewer.template_field_caption')"
+                       (selectionChange)="onTemplateIdChange($event)"
+            />
+        </div>
+    </div>
+</div>

@@ -1,11 +1,14 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, inject, input, InputSignal } from '@angular/core';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button'
+import { Router } from '@angular/router'
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 import ExaminationsTableComponent, { ExaminationsTableRow, ExaminationsTableRowExam } from '../table.component';
+
+import { RoutesPaths } from '../../../../app.routes'
 
 @Component({
     selector: 'examinations-table-studies-column',
@@ -20,6 +23,8 @@ export default class ExaminationsTableStudiesColumnComponent
     public readonly table:   InputSignal<ExaminationsTableComponent> = input.required();
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
+
+    private readonly router: Router = inject(Router);
 
     protected getExamAddEditButtonConfig(exam: ExaminationsTableRowExam): { title: string, tooltip: string }
     {
@@ -49,6 +54,14 @@ export default class ExaminationsTableStudiesColumnComponent
     {
         event.stopPropagation();
 
-        // TODO: implement
+        const currentFullUrl:   string = this.router.url,
+              encodedBackRoute: string = btoa(currentFullUrl);
+
+        this.router.navigate([RoutesPaths.DRAFT_VIEWER], {
+            queryParams: {
+                exam:       exam.exam_id,
+                back_route: encodedBackRoute
+            }
+        }).then();
     }
 }
