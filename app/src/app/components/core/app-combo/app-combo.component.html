@@ -1,17 +1,18 @@
-<nz-form-item [formGroup]="form">
+<nz-form-item [formGroup]="form"
+              [class.inline-label]="inlineLabel()"
+>
     <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
                    [nzFor]="name"
     >
         {{ label }}
     </nz-form-label>
     <nz-form-control [nzErrorTip]="errorTipTpl">
-        <nz-select [nzShowSearch]="useSearch || !Sftoomi.isEmpty(remoteUrl)"
-                   [nzAllowClear]="useClear"
+        <nz-select [nzAllowClear]="useClear"
                    [nzPlaceHolder]="placeholder"
                    [formControlName]="name"
                    [nzShowArrow]="true"
-                   [nzServerSearch]="Sftoomi.isEmpty(remoteUrl)"
-                   (nzOnSearch)="search($event)"
+                   [nzShowSearch]="useSearch || !Sftoomi.isEmpty(remoteUrl)"
+                   [nzServerSearch]="!Sftoomi.isEmpty(remoteUrl)"
                    (ngModelChange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
                    [nzMode]="multiple ? 'multiple' : 'default'"
