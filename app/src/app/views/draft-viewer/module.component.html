@@ -7,7 +7,9 @@
                               (goBack)="goBack()"
     />
 
-    <div class="content">
+    <div class="content"
+         [class.loading-content]="isLoading()"
+    >
         @if (isLoading()) {
             {{ Sftoomi.Translator.translate('loading') }}
         } @else {
