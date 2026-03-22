@@ -1,4 +1,4 @@
-import { Component, Input, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
+import { Component, input, Input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzColDirective } from 'ng-zorro-antd/grid';
@@ -34,6 +34,8 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
     @Input() public useClear: boolean = false;
     @Input() public multiple: boolean = false;
     @Input() public placeholder: string = '';
+
+    public readonly inlineLabel: InputSignal<boolean> = input(false);
 
     @Input() public remoteUrl: string | undefined;
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
