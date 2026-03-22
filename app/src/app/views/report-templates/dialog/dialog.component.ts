@@ -93,4 +93,12 @@ export default class ReportTemplateEditDialogComponent extends AppBaseEditDialog
             this.form.get('template_content')?.setValue(result.content);
         });
     }
+
+    protected override getAdditionalDataOnSave(data: FormData): FormData
+    {
+        data.delete('allowed_studies');
+        data.append('allowed_studies', this.form.get('allowed_studies')?.value ?? '');
+
+        return data;
+    }
 }
