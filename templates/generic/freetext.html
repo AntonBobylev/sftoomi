@@ -15,11 +15,51 @@
                 text-align: left;
 
                 line-height: 1.5;
-                margin-top: 20px;
             }
 
             .row {
                 white-space: nowrap;
+            }
+
+            .report-header {
+                font-weight: bold;
+                text-align: center;
+            }
+
+            .report-header-study-name {
+                text-align: center;
+            }
+
+            .report-header-details {
+                width: 100%;
+
+                .details-table {
+                    width: 100%;
+                    table-layout: fixed;
+                    border-collapse: collapse;
+                }
+
+                .details-table > tbody > tr > td {
+                    width: 50%;
+                    vertical-align: top;
+                    padding: 2px 5px;
+                }
+
+                .details-table table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                .details-table table td:first-child {
+                    width: 35%;
+                    font-weight: normal;
+                    color: #555;
+                }
+
+                .details-table table td:last-child {
+                    text-wrap: auto;
+                    width: 65%;
+                }
             }
 
             .main {
@@ -30,6 +70,7 @@
                     max-height: 300px;
                     width: 100%;
                     resize: none;
+                    background: transparent;
                 }
             }
         </style>
@@ -39,15 +80,70 @@
     <body>
         <div class="wrapper">
             <div class="header-info">
-                <div class="row">Patient: ${patient_name}</div>
-                <div class="row">Examination: ${examination_id}</div>
-                <div class="row">Exam: ${exam_id}</div>
-                <div class="row">Doctor: ${doctor_name}</div>
-                <div class="row">Study: ${study_short_name}</div>
+                <div class="row report-header">Report</div>
+                <div class="row report-header-study-name">${study_full_name}</div>
+                <div class="row report-header-details">
+                    <table class="details-table">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Patient:</td>
+                                        <td>${patient_name}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Date of Birth:</td>
+                                        <td>${patient_dob} (age: ${patient_age}, ${patient_gender})</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Study date:</td>
+                                        <td>${examination_date}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Exam ID:</td>
+                                        <td>${exam_id}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Facility:</td>
+                                        <td>${facility_full_name}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>Doctor:</td>
+                                        <td>${doctor_full_name}</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="main">
-                <label>
-                    <textarea></textarea>
+                <label for="generic-freetext">
+                    <textarea id="generic-freetext"></textarea>
                 </label>
             </div>
         </div>
