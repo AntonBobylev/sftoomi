@@ -35,7 +35,8 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
     @Input() public multiple: boolean = false;
     @Input() public placeholder: string = '';
 
-    public readonly inlineLabel: InputSignal<boolean> = input(false);
+    public readonly inlineLabel:           InputSignal<boolean> = input(false);
+    public readonly errorsWrapperRequired: InputSignal<boolean> = input(true);
 
     @Input() public remoteUrl: string | undefined;
     @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;

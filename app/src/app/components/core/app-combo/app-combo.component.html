@@ -1,5 +1,6 @@
 <nz-form-item [formGroup]="form"
               [class.inline-label]="inlineLabel()"
+              [class.without-error-wrapper]="!errorsWrapperRequired()"
 >
     <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
                    [nzFor]="name"
