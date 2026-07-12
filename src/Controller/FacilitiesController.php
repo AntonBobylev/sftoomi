@@ -90,7 +90,7 @@ final class FacilitiesController extends SftoomiController
         );
 
         $facilityId = $values["id"];
-        if (empty($doctorId)) {
+        if (empty($facilityId)) {
             $facilityId = $this->connection->getLastInsertId();
         }
 
