@@ -116,3 +116,21 @@ front-watch:
 .PHONY: domain-init
 domain-init:
 	@$(COMPOSE_EXEC) php php bin/console app:init-domain
+
+## --- LOGS ---
+.PHONY: logs logs-nginx logs-php logs-mysql logs-redis
+
+logs:
+	@$(DOCKER_COMPOSE) logs -f --tail=100
+
+logs-nginx:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 server
+
+logs-php:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 php
+
+logs-mysql:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 mysql
+
+logs-redis:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 redis
