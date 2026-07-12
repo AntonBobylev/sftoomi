@@ -27,6 +27,10 @@ rebuild:
 rebuild-php:
 	@$(DOCKER_COMPOSE) up -d --build php
 
+.PHONY: rebuild-node
+rebuild-node:
+	@$(DOCKER_COMPOSE) up -d --build node
+
 # APPLICATION
 .PHONY: app-init
 app-init: up wait-db composer-install db-migrate front-reinit
@@ -83,34 +87,20 @@ db-migrate: db-create
 	$(MAKE) app-sync-permissions
 
 ## FRONT
-.PHONY: front-init
+.PHONY: front-shell front-init front-clear front-reinit
+
+front-shell:
+	@$(DOCKER_COMPOSE) exec node sh
+
 front-init:
 	@echo "Installing npm dependencies..."
-	@$(COMPOSE_EXEC) php npm --prefix app install
+	@$(COMPOSE_EXEC) node npm install
 
-.PHONY: front-clear
 front-clear:
 	@echo "Cleaning frontend artifacts..."
-	@$(COMPOSE_EXEC) php rm -rf ./app/node_modules ./app/.angular ./app/build ./public/app
+	@$(COMPOSE_EXEC) node rm -rf ./node_modules ./.angular ./dist
 
-.PHONY: front-reinit
 front-reinit: front-clear front-init
-
-.PHONY: front-build
-front-build:
-	@echo "Building Angular application..."
-	@$(COMPOSE_EXEC) php npm --prefix app run build
-	@echo "Frontend build deployed to public/app!"
-
-.PHONY: front-dev
-front-dev:
-	@echo "Starting Angular with hot reload..."
-	@$(COMPOSE_EXEC) php npm --prefix app run dev:hot-watch
-
-.PHONY: front-watch
-front-watch:
-	@echo "Building Angular application in watch mode..."
-	@$(COMPOSE_EXEC) php npm --prefix app run dev:watch
 
 ## DOMAIN
 .PHONY: domain-init
@@ -125,6 +115,9 @@ logs:
 
 logs-nginx:
 	@$(DOCKER_COMPOSE) logs -f --tail=100 server
+
+logs-node:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 node
 
 logs-php:
 	@$(DOCKER_COMPOSE) logs -f --tail=100 php
