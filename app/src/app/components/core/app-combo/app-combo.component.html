@@ -14,6 +14,7 @@
                    [nzShowArrow]="true"
                    [nzShowSearch]="useSearch || !Sftoomi.isEmpty(remoteUrl)"
                    [nzServerSearch]="!Sftoomi.isEmpty(remoteUrl)"
+                   (nzOnSearch)="search($event)"
                    (ngModelChange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
                    [nzMode]="multiple ? 'multiple' : 'default'"
