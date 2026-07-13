@@ -52,6 +52,8 @@ export default class Translator
 
     public switchToTheNextLocale(): void
     {
+        Sftoomi.showApplicationGlobalMask();
+
         let me: this = this,
             nextLocaleIndex: number = this.availableLocales.findIndex((locale: AppLocale): boolean => locale === me.locale) + 1;
 
