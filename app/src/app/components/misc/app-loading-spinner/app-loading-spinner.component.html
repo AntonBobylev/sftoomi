@@ -1,5 +1,6 @@
 <div class="loading-spinner-wrapper"
-     [style.display]="isLoading ? 'flex' : 'none'"
+     [style.opacity.%]="opacityInPercents()"
+     [class.hidden]="!isLoading()"
 >
     <nz-spin nzSimple></nz-spin>
 </div>

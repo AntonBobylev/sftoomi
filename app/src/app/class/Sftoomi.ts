@@ -25,6 +25,8 @@ export default class Sftoomi
     public static responsiveLayoutService: ResponsiveLayoutService | undefined = undefined;
     public static popupMsgService: PopupMsgService | undefined;
 
+    private static applicationGlobalMaskShown: boolean = false;
+
     public static init(
         dialog: NzModalService,
         nzI18nService: NzI18nService,
@@ -363,6 +365,21 @@ export default class Sftoomi
     public static duplicateEntity(entity: any): any
     {
         return JSON.parse(JSON.stringify(entity));
+    }
+
+    public static showApplicationGlobalMask(): void
+    {
+        this.applicationGlobalMaskShown = true;
+    }
+
+    public static hideApplicationGlobalMask(): void
+    {
+        this.applicationGlobalMaskShown = false;
+    }
+
+    public static isApplicationGlobalMaskShown(): boolean
+    {
+        return this.applicationGlobalMaskShown;
     }
 
     private static parseDateToLuxon(date?: string | null | Date): DateTime | null

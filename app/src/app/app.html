@@ -1,4 +1,10 @@
 <nz-layout class="app-layout">
+
+    <app-loading-spinner [isLoading]="Sftoomi.isApplicationGlobalMaskShown()"
+                         [opacityInPercents]="100"
+
+    />
+
     <app-loading-spinner [isLoading]="isLoading()" />
     @if (Sftoomi.Auth.getIsAuthorizedSignal()()) {
         <app-navigation-panel [isLoading]="isLoading"/>

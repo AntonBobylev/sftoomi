@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { NzSpinComponent } from 'ng-zorro-antd/spin'
 
 @Component({
@@ -12,5 +12,6 @@ import { NzSpinComponent } from 'ng-zorro-antd/spin'
 
 export default class AppLoadingSpinnerComponent
 {
-    @Input({ required: true }) public isLoading: boolean = false;
+    public readonly opacityInPercents: InputSignal<number>  = input(70);
+    public readonly isLoading:         InputSignal<boolean> = input(true);
 }
