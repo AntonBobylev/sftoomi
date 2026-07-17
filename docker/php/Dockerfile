@@ -4,25 +4,23 @@ ARG USER_ID
 ARG GROUP_ID
 ARG USER_NAME
 
-RUN groupadd -g ${GROUP_ID} ${USER_NAME} || true && \
-    useradd -l -u ${USER_ID} -g ${GROUP_ID} -m -s /bin/bash ${USER_NAME} || true
-
-RUN mkdir -p /var/www/project && \
-    chown -R ${USER_ID}:${GROUP_ID} /var/www
+RUN groupadd -g ${GROUP_ID} ${USER_NAME} && \
+    useradd -l -u ${USER_ID} -g ${GROUP_ID} -m -s /bin/bash ${USER_NAME}
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     unzip \
     libicu-dev \
     libzip-dev \
-    && docker-php-ext-install intl opcache pdo pdo_mysql zip \
+    && docker-php-ext-install intl pdo_mysql zip \
     && rm -rf /var/lib/apt/lists/*
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN curl -sS https://get.symfony.com/cli/installer | bash && \
-    mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+RUN curl -sS https://get.symfony.com/cli/installer | bash -s -- --install-dir=/usr/local/bin
 
 WORKDIR /var/www/project
+
+RUN chown -R ${USER_ID}:${GROUP_ID} /var/www
 
 USER ${USER_NAME}
