@@ -6,14 +6,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ExceptionListener
 {
     private string $projectDir;
+    private TranslatorInterface $translator;
 
-    public function __construct(string $projectDir)
+    public function __construct(string $projectDir, TranslatorInterface $translator)
     {
         $this->projectDir = realpath($projectDir) . DIRECTORY_SEPARATOR;
+        $this->translator = $translator;
     }
 
     /**
@@ -25,8 +28,10 @@ class ExceptionListener
     {
         $exception = $event->getThrowable();
 
+        $translatedMessage = $this->translator->trans($exception->getMessage());
+
         $response = new JsonResponse([
-            "message" => $exception->getMessage(),
+            "message" => $translatedMessage,
             "code"    => $exception->getCode(),
             "trace"   => $this->getFormattedTrace($exception)
         ]);
