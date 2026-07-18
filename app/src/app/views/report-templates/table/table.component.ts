@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 import Sftoomi from '../../../class/Sftoomi';
@@ -41,5 +41,5 @@ export default class ReportTemplatesTableComponent extends AppTableComponent
     protected override readonly loadUrl: string = '/getTemplates';
     protected override readonly removeUrl: string = '/removeTemplate';
 
-    protected override readonly toolbar: any | undefined = ReportTemplatesTableToolbarComponent;
+    protected override readonly toolbar: Type<ReportTemplatesTableToolbarComponent> = ReportTemplatesTableToolbarComponent;
 }

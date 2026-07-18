@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
@@ -51,5 +51,5 @@ export default class GroupsTableComponent extends AppTableComponent
     protected override readonly loadUrl: string = '/getGroups';
     protected override readonly removeUrl: string = '/removeGroup';
 
-    protected override readonly toolbar: any | undefined = GroupsTableToolbarComponent;
+    protected override readonly toolbar: Type<GroupsTableToolbarComponent> = GroupsTableToolbarComponent;
 }

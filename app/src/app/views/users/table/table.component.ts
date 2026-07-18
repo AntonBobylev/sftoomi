@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
@@ -71,5 +71,5 @@ export default class UsersTableComponent extends AppTableComponent
     protected override readonly loadUrl: string = '/getUsers';
     protected override readonly removeUrl: string = '/removeUser';
 
-    protected override readonly toolbar: any | undefined = UsersTableToolbarComponent;
+    protected override readonly toolbar: Type<UsersTableToolbarComponent> = UsersTableToolbarComponent;
 }

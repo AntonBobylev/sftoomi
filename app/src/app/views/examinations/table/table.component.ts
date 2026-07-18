@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
@@ -92,5 +92,5 @@ export default class ExaminationsTableComponent extends AppTableComponent
 
     protected override readonly lazyLoad: boolean = true;
 
-    protected override readonly toolbar: any | undefined = ExaminationsTableToolbarComponent;
+    protected override readonly toolbar: Type<ExaminationsTableToolbarComponent> = ExaminationsTableToolbarComponent;
 }

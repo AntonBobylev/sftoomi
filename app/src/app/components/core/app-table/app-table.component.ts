@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, Signal, signal, viewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, Signal, signal, Type, viewChild, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -7,6 +7,7 @@ import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 import { DialogType } from '../../../class/Dialog';
 import AppTableBaseView from './views/base-view'
+import AppBaseToolbar from '../app-base-toolbar'
 
 import AppBaseFilters from '../app-base-filters';
 
@@ -40,7 +41,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     protected readonly removeTimeout: number = Timeout.timeout;
 
     protected readonly toolbarHeight: string = '40px';
-    protected readonly toolbar: any | undefined;
+    protected readonly toolbar: Type<AppBaseToolbar> | undefined;
 
     protected readonly noDataCaption: string = Sftoomi.Translator.translate('no_data_to_display');
 

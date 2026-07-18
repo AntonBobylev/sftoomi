@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
@@ -77,5 +77,5 @@ export default class StudiesTableComponent extends AppTableComponent
     protected override readonly loadUrl: string = '/getStudies';
     protected override readonly removeUrl: string = '/removeStudy';
 
-    protected override readonly toolbar: any | undefined = StudiesTableToolbarComponent;
+    protected override readonly toolbar: Type<StudiesTableToolbarComponent> = StudiesTableToolbarComponent;
 }

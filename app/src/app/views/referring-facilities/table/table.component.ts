@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Type } from '@angular/core';
 
 import AppTableImports from '../../../components/core/app-table/imports';
 
@@ -74,5 +74,5 @@ export default class ReferringFacilitiesTableComponent extends AppTableComponent
     protected override readonly loadUrl: string = '/getFacilities';
     protected override readonly removeUrl: string = '/removeFacility';
 
-    protected override readonly toolbar: any | undefined = ReferringFacilitiesTableToolbarComponent;
+    protected override readonly toolbar: Type<ReferringFacilitiesTableToolbarComponent> = ReferringFacilitiesTableToolbarComponent;
 }
