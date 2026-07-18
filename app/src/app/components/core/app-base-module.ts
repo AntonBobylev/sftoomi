@@ -8,7 +8,7 @@ import { DialogType } from '../../class/Dialog'
 @Directive()
 export default abstract class AppBaseModule implements OnInit
 {
-    protected readonly Sftoomi = Sftoomi
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi
 
     protected router: Router = inject(Router);
     protected activatedRoute: ActivatedRoute = inject(ActivatedRoute);

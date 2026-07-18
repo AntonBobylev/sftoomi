@@ -18,7 +18,7 @@ export default abstract class AppTableBaseView
     protected selectionInHeaderChecked: boolean = false;
     protected selectionInHeaderIntermediate: boolean = false;
 
-    protected readonly Sftoomi = Sftoomi
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi
 
     public refresh(): void
     {

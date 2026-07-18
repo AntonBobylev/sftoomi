@@ -17,5 +17,5 @@ export default class ExaminationsTableReferringColumnComponent
     @Input() public rowData: any = [];
     @Input() public table!: ExaminationsTableComponent;
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }

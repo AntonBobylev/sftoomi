@@ -31,7 +31,7 @@ export default class AppNavigationPanelComponent
     public readonly isLoading: InputSignal<WritableSignal<boolean> | undefined> = input.required();
 
     protected readonly RoutesPaths = RoutesPaths;
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
     protected readonly RoutesPermissions = RoutesPermissions
 
     constructor(private readonly router: Router)

@@ -30,7 +30,7 @@ export default class AppItemSelectorDataListComponent
 
     protected readonly data: WritableSignal<Item[]> = signal<Item[]>([]);
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     public setData(data: AppItemSelectorDataListRow[]): void
     {

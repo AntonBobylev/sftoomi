@@ -27,7 +27,7 @@ export default class AppItemSelectorComponent
     private readonly leftList:  Signal<AppItemSelectorDataListComponent | undefined> = viewChild('left');
     private readonly rightList: Signal<AppItemSelectorDataListComponent | undefined> = viewChild('right');
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     public setData(leftData: AppItemSelectorDataListRow[], rightData: AppItemSelectorDataListRow[]): void
     {

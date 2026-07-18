@@ -18,7 +18,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 export default class LanguageSwitcherComponent
 {
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     protected onClick(event: Event): void
     {

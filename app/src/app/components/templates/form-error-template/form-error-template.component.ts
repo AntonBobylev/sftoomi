@@ -14,5 +14,5 @@ export default class FormErrorTemplateComponent
     @Input({required: true}) fieldName!: string
     @Input({required: true}) parentFormGroup!: FormGroup
 
-    protected Sftoomi = Sftoomi;
+    protected Sftoomi: typeof Sftoomi = Sftoomi;
 }

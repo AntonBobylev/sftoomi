@@ -27,7 +27,7 @@ import AppNavigationPanelComponent from './components/layout/app-navigation-pane
 
 export class App
 {
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 

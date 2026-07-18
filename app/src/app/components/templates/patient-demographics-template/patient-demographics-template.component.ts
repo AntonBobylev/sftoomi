@@ -30,5 +30,5 @@ export default class PatientDemographicsTemplateComponent
 
     public readonly isVertical: InputSignal<boolean> = input(true);
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }

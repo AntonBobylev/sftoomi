@@ -41,7 +41,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
 
     protected isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     protected queryController: AbortController = new AbortController();
 

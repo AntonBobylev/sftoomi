@@ -48,7 +48,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
     protected readonly isBordered: boolean = true;
     protected readonly selectionRequired: boolean = true;
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     protected readonly lazyLoad: boolean = false;
 

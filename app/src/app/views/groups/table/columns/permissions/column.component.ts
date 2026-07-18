@@ -18,5 +18,5 @@ export default class GroupsTablePermissionsColumnComponent
     @Input() public rowData!: getGroupsAPI['data'][0];
     @Input() public table!: GroupsTableComponent;
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }

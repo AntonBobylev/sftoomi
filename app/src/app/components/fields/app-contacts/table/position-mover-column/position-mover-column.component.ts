@@ -23,7 +23,7 @@ export default class AppContactsTablePositionMoverColumnComponent
     @Input() public rowData!: AppContactsTableRecord;
     @Input() public table!: AppContactsTableComponent;
 
-    protected readonly Sftoomi = Sftoomi
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi
 
     protected move(direction: 'up' | 'down'): void
     {

@@ -18,5 +18,5 @@ export default class LinksTablePermissionsColumnComponent
     @Input() public rowData!: getUsersAPI['data'][0];
     @Input() public table!: UsersTableComponent;
 
-    protected readonly Sftoomi = Sftoomi;
+    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }
