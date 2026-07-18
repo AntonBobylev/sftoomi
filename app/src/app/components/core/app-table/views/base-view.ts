@@ -40,11 +40,9 @@ export default abstract class AppTableBaseView
 
     protected onAllChecked(selected: boolean): void
     {
-        this.data().map((row) => {
-            row.selected = selected;
-
-            return row;
-        });
+        this.data.update(rows =>
+            rows.map(row => ({ ...row, selected: selected }))
+        );
 
         this.refreshCheckedStatus();
     }
