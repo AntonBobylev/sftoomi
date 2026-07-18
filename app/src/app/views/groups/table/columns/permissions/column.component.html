@@ -1,5 +1,5 @@
 <div class="wrapper">
-    @for (permission of rowData.permissions; track permission.id) {
+    @for (permission of rowData().permissions; track permission.id) {
         <span [nz-tooltip]="permission.description">{{ permission.name }}</span>
 
         @if (!$last) {
