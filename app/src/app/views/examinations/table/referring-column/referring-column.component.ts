@@ -1,9 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import Sftoomi from '../../../../class/Sftoomi';
-
-import ExaminationsTableComponent from '../table.component';
+import ExaminationsTableComponent, { ExaminationsTableRow } from '../table.component';
+import AppTableCommonColumn from '../../../../components/core/app-table/common-column.component'
 
 @Component({
     selector: 'examinations-table-referring-column',
@@ -12,10 +11,6 @@ import ExaminationsTableComponent from '../table.component';
     imports: [NzTooltipDirective]
 })
 
-export default class ExaminationsTableReferringColumnComponent
+export default class ExaminationsTableReferringColumnComponent extends AppTableCommonColumn<ExaminationsTableRow, ExaminationsTableComponent>
 {
-    @Input() public rowData: any = [];
-    @Input() public table!: ExaminationsTableComponent;
-
-    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 }
