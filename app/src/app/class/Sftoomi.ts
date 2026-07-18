@@ -140,7 +140,7 @@ export default class Sftoomi
      * @param value
      * @param allowBlank
      */
-    public static isEmpty(value: any, allowBlank = false): boolean
+    public static isEmpty(value: any, allowBlank = false): value is null | undefined | ''
     {
         return value === null
             || value === undefined
