@@ -18,4 +18,6 @@ class Constants
         "SESSION" => "SFTOOMI_SESSION",
         "USER"    => "SFTOOMI_USER"
     ];
+
+    public const array AVAILABLE_LOCALES = ["en", "ru"];
 }
