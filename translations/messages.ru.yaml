@@ -1,0 +1,8 @@
+auth_controller:
+    user_not_found: "Пользователь не найден"
+    invalid_credentials: "Неверный логин или пароль"
+    session_id_required: "ID сессии обязателен"
+    invalid_or_expired_session: "Сессия недействительна или истекла"
+
+auth:
+    operation_not_allowed: "Эта операция не разрешена"

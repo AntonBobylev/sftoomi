@@ -1,0 +1,8 @@
+auth_controller:
+    user_not_found: "User not found"
+    invalid_credentials: "Invalid credentials"
+    session_id_required: "Session ID required"
+    invalid_or_expired_session: "Invalid or expired session"
+
+auth:
+    operation_not_allowed: "This operation is not allowed"
