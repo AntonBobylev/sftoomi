@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common'
 import { NzIconDirective } from 'ng-zorro-antd/icon'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
@@ -7,6 +7,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip'
 import Sftoomi from '../../../../../class/Sftoomi'
 
 import AppContactsTableComponent, { AppContactsTableRecord } from '../table.component'
+import AppTableCommonColumn from '../../../../core/app-table/common-column.component'
 
 @Component({
     selector: 'app-contacts-table-position-mover-column',
@@ -18,16 +19,11 @@ import AppContactsTableComponent, { AppContactsTableRecord } from '../table.comp
     ]
 })
 
-export default class AppContactsTablePositionMoverColumnComponent
+export default class AppContactsTablePositionMoverColumnComponent extends AppTableCommonColumn<AppContactsTableRecord, AppContactsTableComponent>
 {
-    @Input() public rowData!: AppContactsTableRecord;
-    @Input() public table!: AppContactsTableComponent;
-
-    protected readonly Sftoomi: typeof Sftoomi = Sftoomi
-
     protected move(direction: 'up' | 'down'): void
     {
-        let allRecords: AppContactsTableRecord[] = Sftoomi.duplicateEntity(this.table.getData()),
+        let allRecords: AppContactsTableRecord[] = Sftoomi.duplicateEntity(this.table().getData()),
             maxPosition: number = this.getContactTypeMaxPosition();
 
         if (maxPosition < 1) {
@@ -36,7 +32,7 @@ export default class AppContactsTablePositionMoverColumnComponent
         }
 
         let currentRecordIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => {
-            return record.position == this.rowData.position;
+            return record.position == this.rowData().position;
         });
 
         if (currentRecordIndex < 0) {
@@ -68,26 +64,26 @@ export default class AppContactsTablePositionMoverColumnComponent
         allRecords[recordWithNewPositionIndex].position = allRecords[currentRecordIndex].position;
         allRecords[currentRecordIndex].position = nextPosition;
 
-        this.table.setData(allRecords);
-        this.table.refresh();
+        this.table().setData(allRecords);
+        this.table().refresh();
     }
 
     protected isMovingButtonDisabled(direction: 'up' | 'down'): boolean
     {
         if (direction === 'up') {
-            return this.rowData.position < 1;
+            return this.rowData().position < 1;
         }
 
-        return this.rowData.position >= this.getContactTypeMaxPosition();
+        return this.rowData().position >= this.getContactTypeMaxPosition();
     }
 
     private getContactTypeMaxPosition(): number
     {
-        let allRecords: AppContactsTableRecord[] = this.table.getData(),
+        let allRecords: AppContactsTableRecord[] = this.table().getData(),
             maxPosition: number = 0;
 
         allRecords.forEach((record: AppContactsTableRecord): void => {
-            if (record.type === this.rowData.type && record.position > maxPosition) {
+            if (record.type === this.rowData().type && record.position > maxPosition) {
                 maxPosition = record.position;
             }
         });
