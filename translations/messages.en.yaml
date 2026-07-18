@@ -6,6 +6,7 @@ auth_controller:
 
 auth:
     operation_not_allowed: "This operation is not allowed"
+    authentication_required: "Authentication required"
 
 fetcher:
     not_numeric_value_detected_in_int_array_method: "A non-numeric value was encountered in the intArray method"

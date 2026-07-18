@@ -22,6 +22,8 @@ class Auth
 
     public function requirePermission(string $permissionName): void
     {
+        $this->assertUserAuthenticated();
+
         if (empty($permissionName)) {
             return;
         }
@@ -38,6 +40,8 @@ class Auth
 
     public function requireAnyPermission(array $permissionsNames): void
     {
+        $this->assertUserAuthenticated();
+
         if (empty($permissionsNames)) {
             return;
         }
@@ -96,5 +100,12 @@ class Auth
         $request = $this->requestStack->getCurrentRequest();
 
         return $request?->cookies->get(self::COOKIE_SESSION);
+    }
+
+    private function assertUserAuthenticated(): void
+    {
+        if (empty($this->getCurrentUserId())) {
+            throw new \RuntimeException("auth.authentication_required");
+        }
     }
 }
