@@ -69,8 +69,8 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     protected override readonly width: string | number | undefined = 600;
 
-    private readonly contactsCtrl: Signal<AppContactsComponent>         = viewChild.required('contactsCtrl');
-    private readonly groupsCtrl:   Signal<AppComboComponent> = viewChild.required('groupsCtrl');
+    private readonly contactsCtrl: Signal<AppContactsComponent> = viewChild.required('contactsCtrl');
+    private readonly groupsCtrl:   Signal<AppComboComponent>    = viewChild.required('groupsCtrl');
 
     private contactId: number | undefined;
 
