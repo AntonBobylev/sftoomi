@@ -1,9 +1,9 @@
 <div class="wrapper">
-    @if (!Sftoomi.isEmpty(rowData.links.user_groups)) {
+    @if (!Sftoomi.isEmpty(rowData().links.user_groups)) {
         <div>
             <div>{{ Sftoomi.Translator.translate('views.users.table.columns.links.groups') }}:</div>
             <ul>
-                @for (userGroup of rowData.links.user_groups; track userGroup.id) {
+                @for (userGroup of rowData().links.user_groups; track userGroup.id) {
                     @if ($index < 5) {
                         <li>{{ userGroup.name }}</li>
                     } @else if ($index < 6) {
