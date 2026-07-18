@@ -6,12 +6,14 @@ use App\Class\Core\DB\Connection as DBConnection;
 use App\Class\Security\Auth;
 use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 abstract class SftoomiController extends AbstractController
 {
     public function __construct(
         protected readonly DBConnection $connection,
-        protected readonly Auth $auth
+        protected readonly Auth $auth,
+        protected readonly TranslatorInterface $translator
     )
     {
     }
