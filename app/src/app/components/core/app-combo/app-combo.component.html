@@ -8,16 +8,16 @@
         {{ label }}
     </nz-form-label>
     <nz-form-control [nzErrorTip]="errorTipTpl">
-        <nz-select [nzAllowClear]="useClear"
-                   [nzPlaceHolder]="placeholder"
+        <nz-select [nzAllowClear]="useClear()"
+                   [nzPlaceHolder]="placeholder()"
                    [formControlName]="name"
                    [nzShowArrow]="true"
-                   [nzShowSearch]="useSearch || !Sftoomi.isEmpty(remoteUrl)"
-                   [nzServerSearch]="!Sftoomi.isEmpty(remoteUrl)"
+                   [nzShowSearch]="useSearch() || !Sftoomi.isEmpty(remoteUrl())"
+                   [nzServerSearch]="!Sftoomi.isEmpty(remoteUrl())"
                    (nzOnSearch)="search($event)"
                    (ngModelChange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
-                   [nzMode]="multiple ? 'multiple' : 'default'"
+                   [nzMode]="multiple() ? 'multiple' : 'default'"
                    [nz-tooltip]="tooltip"
                    [nzTooltipPlacement]="tooltipPlacement"
         >

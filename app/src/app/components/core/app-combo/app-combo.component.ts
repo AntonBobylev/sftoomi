@@ -1,4 +1,4 @@
-import { Component, input, Input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
+import { Component, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { NzColDirective } from 'ng-zorro-antd/grid';
@@ -30,16 +30,16 @@ export type AppComboRecord<T = string | number> = {
 
 export default class AppComboComponent<T = AppComboRecord['value']> extends AppBaseField
 {
-    @Input() public useSearch: boolean = false;
-    @Input() public useClear: boolean = false;
-    @Input() public multiple: boolean = false;
-    @Input() public placeholder: string = '';
+    public readonly useSearch:   InputSignal<boolean>       = input(false);
+    public readonly useClear:    InputSignal<boolean>       = input(false);
+    public readonly multiple:    InputSignal<boolean>       = input(false);
+    public readonly placeholder: InputSignal<string | null> = input<string | null>(null);
 
     public readonly inlineLabel:           InputSignal<boolean> = input(false);
     public readonly errorsWrapperRequired: InputSignal<boolean> = input(true);
 
-    @Input() public remoteUrl: string | undefined;
-    @Input({alias: 'minimalQueryLength'}) public minSearchLength: number = 3;
+    public readonly remoteUrl:       InputSignal<string | null> = input<string | null>(null);
+    public readonly minSearchLength: InputSignal<number>        = input<number>(3, { alias: 'minimalQueryLength' });
 
     public readonly selectionChange: OutputEmitterRef<T> = output();
 
@@ -57,7 +57,9 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
 
     protected search(query: string): void
     {
-        if (this.Sftoomi.isEmpty(this.remoteUrl)) {
+        const url: string | null = this.remoteUrl();
+
+        if (this.Sftoomi.isEmpty(url)) {
             this.filterOptions(query);
 
             return;
@@ -65,7 +67,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
 
         this.queryController.abort();
 
-        if (this.Sftoomi.isEmpty(query) || query.length < this.minSearchLength) {
+        if (this.Sftoomi.isEmpty(query) || query.length < this.minSearchLength()) {
             return;
         }
 
@@ -80,7 +82,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
 
         this.isLoading.set(true);
         new Fetcher().request({
-            url: this.remoteUrl!,
+            url: url,
             signal: this.queryController.signal,
             data: data,
             success: (_response: any, _request: any, result: any): void => {
@@ -99,7 +101,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
     {
         this.selectionChange.emit(this.form.get(this.name)?.value);
 
-        if (this.Sftoomi.isEmpty(this.remoteUrl)) {
+        if (this.Sftoomi.isEmpty(this.remoteUrl())) {
             return;
         }
 
