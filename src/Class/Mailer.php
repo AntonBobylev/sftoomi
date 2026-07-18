@@ -128,19 +128,19 @@ readonly class Mailer
     private function assertEnvVariables(): void
     {
         if (!$this->systemVariables->has("mailer_mail_host")) {
-            throw new RuntimeException("Mailer host not set");
+            throw new RuntimeException("mailer.mailer_host_not_set");
         }
 
         if (!$this->systemVariables->has("mailer_mail_username")) {
-            throw new RuntimeException("Mailer username not set");
+            throw new RuntimeException("mailer.mailer_username_not_set");
         }
 
         if (!$this->systemVariables->has("mailer_mail_password")) {
-            throw new RuntimeException("Mailer password not set");
+            throw new RuntimeException("mailer.mailer_password_not_set");
         }
 
         if (!$this->systemVariables->has("mailer_mail_port")) {
-            throw new RuntimeException("Mailer port not set");
+            throw new RuntimeException("mailer.mailer_port_not_set");
         }
     }
 

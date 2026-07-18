@@ -57,7 +57,7 @@ class SqlSubstitutor
     public function encodeFields($fields): string
     {
         if (count($fields) === 0) {
-            throw new RuntimeException("Unable to encode empty fields list!");
+            throw new RuntimeException("sql_substitutor.unable_to_encode_empty_fields_list");
         }
 
         return '`' . implode('`, `', $fields) . '`';

@@ -28,7 +28,7 @@ final class AuthController extends SftoomiController
         if (empty($user)) {
             return new JsonResponse([
                 "success" => false,
-                "error"   => "Invalid credentials"
+                "error"   => $this->translator->trans("auth_controller.user_not_found")
             ]);
         }
 
@@ -40,7 +40,7 @@ final class AuthController extends SftoomiController
         if (!password_verify($password, $userPassword)) {
             return new JsonResponse([
                 "success" => false,
-                "error"   => "Invalid credentials"
+                "error"   => $this->translator->trans("auth_controller.invalid_credentials")
             ]);
         }
 
@@ -61,7 +61,7 @@ final class AuthController extends SftoomiController
         if (empty($sessionId)) {
             return new JsonResponse([
                 "success" => false,
-                "error"   => "Session ID required"
+                "error"   => $this->translator->trans("auth_controller.session_id_required")
             ]);
         }
 
@@ -70,7 +70,7 @@ final class AuthController extends SftoomiController
         if (empty($sessionData)) {
             return new JsonResponse([
                 "success" => false,
-                "error"   => "Invalid or expired session"
+                "error"   => $this->translator->trans("auth_controller.invalid_or_expired_session")
             ]);
         }
 
@@ -91,7 +91,7 @@ final class AuthController extends SftoomiController
 
         return new JsonResponse([
             "success" => true,
-            "message" => "Logout successful"
+            "message" => $this->translator->trans("auth_controller.invalid_or_expired_session")
         ]);
     }
 }

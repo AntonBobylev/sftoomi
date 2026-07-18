@@ -5,6 +5,7 @@ namespace App\Class\Security;
 use App\Class\Constants;
 use App\Class\Core\DB\Connection as DBConnection;
 use App\Service\SessionManager;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class Auth
 {
@@ -13,9 +14,9 @@ class Auth
     private readonly SessionManager $sessionManager;
 
     public function __construct(
-        private readonly DBConnection $connection
-    )
-    {
+        private readonly DBConnection $connection,
+        private readonly RequestStack $requestStack
+    ) {
         $this->sessionManager = new SessionManager($this->connection);
     }
 
@@ -31,7 +32,7 @@ class Auth
         }
 
         if (empty($userPermissions) || !in_array($permissionName, $userPermissions)) {
-            throw new \RuntimeException("This operation is not allowed");
+            throw new \RuntimeException("auth.operation_not_allowed");
         }
     }
 
@@ -48,7 +49,7 @@ class Auth
 
         $hasPermission = !empty(array_intersect($permissionsNames, $userPermissions));
         if (empty($hasPermission)) {
-            throw new \RuntimeException("This operation is not allowed");
+            throw new \RuntimeException("auth.operation_not_allowed");
         }
     }
 
@@ -92,6 +93,8 @@ class Auth
 
     private function getCurrentUserSession(): ?string
     {
-        return $_COOKIE[self::COOKIE_SESSION];
+        $request = $this->requestStack->getCurrentRequest();
+
+        return $request?->cookies->get(self::COOKIE_SESSION);
     }
 }

@@ -23,7 +23,7 @@ class PasswordGenerator
     public function setLength(int $length): self
     {
         if ($length < $this->minLength) {
-            throw new InvalidArgumentException("Password length must be at least 4 characters");
+            throw new InvalidArgumentException("password_generator.password_length_must_be_at_least_4_characters");
         }
         
         $this->length = $length;
@@ -67,7 +67,7 @@ class PasswordGenerator
         $characterDictionary = $this->buildCharactersDictionary();
 
         if (empty($characterDictionary)) {
-            throw new RuntimeException("No character types selected for password generation");
+            throw new RuntimeException("password_generator.no_character_types_selected_for_password_generation");
         }
 
         $dictionaryLength = strlen($characterDictionary);

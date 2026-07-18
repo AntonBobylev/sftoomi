@@ -6,3 +6,30 @@ auth_controller:
 
 auth:
     operation_not_allowed: "Эта операция не разрешена"
+
+fetcher:
+    not_numeric_value_detected_in_int_array_method: "В методе intArray обнаружено не числовое значение"
+
+mailer:
+    mailer_host_not_set: "Хост у класса Mailer не был установлен"
+    mailer_username_not_set: "Имя пользователя у класса Mailer не было установлено"
+    mailer_password_not_set: "Пароль у класса Mailer не был установлен"
+    mailer_port_not_set: "Порт у класса Mailer не был установлен"
+
+sql_substitutor:
+    unable_to_encode_empty_fields_list: "Не удалось закодировать пустой список полей!"
+
+password_generator:
+    password_length_must_be_at_least_4_characters: "Длина пароля должна быть не менее 4 символов"
+    no_character_types_selected_for_password_generation: "Не выбраны типы символов для генерации пароля"
+
+update_cpt_codes:
+    unable_to_read_cpts_file: "Не удалось прочитать файл с CPT кодами"
+
+studies_controller:
+    study_must_have_at_least_one_cpt_code: "Исследование должно иметь хотя бы один код CPT"
+
+users_controller:
+    new_password_and_confirmation_must_be_equal: "Новый пароль и подтверждение должны совпадать"
+    user_not_found: "Пользователь не найден"
+    old_password_is_incorrect: "Старый пароль неверен"

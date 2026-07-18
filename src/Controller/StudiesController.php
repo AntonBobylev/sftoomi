@@ -102,7 +102,7 @@ final class StudiesController extends SftoomiController
 
         $cptCodesIds = Fetcher::intArray($request->request->get("study_cpts"));
         if (empty($cptCodesIds)) {
-            throw new InvalidArgumentException("Study must have at least one cpt code");
+            throw new InvalidArgumentException("studies_controller.study_must_have_at_least_one_cpt_code");
         }
 
         foreach ($cptCodesIds as $cptCodeId) {

@@ -88,7 +88,7 @@ class Fetcher
 
         return array_map(function ($item) {
             if (!is_numeric($item)) {
-                throw new RuntimeException("Not numeric value detected in intArray method");
+                throw new RuntimeException("fetcher.not_numeric_value_detected_in_int_array_method");
             }
 
             return intval($item);

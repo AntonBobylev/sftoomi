@@ -83,7 +83,11 @@ class UpdateCptCodes extends SftoomiCommand
     {
         $filePointer = @fopen(self::LAST_CPT_LIST_PATH, "r");
         if ($filePointer === false) {
-            throw new RuntimeException("Unable to read CPTs file: " . self::LAST_CPT_LIST_PATH);
+            throw new RuntimeException(sprintf(
+                '%s: %s',
+                $this->translator->trans("update_cpt_codes.unable_to_read_cpts_file"),
+                self::LAST_CPT_LIST_PATH
+            ));
         }
 
         $columns = [

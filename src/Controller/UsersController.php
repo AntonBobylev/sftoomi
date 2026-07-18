@@ -23,18 +23,20 @@ use Symfony\Component\Messenger\Exception\ExceptionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class UsersController extends SftoomiController
 {
     public function __construct(
         DBConnection $connection,
         Auth $auth,
+        TranslatorInterface $translator,
         private readonly Contacts $contacts,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly MessageBusInterface $messageBus
     )
     {
-        parent::__construct($connection, $auth);
+        parent::__construct($connection, $auth, $translator);
     }
 
     #[Route("/getUsers", name: "get_users")]
@@ -180,7 +182,7 @@ final class UsersController extends SftoomiController
         if ($values["new_password"] !== $values["new_password_confirmation"]) {
             return new JsonResponse([
                 "success" => false,
-                "message" => "New password and confirmation must be equal"
+                "message" => $this->translator->trans("users_controller.new_password_and_confirmation_must_be_equal")
             ]);
         }
 
@@ -192,14 +194,14 @@ final class UsersController extends SftoomiController
         if (empty($user)) {
             return new JsonResponse([
                 "success" => false,
-                "message" => "User not found"
+                "message" => $this->translator->trans("users_controller.user_not_found")
             ]);
         }
 
         if (!password_verify($values["old_password"], $user->getPassword())) {
             return new JsonResponse([
                 "success" => false,
-                "message" => "Old password is incorrect"
+                "message" => $this->translator->trans("users_controller.old_password_is_incorrect")
             ]);
         }
 
@@ -237,7 +239,7 @@ final class UsersController extends SftoomiController
         ]);
 
         if (empty($userId)) {
-            // User not exists
+            // User doesn't exist
 
             return $response;
         }
@@ -245,7 +247,7 @@ final class UsersController extends SftoomiController
         $userEmails = $this->getUserEmailsList($userId);
 
         if (!in_array($values["email"], $userEmails)) {
-            // User doesn't have any emails or provided email is not in the user contacts list
+            // User doesn't have any emails, or provided email is not in the user contacts list
 
             return $response;
         }
