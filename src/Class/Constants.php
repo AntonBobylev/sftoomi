@@ -12,4 +12,10 @@ class Constants
     public const string CONTACT_TYPE_EMAIL = "email";
     public const string CONTACT_TYPE_PHONE = "phone";
     public const string CONTACT_TYPE_ADDRESS = "address";
+
+    public const array COOKIES_NAMES = [
+        "LOCALE"  => "SFTOOMI_LOCALE",
+        "SESSION" => "SFTOOMI_SESSION",
+        "USER"    => "SFTOOMI_USER"
+    ];
 }

@@ -2,12 +2,13 @@
 
 namespace App\Class\Security;
 
+use App\Class\Constants;
 use App\Class\Core\DB\Connection as DBConnection;
 use App\Service\SessionManager;
 
 class Auth
 {
-    private const string COOKIE_SESSION = "SFTOOMI_SESSION";
+    private const string COOKIE_SESSION = Constants::COOKIES_NAMES["SESSION"];
 
     private readonly SessionManager $sessionManager;
 
