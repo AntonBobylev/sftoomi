@@ -1,12 +1,11 @@
-import { Component, inject, input, InputSignal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzDividerComponent } from 'ng-zorro-antd/divider';
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { Router } from '@angular/router'
 
-import Sftoomi from '../../../../class/Sftoomi';
-
 import ExaminationsTableComponent, { ExaminationsTableRow, ExaminationsTableRowExam } from '../table.component';
+import AppTableCommonColumn from '../../../../components/core/app-table/common-column.component'
 
 import { RoutesPaths } from '../../../../app.routes'
 
@@ -17,13 +16,8 @@ import { RoutesPaths } from '../../../../app.routes'
     imports: [NzTooltipDirective, NzDividerComponent, NzButtonComponent]
 })
 
-export default class ExaminationsTableStudiesColumnComponent
+export default class ExaminationsTableStudiesColumnComponent extends AppTableCommonColumn<ExaminationsTableRow, ExaminationsTableComponent>
 {
-    public readonly rowData: InputSignal<ExaminationsTableRow>       = input.required();
-    public readonly table:   InputSignal<ExaminationsTableComponent> = input.required();
-
-    protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
-
     private readonly router: Router = inject(Router);
 
     protected getExamAddEditButtonConfig(exam: ExaminationsTableRowExam): { title: string, tooltip: string }
