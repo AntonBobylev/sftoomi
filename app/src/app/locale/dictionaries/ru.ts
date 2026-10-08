@@ -321,6 +321,14 @@ let ruDictionary: object =  {
         phone_number_is_invalid: 'Неверный номер телефона'
     },
 
+    gender: {
+        caption: 'Пол',
+        female: 'Женщина',
+        male: 'Мужчина',
+        unknown: 'Неизвестно',
+        unspecified: 'Не указан'
+    },
+
     popup: {
         form_invalid: 'Форма заполнена неверно. Пожалуйста, исправьте форму и попробуйте снова',
         more_than_one_selected: 'Больше, чем одна запись выбрана. Пожалуйста, выберите одну запись',

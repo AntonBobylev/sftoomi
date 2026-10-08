@@ -321,6 +321,15 @@ let usDictionary: object =  {
         phone_number_is_invalid: 'Phone number is invalid'
     },
 
+
+    gender: {
+        caption: 'Gender',
+        female: 'Female',
+        male: 'Male',
+        unknown: 'Unknown',
+        unspecified: 'Unspecified'
+    },
+
     popup: {
         form_invalid: 'Form is invalid. Please, correct the form and try again',
         more_than_one_selected: 'More than one record selected. Please, select a single record',

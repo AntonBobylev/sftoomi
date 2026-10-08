@@ -1,0 +1,9 @@
+<div class="wrapper">
+    @let iconData = getGenderIconData();
+
+    <svg class="gender-icon" [class]="'icon-' + iconData.id">
+        <use [attr.href]="'/assets/sprite.svg#' + iconData.id"></use>
+    </svg>
+
+    {{ Sftoomi.Translator.translate(iconData.translationKey) }}
+</div>

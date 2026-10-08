@@ -1,0 +1,35 @@
+@import '../../../../theme';
+
+:host {
+    width: 100%;
+}
+
+.wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .gender-icon {
+        width: 15px;
+        height: 15px;
+        fill: none;
+        color: currentColor;
+        flex-shrink: 0;
+
+        &.icon-male {
+            color: @green-base;
+        }
+
+        &.icon-female {
+            color: @magenta-base;
+        }
+
+        &.icon-unknown {
+            color: #f97316;
+        }
+
+        &.icon-unspecified {
+            // nothing for now
+        }
+    }
+}
