@@ -2,12 +2,14 @@ import { Component } from '@angular/core';
 
 import AppTableCommonColumn from '../../core/app-table/common-column.component';
 
+import Gender from '../../../type/Gender';
+
 @Component({
     selector: 'app-gender-column',
     templateUrl: './column.component.html',
     styleUrl: './column.component.less'
 })
-export default class AppGenderColumnComponent<Row extends { gender: 0 | 1 | null }, Table extends object> extends AppTableCommonColumn<Row, Table>
+export default class AppGenderColumnComponent<Row extends { gender: Gender }, Table extends object> extends AppTableCommonColumn<Row, Table>
 {
     protected getGenderIconData(): {
         id:             string,
