@@ -43,7 +43,7 @@ let ruDictionary: object =  {
             referring_doctors: 'Направляющие доктора',
             referring_facilities: 'Направляющие учреждения',
             report_templates: 'Шаблоны отчётов',
-            studies: 'Обследования'
+            studies: 'Исследования'
         },
         mobile_view: {
             button_caption: 'МЕНЮ'
@@ -166,8 +166,8 @@ let ruDictionary: object =  {
                 }
             },
             dialog: {
-                add_title: 'Добавление обследования',
-                edit_title: 'Редактирование обследования #{0}',
+                add_title: 'Добавление исследования',
+                edit_title: 'Редактирование исследования #{0}',
                 width: '500px',
                 cpts: 'CPT'
             }
