@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Throwable;
 
 class InitDefaultUsers extends SftoomiCommand
@@ -32,12 +33,13 @@ class InitDefaultUsers extends SftoomiCommand
     public function __construct(
         Connection $connection,
         Filesystem $filesystem,
+        TranslatorInterface $translator,
         private readonly User $user,
         private readonly Contacts $contacts,
         private readonly UserPasswordHasherInterface $passwordHasher
     )
     {
-        parent::__construct($connection, $filesystem);
+        parent::__construct($connection, $filesystem, $translator);
     }
 
     protected function configure(): void
