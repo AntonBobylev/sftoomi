@@ -29,6 +29,9 @@ class Patient
     #[ORM\Column(length: 16, nullable: true)]
     private ?string $phone = null;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $gender = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Patient
     public function setPhone(?string $phone): static
     {
         $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getGender(): ?int
+    {
+        return $this->gender;
+    }
+
+    public function setGender(?int $gender): static
+    {
+        $this->gender = $gender;
 
         return $this;
     }

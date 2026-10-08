@@ -17,7 +17,8 @@ class PatientModel extends AbstractModel
             "first_name",
             "middle_name",
             "dob",
-            "phone"
+            "phone",
+            "gender"
         ];
     }
 }
