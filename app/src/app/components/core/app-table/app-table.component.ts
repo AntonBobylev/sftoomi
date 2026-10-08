@@ -118,11 +118,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             timeout: this.loadTimeout,
             data: data,
             success: (_response: any, _request: any, result: any): void => {
-                this.data.set(this.convertReceivedDataToTableData(result.data));
-                this.total.set(result.total ?? 0);
-
-                this.viewCtrl()?.refresh();
-                this.afterRefresh.emit();
+                this.afterSuccessfulLoad(result);
             },
             finally: (): void => {
                 this.isLoading.set(false);
@@ -201,6 +197,15 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
         this.pageSize = newPageSize;
         this.currentPageIndex = 1;
         this.refresh();
+    }
+
+    protected afterSuccessfulLoad(result: any): void
+    {
+        this.data.set(this.convertReceivedDataToTableData(result.data));
+        this.total.set(result.total ?? 0);
+
+        this.viewCtrl()?.refresh();
+        this.afterRefresh.emit();
     }
 
     private convertReceivedDataToTableData(data: any[]): any[]
