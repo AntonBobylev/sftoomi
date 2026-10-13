@@ -27,7 +27,7 @@ export default class AppGenderColumnComponent<Row extends { gender: Gender }, Ta
                     id: 'female',
                     translationKey: 'gender.female'
                 };
-            case null:
+            case -1:
                 return {
                     id: 'unspecified',
                     translationKey: 'gender.unspecified'

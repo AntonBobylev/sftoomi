@@ -1,4 +1,4 @@
-import { Component, inject, Signal, signal, viewChild, ViewChild, WritableSignal } from '@angular/core';
+import { Component, inject, Signal, signal, viewChild, WritableSignal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -17,6 +17,7 @@ import phoneValidator from '../../../validators/phone.validator';
 
 import getPatientAPI from '../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../APIs/getExaminationAPI';
+import Gender from '../../../type/Gender';
 
 export type ExaminationEditDialogData = {
     id?: number,
@@ -62,6 +63,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         patient_middle_name: new FormControl<string | null>(null),
         patient_dob:         new FormControl<Date   | null>(null),
         patient_phone:       new FormControl<string | null>(null, [phoneValidator()]),
+        patient_gender:      new FormControl<Gender>(-1),
         studies:             new FormControl
     });
 
@@ -136,6 +138,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
                 this.form.get('patient_middle_name')?.setValue(data.data.middle_name);
                 this.form.get('patient_dob')?.setValue(Sftoomi.stringToDate(data.data.dob));
                 this.form.get('patient_phone')?.setValue(data.data.phone);
+                this.form.get('patient_gender')?.setValue(this.Sftoomi.parseGender(data.data.gender));
             },
             failure: (_code: any, message: any, _request: any): void => {
                 Sftoomi.Dialog.show(message, DialogType.ERROR)
@@ -162,7 +165,8 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             }
         });
 
-        data.set('study_ids', addedStudiesIds.join(','));
+        data.append('study_ids', addedStudiesIds.join(','));
+        data.append('patient_gender', this.form.get('patient_gender')?.value);
 
         return data;
     }

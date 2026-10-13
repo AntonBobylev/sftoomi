@@ -97,7 +97,7 @@ export default class PatientsTableComponent extends AppTableComponent
             last_name:   patient.last_name,
             first_name:  patient.first_name,
             middle_name: patient.middle_name,
-            gender:      patient.gender,
+            gender:      this.Sftoomi.parseGender(patient.gender),
             dob:         patient.dob,
             phone:       patient.phone
         }));

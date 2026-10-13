@@ -1,6 +1,6 @@
 type Gender =
     | 0
     | 1
-    | null;
+    | -1;
 
 export default Gender;
