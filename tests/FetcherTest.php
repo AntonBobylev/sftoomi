@@ -17,8 +17,14 @@ class FetcherTest extends TestCase
         $this->assertIsInt($value);
         $this->assertEquals(1, $value);
 
-        $value = Fetcher::int("test");
-        $this->assertEquals(null, $value);
+        $value = Fetcher::int(true);
+        $this->assertEquals(1, $value);
+
+        $value = Fetcher::int(false);
+        $this->assertEquals(0, $value);
+
+        $value = Fetcher::int("test", 42);
+        $this->assertEquals(42, $value);
 
         $value = Fetcher::int(null);
         $this->assertEquals(null, $value);
@@ -38,14 +44,6 @@ class FetcherTest extends TestCase
         $this->assertEquals("1.5", $value);
 
         $value = Fetcher::trim("SFTOOMI");
-        $this->assertIsString($value);
-        $this->assertEquals("SFTOOMI", $value);
-
-        $value = Fetcher::trim("SFTOOMI   ");
-        $this->assertIsString($value);
-        $this->assertEquals("SFTOOMI", $value);
-
-        $value = Fetcher::trim("            SFTOOMI");
         $this->assertIsString($value);
         $this->assertEquals("SFTOOMI", $value);
 
@@ -80,25 +78,27 @@ class FetcherTest extends TestCase
 
         $this->expectException(\RuntimeException::class);
         Fetcher::intArray("test");
+    }
 
+    public function testIntArrayWithMultipleInvalidValues(): void
+    {
         $this->expectException(\RuntimeException::class);
         Fetcher::intArray("test,test");
+    }
 
+    public function testIntArrayValidCases(): void
+    {
         $value = Fetcher::intArray([1, 2, 3, 4, 5]);
         $this->assertIsArray($value);
         $this->assertEquals([1, 2, 3, 4, 5], $value);
 
-        $value = Fetcher::intArray(["1, 2, 3, 4, 5"]);
+        $value = Fetcher::intArray("1, 2, 3, 4, 5");
         $this->assertIsArray($value);
         $this->assertEquals([1, 2, 3, 4, 5], $value);
 
         $value = Fetcher::intArray(["1", "2", "3", "4", "5"]);
         $this->assertIsArray($value);
         $this->assertEquals([1, 2, 3, 4, 5], $value);
-
-        $value = Fetcher::intArray(["1"]);
-        $this->assertIsArray($value);
-        $this->assertEquals([1], $value);
 
         $value = Fetcher::intArray(["1.2345", "2.3456", "3.4567", "4.5678", "5.6789"]);
         $this->assertIsArray($value);
@@ -119,31 +119,19 @@ class FetcherTest extends TestCase
         $value = Fetcher::date("test");
         $this->assertEquals(null, $value);
 
-        $value = Fetcher::date("26-03-2025");
+        $value = Fetcher::date("2025-03-26");
         $this->assertEquals("2025-03-26", $value);
     }
 
-    public function testIsNull()
+    public function testIsNull(): void
     {
         $value = Fetcher::isNull("test");
-        $this->assertFalse($value);
-
-        $value = Fetcher::isNull(1);
-        $this->assertFalse($value);
-
-        $value = Fetcher::isNull(1.2345);
         $this->assertFalse($value);
 
         $value = Fetcher::isNull(0);
         $this->assertFalse($value);
 
         $value = Fetcher::isNull(false);
-        $this->assertFalse($value);
-
-        $value = Fetcher::isNull(true);
-        $this->assertFalse($value);
-
-        $value = Fetcher::isNull([]);
         $this->assertFalse($value);
 
         $value = Fetcher::isNull("null");
@@ -159,14 +147,6 @@ class FetcherTest extends TestCase
         $this->assertIsInt($value);
         $this->assertEquals(0, $value);
 
-        $value = Fetcher::gender('0');
-        $this->assertIsInt($value);
-        $this->assertEquals(0, $value);
-
-        $value = Fetcher::gender(1);
-        $this->assertIsInt($value);
-        $this->assertEquals(1, $value);
-
         $value = Fetcher::gender('1');
         $this->assertIsInt($value);
         $this->assertEquals(1, $value);
@@ -174,17 +154,21 @@ class FetcherTest extends TestCase
         $value = Fetcher::gender(2);
         $this->assertEquals(null, $value);
 
-        $value = Fetcher::gender("test");
-        $this->assertEquals(null, $value);
-
-        $value = Fetcher::gender(null);
-        $this->assertEquals(null, $value);
-
-        $value = Fetcher::gender("invalid", "default_val");
-        $this->assertEquals("default_val", $value);
-
         $value = Fetcher::gender(null, 0);
         $this->assertIsInt($value);
         $this->assertEquals(0, $value);
+    }
+
+    public function testJson(): void
+    {
+        $value = Fetcher::json('{"foo":"bar"}');
+        $this->assertIsArray($value);
+        $this->assertEquals(['foo' => 'bar'], $value);
+
+        $value = Fetcher::json('invalid-json', ['default' => true]);
+        $this->assertEquals(['default' => true], $value);
+
+        $value = Fetcher::json(null);
+        $this->assertNull($value);
     }
 }

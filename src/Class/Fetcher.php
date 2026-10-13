@@ -66,7 +66,7 @@ class Fetcher
      *
      * @param mixed      $value
      * @param array|null $default
-     * @param string $separator
+     * @param string     $separator
      *
      * @return array|null
      */
@@ -84,7 +84,8 @@ class Fetcher
             return $default;
         }
 
-        $value = array_values(array_filter($value));
+        $value = array_map(fn($item) => is_string($item) ? trim($item) : $item, $value);
+        $value = array_values(array_filter($value, fn($item) => $item !== ""));
 
         return array_map(function ($item) {
             if (!is_numeric($item)) {
@@ -166,19 +167,20 @@ class Fetcher
     }
 
     /**
-     * Checks the value is null or not
+     * Checks if the value is null or string "null".
      *
-     * @param $value
+     * @param  mixed $value
      *
      * @return bool
      */
-    public static function isNull($value): bool
+    public static function isNull(mixed $value): bool
     {
         return $value === null || $value === "null";
     }
 
     /**
-     * Checks the value is json object and decode it
+     * Checks if the value is a valid JSON string and decodes it.
+     * Returns default value if decoding fails.
      *
      * @param mixed      $value
      * @param mixed|null $default
