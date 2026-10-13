@@ -255,9 +255,9 @@ export default class Sftoomi
             first = arg1['first_name'];
             middle = arg1['middle_name'];
         } else {
-            last = arg1;
-            first = arg2;
-            middle = arg3;
+            last = arg1   ?? '';
+            first = arg2  ?? '';
+            middle = arg3 ?? '';
         }
 
         last = last.trim();
@@ -448,7 +448,7 @@ export default class Sftoomi
      *
      * @param entity
      */
-    public static duplicateEntity(entity: any): any
+    public static duplicateEntity<T = any>(entity: any): T
     {
         return JSON.parse(JSON.stringify(entity));
     }
