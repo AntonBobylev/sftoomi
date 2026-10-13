@@ -14,6 +14,8 @@ import CookiesService from '../services/cookies.service';
 import ResponsiveLayoutService from '../services/responsive-layout.service';
 import PopupMsgService from '../services/popup-msg.service'
 
+import Gender from '../type/Gender';
+
 export default class Sftoomi
 {
     public static readonly Translator: Translator = new Translator();
@@ -380,6 +382,35 @@ export default class Sftoomi
     public static isApplicationGlobalMaskShown(): boolean
     {
         return this.applicationGlobalMaskShown;
+    }
+
+    public static parseGender(value: any): Gender
+    {
+        const unspecified = -1;
+        if (value === null || value === undefined || this.isEmpty(value)) {
+            return unspecified;
+        }
+
+        if (typeof value !== 'string' && typeof value !== 'number') {
+            return unspecified;
+        }
+
+        let numericValue: number;
+        if (typeof value === 'string') {
+            numericValue = parseInt(value);
+
+            if (isFinite(numericValue) || isNaN(numericValue)) {
+                return unspecified;
+            }
+        } else {
+            numericValue = value;
+        }
+
+        if (numericValue !== 1 && numericValue !== 0) {
+            return unspecified;
+        }
+
+        return numericValue;
     }
 
     private static parseDateToLuxon(date?: string | null | Date): DateTime | null
