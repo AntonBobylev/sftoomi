@@ -35,6 +35,15 @@ There are few options to run the application in the DEV mode:
 
 ---
 
+### TESTS:
+
+You can run tests using the following `make` commands:
+- `make run-tests` — runs all project tests (both backend and frontend).
+- `make front-tests` — runs all frontend tests.
+- `make front-unit-tests` — runs frontend unit tests (Vitest).
+
+---
+
 ### PRODUCTION
 
 The files will be minified, built and moved to the ./public/app directory: <br />
