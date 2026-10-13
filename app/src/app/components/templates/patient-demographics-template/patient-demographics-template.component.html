@@ -1,37 +1,38 @@
 <div class="wrapper">
-    <form nz-form [formGroup]="form"
+    <form nz-form
+          [formGroup]="form()"
           [class.horizontal-wrapper]="!isVertical()"
     >
         <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
-                       [name]="lastName"
-                       [form]="form"
+                       [name]="lastName()"
+                       [form]="form()"
                        [useUppercase]="true"
         />
 
         <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
-                       [name]="firstName"
-                       [form]="form"
+                       [name]="firstName()"
+                       [form]="form()"
                        [useUppercase]="true"
         />
 
         <app-textfield [label]="Sftoomi.Translator.translate('middle_name')"
-                       [name]="middleName"
-                       [form]="form"
+                       [name]="middleName()"
+                       [form]="form()"
                        [useUppercase]="true"
         />
 
         <app-datepicker [label]="Sftoomi.Translator.translate('dob_full')"
-                        [name]="dobName"
-                        [form]="form"
+                        [name]="dobName()"
+                        [form]="form()"
         />
 
         <app-gender-combo [name]="genderName()"
-                          [form]="form"
+                          [form]="form()"
         />
 
         <app-phone [label]="Sftoomi.Translator.translate('phone')"
-                   [name]="phoneName"
-                   [form]="form"
+                   [name]="phoneName()"
+                   [form]="form()"
         />
     </form>
 </div>

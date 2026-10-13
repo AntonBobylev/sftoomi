@@ -1,4 +1,4 @@
-import { Component, input, Input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { NzFormDirective } from 'ng-zorro-antd/form';
 
@@ -20,14 +20,14 @@ import AppGenderComboComponent from '../../core/app-gender-combo.component';
 })
 export default class PatientDemographicsTemplateComponent
 {
-    @Input({required: true}) public form!: FormGroup;
+    public readonly form: InputSignal<FormGroup> = input.required();
 
-    @Input({required: true, alias: 'lastNameCtrlName'})   public lastName!: string;
-    @Input({required: true, alias: 'firstNameCtrlName'})  public firstName!: string;
-    @Input({required: true, alias: 'middleNameCtrlName'}) public middleName!: string;
-    @Input({required: true, alias: 'dobNameCtrlName'})    public dobName!: string;
-    @Input({required: true, alias: 'phoneNameCtrlName'})  public phoneName!: string;
-    public readonly genderName: InputSignal<string> = input.required({alias: 'genderCtrlName'});
+    public readonly lastName:   InputSignal<string> = input.required({ alias: 'lastNameCtrlName'   });
+    public readonly firstName:  InputSignal<string> = input.required({ alias: 'firstNameCtrlName'  });
+    public readonly middleName: InputSignal<string> = input.required({ alias: 'middleNameCtrlName' });
+    public readonly dobName:    InputSignal<string> = input.required({ alias: 'dobNameCtrlName'    });
+    public readonly phoneName:  InputSignal<string> = input.required({ alias: 'phoneNameCtrlName'  });
+    public readonly genderName: InputSignal<string> = input.required({ alias: 'genderCtrlName'     });
 
     public readonly isVertical: InputSignal<boolean> = input(true);
 
