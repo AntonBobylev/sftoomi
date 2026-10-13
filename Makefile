@@ -141,4 +141,4 @@ run-front-unit-tests:
 	@$(COMPOSE_EXEC) node npm test
 
 run-back-tests:
-	@$(COMPOSE_EXEC) php php bin/phpunit
+	@$(COMPOSE_EXEC) php php bin/phpunit --display-warnings
