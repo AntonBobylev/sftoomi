@@ -51,7 +51,7 @@ export default abstract class AppBaseToolbar
 
         let id: number = selectedRecords[0].id;
         this.openEditDialog(
-            Sftoomi.format(this.editDialogEditTitle, [id]),
+            Sftoomi.format(this.editDialogEditTitle, id),
             id,
             selectedRecords[0]
         );

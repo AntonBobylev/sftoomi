@@ -44,7 +44,7 @@ describe('Sftoomi Utility Class', (): void => {
 
     describe('Strings & Formatting', (): void => {
         it('should format string with arguments', (): void => {
-            expect(Sftoomi.format('Our {0} project called {1}', ['angular', 'SFTOOMI'])).toBe('Our angular project called SFTOOMI');
+            expect(Sftoomi.format('Our {0} project called {1}', 'angular', 'SFTOOMI')).toBe('Our angular project called SFTOOMI');
         });
 
         it('should capitalize string correctly', (): void => {

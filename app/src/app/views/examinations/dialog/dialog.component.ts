@@ -108,7 +108,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
         this.form.get('doctor_id')?.setValue(data.data.doctor_id);
 
         this.patientIdCtrl().setData([{
-            caption: Sftoomi.format('{0} (#{1})', [Sftoomi.humanShortName(data.data.patient), data.data.patient.id.toString()]),
+            caption: Sftoomi.format('{0} (#{1})', Sftoomi.humanShortName(data.data.patient), data.data.patient.id),
             value:   data.data.patient.id
         }]);
 

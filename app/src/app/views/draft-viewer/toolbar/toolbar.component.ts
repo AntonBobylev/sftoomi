@@ -45,9 +45,7 @@ export default class DraftViewerToolbarComponent
         if (templateId < 1) {
             console.error(this.Sftoomi.format(
                 this.Sftoomi.Translator.translate('views.draft_viewer.error_messages.template_id_must_be_greater_than_zero'),
-                [
-                    templateId
-                ]
+                templateId
             ));
 
             return;
@@ -56,9 +54,7 @@ export default class DraftViewerToolbarComponent
         if (!isFinite(templateId)) {
             console.error(this.Sftoomi.format(
                 this.Sftoomi.Translator.translate('views.draft_viewer.error_messages.template_id_is_not_finite'),
-                [
-                    templateId
-                ]
+                templateId
             ));
 
             return;

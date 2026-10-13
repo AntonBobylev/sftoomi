@@ -214,16 +214,16 @@ export default class Sftoomi
      * Formats a template string by replacing placeholders with passed arguments.
      * Example:
      *  format: 'Our {0} project called {1}'
-     *  args:   ['angular', 'SFTOOMI']
+     *  args:   'angular', 'SFTOOMI'
      *  Result: 'Our angular project called SFTOOMI'
      *
      * @param format - The template string with indexed placeholders (e.g. {0}, {1})
-     * @param args - An array of values to inject into placeholders
+     * @param args - A list of values to inject into placeholders
      * @returns The formatted string
      */
-    public static format(format: string, args: any[]): string
+    public static format(format: string, ...args: any[]): string
     {
-        return format.replace(/\{(\d+)}/g, function(_m, i: number){
+        return format.replace(/\{(\d+)}/g, (_m, i: number) =>{
             return args[i];
         });
     }

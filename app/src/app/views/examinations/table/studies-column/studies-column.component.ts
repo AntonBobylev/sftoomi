@@ -28,17 +28,13 @@ export default class ExaminationsTableStudiesColumnComponent extends AppTableCom
             title: this.Sftoomi.Translator.translate(
                 this.Sftoomi.format(
                     'views.examinations.table.columns.studies.{0}',
-                    [
-                        actionTranslationKey
-                    ]
+                    actionTranslationKey
                 )
             ),
             tooltip: this.Sftoomi.Translator.translate(
                 this.Sftoomi.format(
                     'views.examinations.table.columns.studies.{0}_tooltip',
-                    [
-                        actionTranslationKey
-                    ]
+                    actionTranslationKey
                 )
             )
         };

@@ -106,9 +106,7 @@ export default class DraftViewerModuleComponent extends AppBaseModule implements
             this.Sftoomi.Dialog.show(
                 this.Sftoomi.format(
                     this.Sftoomi.Translator.translate('views.draft_viewer.error_messages.template_id_must_be_greater_than_zero'),
-                    [
-                        templateId
-                    ]
+                    templateId
                 ),
                 DialogType.ERROR
             );
@@ -139,7 +137,7 @@ export default class DraftViewerModuleComponent extends AppBaseModule implements
             data: data,
             success: (_response: any, _request: any, result: getDraftViewerData): void => {
                 let templatesStore: AppComboRecord[] = result.lists.templates.map((template): AppComboRecord => ({
-                    caption: this.Sftoomi.format('(ID #{0}): {1}', [template.id, template.name]),
+                    caption: this.Sftoomi.format('(ID #{0}): {1}', template.id, template.name),
                     value:   template.id
                 }));
 
