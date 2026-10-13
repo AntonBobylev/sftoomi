@@ -121,6 +121,16 @@ class FetcherTest extends TestCase
 
         $value = Fetcher::date("2025-03-26");
         $this->assertEquals("2025-03-26", $value);
+
+        $value = Fetcher::date("26.03.2025");
+        $this->assertEquals("2025-03-26", $value);
+
+        $value = Fetcher::date("26.03.2025", null, "d/m/Y");
+        $this->assertEquals("26/03/2025", $value);
+
+        $dateTime = new \DateTime("2025-05-10");
+        $value = Fetcher::date($dateTime);
+        $this->assertEquals("2025-05-10", $value);
     }
 
     public function testIsNull(): void

@@ -100,12 +100,9 @@ class Fetcher
      * Tries to convert the received value to date, then formats it to passed format and returns it as string.
      * Returns default value if received value cannot be converted to date.
      *
-     * TODO: add any date formats converter because right now we expect the row with some PHP common date format right now
-     *
      * @param mixed  $value
      * @param mixed  $default
      * @param string $format
-     *
      * @return string|null
      */
     public static function date(
@@ -114,27 +111,16 @@ class Fetcher
         string $format = Constants::SQL_DEFAULT_DATE_FORMAT
     ): string | null
     {
-        if (empty($value)) {
-            return $default;
-        }
-
         if (self::isNull($value)) {
             return $default;
         }
 
-        if ($value instanceof DateTime) {
-            return $value->format($format);
-        }
-
-        if (!is_string($value)) {
+        $dateTime = Format::parseDateToDateTime($value);
+        if (!$dateTime) {
             return $default;
         }
 
-        try {
-            return new DateTime($value)->format($format);
-        } catch (Exception) {
-            return $default;
-        }
+        return $dateTime->format($format);
     }
 
     /**
