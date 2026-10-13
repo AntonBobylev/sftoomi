@@ -97,16 +97,100 @@ export default class Sftoomi
     }
 
     /**
-     * @param date
+     * Tries to convert any value into a valid JavaScript Date object.
+     * Supports Date instances, Luxon DateTime objects, timestamps (sec/ms),
+     * ISO/RFC formats, and various custom date string formats.
+     *
+     * @param value - The value to parse into a Date object.
+     *
+     * @returns A valid JS Date instance, or null if parsing fails.
      */
-    public static stringToDate(date?: string | null | Date): Date | null
+    public static toDate(value?: unknown): Date | null
     {
-        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
-        if (!luxonDate || !luxonDate.isValid) {
+        if (value === null || value === undefined) {
             return null;
         }
 
-        return luxonDate.toJSDate();
+        if (value instanceof Date) {
+            return isNaN(value.getTime()) ? null : value;
+        }
+
+        if (DateTime.isDateTime(value)) {
+            return value.isValid ? value.toJSDate() : null;
+        }
+
+        type LuxonParseResult = DateTime<true> | DateTime<false>;
+
+        if (typeof value === 'number' || (typeof value === 'string' && /^\d+$/.test(value.trim()))) {
+            const num: number = Number(value);
+            if (!isNaN(num)) {
+                // Check length: <= 10 digits -> seconds, > 10 digits -> milliseconds
+                const dt: LuxonParseResult = num.toString().length <= 10 ? DateTime.fromSeconds(num) : DateTime.fromMillis(num);
+                if (dt.isValid) {
+                    return dt.toJSDate();
+                }
+            }
+        }
+
+        if (typeof value === 'string') {
+            const trimmed: string = value.trim();
+            if (!trimmed) {
+                return null;
+            }
+
+            // Standard ISO 8601 & RFC 2822 formats
+            let dt: LuxonParseResult = DateTime.fromISO(trimmed);
+            if (dt.isValid) {
+                return dt.toJSDate();
+            }
+
+            dt = DateTime.fromRFC2822(trimmed);
+            if (dt.isValid) {
+                return dt.toJSDate();
+            }
+
+            // Common custom date & time formats
+            const popularFormats: string[] = [
+                // With time (24h)
+                'yyyy-MM-dd HH:mm:ss',
+                'yyyy-MM-dd HH:mm',
+                'dd.MM.yyyy HH:mm:ss',
+                'dd.MM.yyyy HH:mm',
+                'dd/MM/yyyy HH:mm:ss',
+                'dd/MM/yyyy HH:mm',
+                'MM/dd/yyyy HH:mm:ss',
+
+                // Date only
+                'yyyy-MM-dd',
+                'dd.MM.yyyy',
+                'dd/MM/yyyy',
+                'MM/dd/yyyy',
+                'yyyy.MM.dd',
+                'yyyy/MM/dd',
+
+                // Short years and compact formats
+                'dd-MM-yyyy',
+                'dd.MM.yy',
+                'dd/MM/yy',
+                'yyyyMMdd'
+            ];
+
+            for (const format of popularFormats) {
+                dt = DateTime.fromFormat(trimmed, format);
+                if (dt.isValid) {
+                    return dt.toJSDate();
+                }
+            }
+
+            // 4.3. Native Date fallback for non-standard browser/system strings
+            const fallbackTimestamp: number = Date.parse(trimmed);
+            if (!isNaN(fallbackTimestamp)) {
+                return new Date(fallbackTimestamp);
+            }
+        }
+
+        // 5. Fallback if no format matched
+        return null;
     }
 
     /**

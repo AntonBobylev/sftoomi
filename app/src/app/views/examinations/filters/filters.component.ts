@@ -86,8 +86,18 @@ export default class ExaminationsFiltersComponent extends AppBaseFilters
     {
         super.afterLoad(data);
 
-        this.examinationDatePickerCtrl().datesForHighlighting = data.data.dates_with_examinations.map((date: string): Date => {
-            return Sftoomi.stringToDate(date)!;
-        });
+        this.examinationDatePickerCtrl().setDatesForHighlighting(data.data.dates_with_examinations
+            .map((date: string): Date | null => {
+                const value: Date | null = this.Sftoomi.toDate(date);
+                if (value === null) {
+                    console.error('Value is not a date', date);
+
+                    return null;
+                }
+
+                return value;
+            })
+            .filter((date: Date | null): date is Date => date !== null)
+        );
     }
 }

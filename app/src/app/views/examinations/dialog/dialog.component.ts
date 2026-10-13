@@ -103,7 +103,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             return;
         }
 
-        this.form.get('examination_date')?.setValue(Sftoomi.stringToDate(data.data.date));
+        this.form.get('examination_date')?.setValue(Sftoomi.toDate(data.data.date));
         this.form.get('facility_id')?.setValue(data.data.facility_id);
         this.form.get('doctor_id')?.setValue(data.data.doctor_id);
 
@@ -136,7 +136,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
                 this.form.get('patient_last_name')?.setValue(data.data.last_name);
                 this.form.get('patient_first_name')?.setValue(data.data.first_name);
                 this.form.get('patient_middle_name')?.setValue(data.data.middle_name);
-                this.form.get('patient_dob')?.setValue(Sftoomi.stringToDate(data.data.dob));
+                this.form.get('patient_dob')?.setValue(Sftoomi.toDate(data.data.dob));
                 this.form.get('patient_phone')?.setValue(data.data.phone);
                 this.form.get('patient_gender')?.setValue(this.Sftoomi.parseGender(data.data.gender));
             },
