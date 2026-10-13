@@ -1,16 +1,11 @@
 import { Component, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
-import { NzColDirective } from 'ng-zorro-antd/grid';
-import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip'
+
+import AppComboImports from './imports';
 
 import { DialogType } from '../../../class/Dialog';
 import Fetcher from '../../../class/Fetcher';
 
 import AppBaseField from '../app-base-field';
-
-import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
 
 export type AppComboRecord<T = string | number> = {
     caption: string,
@@ -20,11 +15,7 @@ export type AppComboRecord<T = string | number> = {
 @Component({
     selector: 'app-combo',
     templateUrl: './app-combo.component.html',
-    imports: [
-        ReactiveFormsModule, NzSelectComponent, NzOptionComponent,
-        NzColDirective, NzFormLabelComponent, FormErrorTemplateComponent,
-        NzFormControlComponent, NzFormItemComponent, NzTooltipDirective
-    ],
+    imports: AppComboImports,
     styleUrl: './app-combo.component.scss'
 })
 
