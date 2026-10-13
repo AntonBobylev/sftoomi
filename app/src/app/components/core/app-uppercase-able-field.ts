@@ -1,11 +1,11 @@
-import { Directive, Input } from '@angular/core';
+import { Directive, input, InputSignal } from '@angular/core';
 
 import AppBaseField from './app-base-field';
 
 @Directive()
 export default abstract class AppUppercaseAbleField extends AppBaseField
 {
-    @Input() public useUppercase: boolean = false;
+    public readonly useUppercase: InputSignal<boolean> = input(false);
 
     protected onInput(event: any): void
     {
@@ -15,7 +15,7 @@ export default abstract class AppUppercaseAbleField extends AppBaseField
             return;
         }
 
-        if (this.useUppercase) {
+        if (this.useUppercase()) {
             this.form.get(this.name)!.setValue((this.form.get(this.name)?.value).toUpperCase());
         }
 
