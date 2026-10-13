@@ -5,16 +5,16 @@ import { NzFormDirective } from 'ng-zorro-antd/form';
 import Sftoomi from '../../../class/Sftoomi';
 
 import AppTextfieldComponent from '../../core/app-textfield/app-textfield.component';
-
 import AppDatepickerComponent from '../../core/app-datepicker/app-datepicker.component';
 import AppPhoneComponent from '../../core/app-phone/app-phone.component';
+import AppGenderComboComponent from '../../core/app-gender-combo.component';
 
 @Component({
     selector: 'patient-demographics-template',
     templateUrl: './patient-demographics-template.component.html',
     imports: [
         ReactiveFormsModule, NzFormDirective, AppTextfieldComponent,
-        AppDatepickerComponent, AppPhoneComponent
+        AppDatepickerComponent, AppPhoneComponent, AppGenderComboComponent
     ],
     styleUrl: './patient-demographics-template.component.less'
 })
@@ -27,6 +27,7 @@ export default class PatientDemographicsTemplateComponent
     @Input({required: true, alias: 'middleNameCtrlName'}) public middleName!: string;
     @Input({required: true, alias: 'dobNameCtrlName'})    public dobName!: string;
     @Input({required: true, alias: 'phoneNameCtrlName'})  public phoneName!: string;
+    public readonly genderName: InputSignal<string> = input.required({alias: 'genderCtrlName'});
 
     public readonly isVertical: InputSignal<boolean> = input(true);
 

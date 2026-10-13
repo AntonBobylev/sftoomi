@@ -68,7 +68,8 @@ final class PatientsController extends SftoomiController
             "first_name"  => Fetcher::trim($request->request->get("first_name")),
             "middle_name" => Fetcher::trim($request->request->get("middle_name")),
             "phone"       => Fetcher::trim($request->request->get("phone")),
-            "dob"         => Fetcher::date($request->request->get("dob"))
+            "dob"         => Fetcher::date($request->request->get("dob")),
+            "gender"      => Fetcher::gender($request->request->get("gender"))
         ];
 
         $this->auth->requirePermission(

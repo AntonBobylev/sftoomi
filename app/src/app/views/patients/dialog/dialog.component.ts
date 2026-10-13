@@ -16,6 +16,8 @@ import getPatientAPI from '../../../APIs/getPatientAPI';
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
 import phoneValidator from '../../../validators/phone.validator';
 
+import Gender from '../../../type/Gender';
+
 export type PatientEditDialogData = {
     id?: number
 };
@@ -51,7 +53,8 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
         first_name:  new FormControl<string | null>(null, [Validators.maxLength(255), Validators.required, onlyLettersValidator()]),
         middle_name: new FormControl<string | null>(null, [Validators.maxLength(255), onlyLettersValidator()]),
         dob:         new FormControl<Date   | null>(null),
-        phone:       new FormControl<string | null>(null, [phoneValidator()])
+        phone:       new FormControl<string | null>(null, [phoneValidator()]),
+        gender:      new FormControl<Gender>(-1)
     });
 
     protected afterLoad(data: getPatientAPI): void
@@ -61,6 +64,7 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
             this.form.get('last_name')?.setValue(data.data.last_name.toUpperCase());
             this.form.get('middle_name')?.setValue(data.data.middle_name?.toUpperCase());
             this.form.get('phone')?.setValue(data.data.phone);
+            this.form.get('gender')?.setValue(this.Sftoomi.parseGender(data.data.gender));
 
             if (data.data.dob) {
                 this.form.get('dob')?.setValue(DateTime.fromISO(data.data.dob).toJSDate());
@@ -70,7 +74,8 @@ export default class PatientEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        data.set('dob', Sftoomi.dateShort(this.form.get('dob')?.value));
+        data.append('dob', Sftoomi.dateShort(this.form.get('dob')?.value));
+        data.append('gender', this.form.get('gender')?.value);
 
         return data;
     }

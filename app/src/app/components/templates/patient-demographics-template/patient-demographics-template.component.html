@@ -7,11 +7,13 @@
                        [form]="form"
                        [useUppercase]="true"
         />
+
         <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
                        [name]="firstName"
                        [form]="form"
                        [useUppercase]="true"
         />
+
         <app-textfield [label]="Sftoomi.Translator.translate('middle_name')"
                        [name]="middleName"
                        [form]="form"
@@ -21,6 +23,10 @@
         <app-datepicker [label]="Sftoomi.Translator.translate('dob_full')"
                         [name]="dobName"
                         [form]="form"
+        />
+
+        <app-gender-combo [name]="genderName()"
+                          [form]="form"
         />
 
         <app-phone [label]="Sftoomi.Translator.translate('phone')"
