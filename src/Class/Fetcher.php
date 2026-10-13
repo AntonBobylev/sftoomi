@@ -137,6 +137,35 @@ class Fetcher
     }
 
     /**
+     * Tries to convert the received value to gender (0 or 1).
+     * Returns default value if received value cannot be converted.
+     *
+     * @param mixed $value
+     * @param mixed $default
+     *
+     * @return int|mixed
+     */
+    public static function gender(
+        mixed $value,
+        mixed $default = null
+    ): mixed
+    {
+        if (self::isNull($value)) {
+            return $default;
+        }
+
+        if ($value === 0 || $value === '0') {
+            return 0;
+        }
+
+        if ($value === 1 || $value === '1') {
+            return 1;
+        }
+
+        return $default;
+    }
+
+    /**
      * Checks the value is null or not
      *
      * @param $value

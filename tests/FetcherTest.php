@@ -152,4 +152,39 @@ class FetcherTest extends TestCase
         $value = Fetcher::isNull(null);
         $this->assertTrue($value);
     }
+
+    public function testGender(): void
+    {
+        $value = Fetcher::gender(0);
+        $this->assertIsInt($value);
+        $this->assertEquals(0, $value);
+
+        $value = Fetcher::gender('0');
+        $this->assertIsInt($value);
+        $this->assertEquals(0, $value);
+
+        $value = Fetcher::gender(1);
+        $this->assertIsInt($value);
+        $this->assertEquals(1, $value);
+
+        $value = Fetcher::gender('1');
+        $this->assertIsInt($value);
+        $this->assertEquals(1, $value);
+
+        $value = Fetcher::gender(2);
+        $this->assertEquals(null, $value);
+
+        $value = Fetcher::gender("test");
+        $this->assertEquals(null, $value);
+
+        $value = Fetcher::gender(null);
+        $this->assertEquals(null, $value);
+
+        $value = Fetcher::gender("invalid", "default_val");
+        $this->assertEquals("default_val", $value);
+
+        $value = Fetcher::gender(null, 0);
+        $this->assertIsInt($value);
+        $this->assertEquals(0, $value);
+    }
 }
