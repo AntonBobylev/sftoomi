@@ -127,3 +127,21 @@ logs-mysql:
 
 logs-redis:
 	@$(DOCKER_COMPOSE) logs -f --tail=100 redis
+
+## TESTS
+.PHONY: run-tests run-front-tests run-front-unit-tests run-back-tests
+
+run-tests: run-back-tests run-front-tests
+	@echo "All tests completed successfully!"
+
+run-front-tests: run-front-unit-tests
+	@echo "All frontend tests completed!"
+
+run-front-unit-tests:
+	@echo "Running frontend unit tests..."
+	@$(COMPOSE_EXEC) node npm test
+
+run-back-tests:
+	@echo "Running backend tests..."
+	@echo "(Not implemented yet)"
+	# @$(COMPOSE_EXEC) php php bin/phpunit
