@@ -8,11 +8,11 @@
     <nz-form-control [nzErrorTip]="errorTpl">
         <nz-date-picker [formControlName]="name"
                         [id]="name"
-                        [nzInline]="isInline"
+                        [nzInline]="isInline()"
                         style="width: 100%; justify-content: center;"
                         [nzFormat]="getDatePickerLocalDateFormat()"
                         [nzDateRender]="dateRenderTpl"
-                        [AppDatePickerScrollMonth]="isInline"
+                        [AppDatePickerScrollMonth]="isInline()"
         />
 
         <ng-template #errorTpl>
@@ -21,7 +21,9 @@
             />
         </ng-template>
 
-        <ng-template #dateRenderTpl let-current>
+        <ng-template #dateRenderTpl
+                     let-current
+        >
             <div class="custom-date-cell">
                 <div class="date-content"
                      [class.today]="isToday(current)"

@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, output, OutputEmitterRef } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzDatePickerComponent } from 'ng-zorro-antd/date-picker';
@@ -13,6 +13,7 @@ import FormErrorTemplateComponent from '../../templates/form-error-template/form
 import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 
 import AppDatePickerScrollMonthDirective from './scroll.directive'
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-datepicker',
@@ -27,26 +28,43 @@ import AppDatePickerScrollMonthDirective from './scroll.directive'
 
 export default class AppDatepickerComponent extends AppBaseField implements AfterViewInit
 {
-    @Input() public isInline: boolean = false;
-    @Input() public datesForHighlighting: Date[] = [];
+    public readonly isInline:                  InputSignal<boolean> = input(false);
+    public readonly datesForHighlightingInput: InputSignal<Date[]>  = input<Date[]>([], { alias: 'datesForHighlighting' });
 
     public override readonly onChange: OutputEmitterRef<Date | null> = output();
 
     protected readonly getDatePickerLocalDateFormat = getDatePickerLocalDateFormat;
 
+    private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
+    private readonly datesToHighlight: WritableSignal<Date[]> = signal<Date[]>([]);
+
+    ngOnInit(): void
+    {
+        this.datesToHighlight.set(this.datesForHighlightingInput());
+    }
+
     ngAfterViewInit(): void
     {
-        this.form.get(this.name)?.valueChanges
+        this.form.get(this.name)
+            ?.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((date: Date | null): void => this.onChange.emit(date));
+    }
+
+    public setDatesForHighlighting(dates: Date[]): void
+    {
+        this.datesToHighlight.set(dates);
     }
 
     protected shouldHighlightDate(currentDate: Date): boolean
     {
-        if (Sftoomi.isEmpty(this.datesForHighlighting)) {
+        const datesToHighlight: Date[] = this.datesToHighlight();
+        if (Sftoomi.isEmpty(datesToHighlight)) {
             return false;
         }
 
-        return this.datesForHighlighting.some((date: Date): boolean => Sftoomi.twoDatesEqual(date, currentDate));
+        return datesToHighlight.some((date: Date): boolean => Sftoomi.twoDatesEqual(date, currentDate));
     }
 
     protected isToday(date: Date): boolean
