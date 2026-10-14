@@ -5,13 +5,13 @@
 >
     <app-loading-spinner [isLoading]="isLoading()" />
 
-    <app-textfield name="login"
+    <app-text-field name="login"
                    [form]="form"
                    [label]="Sftoomi.Translator.translate('dialogs.reset_password.login')"
                    onlyLetters
     />
 
-    <app-textfield name="email"
+    <app-text-field name="email"
                    [form]="form"
                    [label]="Sftoomi.Translator.translate('dialogs.reset_password.email')"
     />

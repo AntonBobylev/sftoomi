@@ -7,7 +7,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component';
 import AppComboComponent, { AppComboRecord } from '../../../components/core/app-combo/app-combo.component';
 
 import getStudyAPI from '../../../APIs/getStudyAPI';
@@ -22,7 +22,7 @@ export type StudiesEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent, AppComboComponent
+        AppTextFieldComponent, AppComboComponent
     ],
     styleUrls: [
         './dialog.component.less',

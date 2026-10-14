@@ -4,7 +4,7 @@ import { NzFormDirective } from 'ng-zorro-antd/form';
 
 import Sftoomi from '../../../class/Sftoomi';
 
-import AppTextfieldComponent from '../../core/app-textfield/app-textfield.component';
+import AppTextFieldComponent from '../../core/app-textfield/app-text-field.component';
 import AppDatepickerComponent from '../../core/app-datepicker/app-datepicker.component';
 import AppPhoneComponent from '../../core/app-phone/app-phone.component';
 import AppGenderComboComponent from '../../core/app-gender-combo.component';
@@ -13,7 +13,7 @@ import AppGenderComboComponent from '../../core/app-gender-combo.component';
     selector: 'patient-demographics-template',
     templateUrl: './patient-demographics-template.component.html',
     imports: [
-        ReactiveFormsModule, NzFormDirective, AppTextfieldComponent,
+        ReactiveFormsModule, NzFormDirective, AppTextFieldComponent,
         AppDatepickerComponent, AppPhoneComponent, AppGenderComboComponent
     ],
     styleUrl: './patient-demographics-template.component.less'

@@ -8,7 +8,7 @@ import { DialogType } from '../../../class/Dialog'
 import Fetcher from '../../../class/Fetcher'
 import AppBaseDialog from '../../core/app-base-dialog'
 
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppTextFieldComponent from '../../core/app-textfield/app-text-field.component';
 import AppLoadingSpinnerComponent from '../app-loading-spinner/app-loading-spinner.component'
 
 import changePasswordAPI from '../../../APIs/changePasswordAPI'
@@ -17,7 +17,7 @@ import changePasswordAPI from '../../../APIs/changePasswordAPI'
     selector: 'change-user-password-dialog',
     templateUrl: './dialog.component.html',
     imports: [
-        AppTextfieldComponent,
+        AppTextFieldComponent,
         NzButtonComponent,
         NzModalFooterDirective,
         AppLoadingSpinnerComponent

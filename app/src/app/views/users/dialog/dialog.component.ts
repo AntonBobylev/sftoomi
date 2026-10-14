@@ -8,7 +8,7 @@ import Sftoomi from '../../../class/Sftoomi'
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component';
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
 import AppContactsComponent from '../../../components/fields/app-contacts/app-contacts.component';
 import { AppContactsTableRecord } from '../../../components/fields/app-contacts/table/table.component'
@@ -31,7 +31,7 @@ export type UserEditDialogData = {
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent, AppCheckboxComponent,
+        AppTextFieldComponent, AppCheckboxComponent,
         NzCollapseComponent, NzCollapsePanelComponent,
         AppContactsComponent, AppLoadingSpinnerComponent,
         AppComboComponent

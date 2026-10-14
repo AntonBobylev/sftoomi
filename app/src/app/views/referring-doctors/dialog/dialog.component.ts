@@ -7,7 +7,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component';
+import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component';
 import AppItemSelectorComponent from '../../../components/core/app-item-selector/app-item-selector.component';
 import { AppItemSelectorDataListRow } from '../../../components/core/app-item-selector/data-list/data-list.component';
 
@@ -26,7 +26,7 @@ export type ReferringDoctorEditDialogData = {
     templateUrl: './dialog.component.html',
     imports: [
         FormsModule, ReactiveFormsModule,
-        NzButtonComponent, NzModalFooterDirective, AppTextfieldComponent, AppItemSelectorComponent
+        NzButtonComponent, NzModalFooterDirective, AppTextFieldComponent, AppItemSelectorComponent
     ],
     styleUrl: './dialog.component.less'
 })

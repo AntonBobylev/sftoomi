@@ -9,7 +9,7 @@ import AppBaseEditDialog from '../../../../core/app-base-edit-dialog/app-base-ed
 
 import { AppContactType } from '../table.component'
 import AppComboComponent, { AppComboRecord } from '../../../../core/app-combo/app-combo.component'
-import AppTextfieldComponent from '../../../../core/app-textfield/app-textfield.component'
+import AppTextFieldComponent from '../../../../core/app-textfield/app-text-field.component'
 import AppPhoneComponent from '../../../../core/app-phone/app-phone.component'
 
 import phoneValidator from '../../../../../validators/phone.validator'
@@ -29,7 +29,7 @@ export type ContactsEditDialogData = {
         NzModalFooterDirective,
         NzButtonComponent,
         AppComboComponent,
-        AppTextfieldComponent,
+        AppTextFieldComponent,
         AppPhoneComponent
     ],
     styleUrl: './dialog.component.less'

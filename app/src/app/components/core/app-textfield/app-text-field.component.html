@@ -1,0 +1,32 @@
+<nz-form-item [formGroup]="form">
+    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
+                   [nzFor]="name"
+    >
+        {{ label }}
+    </nz-form-label>
+    <nz-form-control [nzErrorTip]="errorTipTpl">
+        @if (securedInput()) {
+            <nz-input-password nzAllowClear>
+                <input nz-input
+                       [formControlName]="name"
+                       (input)="onInput($event)"
+                       [id]="name"
+                />
+            </nz-input-password>
+        } @else {
+            <nz-input-wrapper nzAllowClear>
+                <input nz-input
+                       [formControlName]="name"
+                       (input)="onInput($event)"
+                       [id]="name"
+                />
+            </nz-input-wrapper>
+        }
+
+        <ng-template #errorTipTpl>
+            <form-error-template [fieldName]="name"
+                                 [parentFormGroup]="form"
+            />
+        </ng-template>
+    </nz-form-control>
+</nz-form-item>

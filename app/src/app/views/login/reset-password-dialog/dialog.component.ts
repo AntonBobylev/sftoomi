@@ -8,7 +8,7 @@ import Fetcher from '../../../class/Fetcher'
 import Sftoomi from '../../../class/Sftoomi'
 import { DialogType } from '../../../class/Dialog'
 
-import AppTextfieldComponent from '../../../components/core/app-textfield/app-textfield.component'
+import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component'
 import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';
@@ -21,7 +21,7 @@ import OnlyLettersDirective from '../../../directives/only-letters.directive'
     imports: [
         FormsModule, ReactiveFormsModule,
         NzButtonComponent, NzModalFooterDirective,
-        AppTextfieldComponent, OnlyLettersDirective,
+        AppTextFieldComponent, OnlyLettersDirective,
         AppLoadingSpinnerComponent
     ],
     styleUrl: './dialog.component.less'

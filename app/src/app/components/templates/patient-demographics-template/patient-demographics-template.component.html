@@ -3,19 +3,19 @@
           [formGroup]="form()"
           [class.horizontal-wrapper]="!isVertical()"
     >
-        <app-textfield [label]="Sftoomi.Translator.translate('last_name')"
+        <app-text-field [label]="Sftoomi.Translator.translate('last_name')"
                        [name]="lastName()"
                        [form]="form()"
                        [useUppercase]="true"
         />
 
-        <app-textfield [label]="Sftoomi.Translator.translate('first_name')"
+        <app-text-field [label]="Sftoomi.Translator.translate('first_name')"
                        [name]="firstName()"
                        [form]="form()"
                        [useUppercase]="true"
         />
 
-        <app-textfield [label]="Sftoomi.Translator.translate('middle_name')"
+        <app-text-field [label]="Sftoomi.Translator.translate('middle_name')"
                        [name]="middleName()"
                        [form]="form()"
                        [useUppercase]="true"
