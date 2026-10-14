@@ -1,20 +1,27 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
+import { MaskitoOptions } from '@maskito/core';
 
-import AppNumberFieldImports from './imports';
+import AppTextFieldImports from '../app-text-field/imports';
 
-import AppBaseField from '../base/app-base-field'
+import { createNumberMask } from './number-mask-generator';
+
+import AppTextFieldComponent from '../app-text-field/app-text-field.component';
 
 @Component({
     selector: 'app-number-field',
-    templateUrl: './app-number-field.component.html',
-    imports: AppNumberFieldImports,
-    styleUrl: './app-number-field.component.less'
+    templateUrl: '../app-text-field/app-text-field.component.html',
+    imports: AppTextFieldImports,
+    styleUrl: '../app-text-field/app-text-field.component.scss'
 })
-
-export default class AppNumberFieldComponent extends AppBaseField
+export default class AppNumberFieldComponent extends AppTextFieldComponent
 {
-    public readonly allowDecimals:    InputSignal<boolean>       = input(false);
-    public readonly allowNegative:    InputSignal<boolean>       = input(false);
-    public readonly maxDecimalDigits: InputSignal<number>        = input(2);
-    public readonly maxLength:        InputSignal<number | null> = input<number | null>(null);
+    public readonly allowNegative:    InputSignal<boolean> = input<boolean>(false);
+    public readonly maxDecimalDigits: InputSignal<number>  = input<number>(0);
+
+    protected override readonly mask: WritableSignal<MaskitoOptions | null> = signal<MaskitoOptions | null>(
+        createNumberMask({
+            allowNegative:    this.allowNegative(),
+            maxDecimalDigits: this.maxDecimalDigits()
+        })
+    );
 }

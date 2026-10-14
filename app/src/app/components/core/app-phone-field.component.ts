@@ -1,4 +1,4 @@
-import { Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
 import { MaskitoOptions } from '@maskito/core';
 
 import AppTextFieldImports from './app-text-field/imports';
@@ -16,5 +16,5 @@ import AppTextFieldComponent from './app-text-field/app-text-field.component';
 
 export default class AppPhoneFieldComponent extends AppTextFieldComponent
 {
-    public override readonly mask: InputSignal<MaskitoOptions | null> = input<MaskitoOptions | null>(phoneMask);
+    protected override readonly mask: WritableSignal<MaskitoOptions | null> = signal<MaskitoOptions | null>(phoneMask);
 }
