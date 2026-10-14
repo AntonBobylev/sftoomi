@@ -6,7 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppTextFieldComponent from '../../core/app-text-field/app-text-field.component';
 import AppDatepickerComponent from '../../core/app-datepicker/app-datepicker.component';
-import AppPhoneComponent from '../../core/app-phone/app-phone.component';
+import AppPhoneComponent from '../../core/app-phone.component';
 import AppGenderComboComponent from '../../core/app-gender-combo.component';
 
 @Component({

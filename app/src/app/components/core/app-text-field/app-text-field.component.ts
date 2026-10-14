@@ -1,4 +1,5 @@
 import { Component, input, InputSignal } from '@angular/core';
+import { MaskitoOptions } from '@maskito/core';
 
 import AppTextFieldImports from './imports';
 
@@ -13,5 +14,6 @@ import AppUppercaseAbleField from '../app-uppercase-able-field';
 
 export default class AppTextFieldComponent extends AppUppercaseAbleField
 {
-    public readonly securedInput: InputSignal<boolean> = input(false);
+    public readonly securedInput: InputSignal<boolean>               = input<boolean>(false);
+    public readonly mask:         InputSignal<MaskitoOptions | null> = input<MaskitoOptions | null>(null);
 }

@@ -4,6 +4,7 @@
     >
         {{ label }}
     </nz-form-label>
+
     <nz-form-control [nzErrorTip]="errorTipTpl">
         @if (securedInput()) {
             <nz-input-password nzAllowClear>
@@ -19,6 +20,7 @@
                        [formControlName]="name"
                        (input)="onInput($event)"
                        [id]="name"
+                       [maskito]="mask()"
                 />
             </nz-input-wrapper>
         }
