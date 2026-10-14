@@ -1,16 +1,13 @@
-import axios from 'axios';
-
 import Timeout from './Timeout';
 import Sftoomi from './Sftoomi';
 import { DialogType } from './Dialog';
 
-import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration'
+import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
 type RequestOptions = {
     url: string,
     data?: FormData,
     method?: string,
-    longRequest?: boolean,
     timeout?: number,
     signal?: AbortSignal,
     success?: Function,
@@ -19,97 +16,127 @@ type RequestOptions = {
 };
 
 type Request = {
-    headers?: any
+    headers?: Record<string, string>
 } & RequestOptions;
 
 export default class Fetcher
 {
-    public request(options: RequestOptions): void
+    public async request(options: RequestOptions): Promise<void>
     {
-        let request: Request = options;
+        const request:         Request = options,
+              successCallback: Function | undefined = request.success,
+              failureCallback: Function | undefined = request.failure,
+              finallyCallback: Function | undefined = request.finally,
+              method:          string               = request.method || 'POST',
+              timeoutMs:       number               = request.timeout || Timeout.timeout,
+              headers:         Record<string, string> = {
+                  'X-Session-ID': Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION)
+              },
+              bodyToSend: BodyInit | undefined = request.data,
+              url:        string = '/api' + request.url,
+              controller: AbortController = new AbortController(),
+              timeoutId:  number = setTimeout((): void => controller.abort(), timeoutMs);
 
-        let successCallback = request.success,
-            failureCallback = request.failure,
-            finallyCallback = request.finally;
-
-        request.method = request.method || 'POST';
-
-        if (!request.timeout) {
-            request.timeout = Timeout.timeout;
+        if (request.signal) {
+            request.signal.addEventListener('abort', (): void => controller.abort());
         }
 
-        if (request.longRequest) {
-            request.timeout = Timeout.timeoutLong;
-        }
+        try {
+            const response: Response = await fetch(url, {
+                method:  method,
+                headers: headers,
+                body:    bodyToSend,
+                signal:  controller.signal
+            });
 
-        request.headers = {
-            'Content-Type': 'multipart/form-data',
-            'X-Session-ID': Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION)
-        };
+            clearTimeout(timeoutId);
 
-        request.url = '/api' + request.url;
+            let responseData: any = null;
+            const contentType: string | null = response.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                responseData = await response.json().catch(() => null);
+            } else {
+                responseData = await response.text().catch(() => '');
+            }
 
-        axios(request)
-            .then((response): void => {
-                if (typeof successCallback !== 'function') {
+            const fetcherResponse = {
+                data:       responseData,
+                status:     response.status,
+                statusText: response.statusText,
+                headers:    response.headers,
+                config:     request
+            };
 
-                    return;
+            if (!response.ok) {
+                throw {
+                    response: fetcherResponse
+                };
+            }
+
+            if (typeof successCallback !== 'function') {
+                return;
+            }
+
+            try {
+                return successCallback(fetcherResponse, response, responseData);
+            } catch (e: unknown) {
+                let message: string = '';
+
+                if (typeof e === 'string') {
+                    message = e.toUpperCase();
+                } else if (e instanceof Error) {
+                    let stack:          string = e.stack ?? '',
+                        stackArray:     string[] = stack.split('    '),
+                        stackFormatted: string = '';
+
+                    stackArray.forEach(function (row: string): void {
+                        stackFormatted += `<div>&nbsp;&nbsp;&nbsp;&nbsp;${row}</div>`;
+                    });
+
+                    message = `<div>${e.message}</div><div>${stackFormatted}</div>`;
                 }
 
-                try {
-                    return successCallback(response, response.request, response.data);
-                }  catch (e: unknown) {
-                    // do not throw to catch Promise block
-
-                    let message: string = '';
-                    if (typeof e === 'string') {
-                        message = e.toUpperCase();
-                    } else if (e instanceof Error) {
-                        let stack: string = e.stack ?? '',
-                            stackArray: string[] = stack.split('    '),
-                            stackFormatted: string = '';
-
-                        stackArray.forEach(function (row: string): void {
-                            stackFormatted += `<div>&nbsp;&nbsp;&nbsp;&nbsp;${row}</div>`;
-                        });
-
-                        message = `<div>${e.message}</div><div>${stackFormatted}</div>`;
-                    }
-
-                    Sftoomi.Dialog.show(
-                        message,
-                        DialogType.ERROR,
-                        (): void => {
-                            if (failureCallback) {
-                                failureCallback(response, response.request, response.data);
-                            }
+                Sftoomi.Dialog.show(
+                    message,
+                    DialogType.ERROR,
+                    (): void => {
+                        if (failureCallback) {
+                            failureCallback(fetcherResponse, response, responseData);
                         }
-                    );
-                }
-            })
-            .catch((error): void => {
-                if (error.code === 'ERR_CANCELED') {
-                    return;
-                }
+                    }
+                );
+            }
+        } catch (error: any) {
+            clearTimeout(timeoutId);
 
-                let trace: string[] = error.response.data.trace.split('\n'),
-                    formattedTrace: string = '';
+            if (error.name === 'AbortError' || error.code === 'ERR_CANCELED') {
+                return;
+            }
+
+            let errorData = error?.response?.data,
+                traceFormatted: string = '';
+
+            if (errorData && errorData.trace) {
+                let trace: string[] = typeof errorData.trace === 'string'
+                    ? errorData.trace.split('\n')
+                    : [];
 
                 trace.forEach(function (row: string): void {
-                    formattedTrace += `<div>${row}</div>`
+                    traceFormatted += `<div>${row}</div>`;
                 });
+            }
 
-                let message: string = `<div style="overflow-y: auto; max-height: 300px;">
-                                            <div>${error.response.data.message}</div>
-                                            ${formattedTrace}
-                                      </div>`;
+            let errorMessage = errorData?.message || error?.message || 'Unknown error',
+                message: string = `<div style="overflow-y: auto; max-height: 300px;">
+                                       <div>${errorMessage}</div>
+                                       ${traceFormatted}
+                                   </div>`;
 
-                Sftoomi.Dialog.show(message, DialogType.ERROR);
-            })
-            .finally((): void => {
-                if (finallyCallback) {
-                    finallyCallback();
-                }
-            });
+            Sftoomi.Dialog.show(message, DialogType.ERROR);
+        } finally {
+            if (finallyCallback) {
+                finallyCallback();
+            }
+        }
     }
 }
