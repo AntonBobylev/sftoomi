@@ -9,10 +9,10 @@
             <input nz-input
                    [formControlName]="name"
                    [onlyNumbers]="true"
-                   [allowDecimals]="allowDecimals"
-                   [allowNegative]="allowNegative"
-                   [maxDecimalDigits]="maxDecimalDigitsLength"
-                   [maxLength]="maxLength"
+                   [allowDecimals]="allowDecimals()"
+                   [allowNegative]="allowNegative()"
+                   [maxDecimalDigits]="maxDecimalDigits()"
+                   [maxLength]="maxLength()"
                    [id]="name"
             />
         </nz-input-wrapper>

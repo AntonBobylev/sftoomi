@@ -8,7 +8,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseFilters from '../../../components/core/app-base-filters';
 
-import AppNumberfieldComponent from '../../../components/core/app-numberfield/app-numberfield.component'
+import AppNumberFieldComponent from '../../../components/core/app-number-field/app-number-field.component'
 import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component'
 import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 
@@ -32,7 +32,7 @@ export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut
     selector: 'examinations-module-filters-panel',
     templateUrl: './filters.component.html',
     imports: [
-        ReactiveFormsModule, AppNumberfieldComponent, NzButtonComponent,
+        ReactiveFormsModule, AppNumberFieldComponent, NzButtonComponent,
         NzIconDirective, NzCardComponent, AppDatepickerComponent, AppLoadingSpinnerComponent
     ],
     styleUrl: './filters.component.less'
