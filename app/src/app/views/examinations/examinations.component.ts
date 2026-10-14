@@ -20,24 +20,24 @@ import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, E
 
 export default class ExaminationsComponent extends AppBaseModuleWithFilters implements AfterViewInit
 {
-    protected readonly tableCtrl:   Signal<ExaminationsTableComponent> = viewChild.required('tableCtrl');
+    protected readonly tableCtrl:   Signal<ExaminationsTableComponent>   = viewChild.required('tableCtrl');
     protected readonly filtersCtrl: Signal<ExaminationsFiltersComponent> = viewChild.required('filtersCtrl');
 
     protected isFiltersCollapsed: boolean = false;
 
     protected override permission: string | null = 'EXAMINATIONS_MODULE';
 
-    constructor()
+    override ngOnInit(): void
     {
-        super();
-
         let dos: DateTime | null = this.getCurrentDos();
 
-        this.fixExaminationInUrl(
-            dos
-                ? dos.toFormat(this.Sftoomi.Constants.dateIsoFormat)
-                : DateTime.now().toFormat(this.Sftoomi.Constants.dateIsoFormat)
-        );
+        queueMicrotask((): void => {
+            this.fixExaminationInUrl(
+                dos
+                    ? dos.toFormat(this.Sftoomi.Constants.dateIsoFormat)
+                    : DateTime.now().toFormat(this.Sftoomi.Constants.dateIsoFormat)
+            );
+        });
     }
 
     ngAfterViewInit(): void
@@ -84,7 +84,7 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
                 dos: dos
             },
             queryParamsHandling: 'merge'
-        });
+        }).then();
     }
 
     private getCurrentDos(): DateTime | null

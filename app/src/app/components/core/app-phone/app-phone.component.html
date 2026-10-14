@@ -6,19 +6,13 @@
     </nz-form-label>
 
     <nz-form-control [nzErrorTip]="errorTpl">
-        <nz-input-group [nzSuffix]="phoneClearTpl">
+        <nz-input-wrapper nzAllowClear>
             <input nz-input
                    [formControlName]="name"
                    [maskito]="phoneMask"
                    [id]="name"
             />
-
-            <ng-template #phoneClearTpl
-                         [ngTemplateOutlet]="clearTpl"
-                         [ngTemplateOutletContext]="{control: form.get(name)}"
-            >
-            </ng-template>
-        </nz-input-group>
+        </nz-input-wrapper>
 
         <ng-template #errorTpl>
             <form-error-template [fieldName]="name"
@@ -27,16 +21,3 @@
         </ng-template>
     </nz-form-control>
 </nz-form-item>
-
-<ng-template #clearTpl
-             let-control='control'
->
-    @if (control?.value) {
-        <i nz-icon
-           class="ant-input-clear-icon"
-           nzTheme="fill"
-           nzType="close-circle"
-           (click)="control?.reset()"
-        ></i>
-    }
-</ng-template>

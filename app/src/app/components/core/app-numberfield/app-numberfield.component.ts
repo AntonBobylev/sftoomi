@@ -1,10 +1,8 @@
-import { NgTemplateOutlet } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } from 'ng-zorro-antd/form';
 import { NzColDirective } from 'ng-zorro-antd/grid';
-import { NzInputDirective, NzInputGroupComponent } from 'ng-zorro-antd/input';
-import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzInputDirective, NzInputWrapperComponent } from 'ng-zorro-antd/input';
 
 import AppBaseField from '../app-base-field'
 
@@ -18,8 +16,8 @@ import OnlyNumbersDirective from '../../../directives/only-numbers.directive'
     imports: [
         NzFormItemComponent, FormErrorTemplateComponent,
         NzColDirective, NzFormControlComponent, NzFormLabelComponent,
-        NzInputGroupComponent, ReactiveFormsModule, NgTemplateOutlet,
-        NzIconDirective, NzInputDirective, OnlyNumbersDirective
+        ReactiveFormsModule, NzInputWrapperComponent,
+        NzInputDirective, OnlyNumbersDirective
     ],
     styleUrl: './app-numberfield.component.less'
 })

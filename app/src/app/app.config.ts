@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, inject, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { en_US, ru_RU, NZ_I18N, NZ_DATE_CONFIG } from 'ng-zorro-antd/i18n';
+import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
 
 import { routes } from './app.routes';
 
@@ -32,6 +33,7 @@ export const appConfig: ApplicationConfig = {
                 }
             }
         },
+        provideNzDateFnsAdapter(),
         provideAnimationsAsync(),
         provideHttpClient(),
         {

@@ -5,7 +5,7 @@
         {{ label }}
     </nz-form-label>
     <nz-form-control [nzErrorTip]="errorTipTpl">
-        <nz-input-group [nzSuffix]="fieldClearTpl">
+        <nz-input-wrapper nzAllowClear>
             <input nz-input
                    [formControlName]="name"
                    [onlyNumbers]="true"
@@ -15,13 +15,7 @@
                    [maxLength]="maxLength"
                    [id]="name"
             />
-
-            <ng-template #fieldClearTpl
-                         [ngTemplateOutlet]="clearTpl"
-                         [ngTemplateOutletContext]="{control: form.get(name)}"
-            >
-            </ng-template>
-        </nz-input-group>
+        </nz-input-wrapper>
 
         <ng-template #errorTipTpl>
             <form-error-template [fieldName]="name"
@@ -30,17 +24,3 @@
         </ng-template>
     </nz-form-control>
 </nz-form-item>
-
-
-<ng-template #clearTpl
-             let-control='control'
->
-    @if (control?.value) {
-        <i nz-icon
-           class="ant-input-clear-icon"
-           nzTheme="fill"
-           nzType="close-circle"
-           (click)="control?.reset()"
-        ></i>
-    }
-</ng-template>
