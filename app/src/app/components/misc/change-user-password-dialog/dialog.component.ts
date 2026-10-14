@@ -8,7 +8,7 @@ import { DialogType } from '../../../class/Dialog'
 import Fetcher from '../../../class/Fetcher'
 import AppBaseDialog from '../../core/app-base-dialog'
 
-import AppTextFieldComponent from '../../core/app-textfield/app-text-field.component';
+import AppTextFieldComponent from '../../core/app-text-field/app-text-field.component';
 import AppLoadingSpinnerComponent from '../app-loading-spinner/app-loading-spinner.component'
 
 import changePasswordAPI from '../../../APIs/changePasswordAPI'

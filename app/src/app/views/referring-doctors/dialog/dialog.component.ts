@@ -7,7 +7,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component';
+import AppTextFieldComponent from '../../../components/core/app-text-field/app-text-field.component';
 import AppItemSelectorComponent from '../../../components/core/app-item-selector/app-item-selector.component';
 import { AppItemSelectorDataListRow } from '../../../components/core/app-item-selector/data-list/data-list.component';
 

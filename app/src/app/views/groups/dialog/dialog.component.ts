@@ -4,7 +4,7 @@ import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
-import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component'
+import AppTextFieldComponent from '../../../components/core/app-text-field/app-text-field.component'
 import AppItemSelectorComponent from '../../../components/core/app-item-selector/app-item-selector.component'
 import { AppItemSelectorDataListRow } from '../../../components/core/app-item-selector/data-list/data-list.component'
 

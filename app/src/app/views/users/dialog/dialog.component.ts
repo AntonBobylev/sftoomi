@@ -8,7 +8,7 @@ import Sftoomi from '../../../class/Sftoomi'
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component';
+import AppTextFieldComponent from '../../../components/core/app-text-field/app-text-field.component';
 import AppCheckboxComponent from '../../../components/fields/app-checkbox/app-checkbox.component';
 import AppContactsComponent from '../../../components/fields/app-contacts/app-contacts.component';
 import { AppContactsTableRecord } from '../../../components/fields/app-contacts/table/table.component'

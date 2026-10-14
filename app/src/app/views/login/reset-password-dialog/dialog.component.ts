@@ -8,7 +8,7 @@ import Fetcher from '../../../class/Fetcher'
 import Sftoomi from '../../../class/Sftoomi'
 import { DialogType } from '../../../class/Dialog'
 
-import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component'
+import AppTextFieldComponent from '../../../components/core/app-text-field/app-text-field.component'
 import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 
 import { onlyLettersValidator } from '../../../validators/only-letters.validator';

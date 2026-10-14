@@ -9,7 +9,7 @@ import AppBaseEditDialog from '../../../../core/app-base-edit-dialog/app-base-ed
 
 import { AppContactType } from '../table.component'
 import AppComboComponent, { AppComboRecord } from '../../../../core/app-combo/app-combo.component'
-import AppTextFieldComponent from '../../../../core/app-textfield/app-text-field.component'
+import AppTextFieldComponent from '../../../../core/app-text-field/app-text-field.component'
 import AppPhoneComponent from '../../../../core/app-phone/app-phone.component'
 
 import phoneValidator from '../../../../../validators/phone.validator'

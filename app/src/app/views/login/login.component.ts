@@ -5,7 +5,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button'
 import { RoutesPaths } from '../../app.routes'
 import AppBaseModule from '../../components/core/app-base-module'
 
-import AppTextFieldComponent from '../../components/core/app-textfield/app-text-field.component'
+import AppTextFieldComponent from '../../components/core/app-text-field/app-text-field.component'
 import AppLoadingSpinnerComponent from '../../components/misc/app-loading-spinner/app-loading-spinner.component';
 import LanguageSwitcherComponent from '../../components/misc/language-switcher/language-switcher.component';
 import ResetPasswordDialogComponent from './reset-password-dialog/dialog.component'

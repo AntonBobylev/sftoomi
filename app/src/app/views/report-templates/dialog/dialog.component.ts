@@ -5,7 +5,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button'
 
 import AppBaseEditDialog from '../../../components/core/app-base-edit-dialog/app-base-edit-dialog';
 
-import AppTextFieldComponent from '../../../components/core/app-textfield/app-text-field.component'
+import AppTextFieldComponent from '../../../components/core/app-text-field/app-text-field.component'
 import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spinner/app-loading-spinner.component'
 import AppComboComponent, { AppComboRecord } from '../../../components/core/app-combo/app-combo.component'
 import ReportTemplateEditorComponent, { ReportTemplateEditorData } from './template-editor/dialog.component'
