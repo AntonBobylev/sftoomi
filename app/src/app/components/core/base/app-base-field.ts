@@ -2,7 +2,7 @@ import { Directive, Input, output, OutputEmitterRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { NzPlacementType } from 'ng-zorro-antd/dropdown'
 
-import Sftoomi from '../../class/Sftoomi';
+import Sftoomi from '../../../class/Sftoomi';
 
 @Directive()
 export default abstract class AppBaseField

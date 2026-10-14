@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms'
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
 
-import AppBaseDialog from '../../../core/app-base-dialog'
+import AppBaseDialog from '../../../core/base/app-base-dialog'
 
 import AppPdfViewerComponent from '../app-pdf-viewer.component'
 

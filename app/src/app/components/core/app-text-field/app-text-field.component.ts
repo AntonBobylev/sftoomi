@@ -3,7 +3,7 @@ import { MaskitoOptions } from '@maskito/core';
 
 import AppTextFieldImports from './imports';
 
-import AppUppercaseAbleField from '../app-uppercase-able-field';
+import AppUppercaseAbleField from '../base/app-uppercase-able-field';
 
 @Component({
     selector: 'app-text-field',

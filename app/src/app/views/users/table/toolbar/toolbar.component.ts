@@ -5,7 +5,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
-import AppBaseToolbar from '../../../../components/core/app-base-toolbar';
+import AppBaseToolbar from '../../../../components/core/base/app-base-toolbar';
 
 import UserEditDialogComponent, { UserEditDialogData } from '../../dialog/dialog.component';
 

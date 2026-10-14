@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
-import AppBaseField from '../../core/app-base-field';
+import AppBaseField from '../../core/base/app-base-field';
 
 @Component({
     selector: 'app-checkbox',

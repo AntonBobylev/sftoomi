@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 
-import AppBaseDialog from '../../../components/core/app-base-dialog'
+import AppBaseDialog from '../../../components/core/base/app-base-dialog'
 import Fetcher from '../../../class/Fetcher'
 import Sftoomi from '../../../class/Sftoomi'
 import { DialogType } from '../../../class/Dialog'

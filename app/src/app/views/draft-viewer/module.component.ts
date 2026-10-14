@@ -5,7 +5,7 @@ import { FormControl, FormGroup } from '@angular/forms'
 import Fetcher from '../../class/Fetcher'
 import { DialogType } from '../../class/Dialog'
 
-import AppBaseModule from '../../components/core/app-base-module'
+import AppBaseModule from '../../components/core/base/app-base-module'
 
 import { RoutesPaths } from '../../app.routes'
 

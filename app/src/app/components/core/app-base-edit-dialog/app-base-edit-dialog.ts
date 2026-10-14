@@ -5,7 +5,7 @@ import Fetcher from '../../../class/Fetcher';
 
 import { DialogType } from '../../../class/Dialog';
 
-import AppBaseDialog from '../app-base-dialog'
+import AppBaseDialog from '../base/app-base-dialog'
 
 @Directive()
 export default abstract class AppBaseEditDialog extends AppBaseDialog implements AfterViewInit

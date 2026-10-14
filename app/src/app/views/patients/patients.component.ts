@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import AppBaseModule from '../../components/core/app-base-module'
+import AppBaseModule from '../../components/core/base/app-base-module'
 
 import PatientsTableComponent from './table/table.component';
 

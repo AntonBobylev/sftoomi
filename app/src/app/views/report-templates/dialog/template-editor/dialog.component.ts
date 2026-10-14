@@ -6,7 +6,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button'
 
 import Fetcher from '../../../../class/Fetcher'
 import { DialogType } from '../../../../class/Dialog'
-import AppBaseDialog from '../../../../components/core/app-base-dialog'
+import AppBaseDialog from '../../../../components/core/base/app-base-dialog'
 
 import { SafePipe } from '../../../../pipes/safe.pipe'
 

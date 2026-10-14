@@ -5,7 +5,7 @@ import AppComboImports from './imports';
 import { DialogType } from '../../../class/Dialog';
 import Fetcher from '../../../class/Fetcher';
 
-import AppBaseField from '../app-base-field';
+import AppBaseField from '../base/app-base-field';
 
 export type AppComboRecord<T = string | number> = {
     caption: string,

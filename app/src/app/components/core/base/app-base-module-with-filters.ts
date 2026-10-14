@@ -1,11 +1,11 @@
 import { Directive, Signal } from '@angular/core'
 
-import Sftoomi from '../../class/Sftoomi'
+import Sftoomi from '../../../class/Sftoomi'
 
 import AppBaseModule from './app-base-module'
 import AppBaseFilters from './app-base-filters'
 
-import AppTableComponent from './app-table/app-table.component'
+import AppTableComponent from '../app-table/app-table.component'
 
 @Directive()
 export default abstract class AppBaseModuleWithFilters extends AppBaseModule

@@ -3,7 +3,7 @@ import { NzLayoutComponent, NzSiderComponent } from 'ng-zorro-antd/layout'
 import { Params } from '@angular/router'
 import { DateTime } from 'luxon';
 
-import AppBaseModuleWithFilters from '../../components/core/app-base-module-with-filters'
+import AppBaseModuleWithFilters from '../../components/core/base/app-base-module-with-filters'
 
 import ExaminationsTableComponent from './table/table.component';
 import ExaminationsFiltersComponent, { ExaminationsFiltersPanelClearEventData, ExaminationsFiltersPanelOut } from './filters/filters.component';

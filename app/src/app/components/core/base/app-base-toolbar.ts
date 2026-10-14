@@ -1,8 +1,8 @@
 import { Directive, Input, ViewContainerRef } from '@angular/core';
 
-import Sftoomi from '../../class/Sftoomi';
+import Sftoomi from '../../../class/Sftoomi';
 
-import AppTableComponent from './app-table/app-table.component';
+import AppTableComponent from '../app-table/app-table.component';
 
 @Directive()
 export default abstract class AppBaseToolbar

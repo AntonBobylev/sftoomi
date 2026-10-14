@@ -7,9 +7,9 @@ import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 import { DialogType } from '../../../class/Dialog';
 import AppTableBaseView from './views/base-view'
-import AppBaseToolbar from '../app-base-toolbar'
+import AppBaseToolbar from '../base/app-base-toolbar'
 
-import AppBaseFilters from '../app-base-filters';
+import AppBaseFilters from '../base/app-base-filters';
 
 import AppTableColumn from '../../../type/AppTableColumn';
 

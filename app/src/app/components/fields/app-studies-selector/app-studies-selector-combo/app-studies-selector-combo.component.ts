@@ -2,7 +2,7 @@ import { Component, Input, signal, WritableSignal } from '@angular/core';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import AppBaseField from '../../../core/app-base-field';
+import AppBaseField from '../../../core/base/app-base-field';
 
 import { AppComboRecord } from '../../../core/app-combo/app-combo.component';
 

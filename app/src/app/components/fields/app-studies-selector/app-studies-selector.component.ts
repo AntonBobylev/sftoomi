@@ -5,7 +5,7 @@ import { FormControl, Validators } from '@angular/forms';
 
 import Sftoomi from '../../../class/Sftoomi';
 
-import AppBaseField from '../../core/app-base-field';
+import AppBaseField from '../../core/base/app-base-field';
 
 import { AppComboRecord } from '../../core/app-combo/app-combo.component';
 import AppStudiesSelectorComboComponent from './app-studies-selector-combo/app-studies-selector-combo.component';

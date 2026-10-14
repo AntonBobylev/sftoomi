@@ -1,9 +1,9 @@
 import { AfterViewInit, Directive, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import Sftoomi from '../../class/Sftoomi';
-import Fetcher from '../../class/Fetcher';
-import { DialogType } from '../../class/Dialog';
+import Sftoomi from '../../../class/Sftoomi';
+import Fetcher from '../../../class/Fetcher';
+import { DialogType } from '../../../class/Dialog';
 
 @Directive()
 export default abstract class AppBaseFilters implements AfterViewInit

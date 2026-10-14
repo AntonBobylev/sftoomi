@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 
-import AppBaseModule from '../../components/core/app-base-module'
+import AppBaseModule from '../../components/core/base/app-base-module'
 
 @Component({
     selector: 'app-home',

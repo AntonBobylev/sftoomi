@@ -6,7 +6,7 @@ import { NzButtonComponent } from 'ng-zorro-antd/button'
 import Sftoomi from '../../../class/Sftoomi'
 import { DialogType } from '../../../class/Dialog'
 import Fetcher from '../../../class/Fetcher'
-import AppBaseDialog from '../../core/app-base-dialog'
+import AppBaseDialog from '../../core/base/app-base-dialog'
 
 import AppTextFieldComponent from '../../core/app-text-field/app-text-field.component';
 import AppLoadingSpinnerComponent from '../app-loading-spinner/app-loading-spinner.component'

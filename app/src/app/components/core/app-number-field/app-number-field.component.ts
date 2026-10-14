@@ -2,7 +2,7 @@ import { Component, input, InputSignal } from '@angular/core';
 
 import AppNumberFieldImports from './imports';
 
-import AppBaseField from '../app-base-field'
+import AppBaseField from '../base/app-base-field'
 
 @Component({
     selector: 'app-number-field',

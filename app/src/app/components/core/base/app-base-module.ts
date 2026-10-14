@@ -1,9 +1,9 @@
 import { Directive, inject, OnInit } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 
-import Sftoomi from '../../class/Sftoomi'
-import { RoutesPaths } from '../../app.routes'
-import { DialogType } from '../../class/Dialog'
+import Sftoomi from '../../../class/Sftoomi'
+import { RoutesPaths } from '../../../app.routes'
+import { DialogType } from '../../../class/Dialog'
 
 @Directive()
 export default abstract class AppBaseModule implements OnInit

@@ -2,10 +2,10 @@ import { computed, Directive, inject, OnDestroy, OnInit, Signal, signal, Writabl
 import { FormGroup } from '@angular/forms'
 import { NZ_MODAL_DATA, NzModalRef } from 'ng-zorro-antd/modal'
 
-import Sftoomi from '../../class/Sftoomi'
-import { DialogType } from '../../class/Dialog'
+import Sftoomi from '../../../class/Sftoomi'
+import { DialogType } from '../../../class/Dialog'
 
-import ResponsiveLayoutService from '../../services/responsive-layout.service'
+import ResponsiveLayoutService from '../../../services/responsive-layout.service'
 
 @Directive()
 export default abstract class AppBaseDialog implements OnInit, OnDestroy

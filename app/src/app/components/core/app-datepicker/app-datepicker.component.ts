@@ -7,7 +7,7 @@ import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } fro
 
 import Sftoomi from '../../../class/Sftoomi'
 
-import AppBaseField from '../app-base-field';
+import AppBaseField from '../base/app-base-field';
 
 import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
 

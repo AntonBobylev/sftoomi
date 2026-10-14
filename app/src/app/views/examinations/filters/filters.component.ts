@@ -6,7 +6,7 @@ import { NzCardComponent } from 'ng-zorro-antd/card'
 
 import Sftoomi from '../../../class/Sftoomi';
 
-import AppBaseFilters from '../../../components/core/app-base-filters';
+import AppBaseFilters from '../../../components/core/base/app-base-filters';
 
 import AppNumberFieldComponent from '../../../components/core/app-number-field/app-number-field.component'
 import AppDatepickerComponent from '../../../components/core/app-datepicker/app-datepicker.component'
