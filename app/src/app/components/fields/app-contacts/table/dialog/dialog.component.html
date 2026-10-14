@@ -11,7 +11,7 @@
     />
 
     @if (form.get('type')?.value === 'phone') {
-        <app-phone name="text"
+        <app-phone-field name="text"
                    [form]="form"
                    [label]="Sftoomi.Translator.translate('fields.contacts.text')"
         />

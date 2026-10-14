@@ -10,7 +10,7 @@ import AppBaseEditDialog from '../../../../core/app-base-edit-dialog/app-base-ed
 import { AppContactType } from '../table.component'
 import AppComboComponent, { AppComboRecord } from '../../../../core/app-combo/app-combo.component'
 import AppTextFieldComponent from '../../../../core/app-text-field/app-text-field.component'
-import AppPhoneComponent from '../../../../core/app-phone.component'
+import AppPhoneFieldComponent from '../../../../core/app-phone-field.component'
 
 import phoneValidator from '../../../../../validators/phone.validator'
 
@@ -30,7 +30,7 @@ export type ContactsEditDialogData = {
         NzButtonComponent,
         AppComboComponent,
         AppTextFieldComponent,
-        AppPhoneComponent
+        AppPhoneFieldComponent
     ],
     styleUrl: './dialog.component.less'
 })

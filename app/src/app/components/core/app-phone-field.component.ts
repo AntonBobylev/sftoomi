@@ -8,13 +8,13 @@ import phoneMask from '../../misc/phone-mask-generator';
 import AppTextFieldComponent from './app-text-field/app-text-field.component';
 
 @Component({
-    selector: 'app-phone',
+    selector: 'app-phone-field',
     templateUrl: './app-text-field/app-text-field.component.html',
     imports: AppTextFieldImports,
     styleUrl: './app-text-field/app-text-field.component.scss'
 })
 
-export default class AppPhoneComponent extends AppTextFieldComponent
+export default class AppPhoneFieldComponent extends AppTextFieldComponent
 {
     public override readonly mask: InputSignal<MaskitoOptions | null> = input<MaskitoOptions | null>(phoneMask);
 }

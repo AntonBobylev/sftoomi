@@ -6,7 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 
 import AppTextFieldComponent from '../../core/app-text-field/app-text-field.component';
 import AppDatepickerComponent from '../../core/app-datepicker/app-datepicker.component';
-import AppPhoneComponent from '../../core/app-phone.component';
+import AppPhoneFieldComponent from '../../core/app-phone-field.component';
 import AppGenderComboComponent from '../../core/app-gender-combo.component';
 
 @Component({
@@ -14,7 +14,7 @@ import AppGenderComboComponent from '../../core/app-gender-combo.component';
     templateUrl: './patient-demographics-template.component.html',
     imports: [
         ReactiveFormsModule, NzFormDirective, AppTextFieldComponent,
-        AppDatepickerComponent, AppPhoneComponent, AppGenderComboComponent
+        AppDatepickerComponent, AppPhoneFieldComponent, AppGenderComboComponent
     ],
     styleUrl: './patient-demographics-template.component.less'
 })
