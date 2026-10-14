@@ -38,7 +38,6 @@
         "@maskito/phone": "^5.1.1",
         "@ng-util/monaco-editor": "^21.1.0",
         "@types/luxon": "^3.7.1",
-        "axios": "^1.13.6",
         "luxon": "^3.7.2",
         "ng-zorro-antd": "^21.1.1",
         "ngx-extended-pdf-viewer": "^25.6.4",
