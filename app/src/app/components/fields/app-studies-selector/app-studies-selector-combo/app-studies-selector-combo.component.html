@@ -6,7 +6,7 @@
                [formControlName]="name"
                style="width: 100%"
     >
-        @for (record of store(); track record.value) {
+        @for (record of storeSignal()(); track record.value) {
             <nz-option [nzLabel]="record.caption"
                        [nzValue]="record.value"
             />
