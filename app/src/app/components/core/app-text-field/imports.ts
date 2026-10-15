@@ -4,10 +4,10 @@ import { NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent } fro
 import { NzColDirective } from 'ng-zorro-antd/grid';
 import { NzInputDirective, NzInputModule, NzInputWrapperComponent } from 'ng-zorro-antd/input';
 
-import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
+import FormFieldErrorTemplateComponent from '../../templates/form-field-error-template/form-field-error-template.component';
 
 const AppTextFieldImports = [
-    NzFormItemComponent, FormErrorTemplateComponent, NzColDirective,
+    NzFormItemComponent, FormFieldErrorTemplateComponent, NzColDirective,
     NzFormControlComponent, NzFormLabelComponent, ReactiveFormsModule,
     NzInputDirective, NzInputWrapperComponent,FormsModule, NzInputModule,
     MaskitoDirective

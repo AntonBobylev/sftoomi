@@ -1,47 +1,47 @@
-@if (parentFormGroup.get(fieldName)?.dirty || parentFormGroup.get(fieldName)?.touched) {
-    @if (parentFormGroup.get(fieldName)!.hasError('maxlength')) {
+@if (fieldForm().get(fieldName())?.dirty || fieldForm().get(fieldName())?.touched) {
+    @if (fieldForm().get(fieldName())!.hasError('maxlength')) {
         <span>
             {{
                 Sftoomi.format(
                     Sftoomi.Translator.translate('validators.max_length'),
-                    parentFormGroup.get(fieldName)?.errors?.['maxlength'].requiredLength
+                    fieldForm().get(fieldName())?.errors?.['maxlength'].requiredLength
                 )
             }}
         </span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('min')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('min')) {
         <span>
             {{
                 Sftoomi.format(
                     Sftoomi.Translator.translate('validators.min_value'),
-                    parentFormGroup.get(fieldName)?.errors?.['min'].min
+                    fieldForm().get(fieldName())?.errors?.['min'].min
                 )
             }}
         </span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('minlength')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('minlength')) {
         <span>
             {{
                 Sftoomi.format(
                     Sftoomi.Translator.translate('validators.max_length'),
-                    parentFormGroup.get(fieldName)?.errors?.['minlength'].requiredLength
+                    fieldForm().get(fieldName())?.errors?.['minlength'].requiredLength
                 )
             }}
         </span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('max')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('max')) {
         <span>
             {{
                 Sftoomi.format(
                     Sftoomi.Translator.translate('validators.max_value'),
-                    parentFormGroup.get(fieldName)?.errors?.['max'].max
+                    fieldForm().get(fieldName())?.errors?.['max'].max
                 )
             }}
         </span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('required')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('required')) {
         <span>{{ Sftoomi.Translator.translate('validators.field_required') }}</span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('only_letters')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('only_letters')) {
         <span>{{ Sftoomi.Translator.translate('validators.only_letters_allowed') }}</span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('phone')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('phone')) {
         <span>{{ Sftoomi.Translator.translate('validators.phone_number_is_invalid') }}</span>
-    } @else if (parentFormGroup.get(fieldName)!.hasError('email')) {
+    } @else if (fieldForm().get(fieldName())!.hasError('email')) {
         <span>{{ Sftoomi.Translator.translate('validators.email') }}</span>
     }
 }

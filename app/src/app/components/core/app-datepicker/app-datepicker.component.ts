@@ -9,7 +9,7 @@ import Sftoomi from '../../../class/Sftoomi'
 
 import AppBaseField from '../base/app-base-field';
 
-import FormErrorTemplateComponent from '../../templates/form-error-template/form-error-template.component';
+import FormFieldErrorTemplateComponent from '../../templates/form-field-error-template/form-field-error-template.component';
 
 import getDatePickerLocalDateFormat from '../../../locale/getDatePickerLocalDateFormat';
 
@@ -20,7 +20,7 @@ import AppDatePickerScrollMonthDirective from './scroll.directive'
     templateUrl: './app-datepicker.component.html',
     styleUrl: './app-datepicker.component.less',
     imports: [
-        FormErrorTemplateComponent, NzColDirective, NzDatePickerComponent,
+        FormFieldErrorTemplateComponent, NzColDirective, NzDatePickerComponent,
         NzFormControlComponent, NzFormItemComponent, NzFormLabelComponent,
         ReactiveFormsModule, AppDatePickerScrollMonthDirective
     ]
