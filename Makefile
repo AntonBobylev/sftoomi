@@ -102,6 +102,14 @@ front-clear:
 
 front-reinit: front-clear front-init
 
+front-lint:
+	@echo "Running a linter..."
+	@$(COMPOSE_EXEC) node npm run lint
+
+front-lint-fix:
+	@echo "Fixing code by a linter..."
+	@$(COMPOSE_EXEC) node npm run lint:fix
+
 ## DOMAIN
 .PHONY: domain-init
 domain-init:
