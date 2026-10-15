@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, Input, OnDestroy, output, OutputEmitterRef, Signal, signal, Type, viewChild, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, input, InputSignal, OnDestroy, output, OutputEmitterRef, Signal, signal, Type, viewChild, WritableSignal } from '@angular/core';
 
 import AppTableImports from './imports';
 
@@ -22,7 +22,7 @@ import AppTableColumn from '../../../type/AppTableColumn';
 
 export default class AppTableComponent implements AfterViewInit, OnDestroy
 {
-    @Input() public filtersCtrl: AppBaseFilters | undefined;
+    public readonly filtersCtrl: InputSignal<AppBaseFilters | undefined> = input();
 
     public readonly afterRemoveSelected: OutputEmitterRef<void> = output();
     public readonly afterRefresh:        OutputEmitterRef<void> = output();
@@ -102,9 +102,10 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             return;
         }
 
-        filters = filters
-            ? filters
-            : !Sftoomi.isEmpty(this.filtersCtrl) ? Sftoomi.formValuesToFormData(this.filtersCtrl!.getValues()) : undefined;
+        const filtersCtrl: AppBaseFilters | undefined = this.filtersCtrl();
+        if (filtersCtrl) {
+            filters = this.Sftoomi.formValuesToFormData(filtersCtrl.getValues());
+        }
 
         let data: FormData = filters ? filters : new FormData();
         if (this.usePagination) {
@@ -123,7 +124,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             finally: (): void => {
                 this.isLoading.set(false);
             }
-        });
+        }).then();
     }
 
     public removeSelected(): void

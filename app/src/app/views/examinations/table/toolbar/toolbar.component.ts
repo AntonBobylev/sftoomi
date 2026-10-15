@@ -21,7 +21,7 @@ import ExaminationEditDialogComponent, { ExaminationEditDialogData } from '../..
 
 export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
 {
-    protected override readonly editDialogAddTitle: string = Sftoomi.Translator.translate('views.examinations.dialog.add_title');
+    protected override readonly editDialogAddTitle:  string = Sftoomi.Translator.translate('views.examinations.dialog.add_title');
     protected override readonly editDialogEditTitle: string = Sftoomi.Translator.translate('views.examinations.dialog.edit_title');
 
     protected openEditDialog(title: string, id?: number): void
@@ -32,7 +32,7 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
             nzViewContainerRef: this.viewContainerRef,
             nzData: {
                 id: id,
-                examination_date: this.table().filtersCtrl?.getValues().examination_date
+                examination_date: this.table().filtersCtrl()?.getValues().examination_date
             }
         });
 
