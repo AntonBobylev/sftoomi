@@ -1,4 +1,4 @@
-import { Component, Input, Signal, viewChild } from '@angular/core';
+import { Component, input, InputSignal, Signal, viewChild } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
@@ -18,59 +18,50 @@ import AppItemSelectorDataListComponent, { AppItemSelectorDataListRow } from './
     ],
     styleUrl: './app-item-selector.component.scss'
 })
-
 export default class AppItemSelectorComponent
 {
-    @Input() public label: string | undefined;
-    @Input() public required: boolean = false;
+    public readonly label:    InputSignal<string | null> = input<string | null>(null);
+    public readonly required: InputSignal<boolean>       = input(false);
 
-    private readonly leftList:  Signal<AppItemSelectorDataListComponent | undefined> = viewChild('left');
-    private readonly rightList: Signal<AppItemSelectorDataListComponent | undefined> = viewChild('right');
+    private readonly leftList:  Signal<AppItemSelectorDataListComponent> = viewChild.required('left');
+    private readonly rightList: Signal<AppItemSelectorDataListComponent> = viewChild.required('right');
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
 
     public setData(leftData: AppItemSelectorDataListRow[], rightData: AppItemSelectorDataListRow[]): void
     {
-        this.leftList()?.setData(leftData);
-        this.rightList()?.setData(rightData);
+        this.leftList().setData(leftData);
+        this.rightList().setData(rightData);
     }
 
     public getLeftListData(): AppItemSelectorDataListRow[]
     {
-        if (!this.leftList()) {
-            return [];
-        }
-
-        return this.leftList()!.getAllRows();
+        return this.leftList().getAllRows();
     }
 
     public getRightListData(): AppItemSelectorDataListRow[]
     {
-        if (!this.rightList()) {
-            return [];
-        }
-
-        return this.rightList()!.getAllRows();
+        return this.rightList().getAllRows();
     }
 
     protected onMoveRightClick(): void
     {
-        this.moveRows(this.leftList()!, this.rightList()!);
+        this.moveRows(this.leftList(), this.rightList());
     }
 
     protected onMoveLeftClick(): void
     {
-        this.moveRows(this.rightList()!, this.leftList()!);
+        this.moveRows(this.rightList(), this.leftList());
     }
 
     protected onMoveAllLeftClick(): void
     {
-        this.moveRows(this.rightList()!, this.leftList()!, true);
+        this.moveRows(this.rightList(), this.leftList(), true);
     }
 
     protected onMoveAllRightClick(): void
     {
-        this.moveRows(this.leftList()!, this.rightList()!, true);
+        this.moveRows(this.leftList(), this.rightList(), true);
     }
 
     protected getButtonConfig(buttonIndex: 1 | 2 | 3 | 4): { tooltip: string, callback: Function, icon: string }
@@ -80,9 +71,7 @@ export default class AppItemSelectorComponent
             case 1:
                 return {
                     tooltip: this.Sftoomi.Translator.translate(
-                        isMobile
-                            ? 'fields.item_selector.move_all_up'
-                            : 'fields.item_selector.move_all_right'
+                        isMobile ? 'fields.item_selector.move_all_up' : 'fields.item_selector.move_all_right'
                     ),
                     callback: isMobile ? this.onMoveAllLeftClick : this.onMoveAllRightClick,
                     icon:     isMobile ? 'caret-up' : 'double-right'
@@ -90,9 +79,7 @@ export default class AppItemSelectorComponent
             case 2:
                 return {
                     tooltip: this.Sftoomi.Translator.translate(
-                        isMobile
-                            ? 'fields.item_selector.move_up'
-                            : 'fields.item_selector.move_right'
+                        isMobile ? 'fields.item_selector.move_up' : 'fields.item_selector.move_right'
                     ),
                     callback: isMobile ? this.onMoveLeftClick : this.onMoveRightClick,
                     icon:     isMobile ? 'up' : 'right'
@@ -100,9 +87,7 @@ export default class AppItemSelectorComponent
             case 3:
                 return {
                     tooltip: this.Sftoomi.Translator.translate(
-                        isMobile
-                            ? 'fields.item_selector.move_down'
-                            : 'fields.item_selector.move_left'
+                        isMobile ? 'fields.item_selector.move_down' : 'fields.item_selector.move_left'
                     ),
                     callback: isMobile ? this.onMoveRightClick : this.onMoveLeftClick,
                     icon:     isMobile ? 'down' : 'left'
@@ -110,9 +95,7 @@ export default class AppItemSelectorComponent
             case 4:
                 return {
                     tooltip: this.Sftoomi.Translator.translate(
-                        isMobile
-                            ? 'fields.item_selector.move_all_down'
-                            : 'fields.item_selector.move_all_left'
+                        isMobile ? 'fields.item_selector.move_all_down' : 'fields.item_selector.move_all_left'
                     ),
                     callback: isMobile ? this.onMoveAllRightClick : this.onMoveAllLeftClick,
                     icon:     isMobile ? 'caret-down' : 'double-left'
@@ -122,39 +105,26 @@ export default class AppItemSelectorComponent
 
     private moveRows(from: AppItemSelectorDataListComponent, to: AppItemSelectorDataListComponent, moveAll: boolean = false): void
     {
-        let fromItems: AppItemSelectorDataListRow[] = from.getAllRows(),
-            toItems: AppItemSelectorDataListRow[] = to.getAllRows(),
-            newFromData: AppItemSelectorDataListRow[] = [],
-            newToData: AppItemSelectorDataListRow[] = [];
+        const fromItems: AppItemSelectorDataListRow[] = from.getAllRows(),
+              toItems:   AppItemSelectorDataListRow[] = to.getAllRows();
 
         if (moveAll) {
-            newToData = [
-                ...fromItems,
-                ...toItems
-            ];
+            from.setData([]);
+            to.setData([...fromItems, ...toItems]);
 
-            newFromData = [];
-        } else {
-            let fromSelectedItems: AppItemSelectorDataListRow[] = from.getSelected();
-            if (fromSelectedItems.length < 1) {
-                return;
-            }
-
-            let fromListNewData: AppItemSelectorDataListRow[] = fromItems;
-            fromSelectedItems.forEach(function (selectedItem: AppItemSelectorDataListRow): void {
-                fromListNewData = fromListNewData.filter(function (item: AppItemSelectorDataListRow): boolean {
-                    return selectedItem.value !== item.value;
-                });
-            });
-
-            newFromData = fromListNewData;
-            newToData = [
-                ...toItems,
-                ...fromSelectedItems
-            ];
+            return;
         }
 
+        const selectedItems: AppItemSelectorDataListRow[] = from.getSelected();
+        if (this.Sftoomi.isEmpty(selectedItems)) {
+            return;
+        }
+
+        const selectedValues = new Set(selectedItems.map(item => item.value)),
+              newFromData: AppItemSelectorDataListRow[] = fromItems.filter(item => !selectedValues.has(item.value));
+
         from.setData(newFromData);
-        to.setData(newToData);
+
+        to.setData([...toItems, ...selectedItems]);
     }
 }

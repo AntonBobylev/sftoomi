@@ -1,7 +1,7 @@
 <div class="field-wrapper">
-    @if (label) {
-        <nz-form-label [nzRequired]="required">
-            {{ label }}
+    @if (label()) {
+        <nz-form-label [nzRequired]="required()">
+            {{ label() }}
         </nz-form-label>
     }
     <div class="wrapper"
