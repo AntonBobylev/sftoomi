@@ -1,4 +1,4 @@
-import { Directive, Input, ViewContainerRef } from '@angular/core';
+import { Directive, inject, input, InputSignal, ViewContainerRef } from '@angular/core';
 
 import Sftoomi from '../../../class/Sftoomi';
 
@@ -7,7 +7,7 @@ import AppTableComponent from '../app-table/app-table.component';
 @Directive()
 export default abstract class AppBaseToolbar
 {
-    @Input({required: true}) public readonly table!: AppTableComponent;
+    public readonly table: InputSignal<AppTableComponent> = input.required();
 
     protected abstract readonly editDialogAddTitle: string;
     protected abstract readonly editDialogEditTitle: string;
@@ -16,13 +16,11 @@ export default abstract class AppBaseToolbar
 
     protected abstract openEditDialog(title: string, id?: number, additionalData?: any): void;
 
-    constructor(protected readonly viewContainerRef: ViewContainerRef)
-    {
-    }
+    protected readonly viewContainerRef: ViewContainerRef = inject(ViewContainerRef);
 
     protected onRefreshClick(): void
     {
-        this.table.refresh();
+        this.table().refresh();
     }
 
     protected onAddClick(event: MouseEvent): void
@@ -36,7 +34,7 @@ export default abstract class AppBaseToolbar
     {
         event.stopPropagation();
 
-        let selectedRecords: any[] = this.table.getSelection();
+        let selectedRecords: any[] = this.table().getSelection();
         if (selectedRecords.length < 1) {
             Sftoomi.popupMsgService?.nothingSelected();
 
@@ -59,6 +57,6 @@ export default abstract class AppBaseToolbar
 
     protected onRemoveClick(): void
     {
-        this.table.removeSelected();
+        this.table().removeSelected();
     }
 }

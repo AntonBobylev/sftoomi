@@ -32,13 +32,13 @@ export default class ExaminationsTableToolbarComponent extends AppBaseToolbar
             nzViewContainerRef: this.viewContainerRef,
             nzData: {
                 id: id,
-                examination_date: this.table.filtersCtrl?.getValues().examination_date
+                examination_date: this.table().filtersCtrl?.getValues().examination_date
             }
         });
 
         modal.afterClose.subscribe((isSaved: boolean = false): void => {
             if (isSaved) {
-                this.table.refresh();
+                this.table().refresh();
             }
         });
     }

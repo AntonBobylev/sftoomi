@@ -2,7 +2,7 @@
     <button nz-button
             nzType="default"
             nzShape="circle"
-            [disabled]="table.isLoadingNow()"
+            [disabled]="table().isLoadingNow()"
             (click)="onAddClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('add')"
             [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::ADD')"
@@ -12,7 +12,7 @@
     <button nz-button
             nzType="default"
             nzShape="circle"
-            [disabled]="table.isLoadingNow()"
+            [disabled]="table().isLoadingNow()"
             (click)="onEditClick($event)"
             [nz-tooltip]="Sftoomi.Translator.translate('edit')"
             [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::EDIT')"
@@ -22,7 +22,7 @@
     <button nz-button
             nzType="default"
             nzShape="circle"
-            [disabled]="table.isLoadingNow()"
+            [disabled]="table().isLoadingNow()"
             (click)="onRemoveClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('remove')"
             [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE::REMOVE')"
@@ -32,7 +32,7 @@
     <button nz-button
             nzType="default"
             nzShape="circle"
-            [disabled]="table.isLoadingNow()"
+            [disabled]="table().isLoadingNow()"
             (click)="onRefreshClick()"
             [nz-tooltip]="Sftoomi.Translator.translate('refresh')"
             [class.hidden]="!Sftoomi.Auth.permissions.isAllowed('EXAMINATIONS_MODULE')"

@@ -36,7 +36,7 @@ export default class ReportTemplatesTableToolbarComponent extends AppBaseToolbar
 
         modal.afterClose.subscribe((isSaved: boolean = false): void => {
             if (isSaved) {
-                this.table.refresh();
+                this.table().refresh();
             }
         });
     }
