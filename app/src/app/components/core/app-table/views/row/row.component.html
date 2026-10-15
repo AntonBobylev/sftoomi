@@ -1,6 +1,6 @@
 <thead>
     <tr>
-        @if (selectionRequired) {
+        @if (selectionRequired()) {
             <th [nzChecked]="selectionInHeaderChecked"
                 [nzIndeterminate]="selectionInHeaderIntermediate"
                 [nz-tooltip]="Sftoomi.Translator.translate('select_all')"
@@ -8,7 +8,7 @@
                 style="width: 40px"
             ></th>
         }
-        @for (column of columns; track column.name) {
+        @for (column of columns(); track column.name) {
             <th [style.width]="column.width">
                 <span class="cell"
                       [ngStyle]="column.header.extraStyles"
@@ -23,9 +23,9 @@
     </tr>
 </thead>
 <tbody>
-    @for (row of data(); track row + $index) {
+    @for (row of data()(); track row + $index) {
         <tr>
-            @if (selectionRequired) {
+            @if (selectionRequired()) {
                 <td [nzChecked]="row.selected"
                     nzShowCheckbox
                     (nzCheckedChange)="onRowCheck($event, row)"
@@ -33,7 +33,7 @@
                 </td>
             }
 
-            @for (column of columns; track column.name) {
+            @for (column of columns(); track column.name) {
                 <td>
                     <div class="cell"
                          [style.max-width]="column.width"
@@ -42,7 +42,7 @@
                     >
                         @if (column.customColumnComponent) {
                             <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                      inputs: { table: table, rowData: row }"
+                                                                      inputs: { table: table(), rowData: row }"
                             />
                         } @else if (column.rawHtml) {
                             <span [innerHTML]="getCellData(row, column) | safe"

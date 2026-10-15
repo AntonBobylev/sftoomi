@@ -1,5 +1,5 @@
 <tbody class="table">
-    @if (selectionRequired) {
+    @if (selectionRequired()) {
         <div nz-checkbox
              [nzChecked]="selectionInHeaderChecked"
              [nzIndeterminate]="selectionInHeaderIntermediate"
@@ -10,12 +10,12 @@
         </div>
     }
 
-    @for (row of data(); track row + $index) {
+    @for (row of data()(); track row + $index) {
         <tr>
             <td [class.selected-cell]="row.selected"
                 class="cell"
             >
-                @if (selectionRequired) {
+                @if (selectionRequired()) {
                     <div nz-checkbox
                          class="cell-checkbox"
                          [nzChecked]="row.selected"
@@ -25,14 +25,14 @@
 
                 <div class="cell-block">
                     <table>
-                        @for (column of columns; track column.name) {
+                        @for (column of columns(); track column.name) {
                             <tr style="display: flex">
                                 <td style="flex: 1; font-weight: bold">{{ column.header.caption }}:</td>
 
                                 <td style="flex: 2">
                                     @if (column.customColumnComponent) {
                                         <ng-container *ngComponentOutlet="column.customColumnComponent;
-                                                                          inputs: { table: table, rowData: row }"
+                                                                          inputs: { table: table(), rowData: row }"
                                         />
                                     } @else if (column.rawHtml) {
                                         <span [innerHTML]="getCellData(row, column) | safe"

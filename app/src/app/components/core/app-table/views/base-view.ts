@@ -1,4 +1,4 @@
-import { Directive, Input, WritableSignal } from '@angular/core'
+import { Directive, input, InputSignal, WritableSignal } from '@angular/core';
 
 import Sftoomi from '../../../../class/Sftoomi'
 
@@ -9,13 +9,12 @@ import AppTableColumn from '../../../../type/AppTableColumn'
 @Directive()
 export default abstract class AppTableBaseView
 {
-    @Input({required: true}) public table!: AppTableComponent;
-    @Input({required: true}) public data!: WritableSignal<any[]>;
-    @Input({required: true}) public columns!: AppTableColumn[];
+    public readonly table:             InputSignal<AppTableComponent>     = input.required();
+    public readonly data:              InputSignal<WritableSignal<any[]>> = input.required(); // TODO: remove any, gotta use strict type
+    public readonly columns:           InputSignal<AppTableColumn[]>      = input.required();
+    public readonly selectionRequired: InputSignal<boolean>               = input.required();
 
-    @Input({required: true}) public selectionRequired!: boolean;
-
-    protected selectionInHeaderChecked: boolean = false;
+    protected selectionInHeaderChecked:      boolean = false;
     protected selectionInHeaderIntermediate: boolean = false;
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi
@@ -27,20 +26,22 @@ export default abstract class AppTableBaseView
 
     protected refreshCheckedStatus(): void
     {
-        if (Sftoomi.isEmpty(this.data())) {
+        const data = this.data()();
+
+        if (Sftoomi.isEmpty(data)) {
             this.selectionInHeaderChecked = false;
             this.selectionInHeaderIntermediate = false;
 
             return;
         }
 
-        this.selectionInHeaderChecked = this.data().every((row) => row.selected);
-        this.selectionInHeaderIntermediate = this.data().some((row) => row.selected) && !this.selectionInHeaderChecked;
+        this.selectionInHeaderChecked = data.every((row) => row.selected);
+        this.selectionInHeaderIntermediate = data.some((row) => row.selected) && !this.selectionInHeaderChecked;
     }
 
     protected onAllChecked(selected: boolean): void
     {
-        this.data.update(rows =>
+        this.data().update(rows =>
             rows.map(row => ({ ...row, selected: selected }))
         );
 
