@@ -1,12 +1,12 @@
-import { Component, Input, signal, WritableSignal } from '@angular/core';
+import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
 import { NgClass } from '@angular/common';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 export type AppItemSelectorDataListRow = {
-    name: string,
-    value: string,
+    name:     string,
+    value:    string,
     tooltip?: string
 };
 
@@ -26,7 +26,7 @@ type Item = {
 
 export default class AppItemSelectorDataListComponent
 {
-    @Input({required: true}) public title: string = '';
+    public readonly title: InputSignal<string> = input.required();
 
     protected readonly data: WritableSignal<Item[]> = signal<Item[]>([]);
 
