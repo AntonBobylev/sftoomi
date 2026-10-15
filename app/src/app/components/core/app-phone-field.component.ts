@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
+import { Component, signal, WritableSignal } from '@angular/core';
 import { MaskitoOptions } from '@maskito/core';
 
 import AppTextFieldImports from './app-text-field/imports';

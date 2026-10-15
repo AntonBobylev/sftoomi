@@ -11,12 +11,12 @@ import AppComboComponent, { AppComboRecord } from '../../../components/core/app-
 import ReportTemplateEditorComponent, { ReportTemplateEditorData } from './template-editor/dialog.component'
 
 import getTemplateAPI from '../../../APIs/getTemplateAPI'
-import Study from '../../../type/Study'
-import GenericTemplate from '../../../type/GenericTemplate'
+import Study from '../../../interfaces/Study'
+import GenericTemplate from '../../../interfaces/GenericTemplate'
 
-export type ReportTemplateEditDialogData = {
+export interface ReportTemplateEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'report-template-edit-dialog',
@@ -58,12 +58,10 @@ export default class ReportTemplateEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getTemplateAPI): void
     {
-        this.allowedStudiesCtrl().setData(data.lists.studies.map((study: Study): AppComboRecord => {
-            return {
-                caption: study.short_name,
-                value:   study.id
-            }
-        }));
+        this.allowedStudiesCtrl().setData(data.lists.studies.map((study: Study): AppComboRecord => ({
+            caption: study.short_name,
+            value:   study.id
+        })));
 
         this.genericTemplatesList = data.lists.generic_templates;
 

@@ -34,7 +34,7 @@ export default class Translator
 
     constructor()
     {
-        let cookiesLocale: string = new CookiesService().getCookie(SftoomiCookie.SFTOOMI_LOCALE);
+        const cookiesLocale: string = new CookiesService().getCookie(SftoomiCookie.SFTOOMI_LOCALE);
 
         if (cookiesLocale) {
             this.locale = cookiesLocale as AppLocale;
@@ -54,9 +54,7 @@ export default class Translator
     {
         Sftoomi.showApplicationGlobalMask();
 
-        let me: this = this,
-            nextLocaleIndex: number = this.availableLocales.findIndex((locale: AppLocale): boolean => locale === me.locale) + 1;
-
+        let nextLocaleIndex: number = this.availableLocales.findIndex((locale: AppLocale): boolean => locale === this.locale) + 1;
         if (nextLocaleIndex + 1 > this.availableLocales.length) {
             nextLocaleIndex = 0;
         }
@@ -83,9 +81,9 @@ export default class Translator
 
     public translate(value: string, options: TranslationOptions[] = []): string
     {
-        let dictionary: object = this.getDictionary(),
-            translatedValue: string | undefined = dictionary[value as keyof object];
+        const dictionary: object = this.getDictionary();
 
+        let translatedValue: string | undefined = dictionary[value as keyof object];
         if (!translatedValue) {
             // try to find as a path
             translatedValue = this.lookupByPath(dictionary, value);
@@ -123,13 +121,13 @@ export default class Translator
     private lookupByPath(obj: any, path: string): string | undefined
     {
         try {
-            let parts = path.split('.');
+            const parts = path.split('.');
             if (parts.length == 1) {
                 return obj[parts[0]];
             }
 
             return this.lookupByPath(obj[parts[0]], parts.slice(1).join('.'));
-        } catch (e) {
+        } catch (_e) {
             return undefined;
         }
     }

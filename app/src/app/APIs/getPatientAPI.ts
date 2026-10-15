@@ -1,4 +1,4 @@
-type getPatientAPI = {
+export default interface getPatientAPI {
     data: {
         id: number,
         last_name: string,
@@ -8,6 +8,4 @@ type getPatientAPI = {
         phone?: string,
         gender: 0 | 1 | null
     }
-};
-
-export default getPatientAPI;
+}

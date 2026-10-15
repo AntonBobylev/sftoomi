@@ -1,10 +1,10 @@
-import { Pipe, PipeTransform, SecurityContext } from '@angular/core';
+import { inject, Pipe, PipeTransform, SecurityContext } from '@angular/core';
 import { DomSanitizer, SafeValue } from '@angular/platform-browser';
 
-@Pipe({name: 'safe'})
+@Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform
 {
-    constructor(private readonly domSanitizer: DomSanitizer) {}
+    private readonly domSanitizer: DomSanitizer = inject(DomSanitizer);
 
     transform(value: string | null, context: SecurityContext = SecurityContext.HTML): SafeValue | null
     {

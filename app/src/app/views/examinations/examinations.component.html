@@ -8,9 +8,9 @@
             <div class="filters-wrapper">
                 <examinations-module-filters-panel #filtersCtrl
                                                    [class.hidden]="isFiltersCollapsed"
-                                                   (onLoaded)="filtersLoaded($event)"
-                                                   (onSearch)="onSearch($event)"
-                                                   (onClear)="onClear($event)"
+                                                   (loadedEvent)="filtersLoaded($event)"
+                                                   (searchEvent)="onSearch($event)"
+                                                   (clearEvent)="onClear($event)"
                 />
                 <div [class.hidden]="!isFiltersCollapsed"
                      class="hidden-filters-caption"

@@ -9,7 +9,7 @@ import StudiesTableToolbarComponent from './toolbar/toolbar.component';
 
 import getStudiesAPI from '../../../APIs/getStudiesAPI';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'studies-table',
@@ -61,7 +61,7 @@ export default class StudiesTableComponent extends AppTableComponent
                 return Sftoomi.Translator.translate('not_set_tip');
             }
 
-            let lines: string[] = [];
+            const lines: string[] = [];
             cpts.forEach(cpt => {
                 lines.push(
                     '<ul style="margin: unset">' +

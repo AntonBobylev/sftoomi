@@ -15,28 +15,14 @@ module.exports = defineConfig([
         processor: angular.processInlineTemplates,
         languageOptions: {
             parserOptions: {
-                // Включаем автоматический поиск подходящего tsconfig для каждого файла
                 projectService: true,
                 tsconfigRootDir: __dirname,
             },
         },
         rules: {
-            "@angular-eslint/directive-selector": [
-                "error",
-                {
-                    type: "attribute",
-                    prefix: "app",
-                    style: "camelCase",
-                },
-            ],
-            "@angular-eslint/component-selector": [
-                "error",
-                {
-                    type: "element",
-                    prefix: "app",
-                    style: "kebab-case",
-                },
-            ],
+            "@angular-eslint/directive-selector": "off",
+            "@angular-eslint/component-selector": "off",
+
             "@typescript-eslint/no-unused-vars": [
                 "error",
                 {
@@ -46,6 +32,17 @@ module.exports = defineConfig([
                     ignoreRestSiblings: true,
                 },
             ],
+            "@typescript-eslint/no-inferrable-types": "off",
+            "comma-dangle": ["error", "never"],
+            "object-curly-spacing": ["error", "always"],
+            "eol-last": ["error", "always"],
+            "prefer-arrow-callback": "error",
+            "func-style": ["error", "expression", { "allowArrowFunctions": true }],
+            "arrow-body-style": ["error", "as-needed"],
+            "@typescript-eslint/no-unsafe-function-type": "off",
+            "@typescript-eslint/no-explicit-any": "off",
+
+            "@angular-eslint/no-input-rename": "off"
         },
     },
     {
@@ -54,6 +51,10 @@ module.exports = defineConfig([
             angular.configs.templateRecommended,
             angular.configs.templateAccessibility,
         ],
-        rules: {},
+        rules: {
+            "@angular-eslint/template/click-events-have-key-events": "off",
+            "@angular-eslint/template/interactive-supports-focus": "off",
+            "@angular-eslint/template/no-input-rename": "off"
+        },
     }
 ]);

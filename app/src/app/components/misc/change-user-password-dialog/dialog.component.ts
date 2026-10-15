@@ -54,8 +54,8 @@ export default class AppChangeUserPasswordDialog extends AppBaseDialog implement
             return;
         }
 
-        let formValues: any = this.form.value,
-            data: FormData = Sftoomi.formValuesToFormData(formValues);
+        const formValues: any = this.form.value,
+              data: FormData = Sftoomi.formValuesToFormData(formValues);
 
         data.append('user_id', Sftoomi.Auth.getUser()!.id.toString());
 

@@ -24,7 +24,7 @@ export default abstract class AppBaseEditDialog extends AppBaseDialog implements
 
     ngAfterViewInit(): void
     {
-        let isEditMode: boolean = this.data && this.data.id;
+        const isEditMode: boolean = this.data && this.data.id;
         if (isEditMode && !this.Sftoomi.Auth.permissions.isAllowed(this.editPermission)
             || (!isEditMode && !this.Sftoomi.Auth.permissions.isAllowed(this.addPermission))) {
             this.Sftoomi.Dialog.show(
@@ -50,7 +50,7 @@ export default abstract class AppBaseEditDialog extends AppBaseDialog implements
             return;
         }
 
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
         if (this.data.id) {
             data.append(this.idField, this.data.id.toString());
         }
@@ -90,9 +90,9 @@ export default abstract class AppBaseEditDialog extends AppBaseDialog implements
             return;
         }
 
-        let formValues: any = this.form.value,
-            data: FormData = Sftoomi.formValuesToFormData(formValues);
+        const formValues: any = this.form.value;
 
+        let data: FormData = Sftoomi.formValuesToFormData(formValues);
         if (this.data?.id) {
             data.append(this.idField, this.data.id.toString());
             formValues[this.idField] = this.data.id;
@@ -132,6 +132,7 @@ export default abstract class AppBaseEditDialog extends AppBaseDialog implements
 
     protected afterSave(_data: any, _rawData?: any): void
     {
+        // will be useful in children's classes
     };
 
     protected getAdditionalDataOnSave(data: FormData): FormData

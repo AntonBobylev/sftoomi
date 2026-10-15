@@ -4,7 +4,7 @@ import Sftoomi from '../../../../class/Sftoomi'
 
 import AppTableComponent from '../app-table.component'
 
-import AppTableColumn from '../../../../type/AppTableColumn'
+import AppTableColumn from '../../../../interfaces/AppTableColumn'
 
 @Directive()
 export default abstract class AppTableBaseView

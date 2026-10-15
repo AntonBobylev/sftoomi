@@ -1,8 +1,8 @@
 import { AppContactsTableRecord } from '../components/fields/app-contacts/table/table.component';
 
-import Group from '../type/Group'
+import Group from '../interfaces/Group'
 
-type getUserAPI = {
+export default interface getUserAPI {
     data: {
         id:                       number,
         login:                    string,
@@ -19,6 +19,4 @@ type getUserAPI = {
     lists: {
         groups: Group[]
     }
-};
-
-export default getUserAPI;
+}

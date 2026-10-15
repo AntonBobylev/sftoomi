@@ -12,7 +12,7 @@ import loginAPI from '../APIs/loginAPI'
 
 import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
-import User from '../type/User'
+import User from '../interfaces/User'
 
 export default class Auth
 {
@@ -39,8 +39,8 @@ export default class Auth
 
     public tryRestoreSession(callback: Function): void
     {
-        let sessionId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION),
-            userId:    string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_USER);
+        const sessionId: string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_SESSION),
+              userId:    string = Sftoomi.Cookies.getCookie(SftoomiCookie.SFTOOMI_USER);
 
         if (!Sftoomi.isEmpty(sessionId) && !Sftoomi.isEmpty(userId)) {
             new Fetcher().request({
@@ -77,7 +77,7 @@ export default class Auth
         failureCallback?: Function
     ): void
     {
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
 
         data.append('login', login);
         data.append('password', password);
@@ -109,7 +109,7 @@ export default class Auth
     public logout(
         isLoading?: WritableSignal<boolean>,
         successCallback?: Function,
-        failureCallback?: Function,
+        failureCallback?: Function
     ): void
     {
         isLoading?.set(true);

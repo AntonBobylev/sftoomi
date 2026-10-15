@@ -1,5 +1,5 @@
 import { NgComponentOutlet } from '@angular/common';
-import { NzTableComponent} from 'ng-zorro-antd/table';
+import { NzTableComponent } from 'ng-zorro-antd/table';
 
 import AppTableRowViewImports from './views/row/imports'
 import AppTableCardViewImports from './views/card/imports'

@@ -1,11 +1,9 @@
-import Study from '../type/Study';
-import Cpt from '../type/Cpt';
+import Study from '../interfaces/Study';
+import Cpt from '../interfaces/Cpt';
 
-type getStudiesAPI = {
+export default interface getStudiesAPI {
     data: (Study & {
         study_cpts: Cpt[]
     })[],
     total: number
-};
-
-export default getStudiesAPI;
+}

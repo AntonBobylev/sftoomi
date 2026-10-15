@@ -22,7 +22,7 @@ export default class ExaminationsTableStudiesColumnComponent extends AppTableCom
 
     protected getExamAddEditButtonConfig(exam: ExaminationsTableRowExam): { title: string, tooltip: string }
     {
-        let actionTranslationKey: string = exam.exam_drafts_exists ? 'edit_report_draft' : 'add_report_draft';
+        const actionTranslationKey: string = exam.exam_drafts_exists ? 'edit_report_draft' : 'add_report_draft';
 
         return {
             title: this.Sftoomi.Translator.translate(

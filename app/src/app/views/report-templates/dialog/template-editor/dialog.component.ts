@@ -16,19 +16,19 @@ import AppPdfViewerDialogComponent, { AppPdfViewerDialogIn } from '../../../../c
 
 import previewTemplateAPI from '../../../../APIs/previewTemplateAPI'
 
-import GenericTemplate from '../../../../type/GenericTemplate'
+import GenericTemplate from '../../../../interfaces/GenericTemplate'
 
-export type ReportTemplateEditorData = {
+export interface ReportTemplateEditorData {
     content?: string,
     lists: {
         generic_templates: GenericTemplate[]
     }
-};
+}
 
-export type ReportTemplateEditorOut = {
+export interface ReportTemplateEditorOut {
     is_saved: boolean,
     content:  string
-};
+}
 
 @Component({
     selector: 'report-template-editor-dialog',
@@ -153,7 +153,7 @@ export default class ReportTemplateEditorComponent extends AppBaseDialog impleme
 
     protected onPreview(): void
     {
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
         data.append('template_code', this.getPreviewIframeHtmlWithValues());
 
         this.queryController.abort();

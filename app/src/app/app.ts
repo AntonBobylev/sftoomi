@@ -1,4 +1,4 @@
-import { Component, signal, WritableSignal } from '@angular/core';
+import { Component, inject, signal, WritableSignal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
@@ -31,21 +31,21 @@ export class App
 
     protected readonly isLoading: WritableSignal<boolean> = signal<boolean>(false);
 
-    constructor(
-        readonly nzDialog: NzModalService,
-        readonly nzI18nService: NzI18nService,
-        readonly responsiveLayoutService: ResponsiveLayoutService,
-        readonly popupMsgService: PopupMsgService,
-        private readonly router: Router
-    )
+    private readonly nzDialog:                NzModalService          = inject(NzModalService);
+    private readonly nzI18nService:           NzI18nService           = inject(NzI18nService);
+    private readonly responsiveLayoutService: ResponsiveLayoutService = inject(ResponsiveLayoutService);
+    private readonly popupMsgService:         PopupMsgService         = inject(PopupMsgService);
+    private readonly router:                  Router                  = inject(Router);
+
+    constructor()
     {
         this.isLoading.set(true);
 
         Sftoomi.init(
-            nzDialog,
-            nzI18nService,
-            responsiveLayoutService,
-            popupMsgService
+            this.nzDialog,
+            this.nzI18nService,
+            this.responsiveLayoutService,
+            this.popupMsgService
         );
 
         this.restoreUserSession();

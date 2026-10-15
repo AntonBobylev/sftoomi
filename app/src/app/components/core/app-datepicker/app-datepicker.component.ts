@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DestroyRef, inject, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal } from '@angular/core';
+import { AfterViewInit, Component, DestroyRef, inject, input, InputSignal, output, OutputEmitterRef, signal, WritableSignal, OnInit } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzColDirective } from 'ng-zorro-antd/grid';
@@ -26,12 +26,12 @@ import AppDatePickerScrollMonthDirective from './scroll.directive'
     ]
 })
 
-export default class AppDatepickerComponent extends AppBaseField implements AfterViewInit
+export default class AppDatepickerComponent extends AppBaseField implements AfterViewInit, OnInit
 {
     public readonly isInline:                  InputSignal<boolean> = input(false);
     public readonly datesForHighlightingInput: InputSignal<Date[]>  = input<Date[]>([], { alias: 'datesForHighlighting' });
 
-    public override readonly onChange: OutputEmitterRef<Date | null> = output();
+    public override readonly changeEvent: OutputEmitterRef<Date | null> = output();
 
     protected readonly getDatePickerLocalDateFormat = getDatePickerLocalDateFormat;
 
@@ -49,7 +49,7 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
         this.getControl()
             ?.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
-            .subscribe((date: Date | null): void => this.onChange.emit(date));
+            .subscribe((date: Date | null): void => this.changeEvent.emit(date));
     }
 
     public setDatesForHighlighting(dates: Date[]): void
@@ -74,7 +74,7 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
 
     protected isSelected(date: Date): boolean
     {
-        let currentSelectedDate: Date | null = this.getControl()?.value;
+        const currentSelectedDate: Date | null = this.getControl()?.value;
         if (!currentSelectedDate) {
             return false;
         }

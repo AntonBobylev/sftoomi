@@ -11,7 +11,7 @@ import AppBaseToolbar from '../base/app-base-toolbar'
 
 import AppBaseFilters from '../base/app-base-filters';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'app-table',
@@ -107,7 +107,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             filters = this.Sftoomi.formValuesToFormData(filtersCtrl.getValues());
         }
 
-        let data: FormData = filters ? filters : new FormData();
+        const data: FormData = filters ? filters : new FormData();
         if (this.usePagination) {
             data.append('limit', this.pageSize.toString());
             data.append('start', (this.currentPageIndex - 1).toString());
@@ -129,7 +129,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     public removeSelected(): void
     {
-        let selectedRecords: any[] = this.getSelection();
+        const selectedRecords: any[] = this.getSelection();
         if (selectedRecords.length < 1) {
             Sftoomi.popupMsgService?.nothingSelected();
 
@@ -142,10 +142,8 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             return;
         }
 
-        let data: FormData = new FormData();
-        data.append('ids', selectedRecords.map(function (record: any): number {
-            return record.id;
-        }).join(','));
+        const data: FormData = new FormData();
+        data.append('ids', selectedRecords.map((record: any): number => record.id).join(','));
 
         this.isLoading.set(true);
         new Fetcher().request({
@@ -168,9 +166,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     public getSelection(): any[]
     {
-        return this.data().filter(function (row: any): boolean {
-            return row.selected;
-        });
+        return this.data().filter((row: any): boolean => row.selected);
     }
 
     public clearSelection(): void
@@ -179,7 +175,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
             return;
         }
 
-        let records: any[] = this.data();
+        const records: any[] = this.data();
         for (let i: number = 0; i < this.data().length; i++) {
             records[i].selected = false;
         }
@@ -222,7 +218,7 @@ export default class AppTableComponent implements AfterViewInit, OnDestroy
 
     private removeLocal(): void
     {
-        let selectedRows: any[] = this.getSelection();
+        const selectedRows: any[] = this.getSelection();
 
         let currentRows: any[] = this.getData();
         selectedRows.forEach((selectedRow: any): void => {

@@ -7,7 +7,7 @@ import AppBaseDialog from '../../../core/base/app-base-dialog'
 
 import AppPdfViewerComponent from '../app-pdf-viewer.component'
 
-export type AppPdfViewerDialogIn = {
+export interface AppPdfViewerDialogIn {
     src: string
 }
 

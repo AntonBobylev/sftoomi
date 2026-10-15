@@ -92,7 +92,7 @@ export default class DraftViewerModuleComponent extends AppBaseModule implements
                 const decodedUrl: string = atob(encodedRoute);
 
                 this.router.navigateByUrl(decodedUrl).then();
-            } catch (e) {
+            } catch (_e) {
                 this.router.navigate([RoutesPaths.HOME]).then();
             }
         } else {
@@ -128,7 +128,7 @@ export default class DraftViewerModuleComponent extends AppBaseModule implements
             return;
         }
 
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
         data.append('exam_id', this.examId.toString());
 
         this.isLoading.set(true);
@@ -136,7 +136,7 @@ export default class DraftViewerModuleComponent extends AppBaseModule implements
             url: this.loadUrl,
             data: data,
             success: (_response: any, _request: any, result: getDraftViewerData): void => {
-                let templatesStore: AppComboRecord[] = result.lists.templates.map((template): AppComboRecord => ({
+                const templatesStore: AppComboRecord[] = result.lists.templates.map((template): AppComboRecord => ({
                     caption: this.Sftoomi.format('(ID #{0}): {1}', template.id, template.name),
                     value:   template.id
                 }));

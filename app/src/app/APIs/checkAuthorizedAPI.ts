@@ -1,11 +1,9 @@
-import User from '../type/User'
+import User from '../interfaces/User'
 
-type checkAuthorizedAPI = {
+export default interface checkAuthorizedAPI {
     success: boolean,
     error?: string,
     user: (User & {
         permissions: string[]
     })
-};
-
-export default checkAuthorizedAPI;
+}

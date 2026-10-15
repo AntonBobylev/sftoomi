@@ -9,7 +9,7 @@ import ReferringDoctorsTableToolbarComponent from './toolbar/toolbar.component';
 
 import getDoctorsAPI from '../../../APIs/getDoctorsAPI';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'referring-doctors-table',
@@ -64,7 +64,7 @@ export default class ReferringDoctorsTableComponent extends AppTableComponent
                 return Sftoomi.Translator.translate('not_set_tip');
             }
 
-            let lines: string[] = [];
+            const lines: string[] = [];
             facilities.forEach(facility => {
                 lines.push(
                     '<ul style="margin: unset">' +

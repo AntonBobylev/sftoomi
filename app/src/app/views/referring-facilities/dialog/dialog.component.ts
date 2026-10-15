@@ -1,4 +1,4 @@
-import { Component, inject, Signal, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -15,11 +15,11 @@ import { onlyLettersValidator } from '../../../validators/only-letters.validator
 
 import getFacilityAPI from '../../../APIs/getFacilityAPI';
 
-import Doctor from '../../../type/Doctor';
+import Doctor from '../../../interfaces/Doctor';
 
-export type ReferringFacilityEditDialogData = {
+export interface ReferringFacilityEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'referring-facility-edit-dialog',
@@ -70,10 +70,8 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
         }
 
         let doctorsList: Doctor[] = data.lists.doctors;
-        facilityDoctors.forEach(function (facilityDoctor: Doctor): void {
-            doctorsList = doctorsList.filter(function (doctor: Doctor): boolean {
-                return doctor.id !== facilityDoctor.id;
-            });
+        facilityDoctors.forEach((facilityDoctor: Doctor): void => {
+            doctorsList = doctorsList.filter((doctor: Doctor): boolean => doctor.id !== facilityDoctor.id);
         })
 
         this.doctorsItemSelectorCtrl().setData(
@@ -84,11 +82,9 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedDoctors: AppItemSelectorDataListRow[] = this.doctorsItemSelectorCtrl().getRightListData();
+        const selectedDoctors: AppItemSelectorDataListRow[] = this.doctorsItemSelectorCtrl().getRightListData();
         if (selectedDoctors.length > 0) {
-            let doctorsIds: string[] = selectedDoctors.map(function (doctor: AppItemSelectorDataListRow): string {
-                return doctor.value;
-            });
+            const doctorsIds: string[] = selectedDoctors.map((doctor: AppItemSelectorDataListRow): string => doctor.value);
 
             data.append('facility_doctor_ids', doctorsIds.join(','));
         }
@@ -98,11 +94,9 @@ export default class ReferringFacilityEditDialogComponent extends AppBaseEditDia
 
     private convertDoctorsToItemSelectorRow(doctors: Doctor[]): AppItemSelectorDataListRow[]
     {
-        return doctors.map(function (row: Doctor): AppItemSelectorDataListRow {
-            return {
-                name:  Sftoomi.humanShortName(row),
-                value: row.id.toString()
-            };
-        });
+        return doctors.map((row: Doctor): AppItemSelectorDataListRow => ({
+            name:  Sftoomi.humanShortName(row),
+            value: row.id.toString()
+        }));
     }
 }

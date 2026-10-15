@@ -3,7 +3,7 @@ import en from '@angular/common/locales/en';
 import ru from '@angular/common/locales/ru';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
-import { ApplicationConfig, inject, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZoneChangeDetection, provideZonelessChangeDetection } from '@angular/core';
+import { ApplicationConfig, inject, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { en_US, ru_RU, NZ_I18N, NZ_DATE_CONFIG } from 'ng-zorro-antd/i18n';
 import { provideNzDateFnsAdapter } from 'ng-zorro-antd/core/time';
@@ -41,6 +41,6 @@ export const appConfig: ApplicationConfig = {
             useValue: {
                 firstDayOfWeek: getFirstDayOfWeek()
             }
-        },
+        }
     ]
 };

@@ -19,10 +19,10 @@ import getPatientAPI from '../../../APIs/getPatientAPI';
 import getExaminationAPI from '../../../APIs/getExaminationAPI';
 import Gender from '../../../type/Gender';
 
-export type ExaminationEditDialogData = {
-    id?: number,
+export interface ExaminationEditDialogData {
+    id?:               number,
     examination_date?: Date
-};
+}
 
 @Component({
     selector: 'examination-edit-dialog',
@@ -76,26 +76,20 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getExaminationAPI): void
     {
-        this.facilityCtrl().setData(data.lists.facilities.map((facility): AppComboRecord => {
-            return {
-                caption: facility.short_name,
-                value:   facility.id
-            }
-        }));
+        this.facilityCtrl().setData(data.lists.facilities.map((facility): AppComboRecord => ({
+            caption: facility.short_name,
+            value:   facility.id
+        })));
 
-        this.doctorCtrl().setData(data.lists.doctors.map((doctor): AppComboRecord => {
-            return {
-                caption: Sftoomi.humanShortName(doctor),
-                value:   doctor.id
-            }
-        }));
+        this.doctorCtrl().setData(data.lists.doctors.map((doctor): AppComboRecord => ({
+            caption: Sftoomi.humanShortName(doctor),
+            value:   doctor.id
+        })));
 
-        this.studiesStore.set(data.lists.studies.map((study): AppComboRecord => {
-            return {
-                caption: study.short_name,
-                value:   study.id
-            }
-        }));
+        this.studiesStore.set(data.lists.studies.map((study): AppComboRecord => ({
+            caption: study.short_name,
+            value:   study.id
+        })));
 
         if (Sftoomi.isEmpty(data.data)) {
             this.form.get('examination_date')?.setValue(this.data.examination_date ?? new Date());
@@ -122,7 +116,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
             return;
         }
 
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
         data.append('id', patientId.toString());
 
         new Fetcher().request({
@@ -151,13 +145,13 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedStudies: FormControl[] = this.studiesSelectorCtrl().getAddedStudiesControls(),
-            addedStudiesIds: number[] = [];
+        const selectedStudies: FormControl[] = this.studiesSelectorCtrl().getAddedStudiesControls(),
+              addedStudiesIds: number[] = [];
 
-        selectedStudies.forEach(function (studyControl: FormControl): void {
-            let controlName: string | undefined = Sftoomi.getFormControlName(studyControl);
+        selectedStudies.forEach((studyControl: FormControl): void => {
+            const controlName: string | undefined = Sftoomi.getFormControlName(studyControl);
 
-            for (let [key] of data.entries()) {
+            for (const [key] of data.entries()) {
                 if (key === controlName) {
                     addedStudiesIds.push(studyControl.value);
                     data.delete(key);
@@ -173,7 +167,7 @@ export default class ExaminationEditDialogComponent extends AppBaseEditDialog
 
     protected override isPreValid(): boolean
     {
-        let addedStudiesCount: number = this.studiesSelectorCtrl().getAddedStudiesCount();
+        const addedStudiesCount: number = this.studiesSelectorCtrl().getAddedStudiesCount();
         if (addedStudiesCount < 1) {
             Sftoomi.popupMsgService?.warning(Sftoomi.Translator.translate('views.examinations.dialog.no_studies_added_tip'));
 

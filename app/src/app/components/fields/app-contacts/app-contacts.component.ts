@@ -40,12 +40,12 @@ export default class AppContactsComponent
 
     private sortTableData(): void
     {
-        let data: AppContactsTableRecord[] = this.tableCtrl().getData();
+        const data: AppContactsTableRecord[] = this.tableCtrl().getData();
         if (Sftoomi.isEmpty(data)) {
             return;
         }
 
-        let contactsByTypes: any = {};
+        const contactsByTypes: any = {};
         data.forEach((record: AppContactsTableRecord): void => {
             if (!contactsByTypes[record.type]) {
                 contactsByTypes[record.type] = [];
@@ -54,11 +54,11 @@ export default class AppContactsComponent
             contactsByTypes[record.type].push(record);
         });
 
-        let newData: AppContactsTableRecord[] = [];
+        const newData: AppContactsTableRecord[] = [];
         Object.entries(contactsByTypes).forEach(([_type, contacts]): void => {
             (contacts as AppContactsTableRecord[])
                 .sort((a: AppContactsTableRecord, b: AppContactsTableRecord) => a.position - b.position)
-                .map((contact: AppContactsTableRecord, index: number): AppContactsTableRecord => { return {...contact, position: index }; })
+                .map((contact: AppContactsTableRecord, index: number): AppContactsTableRecord => ({ ...contact, position: index }))
                 .forEach((contact: AppContactsTableRecord): void => { newData.push(contact); })
         });
 

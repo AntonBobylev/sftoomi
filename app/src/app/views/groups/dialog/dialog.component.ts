@@ -10,11 +10,11 @@ import { AppItemSelectorDataListRow } from '../../../components/core/app-item-se
 
 import getGroupAPI from '../../../APIs/getGroupAPI'
 
-import Permission from '../../../type/Permission'
+import Permission from '../../../interfaces/Permission'
 
-export type GroupEditDialogData = {
+export interface GroupEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'group-edit-dialog',
@@ -60,9 +60,7 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
 
             selectedPermissionsList = data.data.permissions
             selectedPermissionsList.forEach((groupPermission: Permission): void => {
-                availablePermissionsList = availablePermissionsList.filter((permission: Permission): boolean => {
-                    return permission.id !== groupPermission.id;
-                });
+                availablePermissionsList = availablePermissionsList.filter((permission: Permission): boolean => permission.id !== groupPermission.id);
             });
         }
 
@@ -74,10 +72,8 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
-        let permissionsIds: string[] = selectedPermissions.map(function (permission: AppItemSelectorDataListRow): string {
-            return permission.value;
-        });
+        const selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData(),
+              permissionsIds: string[] = selectedPermissions.map((permission: AppItemSelectorDataListRow): string => permission.value);
 
         data.append('groups_permissions_ids', permissionsIds.join(','));
 
@@ -90,19 +86,17 @@ export default class GroupEditDialogComponent extends AppBaseEditDialog
             return false;
         }
 
-        let selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
+        const selectedPermissions: AppItemSelectorDataListRow[] = this.permissionsCtrl()!.getRightListData();
 
         return this.form.invalid || this.Sftoomi.isEmpty(selectedPermissions);
     }
 
     private convertPermissionsToItemSelectorRow(permissions: Permission[]): AppItemSelectorDataListRow[]
     {
-        return permissions.map(function (row: Permission): AppItemSelectorDataListRow {
-            return {
-                name:    row.name,
-                value:   row.id.toString(),
-                tooltip: row.description
-            };
-        });
+        return permissions.map((row: Permission): AppItemSelectorDataListRow => ({
+            name:    row.name,
+            value:   row.id.toString(),
+            tooltip: row.description
+        }));
     }
 }

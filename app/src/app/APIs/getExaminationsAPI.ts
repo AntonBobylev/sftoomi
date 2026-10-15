@@ -1,4 +1,4 @@
-type getExaminationsAPIRecordStudy = {
+interface getExaminationsAPIRecordStudy {
     exam_id:            number,
     exam_drafts_exists: boolean
     study_id:           number,
@@ -6,7 +6,7 @@ type getExaminationsAPIRecordStudy = {
     study_full_name:    string
 }
 
-type getExaminationsAPI = {
+export default interface getExaminationsAPI {
     data: {
         id:     number,
         date:   string,
@@ -32,6 +32,4 @@ type getExaminationsAPI = {
         studies: getExaminationsAPIRecordStudy[]
     }[],
     total: number
-};
-
-export default getExaminationsAPI;
+}

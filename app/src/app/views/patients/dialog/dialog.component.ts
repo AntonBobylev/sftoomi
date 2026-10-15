@@ -18,9 +18,9 @@ import phoneValidator from '../../../validators/phone.validator';
 
 import Gender from '../../../type/Gender';
 
-export type PatientEditDialogData = {
+export interface PatientEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'patient-edit-dialog',

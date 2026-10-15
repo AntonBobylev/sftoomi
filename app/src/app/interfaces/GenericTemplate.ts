@@ -1,7 +1,5 @@
-type GenericTemplate = {
+export default interface GenericTemplate {
     filename: string,
     name:     string,
     content:  string
-};
-
-export default GenericTemplate;
+}

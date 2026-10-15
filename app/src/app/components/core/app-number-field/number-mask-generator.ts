@@ -6,10 +6,8 @@ export interface NumberMaskConfig {
     maxDecimalDigits?: number
 }
 
-export function createNumberMask(config: NumberMaskConfig = {}): MaskitoOptions {
-    return maskitoNumber({
-        minusSign:             config.allowNegative    ? '-'                     : '',
-        maximumFractionDigits: config.maxDecimalDigits ? config.maxDecimalDigits : 0,
-        thousandSeparator:     ''
-    });
-}
+export const createNumberMask = (config: NumberMaskConfig = {}): MaskitoOptions => maskitoNumber({
+    minusSign:             config.allowNegative    ? '-'                     : '',
+    maximumFractionDigits: config.maxDecimalDigits ? config.maxDecimalDigits : 0,
+    thousandSeparator:     ''
+});

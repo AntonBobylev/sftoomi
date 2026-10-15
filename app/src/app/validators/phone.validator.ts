@@ -15,6 +15,6 @@ export default function phoneValidator(): ValidatorFn
 
         return valid
             ? null
-            : {phone: {value: control.value}};
+            : { phone: { value: control.value } };
     };
 }

@@ -19,6 +19,6 @@ export default abstract class AppUppercaseAbleField extends AppBaseField
             }
         }
 
-        this.onChange.emit(event.data);
+        this.changeEvent.emit(event.data);
     }
 }

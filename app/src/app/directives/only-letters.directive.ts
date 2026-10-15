@@ -1,7 +1,7 @@
 import { Directive, HostListener } from '@angular/core';
 
 @Directive({
-    selector: '[onlyLetters]',
+    selector: '[onlyLetters]'
 })
 export default class OnlyLettersDirective
 {

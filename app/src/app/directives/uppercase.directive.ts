@@ -1,4 +1,4 @@
-import { Directive, HostListener } from '@angular/core';
+import { Directive, HostListener, inject } from '@angular/core';
 import { NgControl } from '@angular/forms';
 
 @Directive({
@@ -6,9 +6,7 @@ import { NgControl } from '@angular/forms';
 })
 export default class UppercaseDirective
 {
-    constructor(private readonly control: NgControl)
-    {
-    }
+    private readonly control: NgControl = inject(NgControl);
 
     @HostListener('input', ['$event'])
     protected onInput(event: Event): void

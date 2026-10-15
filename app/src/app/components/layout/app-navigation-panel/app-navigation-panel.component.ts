@@ -1,4 +1,4 @@
-import { Component, input, InputSignal, WritableSignal } from '@angular/core';
+import { Component, inject, input, InputSignal, WritableSignal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router'
 import { NgTemplateOutlet } from '@angular/common'
 import { NzButtonComponent } from 'ng-zorro-antd/button'
@@ -34,9 +34,7 @@ export default class AppNavigationPanelComponent
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
     protected readonly RoutesPermissions = RoutesPermissions
 
-    constructor(private readonly router: Router)
-    {
-    }
+    private readonly router: Router = inject(Router);
 
     protected isRouteSelected(route: RoutesPaths): boolean
     {

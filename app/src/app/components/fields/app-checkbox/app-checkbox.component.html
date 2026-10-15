@@ -1,6 +1,7 @@
 <span [formGroup]="form()">
     <label nz-checkbox
            [formControlName]="name()"
+           [for]="name()"
     >
         <span [nz-tooltip]="tooltip()">
             {{ label() }}

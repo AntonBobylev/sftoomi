@@ -68,7 +68,7 @@ export default abstract class AppBaseDialog implements OnInit, OnDestroy
 
             if (!Sftoomi.isEmpty(this.title)) {
                 this.getDialogInstance().updateConfig({
-                    nzTitle: this.title,
+                    nzTitle: this.title
                 });
             }
 

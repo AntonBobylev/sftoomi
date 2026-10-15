@@ -4,7 +4,7 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip'
 
 import { SafePipe } from '../../../../../pipes/safe.pipe'
 
-let AppTableRowViewImports = [
+const AppTableRowViewImports = [
     NzThSelectionComponent, NzTooltipDirective, NgStyle,
     NzTdAddOnComponent, NgComponentOutlet, SafePipe
 ];

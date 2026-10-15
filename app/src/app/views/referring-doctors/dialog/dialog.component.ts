@@ -1,4 +1,4 @@
-import { Component, inject, Signal, viewChild, ViewChild } from '@angular/core';
+import { Component, inject, Signal, viewChild } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NZ_MODAL_DATA, NzModalFooterDirective } from 'ng-zorro-antd/modal';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
@@ -15,11 +15,11 @@ import { onlyLettersValidator } from '../../../validators/only-letters.validator
 
 import getDoctorAPI from '../../../APIs/getDoctorAPI';
 
-import Facility from '../../../type/Facility';
+import Facility from '../../../interfaces/Facility';
 
-export type ReferringDoctorEditDialogData = {
+export interface ReferringDoctorEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'referring-doctor-edit-dialog',
@@ -68,10 +68,8 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
         }
 
         let facilitiesList: Facility[] = data.lists.facilities;
-        doctorFacilities.forEach(function (doctorFacility: Facility): void {
-            facilitiesList = facilitiesList.filter(function (facility: Facility): boolean {
-                return facility.id !== doctorFacility.id;
-            });
+        doctorFacilities.forEach((doctorFacility: Facility): void => {
+            facilitiesList = facilitiesList.filter((facility: Facility): boolean => facility.id !== doctorFacility.id);
         })
 
         this.facilitiesItemSelectorCtrl().setData(
@@ -82,18 +80,16 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
 
     protected isSaveButtonDisabled(): boolean
     {
-        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
+        const selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
 
         return this.form.invalid || selectedFacilities.length < 1;
     }
 
     protected override getAdditionalDataOnSave(data: FormData): FormData
     {
-        let selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
+        const selectedFacilities: AppItemSelectorDataListRow[] = this.facilitiesItemSelectorCtrl().getRightListData();
         if (selectedFacilities.length > 0) {
-            let facilitiesIds: string[] = selectedFacilities.map(function (facility: AppItemSelectorDataListRow): string {
-                return facility.value;
-            });
+            const facilitiesIds: string[] = selectedFacilities.map((facility: AppItemSelectorDataListRow): string => facility.value);
 
             data.append('doctor_facilities_ids', facilitiesIds.join(','));
         }
@@ -103,12 +99,10 @@ export default class ReferringDoctorEditDialogComponent extends AppBaseEditDialo
 
     private convertFacilitiesToItemSelectorRow(facilities: Facility[]): AppItemSelectorDataListRow[]
     {
-        return facilities.map(function (row: Facility): AppItemSelectorDataListRow {
-            return {
-                name:    row.short_name,
-                value:   row.id.toString(),
-                tooltip: row.full_name
-            };
-        });
+        return facilities.map((row: Facility): AppItemSelectorDataListRow => ({
+            name:    row.short_name,
+            value:   row.id.toString(),
+            tooltip: row.full_name
+        }));
     }
 }

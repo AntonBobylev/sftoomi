@@ -4,11 +4,11 @@ import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
-export type AppItemSelectorDataListRow = {
+export interface AppItemSelectorDataListRow {
     name:     string,
     value:    string,
     tooltip?: string
-};
+}
 
 type Item = {
     selected: boolean
@@ -34,14 +34,12 @@ export default class AppItemSelectorDataListComponent
 
     public setData(data: AppItemSelectorDataListRow[]): void
     {
-        this.data.set(data.map((row: AppItemSelectorDataListRow): Item => {
-            return {
-                selected: false,
-                value:    row.value,
-                name:     row.name,
-                tooltip:  row.tooltip
-            }
-        }));
+        this.data.set(data.map((row: AppItemSelectorDataListRow): Item => ({
+            selected: false,
+            value:    row.value,
+            name:     row.name,
+            tooltip:  row.tooltip
+        })));
     }
 
     public getAllRows(): AppItemSelectorDataListRow[]

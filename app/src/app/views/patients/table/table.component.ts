@@ -10,10 +10,10 @@ import AppGenderColumnComponent from '../../../components/templates/gender/colum
 
 import getPatientsAPI from '../../../APIs/getPatientsAPI';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 import Gender from '../../../type/Gender';
 
-type TableRow = {
+interface TableRow {
     id:          number,
     last_name:   string,
     first_name:  string,
@@ -21,7 +21,7 @@ type TableRow = {
     gender:      Gender,
     dob:         string | null,
     phone:       string | null
-};
+}
 
 @Component({
     selector: 'patients-table',

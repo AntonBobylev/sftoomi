@@ -90,7 +90,7 @@ export default class Sftoomi
      */
     public static dateShort(date?: string | null | Date): string
     {
-        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
+        const luxonDate: DateTime | null = this.parseDateToLuxon(date);
         if (!luxonDate || !luxonDate.isValid) {
             return '';
         }
@@ -106,7 +106,7 @@ export default class Sftoomi
      */
     public static dateTime(date?: string | null | Date): string
     {
-        let luxonDate: DateTime | null = this.parseDateToLuxon(date);
+        const luxonDate: DateTime | null = this.parseDateToLuxon(date);
         if (!luxonDate || !luxonDate.isValid) {
             return '';
         }
@@ -223,9 +223,7 @@ export default class Sftoomi
      */
     public static format(format: string, ...args: any[]): string
     {
-        return format.replace(/\{(\d+)}/g, (_m, i: number) =>{
-            return args[i];
-        });
+        return format.replace(/\{(\d+)}/g, (_m, i: number) => args[i]);
     }
 
     /**
@@ -365,7 +363,7 @@ export default class Sftoomi
      */
     public static formValuesToFormData(formValues: object): FormData
     {
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
         for (const [key, value] of Object.entries(formValues)) {
             let val: any = value;
 
@@ -417,7 +415,7 @@ export default class Sftoomi
      * @param what  - The object containing properties to merge or override
      * @returns A new merged object
      */
-    public static mergeObjects(where: Object, what: Object): object
+    public static mergeObjects(where: object, what: object): object
     {
         return {
             ...where,

@@ -1,10 +1,10 @@
 import Sftoomi from '../class/Sftoomi';
 
-export type MomentDateFormat = {
+export interface MomentDateFormat {
     date:            string,
     date_time:       string,
     date_time_short: string
-};
+}
 
 export default function getLocalDateFormat(): MomentDateFormat
 {

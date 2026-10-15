@@ -8,9 +8,9 @@ import { DialogType } from '../../../class/Dialog';
 @Directive()
 export default abstract class AppBaseFilters implements AfterViewInit
 {
-    public readonly onSearch: OutputEmitterRef<any> = output();
-    public readonly onClear:  OutputEmitterRef<any> = output();
-    public readonly onLoaded: OutputEmitterRef<any> = output();
+    public readonly searchEvent: OutputEmitterRef<any> = output();
+    public readonly clearEvent:  OutputEmitterRef<any> = output();
+    public readonly loadedEvent: OutputEmitterRef<any> = output();
 
     protected abstract readonly form: FormGroup;
 
@@ -38,7 +38,7 @@ export default abstract class AppBaseFilters implements AfterViewInit
 
                 this.afterLoad(data);
 
-                this.onLoaded.emit(this.getValues());
+                this.loadedEvent.emit(this.getValues());
             },
             failure: (_code: any, message: any, _request: any): void => {
                 if (message === 'canceled') {
@@ -62,7 +62,7 @@ export default abstract class AppBaseFilters implements AfterViewInit
     {
         this.clearFields();
 
-        this.onClear.emit(Sftoomi.mergeObjects(
+        this.clearEvent.emit(Sftoomi.mergeObjects(
             this.getValues(),
             { doSearch: doSearch || false }
         ));
@@ -76,10 +76,11 @@ export default abstract class AppBaseFilters implements AfterViewInit
             return;
         }
 
-        this.onSearch.emit(this.getValues());
+        this.searchEvent.emit(this.getValues());
     }
 
     protected afterLoad(_data: any): void
     {
+        // will be useful in children's classes
     }
 }

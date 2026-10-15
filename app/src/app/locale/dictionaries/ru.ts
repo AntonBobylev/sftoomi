@@ -1,4 +1,4 @@
-let ruDictionary: object =  {
+const ruDictionary: object =  {
     add: 'Добавить',
     clear: 'Очистить',
     dob_full: 'Дата рождения',
@@ -219,7 +219,7 @@ let ruDictionary: object =  {
                 links_panel_title: 'Связи',
                 login: 'Логин',
                 reset_password: 'Сбросить пароль',
-                reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail',
+                reset_password_tooltip: 'Сгенерировать новый пароль и послать его пользователю через e-mail'
             }
         },
         report_templates: {

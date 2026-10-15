@@ -1,6 +1,4 @@
-type changePasswordAPI = {
-    success: boolean,
+export default interface changePasswordAPI {
+    success:  boolean,
     message?: string
-};
-
-export default changePasswordAPI;
+}

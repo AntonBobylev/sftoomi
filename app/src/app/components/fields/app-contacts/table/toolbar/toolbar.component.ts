@@ -29,7 +29,7 @@ export default class AppContactsTableToolbarComponent extends AppBaseToolbar
     {
         let currentRecordIndex: number | undefined;
         if (additionalData) {
-            let data: AppContactsTableRecord[] = this.table().getData();
+            const data: AppContactsTableRecord[] = this.table().getData();
             currentRecordIndex = data.findIndex((record: AppContactsTableRecord): boolean => record === additionalData);
             if (currentRecordIndex < 0) {
                 currentRecordIndex = undefined;
@@ -48,7 +48,7 @@ export default class AppContactsTableToolbarComponent extends AppBaseToolbar
                 return;
             }
 
-            let records: AppContactsTableRecord[] = this.table().getData(),
+            const records: AppContactsTableRecord[] = this.table().getData(),
                 recordIndex: number = currentRecordIndex ?? -1;
 
             if (recordIndex >= 0) {

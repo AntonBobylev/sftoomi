@@ -1,7 +1,7 @@
-import Study from '../type/Study';
-import GenericTemplate from '../type/GenericTemplate'
+import Study from '../interfaces/Study';
+import GenericTemplate from '../interfaces/GenericTemplate'
 
-type getTemplateAPI = {
+export default interface getTemplateAPI {
     data: {
         id?:             number,
         name?:           string,
@@ -12,6 +12,4 @@ type getTemplateAPI = {
         studies:           Study[],
         generic_templates: GenericTemplate[]
     }
-};
-
-export default getTemplateAPI;
+}

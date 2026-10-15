@@ -4,7 +4,7 @@ import { DialogType } from './Dialog';
 
 import SftoomiCookie from '../enumerations/SftoomiCookies.enumeration';
 
-type RequestOptions = {
+interface RequestOptions {
     url: string,
     data?: FormData,
     method?: string,
@@ -13,7 +13,7 @@ type RequestOptions = {
     success?: Function,
     failure?: Function,
     finally?: Function
-};
+}
 
 type Request = {
     headers?: Record<string, string>
@@ -85,11 +85,11 @@ export default class Fetcher
                 if (typeof e === 'string') {
                     message = e.toUpperCase();
                 } else if (e instanceof Error) {
-                    let stack:          string = e.stack ?? '',
-                        stackArray:     string[] = stack.split('    '),
-                        stackFormatted: string = '';
+                    const stack:          string = e.stack ?? '',
+                          stackArray:     string[] = stack.split('    ')
 
-                    stackArray.forEach(function (row: string): void {
+                    let stackFormatted: string = '';
+                    stackArray.forEach((row: string): void => {
                         stackFormatted += `<div>&nbsp;&nbsp;&nbsp;&nbsp;${row}</div>`;
                     });
 
@@ -113,24 +113,24 @@ export default class Fetcher
                 return;
             }
 
-            let errorData = error?.response?.data,
-                traceFormatted: string = '';
+            const errorData = error?.response?.data;
 
+            let traceFormatted: string = '';
             if (errorData && errorData.trace) {
-                let trace: string[] = typeof errorData.trace === 'string'
+                const trace: string[] = typeof errorData.trace === 'string'
                     ? errorData.trace.split('\n')
                     : [];
 
-                trace.forEach(function (row: string): void {
+                trace.forEach((row: string): void => {
                     traceFormatted += `<div>${row}</div>`;
                 });
             }
 
-            let errorMessage = errorData?.message || error?.message || 'Unknown error',
-                message: string = `<div style="overflow-y: auto; max-height: 300px;">
-                                       <div>${errorMessage}</div>
-                                       ${traceFormatted}
-                                   </div>`;
+            const errorMessage    = errorData?.message || error?.message || 'Unknown error',
+                  message: string = `<div style="overflow-y: auto; max-height: 300px;">
+                                         <div>${errorMessage}</div>
+                                         ${traceFormatted}
+                                     </div>`;
 
             Sftoomi.Dialog.show(message, DialogType.ERROR);
         } finally {

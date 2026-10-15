@@ -23,18 +23,15 @@ export default class AppContactsTablePositionMoverColumnComponent extends AppTab
 {
     protected move(direction: 'up' | 'down'): void
     {
-        let allRecords: AppContactsTableRecord[] = Sftoomi.duplicateEntity(this.table().getData()),
-            maxPosition: number = this.getContactTypeMaxPosition();
+        const allRecords: AppContactsTableRecord[] = Sftoomi.duplicateEntity(this.table().getData()),
+              maxPosition: number = this.getContactTypeMaxPosition();
 
         if (maxPosition < 1) {
             // something strange happened
             return;
         }
 
-        let currentRecordIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => {
-            return record.position == this.rowData().position;
-        });
-
+        const currentRecordIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => record.position == this.rowData().position);
         if (currentRecordIndex < 0) {
             // something strange happened
             // the record wasn't found in table data
@@ -51,10 +48,7 @@ export default class AppContactsTablePositionMoverColumnComponent extends AppTab
             nextPosition = allRecords[currentRecordIndex].position + 1;
         }
 
-        let recordWithNewPositionIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => {
-            return record.position == nextPosition;
-        });
-
+        const recordWithNewPositionIndex: number = allRecords.findIndex((record: AppContactsTableRecord): boolean => record.position == nextPosition);
         if (currentRecordIndex < 0) {
             // something strange happened
             // we cannot be here now
@@ -79,9 +73,9 @@ export default class AppContactsTablePositionMoverColumnComponent extends AppTab
 
     private getContactTypeMaxPosition(): number
     {
-        let allRecords: AppContactsTableRecord[] = this.table().getData(),
-            maxPosition: number = 0;
+        const allRecords: AppContactsTableRecord[] = this.table().getData();
 
+        let maxPosition: number = 0;
         allRecords.forEach((record: AppContactsTableRecord): void => {
             if (record.type === this.rowData().type && record.position > maxPosition) {
                 maxPosition = record.position;

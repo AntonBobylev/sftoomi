@@ -1,7 +1,5 @@
-type getDraftViewerTemplateData = {
+export default interface getDraftViewerTemplateData {
     data: {
         template_content: string
     }
-};
-
-export default getDraftViewerTemplateData;
+}

@@ -8,10 +8,10 @@ export enum DialogType {
     ERROR
 }
 
-export type DialogConfig = {
+export interface DialogConfig {
     width?: number | string,
     maxWidth?: number | string
-};
+}
 
 export default class Dialog
 {

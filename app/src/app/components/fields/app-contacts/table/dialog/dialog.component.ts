@@ -14,12 +14,12 @@ import AppPhoneFieldComponent from '../../../../core/app-phone-field.component'
 
 import phoneValidator from '../../../../../validators/phone.validator'
 
-export type ContactsEditDialogData = {
+export interface ContactsEditDialogData {
     item_id?: number,
     type:     AppContactType,
     position: number,
     text:     string
-};
+}
 
 @Component({
     selector: 'contacts-edit-dialog',
@@ -101,7 +101,7 @@ export default class ContactsEditDialogComponent extends AppBaseEditDialog
 
     protected updateTextFieldValidators(type: string): void
     {
-        let textCtrl = this.form.get('text')!;
+        const textCtrl = this.form.get('text')!;
 
         textCtrl.setValidators(this.validatorsByTypes[type]);
         textCtrl.updateValueAndValidity();

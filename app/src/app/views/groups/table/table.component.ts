@@ -8,7 +8,7 @@ import AppTableComponent from '../../../components/core/app-table/app-table.comp
 import GroupsTableToolbarComponent from './toolbar/toolbar.component'
 import GroupsTablePermissionsColumnComponent from './columns/permissions/column.component'
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'groups-table',

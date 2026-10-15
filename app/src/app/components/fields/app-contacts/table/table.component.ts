@@ -8,14 +8,14 @@ import AppTableComponent from '../../../core/app-table/app-table.component';
 import AppContactsTableToolbarComponent from './toolbar/toolbar.component';
 import AppContactsTablePositionMoverColumnComponent from './position-mover-column/position-mover-column.component'
 
-import AppTableColumn from '../../../../type/AppTableColumn';
+import AppTableColumn from '../../../../interfaces/AppTableColumn';
 
-export type AppContactsTableRecord = {
+export interface AppContactsTableRecord {
     item_id?: number,
     type:     AppContactType,
     position: number,
     text:     string
-};
+}
 
 export type AppContactType = 'email' | 'phone' | 'address';
 
@@ -53,7 +53,7 @@ export default class AppContactsTableComponent extends AppTableComponent
         name: 'type',
         width: '120px',
         header: {
-            caption: Sftoomi.Translator.translate('fields.contacts.type'),
+            caption: Sftoomi.Translator.translate('fields.contacts.type')
         },
         valueRenderer: (type: AppContactsTableRecord['type']): string => {
             switch (type) {

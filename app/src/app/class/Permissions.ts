@@ -11,7 +11,7 @@ export default class Permissions
 
     public get(): string[]
     {
-        let permissions: string | null = sessionStorage.getItem(this.storageKey);
+        const permissions: string | null = sessionStorage.getItem(this.storageKey);
 
         return permissions
             ? permissions.split(',')
@@ -24,7 +24,7 @@ export default class Permissions
             return true;
         }
 
-        let permissions: string[] = this.get();
+        const permissions: string[] = this.get();
         if (permissions.includes('*')) {
             return true;
         }
@@ -38,7 +38,7 @@ export default class Permissions
             return true;
         }
 
-        let permissions: string[] = this.get();
+        const permissions: string[] = this.get();
         if (permissions.includes('*')) {
             return true;
         }

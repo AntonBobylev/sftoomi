@@ -1,6 +1,6 @@
-import Permission from '../type/Permission'
+import Permission from '../interfaces/Permission'
 
-type getGroupAPI = {
+export default interface getGroupAPI {
     data: {
         id:   number,
         name: string,
@@ -9,6 +9,4 @@ type getGroupAPI = {
     lists: {
         permissions: Permission[]
     }
-};
-
-export default getGroupAPI;
+}

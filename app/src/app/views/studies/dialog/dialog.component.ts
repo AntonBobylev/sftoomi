@@ -12,9 +12,9 @@ import AppComboComponent, { AppComboRecord } from '../../../components/core/app-
 
 import getStudyAPI from '../../../APIs/getStudyAPI';
 
-export type StudiesEditDialogData = {
+export interface StudiesEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'studies-edit-dialog',

@@ -3,7 +3,7 @@ import { NzCheckboxComponent } from 'ng-zorro-antd/checkbox'
 
 import { SafePipe } from '../../../../../pipes/safe.pipe'
 
-let AppTableCardViewImports = [
+const AppTableCardViewImports = [
     NzCheckboxComponent,
     SafePipe,
     NgComponentOutlet

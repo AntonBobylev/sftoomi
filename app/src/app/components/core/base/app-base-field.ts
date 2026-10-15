@@ -13,7 +13,7 @@ export default abstract class AppBaseField<OnChangeEvent = any>
 
     public readonly tooltip: InputSignal<string | undefined> = input();
 
-    public readonly onChange: OutputEmitterRef<OnChangeEvent> = output();
+    public readonly changeEvent: OutputEmitterRef<OnChangeEvent> = output();
 
     protected readonly tooltipPlacement: NzPlacementType = 'bottomCenter';
 

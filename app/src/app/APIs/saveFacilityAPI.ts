@@ -1,5 +1,3 @@
-type saveFacilityAPI = {
+export default interface saveFacilityAPI {
     id: number
-};
-
-export default saveFacilityAPI;
+}

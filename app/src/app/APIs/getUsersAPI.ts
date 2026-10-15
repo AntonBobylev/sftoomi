@@ -1,6 +1,6 @@
-import Group from '../type/Group'
+import Group from '../interfaces/Group'
 
-type getUsersAPI = {
+export default interface getUsersAPI {
     data: {
         id:          number,
         login:       string,
@@ -12,6 +12,4 @@ type getUsersAPI = {
         }
     }[],
     total: number
-};
-
-export default getUsersAPI;
+}

@@ -34,7 +34,7 @@ export default abstract class AppBaseToolbar
     {
         event.stopPropagation();
 
-        let selectedRecords: any[] = this.table().getSelection();
+        const selectedRecords: any[] = this.table().getSelection();
         if (selectedRecords.length < 1) {
             Sftoomi.popupMsgService?.nothingSelected();
 
@@ -47,7 +47,7 @@ export default abstract class AppBaseToolbar
             return;
         }
 
-        let id: number = selectedRecords[0].id;
+        const id: number = selectedRecords[0].id;
         this.openEditDialog(
             Sftoomi.format(this.editDialogEditTitle, id),
             id,

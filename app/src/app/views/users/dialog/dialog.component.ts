@@ -19,11 +19,11 @@ import { onlyLettersValidator } from '../../../validators/only-letters.validator
 
 import getUserAPI from '../../../APIs/getUserAPI';
 
-import Group from '../../../type/Group'
+import Group from '../../../interfaces/Group'
 
-export type UserEditDialogData = {
+export interface UserEditDialogData {
     id?: number
-};
+}
 
 @Component({
     selector: 'user-edit-dialog',
@@ -76,12 +76,10 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     protected afterLoad(data: getUserAPI): void
     {
-        this.groupsCtrl().setData(data.lists.groups.map((group: Group): AppComboRecord => {
-            return {
-                caption: group.name,
-                value:   group.id
-            }
-        }));
+        this.groupsCtrl().setData(data.lists.groups.map((group: Group): AppComboRecord => ({
+            caption: group.name,
+            value:   group.id
+        })));
 
         if (this.data.id) {
             this.form.get('login')?.setValue(data.data.login);
@@ -123,7 +121,8 @@ export default class UserEditDialogComponent extends AppBaseEditDialog
 
     private getEmailAddress(): string | null
     {
-        let userEmails: AppContactsTableRecord['text'][] = this.contactsCtrl().getValue()
+        const userEmails: AppContactsTableRecord['text'][] = this.contactsCtrl()
+            .getValue()
             .filter((record: AppContactsTableRecord): boolean => record.type === 'email')
             .map((record: AppContactsTableRecord): AppContactsTableRecord['text'] => record.text);
 

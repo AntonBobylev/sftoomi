@@ -1,4 +1,4 @@
-let usDictionary: object =  {
+const usDictionary: object =  {
     add: 'Add',
     clear: 'Clear',
     dob_full: 'Date of birth',
@@ -117,7 +117,7 @@ let usDictionary: object =  {
         patients: {
             dialog: {
                 add_title: 'Add patient',
-                edit_title: 'Edit patient #{0}',
+                edit_title: 'Edit patient #{0}'
             },
             phone_column_header_tooltip: 'Patient\'s cell phone'
         },
@@ -219,7 +219,7 @@ let usDictionary: object =  {
                 links_panel_title: 'Links',
                 login: 'Login',
                 reset_password: 'Reset password',
-                reset_password_tooltip: 'Generate the new password and send it via email',
+                reset_password_tooltip: 'Generate the new password and send it via email'
             }
         },
         report_templates: {

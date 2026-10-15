@@ -1,9 +1,9 @@
-import Doctor from '../type/Doctor';
-import Facility from '../type/Facility';
-import Study from '../type/Study';
-import Patient from '../type/Patient';
+import Doctor from '../interfaces/Doctor';
+import Facility from '../interfaces/Facility';
+import Study from '../interfaces/Study';
+import Patient from '../interfaces/Patient';
 
-type getExaminationAPI = {
+export default interface getExaminationAPI {
     data: {
         id?: string,
         date?: string,
@@ -22,6 +22,4 @@ type getExaminationAPI = {
         })[],
         studies: Study[]
     }
-};
-
-export default getExaminationAPI;
+}

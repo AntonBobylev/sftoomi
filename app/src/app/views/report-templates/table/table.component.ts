@@ -6,7 +6,7 @@ import Sftoomi from '../../../class/Sftoomi';
 import AppTableComponent from '../../../components/core/app-table/app-table.component';
 import ReportTemplatesTableToolbarComponent from './toolbar/toolbar.component';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'report-templates-table',

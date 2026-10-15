@@ -7,10 +7,10 @@ import Fetcher from '../../../class/Fetcher';
 
 import AppBaseField from '../base/app-base-field';
 
-export type AppComboRecord<T = string | number> = {
+export interface AppComboRecord<T = string | number> {
     caption: string,
     value:   T
-};
+}
 
 @Component({
     selector: 'app-combo',
@@ -66,7 +66,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
 
         this.setData([]);
 
-        let data: FormData = new FormData();
+        const data: FormData = new FormData();
 
         data.append('query', query);
         data.append('exclude_ids', this.getControl()?.value ?? '');

@@ -29,7 +29,7 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
 
     override ngOnInit(): void
     {
-        let dos: DateTime | null = this.getCurrentDos();
+        const dos: DateTime | null = this.getCurrentDos();
 
         queueMicrotask((): void => {
             this.fixExaminationInUrl(
@@ -42,7 +42,7 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
 
     ngAfterViewInit(): void
     {
-        let dos: DateTime | null = this.getCurrentDos();
+        const dos: DateTime | null = this.getCurrentDos();
         if (dos) {
             this.filtersCtrl().setValues({
                 ...this.filtersCtrl().getValues(),
@@ -89,12 +89,12 @@ export default class ExaminationsComponent extends AppBaseModuleWithFilters impl
 
     private getCurrentDos(): DateTime | null
     {
-        let params: Params = this.activatedRoute.snapshot.queryParams;
+        const params: Params = this.activatedRoute.snapshot.queryParams;
         if (this.Sftoomi.isEmpty(params['dos'])) {
             return null;
         }
 
-        let dos: DateTime = DateTime.fromISO(params['dos']);
+        const dos: DateTime = DateTime.fromISO(params['dos']);
 
         return dos.isValid
             ? dos

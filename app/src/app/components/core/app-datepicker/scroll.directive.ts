@@ -26,9 +26,7 @@ export default class AppDatePickerScrollMonthDirective
 
         event.preventDefault();
 
-        event.deltaY < 0
-            ? this.navigateMonth(-1)
-            : this.navigateMonth(1);
+        this.navigateMonth(event.deltaY < 0 ? -1 : 1);
     }
 
     private navigateMonth(direction: number): void

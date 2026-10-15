@@ -8,9 +8,9 @@ import ExaminationsTablePatientColumnComponent from './patient-column/patient-co
 import ExaminationsTableStudiesColumnComponent from './studies-column/studies-column.component';
 import ExaminationsTableReferringColumnComponent from './referring-column/referring-column.component';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
-export type ExaminationsTableRowExam = {
+export interface ExaminationsTableRowExam {
     exam_id:            number,
     exam_drafts_exists: boolean
     study_id:           number,
@@ -18,7 +18,7 @@ export type ExaminationsTableRowExam = {
     study_full_name:    string
 }
 
-export type ExaminationsTableRow = {
+export interface ExaminationsTableRow {
     id: number,
     patient: {
         id:          number,

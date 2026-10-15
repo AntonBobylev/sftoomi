@@ -1,11 +1,9 @@
-import Doctor from '../type/Doctor';
-import Facility from '../type/Facility';
+import Doctor from '../interfaces/Doctor';
+import Facility from '../interfaces/Facility';
 
-type getFacilitiesAPI = {
+export default interface getFacilitiesAPI {
     data: (Facility & {
         facility_doctors: Doctor[]
     })[],
     total: number
-};
-
-export default getFacilitiesAPI;
+}

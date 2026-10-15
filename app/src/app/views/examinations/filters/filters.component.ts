@@ -14,15 +14,15 @@ import AppLoadingSpinnerComponent from '../../../components/misc/app-loading-spi
 
 import getExaminationsFiltersAPI from '../../../APIs/getExaminationsFiltersAPI';
 
-export type ExaminationsFiltersPanelIn = {
+export interface ExaminationsFiltersPanelIn {
     examination_date: Date,
     examination_id:   number | null
-};
+}
 
-export type ExaminationsFiltersPanelOut = {
+export interface ExaminationsFiltersPanelOut {
     examination_date: Date,
     examination_id:   number | null
-};
+}
 
 export type ExaminationsFiltersPanelClearEventData = ExaminationsFiltersPanelOut & {
     doSearch: boolean
@@ -42,9 +42,9 @@ export default class ExaminationsFiltersComponent extends AppBaseFilters
 {
     private readonly examinationDatePickerCtrl: Signal<AppDatepickerComponent> = viewChild.required('examinationDatePickerCtrl');
 
-    public override readonly onSearch: OutputEmitterRef<ExaminationsFiltersPanelOut>            = output();
-    public override readonly onClear:  OutputEmitterRef<ExaminationsFiltersPanelClearEventData> = output();
-    public override readonly onLoaded: OutputEmitterRef<ExaminationsFiltersPanelOut>            = output();
+    public override readonly searchEvent: OutputEmitterRef<ExaminationsFiltersPanelOut>            = output();
+    public override readonly clearEvent:  OutputEmitterRef<ExaminationsFiltersPanelClearEventData> = output();
+    public override readonly loadedEvent: OutputEmitterRef<ExaminationsFiltersPanelOut>            = output();
 
     protected readonly form: FormGroup = new FormGroup({
         examination_date: new FormControl<Date   | null>(null, [Validators.required]),

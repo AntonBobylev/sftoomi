@@ -80,7 +80,7 @@ export const routes: Routes = [{
     redirectTo: fallbackRoutePath
 }];
 
-export const RoutesPermissions: Map<string, string | undefined> = new Map([[
+export const RoutesPermissions = new Map<string, string | undefined>([[
     RoutesPaths.DRAFT_VIEWER,
     'EXAMINATIONS_MODULE::EDIT_DRAFT'
 ], [

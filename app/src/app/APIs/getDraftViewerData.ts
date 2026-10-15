@@ -1,4 +1,4 @@
-type getDraftViewerData = {
+export default interface getDraftViewerData {
     data: {
         last_edited_draft_template_id: number | null
     },
@@ -8,6 +8,4 @@ type getDraftViewerData = {
             name:    string
         }[]
     }
-};
-
-export default getDraftViewerData;
+}

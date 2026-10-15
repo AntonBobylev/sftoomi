@@ -10,7 +10,7 @@ import LinksTablePermissionsColumnComponent from './columns/links/column.compone
 
 import getUsersAPI from '../../../APIs/getUsersAPI';
 
-import AppTableColumn from '../../../type/AppTableColumn';
+import AppTableColumn from '../../../interfaces/AppTableColumn';
 
 @Component({
     selector: 'users-table',
