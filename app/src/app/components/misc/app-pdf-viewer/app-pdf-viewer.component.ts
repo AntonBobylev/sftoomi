@@ -13,15 +13,15 @@ import { DateTime } from 'luxon';
 
 export default class AppPdfViewerComponent
 {
-    public readonly src: InputSignal<string> = input.required();
+    public readonly src:                 InputSignal<string> = input.required();
 
-    public readonly showOpenFileButton: InputSignal<false> = input(false);
-    public readonly showTextButton: InputSignal<false> = input(false);
-    public readonly showDrawButton: InputSignal<false> = input(false);
+    public readonly showOpenFileButton:  InputSignal<false> = input(false);
+    public readonly showTextButton:      InputSignal<false> = input(false);
+    public readonly showDrawButton:      InputSignal<false> = input(false);
     public readonly showHighlightButton: InputSignal<false> = input(false);
-    public readonly showAddImageButton: InputSignal<false> = input(false);
+    public readonly showAddImageButton:  InputSignal<false> = input(false);
 
-    public readonly height: InputSignal<string> = input('600px');
+    public readonly height:              InputSignal<string> = input('600px');
 
-    public readonly filename: InputSignal<string> = input(DateTime.now().toSeconds().toString() + '.pdf');
+    public readonly filename:            InputSignal<string> = input(DateTime.now().toSeconds().toString() + '.pdf');
 }
