@@ -1,4 +1,4 @@
-import { Component, effect, Input, signal, WritableSignal } from '@angular/core'
+import { Component, effect, input, Input, InputSignal, signal, WritableSignal } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { FormControl, Validators } from '@angular/forms';
@@ -31,7 +31,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
 {
     @Input() public override label: string = Sftoomi.Translator.translate('fields.studies_selector.caption');
 
-    @Input({required: true}) public store: WritableSignal<AppComboRecord[]> = signal<AppComboRecord[]>([]);
+    public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
 
     protected studiesCollection: StudyCollectionRow[] = [];
 
@@ -42,7 +42,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
         super();
 
         effect((): void => {
-            if (this.store && this.store().length > 0) {
+            if (this.storeSignal()().length > 0) {
                 this.updateStudiesStores();
                 this.clearInvalidForceSelectedStudies();
             }
@@ -86,7 +86,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
 
     protected isAddStudyClickDisabled(): boolean
     {
-        return this.getAddedStudiesCount() >= this.store().length;
+        return this.getAddedStudiesCount() >= this.storeSignal()().length;
     }
 
     private updateStudiesStores(): void
@@ -104,7 +104,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
                 studiesToExclude.splice(currentStudyIndex, 1);
             }
 
-            let filteredStudies: AppComboRecord[] = this.store().filter(function (record: AppComboRecord): boolean {
+            let filteredStudies: AppComboRecord[] = this.storeSignal()().filter(function (record: AppComboRecord): boolean {
                 let includes: boolean = false;
                 studiesToExclude.forEach(study => {
                     if (record.value == study) {
@@ -144,7 +144,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
         this.form.addControl('study' + nextIndex, control);
         this.studiesCollection.push({
             index: nextIndex,
-            store: signal(this.store()),
+            store: signal(this.storeSignal()()),
             control: control
         });
 
@@ -165,7 +165,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
                 return;
             }
 
-            let storeRecord: AppComboRecord | undefined = this.store().find(function (record: AppComboRecord): boolean {
+            let storeRecord: AppComboRecord | undefined = this.storeSignal()().find(function (record: AppComboRecord): boolean {
                 return record.value === study.control.value;
             });
 
