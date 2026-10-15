@@ -1,9 +1,9 @@
-<span [formGroup]="form">
+<span [formGroup]="form()">
     <label nz-checkbox
-           [formControlName]="name"
+           [formControlName]="name()"
     >
-        <span [nz-tooltip]="tooltip">
-            {{ label }}
+        <span [nz-tooltip]="tooltip()">
+            {{ label() }}
         </span>
     </label>
 </span>

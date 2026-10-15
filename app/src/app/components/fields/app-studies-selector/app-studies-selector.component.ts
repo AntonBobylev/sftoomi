@@ -1,4 +1,4 @@
-import { Component, effect, input, Input, InputSignal, signal, WritableSignal } from '@angular/core';
+import { Component, effect, input, InputSignal, signal, WritableSignal } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
 import { FormControl, Validators } from '@angular/forms';
@@ -11,8 +11,8 @@ import { AppComboRecord } from '../../core/app-combo/app-combo.component';
 import AppStudiesSelectorComboComponent from './app-studies-selector-combo/app-studies-selector-combo.component';
 
 type StudyCollectionRow = {
-    index: number,
-    store: WritableSignal<AppComboRecord[]>,
+    index:   number,
+    store:   WritableSignal<AppComboRecord[]>,
     control: FormControl<number | null>
 };
 
@@ -29,7 +29,7 @@ type StudyCollectionRow = {
 
 export default class AppStudiesSelectorComponent extends AppBaseField
 {
-    @Input() public override label: string = Sftoomi.Translator.translate('fields.studies_selector.caption');
+    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
 
     public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
 
@@ -76,7 +76,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
 
     protected onRemoveClick(studyIndex: number): void
     {
-        this.form.removeControl('study' + studyIndex);
+        this.form().removeControl('study' + studyIndex);
         Sftoomi.removeArrayItemByIndex(this.studiesCollection, this.studiesCollection.findIndex(function (study: StudyCollectionRow): boolean {
             return study.index === studyIndex;
         }));
@@ -141,7 +141,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
 
         this.lastIndex = nextIndex;
 
-        this.form.addControl('study' + nextIndex, control);
+        this.form().addControl('study' + nextIndex, control);
         this.studiesCollection.push({
             index: nextIndex,
             store: signal(this.storeSignal()()),
@@ -177,7 +177,7 @@ export default class AppStudiesSelectorComponent extends AppBaseField
 
             let controlName: string | undefined = Sftoomi.getFormControlName(study.control);
             if (controlName) {
-                this.form.removeControl(controlName);
+                this.form().removeControl(controlName);
             }
         });
     }

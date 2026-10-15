@@ -46,7 +46,7 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
 
     ngAfterViewInit(): void
     {
-        this.form.get(this.name)
+        this.getControl()
             ?.valueChanges
             .pipe(takeUntilDestroyed(this.destroyRef))
             .subscribe((date: Date | null): void => this.onChange.emit(date));
@@ -74,7 +74,7 @@ export default class AppDatepickerComponent extends AppBaseField implements Afte
 
     protected isSelected(date: Date): boolean
     {
-        let currentSelectedDate: Date | null = this.form.get(this.name)?.value;
+        let currentSelectedDate: Date | null = this.getControl()?.value;
         if (!currentSelectedDate) {
             return false;
         }

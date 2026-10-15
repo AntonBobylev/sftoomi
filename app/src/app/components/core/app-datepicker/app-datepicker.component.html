@@ -1,13 +1,13 @@
-<nz-form-item [formGroup]="form">
-    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
-                   [nzFor]="name"
+<nz-form-item [formGroup]="form()">
+    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form(), name())"
+                   [nzFor]="name()"
     >
-        {{ label }}
+        {{ label() }}
     </nz-form-label>
 
     <nz-form-control [nzErrorTip]="errorTpl">
-        <nz-date-picker [formControlName]="name"
-                        [id]="name"
+        <nz-date-picker [formControlName]="name()"
+                        [id]="name()"
                         [nzInline]="isInline()"
                         style="width: 100%; justify-content: center;"
                         [nzFormat]="getDatePickerLocalDateFormat()"
@@ -16,8 +16,8 @@
         />
 
         <ng-template #errorTpl>
-            <form-field-error-template [fieldName]="name"
-                                       [fieldForm]="form"
+            <form-field-error-template [fieldName]="name()"
+                                       [fieldForm]="form()"
             />
         </ng-template>
 

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input,  InputSignal } from '@angular/core';
 
 import AppComboImports from './app-combo/imports';
 
@@ -14,7 +14,7 @@ import Gender from '../../type/Gender';
 })
 export default class AppGenderComboComponent extends AppComboComponent<Gender>
 {
-    @Input() public override label: string = this.Sftoomi.Translator.translate('gender.caption');
+    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('gender.caption'));
 
     ngOnInit(): void
     {

@@ -1,4 +1,4 @@
-import { Component, input, Input, InputSignal, WritableSignal } from '@angular/core';
+import { Component, input, InputSignal, WritableSignal } from '@angular/core';
 import { NzOptionComponent, NzSelectComponent } from 'ng-zorro-antd/select';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -17,7 +17,7 @@ import { AppComboRecord } from '../../../core/app-combo/app-combo.component';
 })
 export default class AppStudiesSelectorComboComponent extends AppBaseField
 {
-    public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
+    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
 
-    @Input() public override label: string = 'Study'; // TODO: translate
+    public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
 }

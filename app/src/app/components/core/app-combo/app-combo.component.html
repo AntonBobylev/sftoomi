@@ -1,16 +1,16 @@
-<nz-form-item [formGroup]="form"
+<nz-form-item [formGroup]="form()"
               [class.inline-label]="inlineLabel()"
               [class.without-error-wrapper]="!errorsWrapperRequired()"
 >
-    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form, name)"
-                   [nzFor]="name"
+    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form(), name())"
+                   [nzFor]="name()"
     >
-        {{ label }}
+        {{ label() }}
     </nz-form-label>
     <nz-form-control [nzErrorTip]="errorTipTpl">
         <nz-select [nzAllowClear]="useClear()"
                    [nzPlaceHolder]="placeholder()"
-                   [formControlName]="name"
+                   [formControlName]="name()"
                    [nzShowArrow]="true"
                    [nzShowSearch]="useSearch() || !Sftoomi.isEmpty(remoteUrl())"
                    [nzServerSearch]="!Sftoomi.isEmpty(remoteUrl())"
@@ -18,7 +18,7 @@
                    (ngModelChange)="onSelectionChange()"
                    [nzLoading]="isLoading()"
                    [nzMode]="multiple() ? 'multiple' : 'default'"
-                   [nz-tooltip]="tooltip"
+                   [nz-tooltip]="tooltip()"
                    [nzTooltipPlacement]="tooltipPlacement"
         >
             @for (record of listOfOptions(); track record.value) {
@@ -29,8 +29,8 @@
         </nz-select>
 
         <ng-template #errorTipTpl>
-            <form-field-error-template [fieldName]="name"
-                                       [fieldForm]="form"
+            <form-field-error-template [fieldName]="name()"
+                                       [fieldForm]="form()"
             />
         </ng-template>
     </nz-form-control>

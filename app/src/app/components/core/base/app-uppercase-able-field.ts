@@ -1,4 +1,5 @@
 import { Directive, input, InputSignal } from '@angular/core';
+import { AbstractControl } from '@angular/forms';
 
 import AppBaseField from './app-base-field';
 
@@ -9,14 +10,13 @@ export default abstract class AppUppercaseAbleField extends AppBaseField
 
     protected onInput(event: any): void
     {
-        if (!this.form.get(this.name)?.value) {
-            this.onChange.emit(event.data);
+        const control: AbstractControl | null = this.getControl();
+        if (control) {
+            const value = control.value;
 
-            return;
-        }
-
-        if (this.useUppercase()) {
-            this.form.get(this.name)!.setValue((this.form.get(this.name)?.value).toUpperCase());
+            if (!this.Sftoomi.isEmpty(value) && value && this.useUppercase()) {
+                control.setValue(value.toUpperCase());
+            }
         }
 
         this.onChange.emit(event.data);

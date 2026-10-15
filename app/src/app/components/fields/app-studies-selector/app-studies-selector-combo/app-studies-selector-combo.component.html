@@ -1,9 +1,9 @@
-<div [formGroup]="form"
+<div [formGroup]="form()"
      style="width: 100%"
 >
     <nz-select nzShowSearch
                [nzPlaceHolder]="Sftoomi.Translator.translate('fields.studies_selector.combo.placeholder')"
-               [formControlName]="name"
+               [formControlName]="name()"
                style="width: 100%"
     >
         @for (record of storeSignal()(); track record.value) {

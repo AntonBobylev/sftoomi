@@ -69,7 +69,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
         let data: FormData = new FormData();
 
         data.append('query', query);
-        data.append('exclude_ids', this.form.get(this.name)?.value ?? '');
+        data.append('exclude_ids', this.getControl()?.value ?? '');
 
         this.isLoading.set(true);
         new Fetcher().request({
@@ -90,7 +90,7 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
 
     protected onSelectionChange(): void
     {
-        this.selectionChange.emit(this.form.get(this.name)?.value);
+        this.selectionChange.emit(this.getControl()?.value);
 
         if (this.Sftoomi.isEmpty(this.remoteUrl())) {
             return;
