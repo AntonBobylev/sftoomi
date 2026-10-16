@@ -18,4 +18,4 @@ RUN chown -R ${USER_ID}:${GROUP_ID} /var/www/project
 
 EXPOSE 4200
 
-CMD ["npm", "run", "start"]
+CMD ["tail", "-f", "/dev/null"]

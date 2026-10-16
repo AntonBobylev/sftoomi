@@ -22,6 +22,7 @@ stop:
 .PHONY: rebuild
 rebuild:
 	@$(DOCKER_COMPOSE) up -d --build
+	@$(MAKE) front-reinit
 
 .PHONY: rebuild-php
 rebuild-php:
@@ -30,6 +31,7 @@ rebuild-php:
 .PHONY: rebuild-node
 rebuild-node:
 	@$(DOCKER_COMPOSE) up -d --build node
+	@$(MAKE) front-reinit
 
 # APPLICATION
 .PHONY: app-init
@@ -87,20 +89,33 @@ db-migrate: db-create
 	$(MAKE) app-sync-permissions
 
 ## FRONT
-.PHONY: front-shell front-init front-clear front-reinit
+.PHONY: front-shell front-init front-clear front-reinit front-dev front-kill
 
 front-shell:
 	@$(DOCKER_COMPOSE) exec node sh
 
 front-init:
-	@echo "Installing npm dependencies..."
+	@echo "Installing frontend dependencies..."
+	@$(DOCKER_COMPOSE) exec -u root node chown -R $${USER_ID:-1000}:$${GROUP_ID:-1000} /var/www/project/app
 	@$(COMPOSE_EXEC) node npm install
 
 front-clear:
 	@echo "Cleaning frontend artifacts..."
-	@$(COMPOSE_EXEC) node rm -rf ./node_modules ./.angular ./dist
+	@$(MAKE) front-kill
+	@$(COMPOSE_EXEC) node sh -c "rm -rf ./node_modules/* ./node_modules/.* 2>/dev/null || true; rm -rf ./.angular ./dist"
+
+front-kill:
+	@echo "Killing old frontend processes..."
+	@$(DOCKER_COMPOSE) exec -u root node pkill -9 -f "ng serve" || true
+	@$(DOCKER_COMPOSE) exec -u root node pkill -9 -f "npm run start" || true
+	@$(DOCKER_COMPOSE) exec -u root node pkill -9 -f "node" || true
 
 front-reinit: front-clear front-init
+
+front-dev:
+	@echo "Starting frontend dev server..."
+	@$(MAKE) front-kill
+	@$(DOCKER_COMPOSE) exec node npm run dev:hot-watch
 
 front-lint:
 	@echo "Running a linter..."
