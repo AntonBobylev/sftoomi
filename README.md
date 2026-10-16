@@ -21,6 +21,7 @@
 * In project root directory: `cp ./.env ./.env.local` and set it up for you
 * Initialize an application: `make app-init`
 * Initialize the domain: `make init-domain` (optional)
+* Start the frontend dev server: `make front-dev`
 * An application will be available at localhost:{YOUR_SERVER_PORT}.
 
 ---
