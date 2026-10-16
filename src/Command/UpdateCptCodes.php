@@ -33,11 +33,10 @@ class UpdateCptCodes extends SftoomiCommand
         $tableExists = !empty($this->connection->fetchCol($sql));
 
         if ($tableExists) {
-            $this->connection->execute("drop table %s" . self::CPT_TABLE_NAME);
+            $this->connection->execute(sprintf("drop table %s", self::CPT_TABLE_NAME));
         }
 
-        $sql = sprintf(
-                "create table %s (
+        $sql = sprintf("create table %s (
                     id int primary key auto_increment,
                     code varchar(10),
                     short_name varchar(100),
@@ -50,27 +49,43 @@ class UpdateCptCodes extends SftoomiCommand
 
         $this->connection->execute($sql);
 
+        $data = array_filter($data, fn($cpt) => $cpt["is_code"]);
+
         $output->writeln("Starting CPT codes filling in database...");
         $progress = $this->createProgressBar($output, count($data));
 
-        foreach ($data as $cpt) {
-            if (!$cpt["is_code"]) {
-                $progress->advance();
+        try {
+            $this->connection->beginTransaction();
 
-                continue;
-            }
+            $batchSize = 500;
+            $batch = [];
 
-            $this->connection->insert(
-                self::CPT_TABLE_NAME,
-                [
+            foreach ($data as $cpt) {
+                $batch[] = [
                     "id"         => $cpt["id"],
                     "code"       => $cpt["code"],
                     "short_name" => $cpt["short_name"],
                     "full_name"  => $cpt["full_name"]
-                ]
-            );
+                ];
 
-            $progress->advance();
+                $progress->advance();
+
+                if (count($batch) >= $batchSize) {
+                    $this->connection->insertBatch(self::CPT_TABLE_NAME, $batch);
+                    $this->connection->commit();
+                    $this->connection->beginTransaction();
+                    $batch = [];
+                }
+            }
+
+            if (!empty($batch)) {
+                $this->connection->insertBatch(self::CPT_TABLE_NAME, $batch);
+            }
+
+            $this->connection->commit();
+        } catch (Exception $e) {
+            $this->connection->rollBack();
+            throw $e;
         }
 
         $progress->finish();
