@@ -207,6 +207,39 @@ readonly class Connection
     }
 
     /**
+     * @param string $table
+     * @param array  $rows
+     *
+     * @return bool|int|string
+     */
+    public function insertBatch(string $table, array $rows): bool | int | string
+    {
+        if (empty($rows)) {
+            return false;
+        }
+
+        $fields = array_keys(reset($rows));
+        $fieldsSql = $this->substitutor->encodeFields($fields);
+
+        $allValuesSql = [];
+        foreach ($rows as $row) {
+            $rowValuesSql = "";
+            foreach ($fields as $field) {
+                if (!empty($rowValuesSql)) {
+                    $rowValuesSql .= ", ";
+                }
+
+                $rowValuesSql .= $this->substitutor->encodeValue($row[$field] ?? null);
+            }
+            $allValuesSql[] = "($rowValuesSql)";
+        }
+
+        $valuesSql = implode(", ", $allValuesSql);
+
+        return $this->connection->executeStatement("insert into `$table` ($fieldsSql) values $valuesSql");
+    }
+
+    /**
      * @throws Exception
      */
     public function delete(string $table, string $where = "true", array $params = []): bool | int | string
