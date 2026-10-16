@@ -20,7 +20,7 @@
         "symfony/dotenv": "^8.1.6",
         "symfony/flex": "^2.11",
         "symfony/framework-bundle": "^8.1.9",
-        "symfony/intl": "8.0.*",
+        "symfony/intl": "^8.1.5",
         "symfony/messenger": "^8.1.9",
         "symfony/monolog-bundle": "^4.1",
         "symfony/property-access": "^8.1.4",
@@ -28,7 +28,7 @@
         "symfony/runtime": "^8.1.9",
         "symfony/security-bundle": "^8.1.9",
         "symfony/serializer": "^8.1.9",
-        "symfony/translation": "8.0.*",
+        "symfony/translation": "^8.1.5",
         "symfony/yaml": "^8.1.9"
     },
     "config": {
