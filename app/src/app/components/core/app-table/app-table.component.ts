@@ -6,8 +6,8 @@ import Sftoomi from '../../../class/Sftoomi';
 import Fetcher from '../../../class/Fetcher';
 import Timeout from '../../../class/Timeout';
 import { DialogType } from '../../../class/Dialog';
-import AppTableBaseView from './views/base-view'
-import AppBaseToolbar from '../base/app-base-toolbar'
+import AppTableBaseView from './views/base-view';
+import AppBaseToolbar from '../base/app-base-toolbar';
 
 import AppBaseFilters from '../base/app-base-filters';
 
