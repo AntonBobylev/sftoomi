@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { NzButtonComponent } from 'ng-zorro-antd/button';
 import { NzIconDirective } from 'ng-zorro-antd/icon';
+import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
 
 import AppBaseToolbar from '../../../../components/core/base/app-base-toolbar';
 
 import PatientEditDialogComponent, { PatientEditDialogData } from '../../dialog/dialog.component';
-import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 @Component({
     selector: 'patients-table-toolbar',
