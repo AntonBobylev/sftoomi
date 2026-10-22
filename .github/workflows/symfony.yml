@@ -40,13 +40,35 @@ jobs:
                   mkdir -p data
                   touch data/database.sqlite
 
+            # --- Node.js Backend PDF Service Setup & Start ---
+            - name: Set up Node.js for PDF Service
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '26'
+                  cache: 'npm'
+                  cache-dependency-path: pdf-service/package-lock.json
+
+            - name: Install PDF Service Dependencies
+              working-directory: pdf-service
+              run: npm ci
+
+            - name: Start PDF Service in Background
+              working-directory: pdf-service
+              env:
+                  PORT: 3005
+              run: |
+                  node server.js &
+                  sleep 3
+
+            # --- Execute PHPUnit tests ---
             - name: Execute PHPUnit tests
               env:
                   DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+                  PDF_SERVICE_URL: http://localhost:3005/convert
               run: vendor/bin/phpunit
 
             # --- Node.js / Frontend Setup & Tests ---
-            - name: Set up Node.js
+            - name: Set up Node.js for Frontend
               uses: actions/setup-node@v4
               with:
                   node-version: '26'
