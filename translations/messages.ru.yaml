@@ -74,3 +74,8 @@ messengers:
 file_reader:
     unknown_file_reader_type: "Неизвестный тип читателя файла %type%"
     file_does_not_exist: "Файл не существует по пути: \"%file_path\""
+
+converters:
+    html_to_pdf:
+        unknown_pdf_generation_error: "Неизвестная ошибка при генерации PDF"
+        pdf_successfully_generated: "PDF успешно сгенерирован"

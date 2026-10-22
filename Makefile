@@ -33,9 +33,14 @@ rebuild-node:
 	@$(DOCKER_COMPOSE) up -d --build node
 	@$(MAKE) front-reinit
 
+.PHONY: rebuild-node-backend
+rebuild-node-backend:
+	@$(DOCKER_COMPOSE) up -d --build node-backend
+	@$(MAKE) node-backend-init
+
 # APPLICATION
 .PHONY: app-init
-app-init: up wait-db composer-install db-migrate front-reinit
+app-init: up wait-db composer-install db-migrate front-reinit node-backend-init
 	@echo "Application initialization completed!"
 
 .PHONY: app-sync-permissions
@@ -124,6 +129,19 @@ front-lint:
 front-lint-fix:
 	@echo "Fixing code by a linter..."
 	@$(COMPOSE_EXEC) node npm run lint:fix
+
+## NODE BACKEND
+.PHONY: node-backend-shell node-backend-init
+
+node-backend-shell:
+	@$(DOCKER_COMPOSE) exec node-backend sh
+
+node-backend-init:
+	@echo "Installing pdf-service dependencies..."
+	@$(COMPOSE_EXEC) node-backend sh -c "cd pdf-service && npm install"
+
+logs-node-backend:
+	@$(DOCKER_COMPOSE) logs -f --tail=100 node-backend
 
 ## DOMAIN
 .PHONY: domain-init

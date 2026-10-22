@@ -53,7 +53,7 @@ final class TemplateController extends SftoomiController
     }
 
     #[Route("/previewTemplate", name: "preview_template")]
-    public function previewTemplate(Request $request, Filesystem $filesystem): Response
+    public function previewTemplate(Request $request, Filesystem $filesystem, HtmlToPdfConverter $pdfConverter): Response
     {
         $this->auth->requirePermission("REPORT_TEMPLATES_MODULE");
 
@@ -65,7 +65,7 @@ final class TemplateController extends SftoomiController
 
         $filesystem->dumpFile($tmpHtmlFile, $templateCode);
 
-        $convertResult = new HtmlToPdfConverter()->convert($tmpHtmlFile, $tmpPdfFile);
+        $convertResult = $pdfConverter->convert($tmpHtmlFile, $tmpPdfFile);
 
         if ($convertResult["result_code"] === 0) {
             $response = new JsonResponse([

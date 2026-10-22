@@ -33,6 +33,26 @@ services:
         networks:
             - sftoomi
 
+    node-backend:
+        build:
+            context: ..
+            dockerfile: ./docker/node-backend/Dockerfile
+            args:
+                USER_ID: "${USER_ID}"
+                GROUP_ID: "${GROUP_ID}"
+                USER_NAME: "${USER_NAME}"
+        container_name: sftoomi_node_backend
+        restart: always
+        volumes:
+            - ../.:/var/www/project
+        environment:
+            - PORT=${NODE_PDF_PORT:-3000}
+        command: sh -c "cd pdf-service && npm install && node server.js"
+        ports:
+            - "${NODE_PDF_PORT:-3005}:3000"
+        networks:
+            - sftoomi
+
     php:
         container_name: sftoomi_php
         restart: always

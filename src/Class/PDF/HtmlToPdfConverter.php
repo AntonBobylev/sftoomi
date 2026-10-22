@@ -2,38 +2,48 @@
 
 namespace App\Class\PDF;
 
-use App\Utils;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 readonly class HtmlToPdfConverter
 {
-    private string $utilityPath;
-
-    public function __construct()
-    {
-        $this->utilityPath = Utils::getVars()->get("wkhtmltopdf_path");
-    }
+    public function __construct(
+        private HttpClientInterface $httpClient,
+        private string              $pdfServiceUrl,
+        private TranslatorInterface $translator
+    ) {}
 
     public function convert(string $htmlFilepath, string $pdfFilepath): array
     {
-        $command = sprintf(
-            "%s --encoding utf-8 --disable-smart-shrinking %s %s",
-            escapeshellcmd($this->utilityPath),
-            escapeshellcmd($htmlFilepath),
-            escapeshellcmd($pdfFilepath)
-        );
+        try {
+            $response = $this->httpClient->request("POST", $this->pdfServiceUrl, [
+                "json" => [
+                    "htmlFilepath" => $htmlFilepath,
+                    "pdfFilepath"  => $pdfFilepath,
+                ],
+                "timeout" => 30,
+            ]);
 
-        $output = [];
-        $resultCode = 0;
+            $statusCode = $response->getStatusCode();
+            $content = $response->toArray(false);
 
-        exec(
-            $command,
-            $output,
-            $resultCode
-        );
+            if ($statusCode !== 200) {
+                return [
+                    "output"      => [$content["error"] ?? $this->translator->trans("converters.html_to_pdf.unknown_pdf_generation_error")],
+                    "result_code" => 1
+                ];
+            }
 
-        return [
-            "output"      => $output,
-            "result_code" => $resultCode
-        ];
+            return [
+                "output"      => [$this->translator->trans("converters.html_to_pdf.pdf_successfully_generated")],
+                "result_code" => 0
+            ];
+
+        } catch (\Throwable $e) {
+            return [
+                "output"      => [$e->getMessage()],
+                "result_code" => 1
+            ];
+        }
     }
 }

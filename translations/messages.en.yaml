@@ -75,3 +75,8 @@ messengers:
 file_reader:
     unknown_file_reader_type: "Unknown file reader type %type%"
     file_does_not_exist: "File doesn't exist by the path: \"%file_path\""
+
+converters:
+    html_to_pdf:
+        unknown_pdf_generation_error: "Unknown PDF generation error"
+        pdf_successfully_generated: "PDF successfully generated"

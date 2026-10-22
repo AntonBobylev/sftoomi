@@ -6,6 +6,7 @@ services:
         autoconfigure: true
         bind:
             $projectDir: '%kernel.project_dir%'
+            $pdfServiceUrl: '%env(PDF_SERVICE_URL)%'
 
     App\:
         resource: '../src/'
