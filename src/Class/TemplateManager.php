@@ -2,8 +2,10 @@
 
 namespace App\Class;
 
+use App\Class\FileReader\FileReaderFactory;
+use App\Class\FileReader\JsonFileReader;
+use App\Filesystem;
 use App\Utils;
-use Symfony\Component\Filesystem\Filesystem;
 
 readonly class TemplateManager
 {
@@ -74,30 +76,13 @@ readonly class TemplateManager
     }
 
     /**
-     * TODO: move JSON file reading into the single class?
-     *
      * @return array
      */
     private function getMockData(): array
     {
-        $mockFileLocation = sprintf("%s/mock-data.json", Utils::getVars()->get("templates_dir"));
-        if (!$this->filesystem->exists($mockFileLocation)) {
-            throw new \RuntimeException(json_encode([
-                "message"    => "template_manager.file_with_mock_data_does_not_exist_by_the_path",
-                "parameters" => [
-                    "%file_path%" => $mockFileLocation
-                ]
-            ]));
-        }
-
-        $fileRawContent = $this->filesystem->readFile($mockFileLocation);
-
-        $mockData = json_decode($fileRawContent, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \RuntimeException(json_last_error_msg());
-        }
-
-        return $mockData;
+        return new FileReaderFactory()
+            ->build(JsonFileReader::class, $this->filesystem)
+            ->read(sprintf("%s/mock-data.json", Utils::getVars()->get("templates_dir")));
     }
 
     private function getGenericTemplatesPath(): string

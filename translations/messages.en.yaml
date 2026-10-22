@@ -65,10 +65,13 @@ entity_manipulator:
 
 template_manager:
     file_does_not_exist_by_the_path: "File doesn't exist by the path: \"%file_path\""
-    file_with_mock_data_does_not_exist_by_the_path: "File with mock data doesn't exist by the path: \"%file_path\""
 
 messengers:
     user:
         reset_password:
             handler:
                 user_not_found: "User not found"
+
+file_reader:
+    unknown_file_reader_type: "Unknown file reader type %type%"
+    file_does_not_exist: "File doesn't exist by the path: \"%file_path\""

@@ -56,7 +56,7 @@ services:
     template_manager:
         class: App\Class\TemplateManager
         arguments:
-            - '@filesystem'
+            - '@App\Filesystem'
 
     study_draft_manager:
         class: App\Class\StudyDraft\Manager
