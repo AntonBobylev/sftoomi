@@ -10,8 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-// TODO: rename to DraftViewerController
-final class DraftViewer extends SftoomiController
+final class DraftViewerController extends SftoomiController
 {
     #[Route("/getDraftViewerData", name: "get_draft_viewer_data")]
     public function getDraftViewerData(Request $request): Response
