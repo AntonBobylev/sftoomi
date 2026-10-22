@@ -43,7 +43,7 @@ class EntityManipulator
 
             $idFieldToRemove = $idField ?? $entityTableConfig["idField"];
             if (!$idFieldToRemove) {
-                throw new \RuntimeException("Unknown idField");
+                throw new \RuntimeException("entity_manipulator.unknown_id_field");
             }
 
             $this->connection->delete(
@@ -57,7 +57,7 @@ class EntityManipulator
     private function loadConfig(): void
     {
         if (!file_exists($this->configFilePath)) {
-            throw new \RuntimeException("Configuration file does not exist");
+            throw new \RuntimeException("entity_manipulator.configuration_file_does_not_exist");
         }
 
         $fileContent = file_get_contents($this->configFilePath);
@@ -77,11 +77,13 @@ class EntityManipulator
     ): void
     {
         if (empty($referenceConfig["idField"])) {
-            throw new \RuntimeException(sprintf(
-                "idField is not set for reference \"%s\" in %s config ",
-                $referenceTable,
-                $removingEntityTable
-            ));
+            throw new \RuntimeException(json_encode([
+                "message"    => "entity_manipulator.id_field_not_set_for_reference",
+                "parameters" => [
+                    "%reference%" => $referenceTable,
+                    "%config%"    => $removingEntityTable
+                ]
+            ]));
         }
 
         switch ($referenceConfig["onDelete"]) {
@@ -92,12 +94,14 @@ class EntityManipulator
                 $recordsExists = $this->connection->selInt($sql, [$removingEntityId]);
 
                 if ($recordsExists) {
-                    throw new \RuntimeException(sprintf(
-                        "You cannot remove the record with ID %s from \"%s\" table because it has dependencies in table \"%s\"",
-                        $removingEntityId,
-                        $removingEntityTable,
-                        $referenceTable
-                    ));
+                    throw new \RuntimeException(json_encode([
+                        "message"    => "entity_manipulator.you_cannot_remove_the_record_with_id_s_from_s_table_because_it_has_dependencies_in_table_s",
+                        "parameters" => [
+                            "%entity_id%"       => $removingEntityId,
+                            "%from_table%"      => $removingEntityTable,
+                            "%dependent_table%" => $referenceTable
+                        ]
+                    ]));
                 }
 
                 break;

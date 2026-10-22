@@ -137,7 +137,7 @@ final class ProcessingController extends SftoomiController
             ];
 
             if (empty($patient["last_name"]) || empty($patient["first_name"])) {
-                throw new \RuntimeException("You must specify patient last name and first name");
+                throw new \RuntimeException("processing_controller.you_must_specify_patient_last_name_and_first_name");
             }
 
             $this->connection->insert(
@@ -166,7 +166,7 @@ final class ProcessingController extends SftoomiController
 
         $newStudyIds = Fetcher::intArray($request->request->get("study_ids"));
         if (empty($newStudyIds)) {
-            throw new \RuntimeException("You must specify at least one study to save the examination");
+            throw new \RuntimeException("processing_controller.you_must_specify_at_least_one_study_to_save_the_examination");
         }
 
         $sql = "select exam_id, study_id

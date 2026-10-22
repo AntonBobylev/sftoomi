@@ -25,18 +25,22 @@ abstract class SftoomiController extends AbstractController
         }
 
         if (empty($values)) {
-            throw new InvalidArgumentException(sprintf(
-                "Required fields for the operation: %s",
-                implode(", ", $requiredFields)
-            ));
+            throw new \InvalidArgumentException(json_encode([
+                "message"    => "sftoomi_controller.required_fields_for_the_operation",
+                "parameters" => [
+                    "%fields%" => implode(", ", $requiredFields)
+                ]
+            ]));
         }
 
         foreach ($requiredFields as $field) {
             if (empty($values[$field])) {
-                throw new InvalidArgumentException(sprintf(
-                    "Field %s is required",
-                    $field
-                ));
+                throw new \InvalidArgumentException(json_encode([
+                    "message"    => "sftoomi_controller.field_is_required",
+                    "parameters" => [
+                        "%field%" => $field
+                    ]
+                ]));
             }
         }
     }

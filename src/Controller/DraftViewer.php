@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+// TODO: rename to DraftViewerController
 final class DraftViewer extends SftoomiController
 {
     #[Route("/getDraftViewerData", name: "get_draft_viewer_data")]
@@ -19,7 +20,7 @@ final class DraftViewer extends SftoomiController
 
         $examId = Fetcher::int($request->request->get("exam_id"));
         if (empty($examId)) {
-            throw new \InvalidArgumentException("Exam ID required");
+            throw new \InvalidArgumentException("draft_viewer_controller.exam_id_required");
         }
 
         $sql = "select study_id
@@ -50,12 +51,12 @@ final class DraftViewer extends SftoomiController
 
         $templateId = Fetcher::int($request->request->get("template_id"));
         if (empty($templateId)) {
-            throw new \InvalidArgumentException("Template ID required");
+            throw new \InvalidArgumentException("draft_viewer_controller.template_id_required");
         }
 
         $examId = Fetcher::int($request->request->get("exam_id"));
         if (empty($examId)) {
-            throw new \InvalidArgumentException("Exam ID required");
+            throw new \InvalidArgumentException("draft_viewer_controller.exam_id_required");
         }
 
         $sql = "select content
@@ -64,7 +65,7 @@ final class DraftViewer extends SftoomiController
         $templateContent = $this->connection->selString($sql, [$templateId]);
 
         if (empty($templateContent)) {
-            throw new \InvalidArgumentException("Template content not found");
+            throw new \InvalidArgumentException("draft_viewer_controller.template_content_not_found");
         }
 
         $data = $studyDraftManager->getStudyDraftData($examId);

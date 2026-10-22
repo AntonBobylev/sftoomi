@@ -42,10 +42,12 @@ class SqlSubstitutor
         } elseif (is_null($value)) {
             return "NULL";
         } else {
-            throw new InvalidArgumentException(sprintf(
-                "Unsupported parameter type: %s",
-                gettype($value)
-            ));
+            throw new InvalidArgumentException(json_encode([
+                "message"    => "sql_substitutor.unsupported_parameter_type",
+                "parameters" => [
+                    "%type%" => gettype($value)
+                ]
+            ]));
         }
     }
 
@@ -87,11 +89,13 @@ class SqlSubstitutor
         $questionCount = substr_count($sql, "?");
 
         if ($questionCount !== count($params)) {
-            throw new InvalidArgumentException(sprintf(
-                "Mismatch between the number of placeholders (%d) and parameters (%d)",
-                $questionCount,
-                count($params)
-            ));
+            throw new InvalidArgumentException(json_encode([
+                "message"    => "sql_substitutor.mismatch_between_the_number_of_placeholders_and_parameters",
+                "parameters" => [
+                    "%placeholders_count%" => $questionCount,
+                    "%parameters_count%"   => count($params)
+                ]
+            ]));
         }
 
         $parts = preg_split('/(\?)/', $sql, -1, PREG_SPLIT_DELIM_CAPTURE);

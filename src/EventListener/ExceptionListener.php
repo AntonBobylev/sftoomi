@@ -27,8 +27,17 @@ class ExceptionListener
     public function onKernelException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
+        $message   = $exception->getMessage();
 
-        $translatedMessage = $this->translator->trans($exception->getMessage());
+        $decodedMessage = json_decode($message, true);
+        if (json_last_error() === JSON_ERROR_NONE && isset($decodedMessage["message"])) {
+            $translatedMessage = $this->translator->trans(
+                $decodedMessage["message"],
+                $decodedMessage["parameters"] ?? []
+            );
+        } else {
+            $translatedMessage = $this->translator->trans($message);
+        }
 
         $response = new JsonResponse([
             "message" => $translatedMessage,

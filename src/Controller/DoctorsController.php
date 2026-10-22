@@ -110,7 +110,7 @@ final class DoctorsController extends SftoomiController
         $doctorFacilitiesIds = Fetcher::intArray($request->request->get("doctor_facilities_ids"));
 
         if (empty($doctorFacilitiesIds)) {
-            throw new \RuntimeException("Doctor must be assigned at least to one facility");
+            throw new \RuntimeException("doctors_controller.doctor_must_be_assigned_at_least_to_one_facility");
         }
 
         $this->connection->delete(

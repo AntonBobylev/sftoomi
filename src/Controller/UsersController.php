@@ -143,7 +143,7 @@ final class UsersController extends SftoomiController
 
         $userGroups = Fetcher::intArray($request->request->get("user_groups"), []);
         if (empty($userGroups)) {
-            throw new \RuntimeException("At least one user group must be selected for the user");
+            throw new \RuntimeException("users_controller.at_least_one_user_group_must_be_selected_for_the_user");
         }
 
         $this->connection->delete(

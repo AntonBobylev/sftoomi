@@ -54,7 +54,12 @@ readonly class TemplateManager
     {
         $filePath = sprintf("%s/%s", Utils::getVars()->get("templates_dir"), $templateName);
         if (!$this->filesystem->exists($filePath)) {
-            throw new \RuntimeException("File doesn't exist by the path: \"$filePath\"");
+            throw new \RuntimeException(json_encode([
+                "message"    => "template_manager.file_does_not_exist_by_the_path",
+                "parameters" => [
+                    "%file_path%" => $filePath
+                ]
+            ]));
         }
 
         return $this->filesystem->readFile($filePath);
@@ -77,7 +82,12 @@ readonly class TemplateManager
     {
         $mockFileLocation = sprintf("%s/mock-data.json", Utils::getVars()->get("templates_dir"));
         if (!$this->filesystem->exists($mockFileLocation)) {
-            throw new \RuntimeException("File with mock data doesn't exist by the path: \"$mockFileLocation\"");
+            throw new \RuntimeException(json_encode([
+                "message"    => "template_manager.file_with_mock_data_does_not_exist_by_the_path",
+                "parameters" => [
+                    "%file_path%" => $mockFileLocation
+                ]
+            ]));
         }
 
         $fileRawContent = $this->filesystem->readFile($mockFileLocation);

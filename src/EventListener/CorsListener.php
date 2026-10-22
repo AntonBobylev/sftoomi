@@ -17,7 +17,7 @@ class CorsListener
         }
 
         if (empty($_ENV["FRONT_URL"])) {
-            throw new \RuntimeException("FRONT_URL environment variable is not defined");
+            throw new \RuntimeException("cors_listener.front_url_environment_variable_is_not_defined");
         }
 
         $response->headers->set("Access-Control-Allow-Origin", $_ENV["FRONT_URL"]);

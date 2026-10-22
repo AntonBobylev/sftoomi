@@ -19,6 +19,8 @@ mailer:
 
 sql_substitutor:
     unable_to_encode_empty_fields_list: "Не удалось закодировать пустой список полей!"
+    unsupported_parameter_type: "Неподдерживаемый тип параметра: \"%type%\""
+    mismatch_between_the_number_of_placeholders_and_parameters: "Несоответствие между количеством заполнителей (%placeholders_count%) и параметров (%parameters_count%)"
 
 password_generator:
     password_length_must_be_at_least_4_characters: "Длина пароля должна быть не менее 4 символов"
@@ -34,3 +36,38 @@ users_controller:
     new_password_and_confirmation_must_be_equal: "Новый пароль и подтверждение должны совпадать"
     user_not_found: "Пользователь не найден"
     old_password_is_incorrect: "Старый пароль неверен"
+
+cors_listener:
+    front_url_environment_variable_is_not_defined: "Переменная окружения FRONT_URL не определена"
+
+doctors_controller:
+    doctor_must_be_assigned_at_least_to_one_facility: "Врач должен быть прикреплен хотя бы к одному учреждению"
+
+draft_viewer_controller:
+    exam_id_required: "Требуется ID исследования"
+    template_id_required: "Требуется ID шаблона"
+    template_content_not_found: "Содержимое шаблона не найдено"
+
+processing_controller:
+    you_must_specify_patient_last_name_and_first_name: "Необходимо указать имя и фамилию пациента"
+    you_must_specify_at_least_one_study_to_save_the_examination: "Необходимо указать хотя бы одно исследование для сохранения обследования"
+
+sftoomi_controller:
+    required_fields_for_the_operation: "Обязательные поля для операции: %fields%"
+    field_is_required: "Поле %field% обязательно для заполнения"
+
+entity_manipulator:
+    unknown_id_field: "Неизвестное поле idField"
+    configuration_file_does_not_exist: "Файл конфигурации не существует"
+    id_field_not_set_for_reference: "Поле idField не задано для связи \"%reference%\" в конфигурации %config%"
+    you_cannot_remove_the_record_with_id_s_from_s_table_because_it_has_dependencies_in_table_s: "Вы не можете удалить запись с ID %entity_id% из таблицы \"%from_table%\", так как у нее есть зависимости в таблице \"%dependent_table%\""
+
+template_manager:
+    file_does_not_exist_by_the_path: "Файл не существует по пути: \"%file_path\""
+    file_with_mock_data_does_not_exist_by_the_path: "Файл с тестовыми данными не существует по пути: \"%file_path\""
+
+messengers:
+    user:
+        reset_password:
+            handler:
+                user_not_found: "Пользователь не найден"

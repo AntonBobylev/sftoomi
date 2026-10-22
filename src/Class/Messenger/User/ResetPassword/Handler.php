@@ -68,7 +68,7 @@ readonly class Handler extends SftoomiHandler
     {
         $user = $this->userRepository->findOneBy(["id" => $userId]);
         if (!$user instanceof User) {
-            throw new \Exception("User not found");
+            throw new \Exception("messengers.user.reset_password.handler.user_not_found");
         }
 
         return $user;
