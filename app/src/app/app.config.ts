@@ -1,7 +1,6 @@
 import { registerLocaleData } from '@angular/common';
 import en from '@angular/common/locales/en';
 import ru from '@angular/common/locales/ru';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient } from '@angular/common/http';
 import { ApplicationConfig, inject, LOCALE_ID, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { provideRouter, withHashLocation } from '@angular/router';
@@ -34,7 +33,6 @@ export const appConfig: ApplicationConfig = {
             }
         },
         provideNzDateFnsAdapter(),
-        provideAnimationsAsync(),
         provideHttpClient(),
         {
             provide: NZ_DATE_CONFIG,
