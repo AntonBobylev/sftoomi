@@ -1,0 +1,47 @@
+name: Backend (Symfony) CI
+
+on:
+    push:
+        branches: [ "main" ]
+        paths:
+            - 'src/**'
+            - 'config/**'
+            - 'templates/**'
+            - 'tests/**'
+            - 'composer.json'
+            - 'composer.lock'
+    pull_request:
+        branches: [ "main" ]
+        paths:
+            - 'src/**'
+            - 'config/**'
+            - 'templates/**'
+            - 'tests/**'
+            - 'composer.json'
+            - 'composer.lock'
+
+jobs:
+    symfony-tests:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            - uses: shivammathur/setup-php@2cb9b829437ee246e9b3cac53555a39208ca6d28
+              with:
+                  php-version: '8.5'
+
+            - name: Copy .env.test.local
+              run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+
+            - name: Install PHP Dependencies
+              run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+
+            - name: Create Database
+              run: |
+                  mkdir -p data
+                  touch data/database.sqlite
+
+            - name: Execute PHPUnit tests
+              env:
+                  DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
+              run: vendor/bin/phpunit
