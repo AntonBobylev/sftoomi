@@ -43,7 +43,6 @@ readonly class DeduplicationMiddleware implements MiddlewareInterface
                 return $envelope;
             }
 
-            // Устанавливаем замок
             $cacheItem->set(true);
             $cacheItem->expiresAfter($config->ttl);
             $this->cache->save($cacheItem);
