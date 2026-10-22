@@ -9,7 +9,6 @@ class FetcherTest extends TestCase
 {
     public function testInt(): void
     {
-        test
         $value = Fetcher::int(1);
         $this->assertIsInt($value);
         $this->assertEquals(1, $value);
