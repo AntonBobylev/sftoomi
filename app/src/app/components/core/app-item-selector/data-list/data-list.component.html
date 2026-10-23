@@ -3,11 +3,20 @@
         {{ title() }}:
     </div>
 
+    @if (useFilter()) {
+        <div class="search-container">
+            <app-text-field name="filter"
+                            [form]="form"
+                            [placeholder]="Sftoomi.Translator.translate('fields.item_selector.type_to_search_placeholder')"
+            />
+        </div>
+    }
+
     <div class="content">
-        @if (Sftoomi.isEmpty(data())) {
+        @if (Sftoomi.isEmpty(data()) || Sftoomi.isEmpty(filteredData())) {
             <span class="no-data-message">{{ Sftoomi.Translator.translate('no_data_to_display') }}</span>
         } @else {
-            @for (row of data(); track row.value) {
+            @for (row of filteredData(); track row.value) {
                 <span class="item"
                       (click)="onItemClick($event, row)"
                       [ngClass]="{'item-selected': row.selected}"

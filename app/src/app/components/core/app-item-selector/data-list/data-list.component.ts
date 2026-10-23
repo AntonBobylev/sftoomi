@@ -1,8 +1,12 @@
-import { Component, input, InputSignal, signal, WritableSignal } from '@angular/core';
+import { Component, DestroyRef, inject, input, InputSignal, signal, WritableSignal, OnInit } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { FormControl, FormGroup } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NzTooltipDirective } from 'ng-zorro-antd/tooltip';
 
 import Sftoomi from '../../../../class/Sftoomi';
+
+import AppTextFieldComponent from '../../app-text-field/app-text-field.component';
 
 export interface AppItemSelectorDataListRow {
     name:     string,
@@ -19,18 +23,56 @@ type Item = {
     templateUrl: './data-list.component.html',
     imports: [
         NgClass,
-        NzTooltipDirective
+        NzTooltipDirective,
+        AppTextFieldComponent
     ],
     styleUrl: './data-list.component.less'
 })
 
-export default class AppItemSelectorDataListComponent
+export default class AppItemSelectorDataListComponent implements OnInit
 {
-    public readonly title: InputSignal<string> = input.required();
+    public readonly title:     InputSignal<string>  = input.required();
+    public readonly useFilter: InputSignal<boolean> = input(true);
 
-    protected readonly data: WritableSignal<Item[]> = signal<Item[]>([]);
+    protected readonly data:         WritableSignal<Item[]> = signal([]);
+    protected readonly filteredData: WritableSignal<Item[]> = signal([]);
+
+    protected form = new FormGroup({
+        filter: new FormControl<string | null>(null)
+    });
 
     protected readonly Sftoomi: typeof Sftoomi = Sftoomi;
+
+    private readonly destroyRef: DestroyRef = inject(DestroyRef);
+
+    ngOnInit(): void
+    {
+        this.form.get('filter')
+            ?.valueChanges
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((query: string | null): void => {
+                const items: Item[] = this.data();
+
+                if (typeof query !== 'string') {
+                    this.filteredData.set(items);
+
+                    return;
+                }
+
+                query = query.toLowerCase().trim();
+                if (!query) {
+                    this.filteredData.set(items);
+
+                    return;
+                }
+
+                this.filteredData.set(items.filter(row =>
+                    row.name.toLowerCase().includes(query)
+                    || row.value.toLowerCase().includes(query)
+                    || row.tooltip?.toLowerCase().includes(query)
+                ));
+            });
+    }
 
     public setData(data: AppItemSelectorDataListRow[]): void
     {
@@ -40,6 +82,8 @@ export default class AppItemSelectorDataListComponent
             name:     row.name,
             tooltip:  row.tooltip
         })));
+
+        this.filteredData.set(this.data());
     }
 
     public getAllRows(): AppItemSelectorDataListRow[]

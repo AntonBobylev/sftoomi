@@ -254,7 +254,8 @@ const ruDictionary: object =  {
             move_left: 'Переместить влево',
             move_right: 'Переместить вправо',
             move_up: 'Переместить вверх',
-            selected: 'Выбрано'
+            selected: 'Выбрано',
+            type_to_search_placeholder: 'Введите, чтобы отфильтровать...'
         },
         studies_selector: {
             caption: 'Исследования',

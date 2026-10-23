@@ -254,7 +254,8 @@ const usDictionary: object =  {
             move_left: 'Move left',
             move_right: 'Move right',
             move_up: 'Move up',
-            selected: 'Selected'
+            selected: 'Selected',
+            type_to_search_placeholder: 'Type to search...'
         },
         studies_selector: {
             caption: 'Studies',
