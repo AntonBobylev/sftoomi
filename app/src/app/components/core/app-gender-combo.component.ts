@@ -14,7 +14,7 @@ import Gender from '../../type/Gender';
 })
 export default class AppGenderComboComponent extends AppComboComponent<Gender> implements OnInit
 {
-    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('gender.caption'));
+    public override readonly label: InputSignal<string | null> = input<string | null>(this.Sftoomi.Translator.translate('gender.caption'));
 
     ngOnInit(): void
     {

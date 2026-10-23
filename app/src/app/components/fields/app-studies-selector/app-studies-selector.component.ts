@@ -29,7 +29,7 @@ interface StudyCollectionRow {
 
 export default class AppStudiesSelectorComponent extends AppBaseField
 {
-    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
+    public override readonly label: InputSignal<string | null> = input<string | null>(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
 
     public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
 

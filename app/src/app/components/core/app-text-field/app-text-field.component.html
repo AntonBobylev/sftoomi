@@ -1,9 +1,11 @@
 <nz-form-item [formGroup]="form()">
-    <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form(), name())"
-                   [nzFor]="name()"
-    >
-        {{ label() }}
-    </nz-form-label>
+    @if (!Sftoomi.isEmpty(label())) {
+        <nz-form-label [nzRequired]="Sftoomi.isFieldRequired(form(), name())"
+                       [nzFor]="name()"
+        >
+            {{ label() }}
+        </nz-form-label>
+    }
 
     <nz-form-control [nzErrorTip]="errorTipTpl">
         @if (securedInput()) {
@@ -12,6 +14,7 @@
                        [formControlName]="name()"
                        (input)="onInput($event)"
                        [id]="name()"
+                       [attr.placeholder]="placeholder()"
                 />
             </nz-input-password>
         } @else {
@@ -21,6 +24,7 @@
                        (input)="onInput($event)"
                        [id]="name()"
                        [maskito]="mask()"
+                       [attr.placeholder]="placeholder()"
                 />
             </nz-input-wrapper>
         }

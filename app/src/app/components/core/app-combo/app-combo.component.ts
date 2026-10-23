@@ -24,7 +24,6 @@ export default class AppComboComponent<T = AppComboRecord['value']> extends AppB
     public readonly useSearch:   InputSignal<boolean>       = input(false);
     public readonly useClear:    InputSignal<boolean>       = input(false);
     public readonly multiple:    InputSignal<boolean>       = input(false);
-    public readonly placeholder: InputSignal<string | null> = input<string | null>(null);
 
     public readonly inlineLabel:           InputSignal<boolean> = input(false);
     public readonly errorsWrapperRequired: InputSignal<boolean> = input(true);

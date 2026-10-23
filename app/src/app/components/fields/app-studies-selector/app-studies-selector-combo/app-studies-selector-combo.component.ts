@@ -17,7 +17,7 @@ import { AppComboRecord } from '../../../core/app-combo/app-combo.component';
 })
 export default class AppStudiesSelectorComboComponent extends AppBaseField
 {
-    public override readonly label: InputSignal<string> = input(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
+    public override readonly label: InputSignal<string | null> = input<string | null>(this.Sftoomi.Translator.translate('fields.studies_selector.caption'));
 
     public readonly storeSignal: InputSignal<WritableSignal<AppComboRecord[]>> = input.required({ alias: 'store' });
 }
